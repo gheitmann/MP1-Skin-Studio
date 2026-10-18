@@ -1,0 +1,191 @@
+PASS  Unveränderte UTF-8-Datei bleibt bytegleich
+PASS  Position wird als einzelner Quelltextbereich geändert
+PASS  Doppelte ID 0: nur zweites Control geändert
+PASS  Mehrere Eigenschaften in einer Transaktion
+PASS  Neue lokale Eigenschaft, unbekannte Tags bleiben
+PASS  Kommentar innerhalb einer Eigenschaft bleibt
+PASS  CDATA bleibt CDATA; schließende Sequenz wird gesplittet
+PASS  XML-Entities und Umlaute werden korrekt gespeichert
+PASS  Self-closing Eigenschaft behält Attribute
+PASS  IDs und Control-Typen sind geschützt
+PASS  DTD und externe Entitäten werden abgelehnt
+PASS  Fehlerhaftes XML wird abgelehnt
+PASS  Verschachtelte Eigenschaft wird nicht überschrieben
+PASS  UTF-16 LE und BOM bleiben erhalten
+PASS  Windows-1252 bleibt erhalten; ungeeignete Zeichen abgelehnt
+PASS  Referenz → Style → lokaler Wert aufgelöst
+PASS  Defines im Include bleiben gebunden und auflösbar
+PASS  Undo/Redo stellt exakten Quelltext wieder her
+PASS  ZIP exportiert nur richtige Include-Datei; Original bleibt bytegleich
+PASS  Pfad außerhalb des Skinordners wird abgelehnt
+PASS  Export auf Skin-XML statt ZIP wird abgelehnt
+PASS  Zyklische und fehlende Includes werden gemeldet
+PASS  Theme überschreibt Datei, fehlende Dateien fallen auf Basis zurück
+PASS  Unbekannte Vorschau-Bedingung ist unbekannt, nicht wahr
+PASS  Vorschau-Boolesche Bedingungen und Plugin-Zustand
+PASS  Echte Titan-Dateien laden; Uhr gezielt ändern; Animationskommentare bleiben
+PASS  Mehrere Dateien ändern: ein Undo/Redo stellt beide exakt wieder her
+PASS  Fehler im zweiten Element rollt gesamte Mehrfachänderung zurück
+PASS  Einfügen erzeugt vollständiges Control; Undo/Redo erhält Identität
+PASS  Text- und Bildvorlagen werden als gültiges XML eingefügt
+PASS  Neue ID berücksichtigt nicht geöffnete Seiten und Navigationsziele
+PASS  Duplizieren erhält Original, Kommentare, Styles und unbekannte Einträge
+PASS  Gebundene Positionen werden beim Duplizieren geschützt
+PASS  Ausrichten berücksichtigt rechtsbündige Label-Anker
+PASS  Gleiche horizontale Abstände erhalten äußere Kanten
+PASS  Ausrichten überschreibt gebundene Position nicht ohne Freigabe
+PASS  Navigation verbindet nur gewählte Richtung und ist rückgängig
+PASS  Navigation lehnt doppelte ID und nicht fokussierbares Ziel ab
+PASS  Navigation schützt dynamische Zielbindung
+PASS  Navigation erkennt numerisch gleiche IDs mit führenden Nullen
+PASS  Leerer selbstschließender Controls-Bereich ist erweiterbar und exakt rückgängig
+PASS  Nicht auflösbare Geometrie wird auch nach Bindungsfreigabe nicht geraten
+PASS  Editorprojekt stellt mehrere geänderte XMLs und exakte Kommentare wieder her
+PASS  Wiederhergestelltes Projekt hat einen gemeinsamen Undo/Redo-Schritt
+PASS  Unverändertes Editorprojekt speichert Bildschirm und Skinordner
+PASS  Projekt kann mit demselben Originalstand in einen anderen Skinordner umziehen
+PASS  Extern geänderte Quelldatei verhindert stilles Wiederherstellen
+PASS  Beschädigter bearbeiteter Schnappschuss wird erkannt
+PASS  Pfadtraversal in Editorprojekt wird vor Dateizugriff abgewiesen
+PASS  Projektformat-Version und doppelte ZIP-Einträge werden geprüft
+PASS  Projekt-Manifest erlaubt keine DTD oder externen Entitäten
+PASS  Editorprojekt erhält UTF-16 und BOM beim Wiederherstellen
+PASS  Editorprojekt erhält ausgewähltes Theme und Theme-XML
+PASS  Projekt speichern ersetzt bestehendes Projekt atomar und schützt XML-Ziele
+PASS  Texturkatalog findet Unterordner und bevorzugt das gewählte Theme
+PASS  PNG-Vorschaubild enthält Abmessungen und hält Quelldatei nicht offen
+PASS  Beschädigtes Bild liefert Fehler statt Vorschau oder Absturz
+PASS  Editorzustand bleibt beim Speichern unabhängig von XML und Quelldateien
+PASS  Elementschutz blockiert gemeinsame Bearbeitung atomar
+PASS  Gruppenschutz und Editor-Ausblendung gelten für enthaltene Controls
+PASS  Alte Editorprojekte ohne editorState öffnen mit eingepasster Ansicht
+PASS  Geänderte Quelle einer reinen Sperrmarkierung wird erkannt
+PASS  Ungültige Ansichten und Editor-Pfade werden beim Öffnen abgewiesen
+PASS  Editor-Markierungen fehlen vollständig im exportierten Skin-XML
+PASS  Markierungen rückgängig gemachter neuer Controls werden nicht falsch gespeichert
+PASS  Seitenprüfung findet numerisch identische Fokus-IDs und mehrdeutige Navigation
+PASS  Wiederholte ID 0 und nicht geladene Seiten erzeugen keinen Fokus-ID-Konflikt
+PASS  Fehlendes Ziel wird mit echter Include-Zeile und Eigenschaft gemeldet
+PASS  Dynamische und besondere Navigationswerte werden als ungeprüft behandelt
+PASS  Vorhandenes Ziel mit unbekanntem Fokustyp bleibt ein Hinweis
+PASS  Bildprüfung verwendet Theme vor Basis und meldet auch ausgeblendete Bilder
+PASS  Auflösbare Defines werden geprüft; unbekannte Bildbindungen bleiben Hinweise
+PASS  Mehrfach eingebundene Quelle wird in jedem unterschiedlichen Define-Kontext geprüft
+PASS  Prüfung verändert weder XML noch Projekt-, Sperr- und Undo-Zustand
+PASS  Nicht geladene Includes erscheinen als Seitenfund ohne erfundenen Control-Verweis
+PASS  Rücksetzen entfernt nur den lokalen XML-Bereich samt seiner eigenen Leerzeile
+PASS  Kommentare und PIs bleiben beim Entfernen erhalten; CDATA-Inhalt wird nicht als Kommentar behandelt
+PASS  Rücksetzvorschau verwendet Style vor Referenz und verändert die Sitzung nicht
+PASS  Mehrere Quellen übernehmen Referenz und Style in einem exakten Undo-/Redo-Schritt
+PASS  Rücksetzen ohne geerbten Wert entfernt die Eigenschaft statt einen Ersatzwert zu schreiben
+PASS  Nicht lokal gesetzte Werte sind ein No-op und erzeugen keinen Undo-Schritt
+PASS  Attribute, verschachtelte und doppelte Eigenschaften sowie Identitäten bleiben geschützt
+PASS  Geschützte Bindung blockiert gesamte Auswahl; Freigabe erlaubt Rücksetzen
+PASS  Gesperrte oder strukturell geschützte Auswahl wird vor jeder Teiländerung abgewiesen
+PASS  UTF-16-Kodierung und BOM bleiben beim Rücksetzen unverändert
+PASS  Editorprojekt und ZIP erhalten gezielte Rücksetzungen, ohne Style- oder Referenzdatei zu ändern
+PASS  Zu große Projektbeschreibung wird abgewiesen und erhält die letzte gespeicherte Datei
+PASS  Vorschaudaten ersetzen vollständige Variablen ohne Präfixfehler oder rekursive Ersetzung
+PASS  Ausdrückliche Beispielwerte haben Vorschauvorrang und ändern keine lokale Bindung
+PASS  Plugin- und Datenzustände schalten unterstützte Bedingungen; unbekannte bleiben unbekannt
+PASS  Ungültige Vorschaudaten werden vor jeder Übernahme abgewiesen
+PASS  Vorschauzustand bewahrt Leerwerte, Unicode, Leerraum und Plugin-Namen im Projekt
+PASS  Alte Projekte ohne Vorschauabschnitt laden die bisherigen Basisdaten
+PASS  Doppelte Vorschauvariablen im Editorprojekt werden abgewiesen
+PASS  Vorschaudaten ändern Editor-Signatur, aber weder XML-Signatur noch Skinexport
+PASS  Projekt mit vollständig geleerten Quellen lässt sich öffnen, rückgängig machen und wiederholen
+PASS  Ersetztes Control mit gleicher Ordinalposition übernimmt keine Identität oder Sperre des Originals
+PASS  Veraltete Control-Objekte können nach Strukturänderungen keine anderen Controls bearbeiten
+PASS  Ebenenwechsel erhält rohe Controls, Erweiterungen, IDs und exaktes Undo/Redo
+PASS  Sperren und Ausblendungen folgen überquerten Controls und verschachtelten Kindern
+PASS  Nachträglich gesetzte Editor-Markierungen werden beim Undo übersetzt statt überschrieben
+PASS  Gesperrtes Kind blockiert Änderung seiner Gruppe ohne Teiländerung
+PASS  Ebenengrenzen und Include-Barrieren bleiben No-op ohne zusätzlichen Undo-Schritt
+PASS  Entfernen einer Gruppe zählt Kinder und stellt XML und Ausblendungen wieder her
+PASS  Verweisprüfung findet Navigation und Sichtbarkeit und ignoriert gemeinsam entfernte Verweise
+PASS  Include-Entfernung erfordert Freigabe und bleibt eine dateiübergreifende Transaktion
+PASS  Einfüge-Undo entfernt Markierungen und Redo stellt sie am neuen Control wieder her
+PASS  Gespeicherte Ebenenreihenfolge behält Identitäten und Markierungen beim Wiederherstellungs-Undo
+PASS  Gespeicherte Entfernung übersetzt verbleibende Sperren beim Undo und Redo korrekt
+PASS  Altes Projekt ohne Elementzuordnung lädt appendierte Controls kompatibel
+PASS  Projektformat 2/3 verlangt eine vollständige Elementzuordnung
+PASS  Beschädigte Elementzuordnung wird vor Projektübernahme abgewiesen
+PASS  Elementsuche kombiniert Wörter über Name, Quelle und Eigenschaften
+PASS  ID-Suche vergleicht ganze numerische IDs statt Teilzeichenfolgen
+PASS  Gezielte Suche trennt Typ, Text und Quelldatei
+PASS  Bindungen und Grafiknamen bleiben als Suchwerte auffindbar
+PASS  Elementsuche verändert weder XML noch Undo oder Editorzustand
+PASS  Gruppeninhalt umfasst eindeutige Blatt-Controls ohne die Gruppenrahmen
+PASS  Freie Geschwister innerhalb einer Gruppe lassen sich atomar ausrichten
+PASS  Gruppenrahmen und unterschiedliche verschachtelte Eltern werden nicht ausgerichtet
+PASS  Automatische Layouts schützen auch tief verschachtelte Controls
+PASS  Style-Layout und Include-Inhalte erben den Schutz automatischer Positionierung
+PASS  Veraltete Gruppenobjekte werden bei Inhaltsauswahl abgewiesen
+PASS  Mehrfach eingebundene XML-Controls behalten Layoutschutz in jeder aktiven Verwendung
+PASS  Textänderung erhält unbekanntes XML und ist bytegenau rückgängig
+PASS  Datenbindung wird nur nach expliziter Freigabe ersetzt
+PASS  Numerische Texte bleiben als mögliche Sprachressourcen-ID geschützt
+PASS  Geerbter Text wird lokal überschrieben ohne Style oder Referenz zu verändern
+PASS  Texteditor lehnt Sperren, Gruppen, Bilder und veraltete Controls ab
+PASS  Ungültiger oder zu langer Text verändert weder Quelle noch Historie
+PASS  Doppelte und verschachtelte label-Einträge bleiben geschützt
+PASS  Textänderung erhält umgebende Leerzeichen und Zeilenumbrüche
+PASS  Sprachtexte verwenden Hauptsprache, Fallback und konfigurierbare Präfixe
+PASS  Leere primäre Übersetzung fällt nicht auf einen anderen Text zurück
+PASS  Sprachdateien lehnen DTD, doppelte IDs und fremde Formate ab
+PASS  Sprachvorschau verändert numerische XML-IDs nicht und lässt fehlende IDs erkennbar
+PASS  Numerische Beispieldaten werden nicht irrtümlich als Sprach-ID interpretiert
+PASS  Sprachdatei-Schnappschüsse sind unveränderlich und Kopien unabhängig
+PASS  Editorprojekt stellt Sprach-Schnappschüsse ohne ursprüngliche Sprachdateien wieder her
+PASS  Beschädigter Sprach-Schnappschuss und doppelter Sprachzustand werden abgewiesen
+PASS  Sprach-Einstellungen verändern Editor-Signatur aber keinen Skin-Export
+PASS  Elementsuche findet übersetzte Beschriftungen bei unverändertem Rohwert
+PASS  Fehlende Sprach-ID wird nur bei geladener Sprachvorschau als Fund gemeldet
+PASS  UTF-16-Sprachschnappschuss behält BOM und Dateibytes
+PASS  Bisheriges Projektformat 2 bleibt ohne Sprach-Schnappschüsse lesbar
+PASS  Reine Define-Includes laden Werte ohne falsche fehlende-Controls-Warnung
+PASS  Gruppenbedingungen behalten ihren Kontext trotz Defines eingebundener Kinder
+PASS  Include und Otherwise verwenden den vor dem Laden festgehaltenen Bedingungskontext
+PASS  String-Gleichheit respektiert zitierte Kommas und unbekannte Werte
+PASS  Boolesche Define-Ketten werden aufgelöst und Zyklen bleiben unbekannt
+PASS  Control.IsVisible wertet das Ziel in dessen eigenem Define-Kontext aus
+PASS  Sperren und Ausblenden von Gruppen wirken auch auf eingebundene Kinder
+PASS  Gesperrtes eingebundenes Kind verhindert Entfernen seiner enthaltenden Gruppe
+PASS  Fenster-Standardfokus wird geladen ohne von einer Labelauswahl abhängig zu sein
+PASS  Klammern in zitierten Vergleichswerten verändern die Bedingungsstruktur nicht
+PASS  Textur-Platzhalter Minus wird nicht als fehlende Grafik gemeldet
+PASS  Layoutdialog-Änderung ist atomar und erhält Kindpositionen
+PASS  Layoutdialog-Modell schützt Sperren, Bindungen und unbekannte Regeln
+PASS  Vertikaler Stack ersetzt Quellpositionen ohne XML-Änderung
+PASS  Horizontaler Stack und nichtnegative Abstände
+PASS  Stack ohne Parameter verwendet vertikale Anordnung
+PASS  Unsichtbare Controls rücken nur mit CollapseHiddenButtons nach
+PASS  Unbekannte Bedingungen und Editor-Ausblendung behalten ihren Platz
+PASS  Collapsed entfernt Messgröße und Layoutslot
+PASS  Gruppen-Margin und Kind-Ausrichtung werden angewandt
+PASS  Horizontale Gruppenausrichtung folgt MP1 inklusive Endabstand
+PASS  Rechtsbündiges Stack-Label behält seine Zeichenanker-Konvention
+PASS  Unbekannte und fehlerhafte Layouts warnen ohne Positionsänderung
+PASS  Layoutänderung, Undo und Redo erneuern abgeleitete Positionen
+PASS  Wiederverwendete Includes behalten getrennte Layoutrechtecke
+PASS  Projektformat 4 schützt neue Sammlungsdaten; Format 3 bleibt lesbar
+PASS  Facade-Navigation verwendet logische ID und schreibt nur die aktive Quellvorlage
+PASS  Native Visibility Hidden und Collapsed bleiben bei Vorschau-Bedingungen unsichtbar
+PASS  Facade zeigt genau eine Unteransicht und erhält sämtliche XML-Controls
+PASS  Fehlende Facade-Ansicht fällt auf vorhandene Vorlage zurück
+PASS  Facade-Bedingungen und ausgewählte Beispieldaten folgen der Vorschau
+PASS  Gemeinsame Facade-ID ist eine logische Identität, echte ID-Kollisionen bleiben geschützt
+PASS  Listen-Geometrie verwendet textureHeight und spaceBetweenItems
+PASS  Listenauswahl scrollt in den sichtbaren Bereich ohne XML-Positionen zu ändern
+PASS  Symbolraster nutzt große Maße getrennt von kleinen Symbolen
+PASS  Filmstreifen und Coverflow bilden unterschiedliche statische Geometrien
+PASS  Leere Sammlung und Auswahl hinter dem letzten Eintrag sind begrenzt
+PASS  Sammlungsdaten werden tief kopiert und unsichere Bildpfade abgewiesen
+PASS  Projekt speichert Sammlungsansicht und Daten unabhängig vom Skin-ZIP
+PASS  Schriftgrößen folgen der MP1-Basis von 576 Zeilen
+PASS  Schriftfamilie, Stil und Alias werden aus fonts.xml geladen
+PASS  Textoffsets und Seitenverhältnis bleiben innerhalb des Steuerelements
+PASS  Bildfärbung berücksichtigt RGB und Alpha ohne Originalgrafik zu verändern
+PASS  Textbox-Zeilenumbruch zeichnet zusätzliche Zeilen und hält die Begrenzung ein
+
+189 bestanden, 0 fehlgeschlagen.

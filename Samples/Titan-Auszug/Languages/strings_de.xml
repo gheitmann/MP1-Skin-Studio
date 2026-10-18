@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Eigene Beispieltexte des Editors, keine MP1-Sprachdatei-Kopie. -->
+<Language name="Deutsch (Editor-Demo)">
+  <Section name="unmapped">
+    <String id="10001">Filme entdecken</String>
+    <String id="10002">Sprache laden, Text auswählen und die originale Sprach-ID behalten.</String>
+    <String id="10003" prefix="Meine ">Filme</String>
+    <String id="10005"></String>
+  </Section>
+</Language>

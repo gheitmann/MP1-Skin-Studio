@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window>
+  <id>9008</id><defaultcontrol>801</defaultcontrol>
+  <controls>
+    <control><type>label</type><font>TitanLight20</font><posX>120</posX><posY>65</posY><width>1600</width><height>70</height><font>TitanLight32</font><label>Automatische Gruppenlayouts</label></control>
+    <control><type>label</type><font>TitanLight20</font><posX>120</posX><posY>140</posY><width>1600</width><height>55</height><label>Abstände, Reihenfolge und Sichtbarkeit bestimmen die Anordnung.</label></control>
+    <control><type>group</type><id>800</id><description>Vertikales Menü</description><posX>120</posX><posY>265</posY><layout>StackLayout(18, Vertical, true)</layout>
+      <control><type>button</type><font>TitanLight22</font><id>801</id><width>620</width><height>90</height><label>Filme</label><textureFocus>Studio/Schaltflaeche-blau.png</textureFocus><textureNoFocus>Studio/Schaltflaeche-dunkel.png</textureNoFocus></control>
+      <control><type>button</type><font>TitanLight22</font><id>802</id><width>620</width><height>90</height><label>Dieser Eintrag ist ausgeblendet</label><visible>no</visible></control>
+      <control><type>button</type><font>TitanLight22</font><id>803</id><width>620</width><height>90</height><label>Serien</label><textureFocus>Studio/Schaltflaeche-blau.png</textureFocus><textureNoFocus>Studio/Schaltflaeche-dunkel.png</textureNoFocus></control>
+      <control><type>button</type><font>TitanLight22</font><id>804</id><width>620</width><height>90</height><label>Musik</label><textureFocus>Studio/Schaltflaeche-blau.png</textureFocus><textureNoFocus>Studio/Schaltflaeche-dunkel.png</textureNoFocus></control>
+    </control>
+    <control><type>label</type><font>TitanLight20</font><posX>900</posX><posY>265</posY><width>900</width><height>60</height><label>Horizontal mit festen Abständen</label></control>
+    <control><type>group</type><id>810</id><description>Horizontale Aktionen</description><posX>900</posX><posY>360</posY><layout>StackLayout(25, Horizontal)</layout>
+      <control><type>button</type><font>TitanLight22</font><id>811</id><width>245</width><height>90</height><label>Zurück</label><textureNoFocus>Studio/Schaltflaeche-dunkel.png</textureNoFocus></control>
+      <control><type>button</type><font>TitanLight22</font><id>812</id><width>245</width><height>90</height><label>Weiter</label><textureNoFocus>Studio/Schaltflaeche-dunkel.png</textureNoFocus></control>
+      <control><type>button</type><font>TitanLight22</font><id>813</id><width>245</width><height>90</height><label>Fertig</label><textureNoFocus>Studio/Schaltflaeche-dunkel.png</textureNoFocus></control>
+    </control>
+    <control><type>label</type><font>TitanLight20</font><posX>120</posX><posY>760</posY><width>1650</width><height>110</height><label>Gruppenlayout über das Element-Menü bearbeiten. Die XML-Positionen der Kinder bleiben erhalten.</label></control>
+  </controls>
+</window>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- Editor-Demo: diese Zusammenstellung stammt aus dem Prototyp, nicht aus MP1. -->
+<window>
+  <id>0</id>
+  <define>#header.label:Mein MediaPortal</define>
+  <controls>
+    <import>common.default.background.xml</import>
+    <import>demo.menu.xml</import>
+    <import>common.time.xml</import>
+  </controls>
+</window>

@@ -1,0 +1,11 @@
+Originalquelle: https://github.com/MediaPortal/MediaPortal-1/releases/tag/Release_1.39.0
+Paket: MediaPortalSetup_x64_1.39.000_2026-10-13-09-28.zip
+Offizielle ZIP-SHA256: eeaa4d3e31f77a7df035a3f9b47115a06ba3e4486f360959033fbe20c1e1c76c
+Core.dll SHA256: 0D9160A8E6FB61A6B6BFECACC80DF0207396BC4CC01D4C5DC2F5850C86BB4B39
+Core.dll Dateiversion: 1.39.0.0
+
+Die Probe ruft Originalklassen aus der verifizierten MP1-1.39-Core.dll auf.
+Geprueft sind statische StackLayout-Messung, Anordnung und Visibility-Werte.
+Nicht geprueft: vollstaendiger Clientstart, Direct3D-Rendering, Plugins und Bildvergleich.
+NativeProbe-Pruefen.ps1 benoetigt eine beschreibbare, isolierte MP1-Dateikopie.
+Systemweite MP1-Installation und Erstkonfiguration sind noch nicht abgeschlossen.

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window><id>99102</id><defaultcontrol>501</defaultcontrol>
+  <controls>
+    <control><type>label</type><id>0</id><description>Überschrift</description><posX>200</posX><posY>230</posY><width>1500</width><height>90</height><font>TitanLight32</font><label>10001</label></control>
+    <control><type>label</type><id>0</id><description>Anleitung</description><posX>200</posX><posY>380</posY><width>1500</width><height>80</height><font>TitanLight22</font><label>10002</label></control>
+    <control><type>button</type><id>501</id><posX>200</posX><posY>600</posY><width>650</width><height>140</height><font>TitanLight22</font><label>10003</label><textureFocus>Studio/Schaltflaeche-blau.png</textureFocus><textureNoFocus>Studio/Schaltflaeche-dunkel.png</textureNoFocus></control>
+    <control><type>button</type><id>502</id><posX>1000</posX><posY>600</posY><width>650</width><height>140</height><font>TitanLight22</font><label>10004</label><textureFocus>Studio/Schaltflaeche-blau.png</textureFocus><textureNoFocus>Studio/Schaltflaeche-dunkel.png</textureNoFocus></control>
+  </controls>
+</window>

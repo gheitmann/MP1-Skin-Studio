@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Language name="English (editor demo)">
+  <Section name="unmapped">
+    <String id="10001">Discover movies</String>
+    <String id="10002">Load a language, choose a label and retain its original language ID.</String>
+    <String id="10003" prefix="My ">Movies</String>
+    <String id="10004">Settings</String>
+    <String id="10005">An intentionally empty German entry must stay empty.</String>
+  </Section>
+</Language>

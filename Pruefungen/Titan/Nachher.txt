@@ -1,0 +1,14 @@
+MP1 Skin Studio - vollständige XML-Lade- und Bearbeitungsprobe
+Skin: Titan
+XML bytegleich geladen: 528
+XML-Fehler: 0
+Themes einschließlich Standard: 2
+Seitenvarianten geladen: 602
+Seiten-Ladefehler: 0
+Bearbeiten + exaktes Undo: 586
+Bearbeitungsfehler: 0
+Projekt-/Exportproben: 10
+Veränderte Originaldateien: 0
+
+Warnungen sind Modellhinweise, keine vollständig bewiesenen MP1-Laufzeitfehler.
+Keine vollständige Prüfung von Rendering, Plugins oder Navigation in MediaPortal.

@@ -1,0 +1,187 @@
+PASS  Demo und Theme sind ausgewählt
+PASS  Eigenschaften übernehmen bearbeitet zugehörige Include-Datei
+PASS  Undo-Schaltfläche stellt Original wieder her
+PASS  Redo-Schaltfläche stellt Änderung wieder her
+PASS  Datenbindung ist gegen versehentliches Ersetzen geschützt
+PASS  Freigegebene Datenbindung kann lokal ersetzt werden
+PASS  Canvas-Mausereignisse verschieben mit Raster
+PASS  Canvas-Griff ändert Breite und Höhe
+PASS  Bildschirmauswahl lädt andere XML
+PASS  Rückkehr zur Demo ohne Änderungen an Originalen
+PASS  Mehrfachauswahl zeigt gemischte Werte und aktiviert Ausrichten
+PASS  Canvas-Mausereignisse verschieben gesamte Auswahl in einer Transaktion
+PASS  Ein Undo stellt gesamte Mehrfachauswahl wieder her
+PASS  Gemeinsame Eigenschaften gelten für alle ausgewählten Controls
+PASS  Bewusst geleertes gemischtes Textfeld leert alle gewählten Beschriftungen
+PASS  Ausrichten-Aktion korrigiert gemischte Positionen
+PASS  Einfügen wählt neues Control mit eigener ID aus
+PASS  Duplizieren erhält Erweiterungen und wählt Kopie aus
+PASS  Navigationsmodus verbindet per Canvas-Mausereignis zum Ziel
+PASS  Pfeiltaste testet Fernbedienungsweg nach rechts
+PASS  Pfeiltaste testet Fernbedienungsweg zurück
+PASS  Eine geschützte Bindung blockiert den gesamten gemeinsamen Drag
+PASS  Neue Designer-Aktionen lassen sich vollständig auf Original zurücksetzen
+PASS  Fenstertitel kennzeichnet noch nicht gesicherte Änderungen
+PASS  Projekt speichern sichert Sitzung, ohne Exportänderungen zu verwerfen
+PASS  Projekt öffnen stellt gespeicherte Bearbeitung wieder her
+PASS  Fehlgeschlagenes Öffnen erhält laufende Sitzung
+PASS  Änderung nach Projektspeicherung wird erneut als ungesichert erkannt
+PASS  Undo auf gesicherten Stand entfernt die Änderungsmarkierung
+PASS  Wiederhergestellte Projektänderungen sind vollständig rückgängig
+PASS  Texturbrowser lädt vorhandene Demo-Bilder mit Vorschauen
+PASS  Suchfeld filtert Texturen nach Dateipfad
+PASS  Leere Suche deaktiviert die Bildübernahme
+PASS  Bildauswahl übernimmt relativen Media-Pfad
+PASS  Gewählte Textur wird gezielt am Control gespeichert
+PASS  Bildauswahl ist vollständig rückgängig
+PASS  Abbrechen des Texturbrowsers ändert keine XML-Datei
+PASS  Mausrad erhält den logischen Punkt unter dem Mauszeiger
+PASS  Mittlere Maustaste verschiebt Ansicht ohne XML oder Undo-Schritt
+PASS  Reine Ansichtsänderung wird zum Sichern im Projekt vorgemerkt
+PASS  100-Prozent-Schaltfläche zeigt einen Skinpixel pro Canvaspixel
+PASS  Einpassen stellt Ausgangsansicht und Sicherungsstatus wieder her
+PASS  Gesperrtes Element bleibt im Baum erreichbar; Eigenschaften sind schreibgeschützt
+PASS  Canvas-Hit-Test überspringt gesperrtes Element beim Drag
+PASS  Elementschutz blockiert auch direkte Eigenschaftsübernahme
+PASS  Ein gesperrtes Element blockiert gesamte Ausrichten-Aktion
+PASS  Editor-Ausblendung gilt auch bei aktivem Versteckte-zeigen-Schalter
+PASS  Projektöffnung stellt Ausblendungen und Zoom ohne XML-Änderung wieder her
+PASS  Einblenden nach gespeichertem Stand markiert Editorprojekt als geändert
+PASS  Problemliste zeigt Fundstellen der geöffneten Seite
+PASS  Suche nach Prüfcode filtert exakt den fehlenden Navigationsverweis
+PASS  Prüfdetails zeigen Wert und tatsächliche Include-Quelle
+PASS  Fundstelle gibt Control-Schlüssel und Eigenschaft zum Anspringen zurück
+PASS  Sprung wählt richtiges Control und markiert die betroffene Eigenschaft
+PASS  Leerer Filter deaktiviert Sprung zum Element
+PASS  Dynamische Bildpfade erscheinen separat als ungeprüfte Hinweise
+PASS  Hinweisschalter blendet ungeprüfte Werte aus
+PASS  Erneute Prüfung nach Undo verwirft behobenen Navigationsfund
+PASS  Lokale Eigenschaft ist zum Rücksetzen verfügbar
+PASS  Rücksetzen übernimmt Referenzwert und zeigt geerbte Herkunft
+PASS  Bereits geerbte Eigenschaft kann nicht nochmals entfernt werden
+PASS  Ein Undo stellt vollständige lokale Eigenschaft bytegenau wieder her
+PASS  Andere noch nicht übernommene Eingaben blockieren Rücksetzen und bleiben erhalten
+PASS  Mehrfachauswahl übernimmt geerbte Breiten in einem Undo-Schritt
+PASS  Lokale Datenbindung bleibt auch beim Rücksetzen geschützt
+PASS  Ausdrücklich freigegebene lokale Bindung kann entfernt werden
+PASS  Elementschutz blockiert Rücksetzen lokaler Eigenschaften
+PASS  Testdaten-Dialog setzt unbekannte Bindungen nicht automatisch auf leer
+PASS  Vorlagenauswahl bleibt bis zur Übernahme im Dialog
+PASS  Abbrechen des Testdaten-Dialogs erhält den vollständigen Projektzustand
+PASS  Nachrichten-Szene beginnt mit ausgeblendeter Benachrichtigung
+PASS  Beispieldaten schalten sichtbares Control um und erhalten offene Eigenschaftseingaben
+PASS  Vorschauzustand wird ohne XML-Änderung als ungesichert erkannt
+PASS  Projektöffnung stellt gespeicherte Vorschauwerte und Sicherungsstatus wieder her
+PASS  Wettervorlage übernimmt Plugin-Zustand und Temperatur
+PASS  Basiszustand stellt Standardwerte ohne XML-Undo-Schritt wieder her
+PASS  Ungültige Variablen werden vor Änderung der laufenden Vorschau erkannt
+PASS  Fokuswechsel aktualisiert Sichtbarkeitsmarkierung im Elementbaum sofort
+PASS  Seitenauswahl über echten Menü-Tastaturpfad schließt Dropdown ohne Dispose-Absturz
+PASS  Wiederholte Seitenauswahl verwendet dieselbe begrenzte Menüinstanz
+PASS  Schriftmenü führt Auswahl und normales Dropdown-Schließen aus
+PASS  Reset-Menü überlebt das Neuerstellen seiner eigenen Anker-Schaltfläche
+PASS  Einfügen über Menü verarbeitet Klick nach dem Schließen vollständig
+PASS  Ausrichten über Menü bleibt trotz Eigenschafts-Neuaufbau stabil
+PASS  Sperren und Entsperren per Kontextmenü können direkt nacheinander erfolgen
+PASS  Testdaten-Vorlagen über echten Dropdown-Pfad mehrfach ohne Absturz wechseln
+PASS  Menü bleibt auch bei zerstörtem Anker und verschachtelter Ereignisschleife gültig
+PASS  Menü-Wiederverwendung entfernt alte Einträge und Callback-Referenzen
+PASS  Escape schließt Menü ohne Aktion oder vorzeitige Freigabe
+PASS  Menüs werden beim Freigeben ihres Besitzerfensters aufgeräumt
+PASS  Ebenenmenü hält Auswahl und Editor-Markierungen beim richtigen Element
+PASS  Ebenen-Undo stellt XML und ursprüngliche Auswahl wieder her
+PASS  Ebenen-Redo wählt erneut dasselbe logische Element
+PASS  Eigenschaften bearbeiten nach Ebenenwechsel trifft weiterhin das ausgewählte Control
+PASS  Offene Eigenschaftseingaben werden beim Ebenenwechsel nicht verworfen
+PASS  Entfernen mit Verweisen und Include-Wirkung beginnt ohne Freigabe
+PASS  Explizite Freigaben aktivieren das Entfernen
+PASS  Entfernen über Menü und Prüfdialog funktioniert und wählt das nächste Element
+PASS  Entfernen-Undo stellt Auswahl, vollständiges XML und unveränderte Verweise wieder her
+PASS  Entfernen-Redo stellt die Auswahl nach der Entfernung wieder her
+PASS  Suchfilter reduziert nur den Baum und erhält offene Eingaben sowie die vollständige Vorschau
+PASS  Treffer im Baum lässt offene Eigenschaftseingaben und die vorherige Auswahl bestehen
+PASS  Trefferauswahl blockiert bei noch nicht übernommenen Eigenschaften
+PASS  Enter-Auswahl springt zum nächsten Treffer und markiert den Baum
+PASS  Rückwärtssuche findet den vorherigen Treffer
+PASS  Rückwärtssuche läuft am Listenanfang zum letzten Treffer
+PASS  Gezielte ID-Suche filtert Include-Control im echten Baum
+PASS  Leere Trefferliste lässt die aktuelle Auswahl und Eigenschaften bestehen
+PASS  Escape löscht Suchfilter und stellt alle Baumknoten wieder her
+PASS  Undo aktualisiert gefilterte Control-Objekte ohne veraltete Treffer
+PASS  Seitenwechsel wendet bestehenden Suchfilter auf die neue Seite an
+PASS  Treffer unter dem Mauszeiger sind in sichtbarer Reihenfolge von vorn nach hinten sortiert
+PASS  Überlagerungsliste enthält auch gesperrte Elemente zum Prüfen
+PASS  Echtes Rechtsklickmenü wählt verdecktes gesperrtes Element trotz Baumfilter ohne XML-Änderung
+PASS  Wiederverwendete Überlagerungsliste wählt mittlere Ebene ohne Drag oder Undo-Schritt
+PASS  Im Editor ausgeblendete Elemente erscheinen nicht unter dem Mauszeiger
+PASS  Bedingt unsichtbare Controls bleiben aus der Überlagerungsliste ausgefiltert
+PASS  Versteckte-zeigen bezieht bedingt unsichtbare Controls ein, Editor-Ausblendung bleibt wirksam
+PASS  Außerhalb der Skinfläche werden keine Controls angeboten
+PASS  Projektwechsel setzt die vorübergehende Elementsuche zurück
+PASS  Gruppenbaum zeigt XML-Verschachtelung ohne fehlende oder doppelte Controls
+PASS  Gruppenrahmen kann nicht versehentlich als einzelnes Rechteck skaliert werden
+PASS  Inhaltsauswahl verwirft keine offenen Eigenschaftseingaben
+PASS  Suchtreffer behält die vollständige Gruppenkette als Kontext, ohne sie als Treffer zu zählen
+PASS  Trefferwahl erreicht tief verschachteltes Control und erhält Gruppenmarkierung
+PASS  Gruppeninhalt über echtes Menü auswählen entfernt Suchfilter ohne XML oder Undo-Schritt
+PASS  Mehrfachauswahl markiert auch tiefe Baumknoten
+PASS  Ausgewählte Blatt-Controls verschieben sich gemeinsam, Gruppenrahmen bleibt erhalten
+PASS  Undo der Inhaltsbewegung erhält vollständiges XML und Mehrfachauswahl
+PASS  Freie Geschwister-Controls innerhalb einer Gruppe werden über die Oberfläche ausgerichtet
+PASS  Inhaltsauswahl respektiert geerbte Gruppensperre
+PASS  Drag in automatisch angeordneter Gruppe verändert kein Control
+PASS  Entfernen einer Untergruppe entfernt ihre Baumkette vollständig
+PASS  Undo stellt verschachtelte Baumstruktur und vollständigen Quelltext wieder her
+PASS  Editorstatus aktualisiert auch gefilterte tiefe Baumknoten
+PASS  Textdialog zeigt gebundenen Originalwert mit aktuellen Beispieldaten und erlaubt unverändertes Schließen
+PASS  Geänderter gebundener Text verlangt eigene ausdrückliche Freigabe
+PASS  Freigabe aktiviert Übernahme und Vorschau aktualisiert sich
+PASS  Canvas-Doppelklick öffnet Texteditor und übernimmt Text als einen Undo-Schritt
+PASS  Undo nach Doppelklick stellt XML einschließlich unbekannter Daten exakt wieder her
+PASS  Redo nach Textbearbeitung stellt neuen Wert wieder her
+PASS  Kleine Mausbewegung beim Klicken verändert auch ohne Raster keine Position
+PASS  Echtes Element-Menü öffnet Texteditor; Abbrechen verändert weder XML noch Historie
+PASS  Doppelklick und vorgeschaltete Mausauswahl verwerfen keine offenen Eigenschaftseingaben
+PASS  F2 auf einem Dateiknoten bearbeitet nicht versehentlich das vorherige Control
+PASS  F2 auf der Arbeitsfläche öffnet Texteditor; unverändertes Übernehmen erzeugt keinen Schritt
+PASS  Gebundener Text lässt sich im Dialog ausdrücklich lokal ersetzen
+PASS  Undo stellt die ursprüngliche Datenbindung wieder her
+PASS  Gesperrter Text öffnet keinen schreibenden Dialog
+PASS  Text bleibt innerhalb automatischer Gruppenlayouts ausdrücklich bearbeitbar
+PASS  Strg+Enter übernimmt mehrzeilige Texte ohne Trim
+PASS  Unverändertes mehrzeiliges Texteingabefeld erhält Leerzeichen, Zeilenumbrüche und Originalwert
+PASS  Sprachwechsel zeigt übersetzte Namen und wahrt die originale XML-ID
+PASS  Elementsuche findet den übersetzten Text in der echten Oberfläche
+PASS  Sprachwechsel markiert nur das Editorprojekt zum Sichern
+PASS  Suchfeld im Sprachkatalog bleibt auch bei schmalem Fenster vollständig sichtbar
+PASS  Sprachkatalog filtert Fallback-ID
+PASS  Präfixabschaltung wirkt im Sprachkatalog
+PASS  Abbrechen im Sprachdialog verändert keine Vorschauoption
+PASS  Sprachtext-Auswahl liefert die passende ID statt einen festgeschriebenen Text
+PASS  Texteditor zeigt Sprach-ID neben aufgelöster Vorschau
+PASS  Andere Sprach-ID zeigt Fallback und bleibt bis zur Freigabe geschützt
+PASS  Sprachtext-Picker im Textdialog setzt eine ID und erhält den Ersetzungsschutz
+PASS  Gespeichertes Projekt stellt Vorschau-Sprache und übersetzte Auswahl wieder her
+PASS  Ungeprüfte Bedingungen bleiben standardmäßig gepunktet sichtbar
+PASS  Ungeprüfte Zustände lassen sich ohne Änderung der Bedingung aus der Vorschau ausblenden
+PASS  XML-Undo erhält die unabhängig gewählte Vorschauoption
+PASS  Stack-Vorschau ordnet sichtbare Einträge mit Abstand an, ohne Quellpositionen zu ändern
+PASS  Mausauswahl trifft das angeordnete statt des ursprünglichen Rechtecks
+PASS  Element-Menü öffnet Layoutdialog und übernimmt Richtung, Abstand und Nachrücken atomar
+PASS  Layoutübernahme reserviert den ausgeblendeten Eintrag und erneuert die Vorschau
+PASS  Undo stellt Quelltext und Stack-Vorschau exakt wieder her
+PASS  Redo erneuert Stack-Geometrie
+PASS  Layoutdialog übernimmt vorhandene Einstellungen korrekt
+PASS  Andere Layouttypen erfordern ausdrückliche Freigabe im Dialog
+PASS  Ausdrückliche Freigabe aktiviert Layoutübernahme
+PASS  Facade zeigt nur die aktive Unteransicht in der Arbeitsfläche
+PASS  Sammlungsdialog übernimmt Ansicht, Auswahl und eigene Daten
+PASS  Sammlungszustand wird unabhängig von XML und Undo zum Sichern vorgemerkt
+PASS  Projektöffnung stellt Sammlungszustand und Sicherungsstatus wieder her
+PASS  Sammlungsdialog verwirft ungültige Bildpfade vor der Übernahme
+PASS  Element-Menü öffnet Sammlungsdialog; Abbrechen verändert keine Daten
+PASS  Gerenderte Sammlung erhält Original-XML
+PASS  Textabstände und innere Ausrichtung lassen sich über Eigenschaften atomar bearbeiten
+PASS  Undo der Textdarstellung stellt Quelltext exakt wieder her
+
+185 bestanden, 0 fehlgeschlagen.
