@@ -316,7 +316,7 @@ namespace MP1SkinStudio
             AddWindow(start, new Dictionary<string,string>(globalDefines), new HashSet<string>(StringComparer.OrdinalIgnoreCase), "", 0);
             var automaticKeys=new HashSet<string>(Controls.Where(c=>c.AutomaticLayout).Select(c=>c.Key));foreach(var control in Controls)if(automaticKeys.Contains(control.Key))control.AutomaticLayout=true;
             Warnings.AddRange(new StackPreview(this,null).Warnings.Distinct());
-            if (Controls.Any(c=>c.Get("type")=="group" || c.Get("type")=="actiongroup")) Warnings.Add("StackLayout is evaluated as a static preview; animations and transformations remain approximate.");
+            if (Controls.Any(c=>c.Get("type")=="group" || c.Get("type")=="actiongroup")) Warnings.Add("StackLayout and GridLayout are evaluated as static previews; animations and transformations remain approximate.");
         }
         void AddWindow(SkinSource source, Dictionary<string,string> context, HashSet<string> active, string inheritedCondition, int depth,bool automaticLayout=false,SkinControl runtimeParent=null,VisibilityTerm[] terms=null)
         {

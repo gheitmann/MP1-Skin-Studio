@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window>
+  <id>9010</id><defaultcontrol>901</defaultcontrol>
+  <controls>
+    <control><type>label</type><font>TitanLight32</font><posX>120</posX><posY>65</posY><width>1600</width><height>70</height><label>Automatic grid layouts</label></control>
+    <control><type>label</type><font>TitanLight20</font><posX>120</posX><posY>150</posY><width>1600</width><height>55</height><label>Two columns, equal cells and separate horizontal and vertical spacing.</label></control>
+    <control><type>group</type><id>900</id><description>Media grid</description><posX>120</posX><posY>280</posY><layout>GridLayout(2,0,30,25,Horizontal)</layout>
+      <control><type>button</type><textcolorNoFocus>ffffffff</textcolorNoFocus><font>TitanLight22</font><id>901</id><width>500</width><height>110</height><label>Movies</label><textureNoFocus>Studio/Button-dark.png</textureNoFocus><textureFocus>Studio/Button-blue.png</textureFocus></control>
+      <control><type>button</type><textcolorNoFocus>ffffffff</textcolorNoFocus><font>TitanLight22</font><id>902</id><width>500</width><height>110</height><label>Series</label><textureNoFocus>Studio/Button-dark.png</textureNoFocus></control>
+      <control><type>button</type><textcolorNoFocus>ffffffff</textcolorNoFocus><font>TitanLight22</font><id>903</id><width>500</width><height>110</height><label>Music</label><textureNoFocus>Studio/Button-dark.png</textureNoFocus></control>
+      <control><type>button</type><textcolorNoFocus>ffffffff</textcolorNoFocus><font>TitanLight22</font><id>904</id><width>500</width><height>110</height><label>Pictures</label><textureNoFocus>Studio/Button-dark.png</textureNoFocus></control>
+      <control><type>button</type><textcolorNoFocus>ffffffff</textcolorNoFocus><font>TitanLight22</font><id>905</id><width>500</width><height>110</height><label>Radio</label><textureNoFocus>Studio/Button-dark.png</textureNoFocus></control>
+    </control>
+    <control><type>label</type><font>TitanLight20</font><posX>120</posX><posY>800</posY><width>1600</width><height>100</height><label>Grid positions are preview geometry. Original child XML positions are preserved.</label></control>
+  </controls>
+</window>

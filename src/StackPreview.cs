@@ -9,7 +9,7 @@ namespace MP1SkinStudio
 {
     // Derived rectangles belong to an occurrence, never to its shared source key.
     // No XML/property is changed by measurement, visibility changes or arrangement.
-    public sealed class StackPreview
+    public sealed partial class StackPreview
     {
         readonly Dictionary<SkinControl,RectangleF> rectangles=new Dictionary<SkinControl,RectangleF>();
         readonly Dictionary<SkinControl,SkinControl[]> children=new Dictionary<SkinControl,SkinControl[]>();
@@ -65,6 +65,7 @@ namespace MP1SkinStudio
         {
             SkinControl[] list;if(!children.TryGetValue(c,out list))return;
             foreach(var child in list)Measure(child);
+            GridRule grid;if(TryReadGrid(c.Resolved("layout").Trim(),out grid)){grids[c]=grid;MeasureGrid(c,list,grid);return;}
             var rule=Parse(c);if(rule==null)return;rules[c]=rule;
             float w=0,h=0;foreach(var child in list.Where(x=>!Collapsed(x)))
             {var r=rectangles[child];w=rule.Horizontal?w+r.Width+rule.Gap:Math.Max(w,r.Width);h=rule.Horizontal?Math.Max(h,r.Height):h+r.Height+rule.Gap;}
@@ -75,6 +76,7 @@ namespace MP1SkinStudio
         void Arrange(SkinControl c)
         {
             SkinControl[] list;if(!children.TryGetValue(c,out list))return;
+            GridRule grid;if(grids.TryGetValue(c,out grid))ArrangeGrid(c,list,grid);
             Rule rule;if(rules.TryGetValue(c,out rule))
             {
                 var g=rectangles[c];var t=Margin(c);float x=g.X+t[0],y=g.Y+t[1];

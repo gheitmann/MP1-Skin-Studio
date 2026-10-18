@@ -48,7 +48,7 @@ namespace MP1SkinStudio
             catch(Exception ex)
             {
                 string log=StudioErrors.Record(ex);
-                if(args.Length==0||!args[0].StartsWith("--",StringComparison.Ordinal)||args[0]=="--preview-skin")MessageBox.Show(ex.Message+(log==null?"":"\n\nFehlerdetails: "+log),"MP1 Skin Studio",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                if(args.Length==0||!args[0].StartsWith("--",StringComparison.Ordinal)||args[0]=="--preview-skin")MessageBox.Show(ex.Message+(log==null?"":"\n\nError details: "+log),"MP1 Skin Studio",MessageBoxButtons.OK,MessageBoxIcon.Error);
                 return 1;
             }
         }

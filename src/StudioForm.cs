@@ -476,7 +476,7 @@ namespace MP1SkinStudio
             RunGroupUiSmoke(verify);
             RunTextEditUiSmoke(verify);
             RunLanguageUiSmoke(directory,verify);
-            RunStackUiSmoke(directory,verify);
+            RunStackUiSmoke(directory,verify);RunGridUiSmoke(directory,verify);
             RunCollectionUiSmoke(directory,verify);
             File.WriteAllLines(System.IO.Path.Combine(directory,"ui-test-results.txt"),results.Concat(new[]{"",results.Count+" passed, 0 failed."}),new System.Text.UTF8Encoding(false));
             Hide();

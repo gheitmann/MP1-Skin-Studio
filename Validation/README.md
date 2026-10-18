@@ -1,5 +1,9 @@
 # Validation records
 
+Grid-Preview contains fresh October 18 runs: 200 core checks, 188 UI checks and
+ten original MP1 1.39 GridLayout checks, plus a visually inspected editor render.
+See its README for reproduction and the outstanding desktop comparison blocker.
+
 Core-Tests.txt and UI-Tests.txt contain translated descriptions of the original
 version 0.9 test runs (189 core checks and 185 UI checks). Translation preserves
 the recorded results; it does not constitute a fresh test run.

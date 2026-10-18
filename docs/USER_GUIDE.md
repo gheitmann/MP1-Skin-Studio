@@ -70,6 +70,14 @@ Child source positions remain unchanged; derived rectangles are used only for
 rendering, hit testing and layout. Group margins and alignment are approximated.
 Unknown conditions reserve space. Editor hiding does not change runtime layout.
 
+GridLayout groups are also previewed with equal cells, row or column filling,
+separate spacing, margins and child alignment. Open `demo.grid.xml` for an example.
+Use four layout parameters for spacing, for example `GridLayout(2,0,30,25)`;
+a fifth parameter selects `Horizontal` or `Vertical`. A positive row count
+overrides the column count, matching MP1. Calculated positions remain preview-only.
+Edit the `layout` property explicitly to change a grid. The group layout dialog
+currently creates StackLayout rules and protects other layouts from replacement.
+
 ## Text, images and properties
 
 Double-click a supported text control, press F2 or use **Edit Text**.

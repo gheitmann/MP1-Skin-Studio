@@ -1,0 +1,13 @@
+Native GridLayout checks against original MP1 Core.dll and GUIControlFactory
+Core assembly: 1.39.0.0
+PASS  Two columns measure 165 x 104 without trailing spacing
+PASS  Horizontal fill wraps the third child
+PASS  Incomplete final row retains grid height
+PASS  Titan numeric orientation fills columns first
+PASS  Positive row count overrides explicit columns
+PASS  XML factory ignores the third token when only three are supplied
+PASS  Collapsed children keep row count but skip horizontal advance
+PASS  Hidden children retain grid slots
+PASS  Margins and right/bottom alignment match preview
+PASS  Stretch uses maximum cell dimensions
+10 native checks passed. No full client/Direct3D image comparison.

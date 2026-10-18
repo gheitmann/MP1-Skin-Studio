@@ -62,7 +62,7 @@ namespace MP1SkinStudio
             RunElementSearchTests();
             RunGroupTests(root);
             RunTextEditTests(root);
-            RunLanguageTests(root);RunConditionScopeTests(root);RunStackTests(root);RunCollectionTests(root);
+            RunLanguageTests(root);RunConditionScopeTests(root);RunStackTests(root);RunGridTests(root);RunCollectionTests(root);
             report.Add("");report.Add(passed+" passed, "+failed+" failed.");
             File.WriteAllLines(Path.Combine(root,"test-results.txt"),report.ToArray(),new UTF8Encoding(false));
             return failed==0?0:1;
