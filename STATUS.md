@@ -20,7 +20,7 @@ Added static GridLayout measurement and arrangement, including Titan's vertical
 fill, row precedence, margins, alignment, stretching and MP1 visibility behavior.
 Calculated rectangles drive rendering and mouse selection without editing XML.
 Nested stack/grid groups and undo refresh are covered. The existing group-layout
-dialog still edits StackLayout only; grid expressions can be edited as properties.
+dialog edits StackLayout; a separate grid dialog now edits GridLayout rules.
 
 Fresh validation: **200 core checks, 188 UI checks and 10 native GridLayout checks
 passed**. The native checks ran against the installed original MP1 1.39 Core.dll,
@@ -32,10 +32,22 @@ also translated into English.
 
 ## Remaining work
 
+The latest completed milestone adds an **Edit grid layout** dialog with column
+and row counts, independent spacing, fill direction, binding replacement
+protection, and exact undo/redo. Child XML positions are preserved. Fresh
+validation: **203 core checks and 195 UI checks passed**; the dialog render was
+visually inspected. See [Grid dialog validation](Validation/Grid-Dialog/README.md).
+
 1. Complete a real MediaPortal 1 client comparison using the user's installed client, as explicitly requested. The app-server/PATH blocker has been resolved and the installed MP1 1.39 Titan Home screen has been observed. The DirectX prerequisite component reports True after the user installed the legacy runtime. A fresh settings export changes only spacing from 7 to 15 pixels. Settings rendering, focus and navigation still require comparison: desktop automation currently rejects launching MediaPortal with "Computer Use was not approved to use mediaportal". See [current client validation](Validation/Client-Comparison/README.md). No original skin file was changed.
 2. Improve preview fidelity for complex collections, font metrics, image masks, dynamic conditions and animations. Coverflow is currently a static approximation.
 3. Extend design tools: create/ungroup groups, move controls between groups, and provide convenient global style editing.
 4. Continue usability and stability checks on large real-world skins.
+
+## Deferred backlog
+
+- [Issue #1](https://github.com/gheitmann/MP1-Skin-Studio/issues/1): assess removal
+  or replacement of legacy DirectX runtime dependencies in MediaPortal 1.
+  Explicitly deferred by the user; do not investigate or implement now.
 
 ## Rules for continuing work
 

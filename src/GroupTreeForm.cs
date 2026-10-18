@@ -41,6 +41,7 @@ namespace MP1SkinStudio
         {
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add("Edit group layout …",null,(s,e)=>Attempt(EditStackLayout)).Enabled=SelectedControls().Length==1&&selected!=null&&selected.Get("type")=="group"&&!project.IsLocked(selected);
+            menu.Items.Add("Edit grid layout ...",null,(s,e)=>Attempt(EditGridLayout)).Enabled=SelectedControls().Length==1&&selected!=null&&selected.Get("type")=="group"&&!project.IsLocked(selected);
             menu.Items.Add("Select individual child controls",null,(s,e)=>Attempt(SelectContainedLeaves)).Enabled=SelectedControls().Length==1&&selected!=null&&project.ContainedLeaves(selected).Length>0;
         }
         public void PrepareGroupPreview(){LoadProject(DemoRoot(),"demo.groups.xml");SelectControl(project.Controls.First(c=>c.Name=="Media section"));}

@@ -8,9 +8,9 @@ namespace MP1SkinStudio
 {
     public sealed partial class StackPreview
     {
-        sealed class GridRule {public int Columns=1,Rows;public float XGap,YGap;public bool Vertical;}
+        internal sealed class GridRule {public int Columns=1,Rows,XGap,YGap;public bool Vertical;}
         readonly Dictionary<SkinControl,GridRule> grids=new Dictionary<SkinControl,GridRule>();
-        static bool TryReadGrid(string text,out GridRule rule)
+        internal static bool TryReadGrid(string text,out GridRule rule)
         {
             rule=null;var m=Regex.Match(text,@"^GridLayout\s*(?:\(([^()]*)\))?$",RegexOptions.IgnoreCase);if(!m.Success)return false;
             var args=Regex.Split(m.Groups[1].Value.Trim(),@"[,\s]+").Where(x=>x.Length>0).ToArray();if(args.Length>5)return false;
@@ -37,13 +37,13 @@ namespace MP1SkinStudio
             int cols,rows;GridDimensions(rule,list.Length,out cols,out rows);
             float w=0,h=0;foreach(var child in list.Where(x=>!Collapsed(x))){var r=rectangles[child];w=Math.Max(w,r.Width);h=Math.Max(h,r.Height);}
             var t=Margin(c);var bounds=rectangles[c];
-            bounds.Width=Math.Max(0,w*cols+rule.XGap*(cols-1)+t[0]+t[2]);
-            bounds.Height=Math.Max(0,h*rows+rule.YGap*(rows-1)+t[1]+t[3]);rectangles[c]=bounds;
+            bounds.Width=Math.Max(0,w*cols+(float)rule.XGap*(cols-1)+t[0]+t[2]);
+            bounds.Height=Math.Max(0,h*rows+(float)rule.YGap*(rows-1)+t[1]+t[3]);rectangles[c]=bounds;
         }
         void ArrangeGrid(SkinControl c,SkinControl[] list,GridRule rule)
         {
             int cols,rows;GridDimensions(rule,list.Length,out cols,out rows);if(cols==0||rows==0)return;
-            var g=rectangles[c];var t=Margin(c);float w=(g.Width-t[0]-t[2]-(cols-1)*rule.XGap)/cols,h=(g.Height-t[1]-t[3]-(rows-1)*rule.YGap)/rows;
+            var g=rectangles[c];var t=Margin(c);float w=(g.Width-t[0]-t[2]-(cols-1)*(float)rule.XGap)/cols,h=(g.Height-t[1]-t[3]-(rows-1)*(float)rule.YGap)/rows;
             // Iterate actual children, not configured empty cells; huge dimensions stay bounded.
             var collapsedInRow=new Dictionary<int,int>();
             for(int i=0;i<list.Length;i++)

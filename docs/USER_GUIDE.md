@@ -75,8 +75,11 @@ separate spacing, margins and child alignment. Open `demo.grid.xml` for an examp
 Use four layout parameters for spacing, for example `GridLayout(2,0,30,25)`;
 a fifth parameter selects `Horizontal` or `Vertical`. A positive row count
 overrides the column count, matching MP1. Calculated positions remain preview-only.
-Edit the `layout` property explicitly to change a grid. The group layout dialog
-currently creates StackLayout rules and protects other layouts from replacement.
+Choose **Edit grid layout** from the group menu to set columns, rows, horizontal
+and vertical spacing, and fill direction. At least one row or column is required.
+Applying creates one undo step and preserves child source positions. Existing
+bindings or other layout types require the dialog's explicit replacement option;
+locked groups and ambiguous layout properties remain protected.
 
 ## Text, images and properties
 
