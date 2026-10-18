@@ -27,6 +27,18 @@ namespace MP1SkinStudio
         }
         static void RunProjectFileTests(string root)
         {
+            Test("Failed page loads preserve the current edited page and history",()=>
+            {
+                var p=SessionFixture(root,"page-load-failure");p.Edit(p.Controls[0],Set("posX","60"),"Move");
+                string signature=ProjectFile.ContentSignature(p);var selected=p.Controls[0];var sources=p.Sources.ToArray();int undo=p.Undo.Count;
+                foreach(string page in new[]{"missing.xml","broken.xml","../outside.xml"})
+                {
+                    Write(p.Root,"broken.xml","<window><controls>");Reject(()=>p.OpenPage(page));
+                    Check(p.Page=="main.xml"&&p.Controls[0]==selected&&ProjectFile.ContentSignature(p)==signature&&p.Undo.Count==undo&&p.Redo.Count==0,"Failed page loading damaged the current session.");
+                    Check(p.Sources.Count==sources.Length&&sources.All(pair=>p.Sources[pair.Key]==pair.Value),"Failed load polluted the source cache.");
+                }
+                p.UndoChange();Check(!p.Dirty&&p.Controls[0].Get("posX")=="50","Undo no longer works after failed page loading.");
+            });
             Test("Editor projects restore multiple modified XML files and exact comments",()=>
             {
                 var p=SessionFixture(root,"project-roundtrip");var disk=File.ReadAllBytes(Path.Combine(p.Root,"part.xml"));

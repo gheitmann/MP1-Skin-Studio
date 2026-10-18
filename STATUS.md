@@ -234,3 +234,18 @@ hashes remain unchanged. See
 The new GUI wiring compiles but has not been exercised or visually inspected.
 No GUI/client launch, window capture or Computer Use was performed. Continue
 model-level core work; manual/UI verification remains pending and DirectX deferred.
+
+## Failed page loads preserve the working session
+
+October 19, 2026: OpenPage now restores the existing active page on a loading
+exception, including control identity, source cache, metadata and fonts. Missing,
+malformed and out-of-root page requests no longer clear the working session.
+A new regression failed before the fix and passes afterward. Fresh build and
+console core suite: 226 passed, zero failed.
+
+Nine real Titan multi-page console checks also passed: shared facade edits
+appear on both video pages, three edited XML sources survive page switching,
+cross-page undo/redo and save/reopen, and export contains all changes. Original
+files remain unchanged. See [page loading validation](Validation/Page-Loading/README.md).
+No GUI/client launch, capture or Computer Use was performed. Visual/UI/runtime
+verification remains pending and DirectX replacement stays deferred.

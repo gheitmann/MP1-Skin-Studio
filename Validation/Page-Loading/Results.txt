@@ -1,0 +1,10 @@
+PASS: Shared video list edit survives switching to another importing page
+PASS: Three edits remain pending across three XML sources
+PASS: Undo across page boundaries preserves the current page and earlier shared edit
+PASS: Cross-page redo restores the complete edited snapshot
+PASS: Saving while Settings is active retains edits belonging to other pages
+PASS: Reopened project exposes both shared and page-local edits after switching pages
+PASS: A missing page leaves the reopened edited session intact
+PASS: Export contains all three edited XML sources and instructions
+PASS: All loaded original source files remain unchanged
+9 multi-page checks passed.

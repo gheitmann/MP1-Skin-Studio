@@ -293,7 +293,7 @@ namespace MP1SkinStudio
                 if (colon > 0) dict[text.Substring(0,colon)] = text.Substring(colon+1);
             }
         }
-        public void OpenPage(string page)
+        void OpenPageCore(string page)
         {
             Page = page; Controls.Clear(); Warnings.Clear(); defaults.Clear(); styles.Clear(); globalDefines.Clear(); FontSizes.Clear(); FontNames.Clear();
             Width = 1920; Height = 1080; WindowId = 0;DefaultControlId=-1;FontSpecs.Clear();
