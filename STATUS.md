@@ -15,13 +15,13 @@ requiring a hard reset. Do not launch the editor GUI or MediaPortal, capture
 windows or retry Computer Use without explicit new authorization. Continue
 source/model and console work only. DirectX replacement remains deferred.
 
-Latest joint validation: fresh final build, **233 core checks and 39 targeted
+Latest joint validation: fresh final build, **237 core checks and 39 targeted
 checks passed**. Coverage includes filmstrip geometry, string conditions, real
 Titan imported-list edits, save/export, multiple pages and Christmas/default
 theme preparation. Write-failure tests preserve existing archives and clean
 intermediate files. New UI wiring, Revert Inputs and pending-input guards remain
 manually unverified; prior UI counts are historical.
-See [session reliability validation](Validation/Session-Reliability/README.md).
+See [model performance and batch validation](Validation/Model-Performance/README.md).
 
 The next substantial gate is manual validation of the changed interface and
 remaining preview/runtime differences when that work is authorized. Auxiliary
@@ -296,3 +296,18 @@ edit/save/reopen/export. Forced project/ZIP replacement failures retain usable
 previous files, unchanged in-memory edits and no leftover temporary archives.
 See Validation/Session-Reliability/README.md. No GUI/client launch, capture or
 Computer Use was performed; interface paths remain manually unverified.
+
+## Cached source ordinals, safe batch merging and review package
+
+October 19, 2026: cached XML control ordinals remove repeated prefix scans while
+loading a page. A bounded 1,600-control benchmark improved from 101.75 ms to
+4.61 ms median for cached model loading; this does not measure GUI performance.
+EditMany now merges compatible entries for one control, rejects conflicting
+values before mutation and validates stale duplicates. A rejected batch retains
+redo history; corrected edits after rollback remain usable.
+
+Fresh build: 237 core checks and 39 targeted console checks passed. All original
+real-skin sources remain unchanged. package-review.ps1 produced and verified a
+manual review ZIP (24 files plus notes and SHA256 manifest) without launching it.
+See Validation/Model-Performance/README.md. Recent GUI paths remain manually
+unverified; desktop automation and DirectX work remain suspended/deferred.

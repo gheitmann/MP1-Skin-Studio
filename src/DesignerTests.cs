@@ -11,6 +11,29 @@ namespace MP1SkinStudio
         static SkinControl Named(SkinProject p,string name){return p.Controls.First(c=>c.Get("description")==name);}
         static void RunDesignerTests(string root)
         {
+            Test("Cached control ordinals preserve nested source order after reparsing",()=>
+            {
+                var source=SkinSource.FromText("<window><controls><control><type>group</type><control><type>label</type><label>Child</label></control></control><control><type>label</type><label>Next</label></control></controls></window>","ordinals.xml");
+                Check(source.Elements.Where(n=>n.Name=="control").Select(n=>n.ControlOrdinal).SequenceEqual(new[]{0,1,2})&&source.Elements.Where(n=>n.Name!="control").All(n=>n.ControlOrdinal==-1),"Cached source ordinals do not follow XML preorder.");
+                source.SetControlProperties(1,Set("label","A much longer child label"));Check(source.Elements.Where(n=>n.Name=="control").Select(n=>n.ControlOrdinal).SequenceEqual(new[]{0,1,2})&&source.Elements.Single(n=>n.ControlOrdinal==1).Value("label")=="A much longer child label","Reparsing changed control identity/order.");
+            });
+            Test("Compatible batch entries for one control merge without losing properties",()=>
+            {
+                var p=Demo();var c=Named(p,"Movies");string before=c.Source.Text;
+                p.EditMany(new[]{new ControlEdit(c,Set("posX","220")),new ControlEdit(c,Set("width","600")),new ControlEdit(c,Set("posX","220"))},"Merged batch");
+                Check(Named(p,"Movies").Get("posX")=="220"&&Named(p,"Movies").Get("width")=="600"&&p.Undo.Count==1,"Duplicate control entries lost values or split history.");p.UndoChange();Check(Named(p,"Movies").Source.Text==before&&!p.Dirty,"Merged batch undo is not exact.");
+            });
+            Test("Conflicting batch entries reject all changes and retain redo history",()=>
+            {
+                var p=Demo();p.Edit(Named(p,"Movies"),Set("posX","220"),"Earlier");p.UndoChange();var c=Named(p,"Movies");string signature=ProjectFile.ContentSignature(p);
+                Reject(()=>p.EditMany(new[]{new ControlEdit(c,Set("posX","300")),new ControlEdit(c,Set("posX","400")),new ControlEdit(Named(p,"Time"),Set("posX","1500"))},"Conflicting batch"));
+                Check(ProjectFile.ContentSignature(p)==signature&&p.Undo.Count==0&&p.Redo.Count==1,"Rejected batch changed XML or history.");p.RedoChange();Check(Named(p,"Movies").Get("posX")=="220","Redo no longer works after batch rejection.");
+            });
+            Test("A stale duplicate batch entry cannot bypass selection validation",()=>
+            {
+                var p=Demo();var stale=Named(p,"Movies");p.Edit(stale,Set("posX","220"),"Earlier");var current=Named(p,"Movies");string signature=ProjectFile.ContentSignature(p);
+                Reject(()=>p.EditMany(new[]{new ControlEdit(current,Set("width","600")),new ControlEdit(stale,Set("posX","300"))},"Stale batch"));Check(ProjectFile.ContentSignature(p)==signature&&p.Undo.Count==1,"Stale duplicate entry was silently ignored.");
+            });
             Test("One undo/redo restores changes across multiple files exactly",()=>
             {
                 var p=Demo();var a=Named(p,"Movies");var b=Named(p,"Time");string sa=a.Source.Text,sb=b.Source.Text;
@@ -24,6 +47,7 @@ namespace MP1SkinStudio
                 var p=Demo();var a=Named(p,"Movies");var b=Named(p,"Time");string sa=a.Source.Text,sb=b.Source.Text;
                 Reject(()=>p.EditMany(new[]{new ControlEdit(a,Set("posX","400")),new ControlEdit(b,Set("id","9"))},"malformed"));
                 Check(a.Source.Text==sa&&b.Source.Text==sb&&!p.Dirty&&p.Undo.Count==0,"Failed transaction leaves changes behind.");
+                p.Edit(Named(p,"Movies"),Set("posX","440"),"Corrected input");p.UndoChange();Check(Named(p,"Movies").Source.Text==sa&&!p.Dirty,"Correcting input after rollback no longer works.");p.RedoChange();Check(Named(p,"Movies").Get("posX")=="440","Corrected transaction redo failed.");
             });
             Test("Insertion creates a complete control and undo/redo preserves its identity",()=>
             {

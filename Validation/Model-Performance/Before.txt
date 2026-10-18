@@ -1,0 +1,4 @@
+Synthetic page controls: 1600
+Cached page-load milliseconds: 98.14, 101.75, 117.46, 109.22, 98.46
+Median milliseconds: 101.75
+PASS: every control retains its source ordinal on all five loads; no original installed skin is used.

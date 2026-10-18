@@ -75,8 +75,19 @@ namespace MP1SkinStudio
         }
         public void EditMany(IEnumerable<ControlEdit> changes,string description)
         {
-            var edits=changes.Where(e=>e.Values.Count>0).GroupBy(e=>e.Control.Key).Select(g=>g.First()).ToArray();
-            foreach(var edit in edits)RequireCurrent(edit.Control);
+            var requested=changes.Where(e=>e.Values.Count>0).ToArray();
+            foreach(var edit in requested)RequireCurrent(edit.Control);
+            var edits=requested.GroupBy(e=>e.Control.Key).Select(group=>
+            {
+                var values=new Dictionary<string,string>();
+                foreach(var edit in group)foreach(var pair in edit.Values)
+                {
+                    string existing;if(values.TryGetValue(pair.Key,out existing)&&existing!=pair.Value)
+                        throw new InvalidOperationException("Conflicting values for "+pair.Key+" on the same XML control. No changes were applied.");
+                    values[pair.Key]=pair.Value;
+                }
+                return new ControlEdit(group.First().Control,values);
+            }).ToArray();
             if(edits.Length==0)return;
             if(edits.Any(e=>IsLocked(e.Control)))throw new InvalidOperationException("The selection contains a locked element. Unlock it in the element tree first.");
             Transaction(edits.Select(e=>e.Control.Source),()=>

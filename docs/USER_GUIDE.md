@@ -10,6 +10,7 @@ Version 0.9 · October 18, 2026
 4. Drag to move it; use the lower-right handle to resize it.
 5. Edit properties on the right and choose **Apply Properties**.
 6. Save an editor project to continue later, or choose **Export Changes as ZIP**.
+7. Use **Revert Inputs** to discard unapplied property fields without undoing applied XML changes. Pending fields block save/export and page/theme changes until applied or reverted.
 
 ## Open skins, pages and themes
 
@@ -287,3 +288,16 @@ not original Titan screens or graphics. Original Titan fonts are not bundled.
 MediaPortal sample files: copyright Team MediaPortal; see LICENSE.
 New editor source is provided under GPL-3.0-or-later.
 This is not an official Team MediaPortal product.
+
+## Current property editing
+
+Select a concrete list, filmstrip or thumbnail subview in the element tree to
+edit its compatible row, spacing and image dimensions. For multiple selection,
+only collection fields supported by every selected element are offered.
+
+**Visibility condition** edits the XML `visible` expression. Parent and include
+conditions still apply. Unsupported runtime conditions remain unresolved in the
+static preview and are preserved in saved projects and exports.
+
+These recent interface paths are awaiting manual validation. Refer to STATUS.md
+for the current automation restriction and the limits of verified behavior.

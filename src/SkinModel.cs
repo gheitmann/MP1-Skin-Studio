@@ -17,6 +17,7 @@ namespace MP1SkinStudio
     {
         public string Name;
         public int Start, OpenEnd, CloseStart, End;
+        public int ControlOrdinal = -1;
         public bool Empty;
         public ElementSpan Parent;
         public List<ElementSpan> Children = new List<ElementSpan>();
@@ -86,7 +87,7 @@ namespace MP1SkinStudio
             using (var reader = XmlReader.Create(new StringReader(Text), settings)) doc.Load(reader);
             Elements = new List<ElementSpan>();
             var stack = new Stack<ElementSpan>();
-            int p = 0;
+            int p = 0, controlOrdinal = 0;
             while ((p = Text.IndexOf('<', p)) >= 0)
             {
                 if (Text.IndexOf("<!--", p, StringComparison.Ordinal) == p) { p = Text.IndexOf("-->", p + 4, StringComparison.Ordinal) + 3; continue; }
@@ -110,6 +111,7 @@ namespace MP1SkinStudio
                     if (!match.Success) throw new InvalidDataException("Invalid XML tag.");
                     var n = new ElementSpan { Name = match.Groups[1].Value, Start = p, OpenEnd = end + 1,
                         Empty = Text[end - 1] == '/', CloseStart = end + 1, End = end + 1 };
+                    if(n.Name=="control")n.ControlOrdinal=controlOrdinal++;
                     if (stack.Count > 0) { n.Parent = stack.Peek(); n.Parent.Children.Add(n); }
                     Elements.Add(n);
                     if (!n.Empty) stack.Push(n);
@@ -124,7 +126,7 @@ namespace MP1SkinStudio
                 Elements[i].Element = xmlElements[i];
             }
             Root = Elements.First();
-            if(OriginalOrdinals==null)OriginalOrdinals=Enumerable.Range(0,Elements.Count(n=>n.Name=="control")).ToList();
+            if(OriginalOrdinals==null)OriginalOrdinals=Enumerable.Range(0,controlOrdinal).ToList();
         }
 
         public void SetControlProperties(int ordinal, IDictionary<string, string> values)
@@ -352,7 +354,7 @@ namespace MP1SkinStudio
                 }
                 if(n.Name!="control") continue;
                 var c=new SkinControl { Source=source,Node=n,Depth=depth,IncludeCondition=condition,AutomaticLayout=automaticLayout,RuntimeParent=runtimeParent,VisibilityTerms=terms??new VisibilityTerm[0],
-                    Ordinal=source.Elements.Where(e=>e.Name=="control").TakeWhile(e=>e!=n).Count(), Defines=new Dictionary<string,string>(context) };
+                    Ordinal=n.ControlOrdinal, Defines=new Dictionary<string,string>(context) };
                 c.Key=source.RelativePath+"|"+c.Ordinal;
                 ElementSpan d; string type=n.Value("type")??"";
                 if(defaults.TryGetValue(type,out d)) Merge(c,d,"references.xml · " + type,false);

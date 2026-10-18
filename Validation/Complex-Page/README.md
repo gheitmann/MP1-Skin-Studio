@@ -49,3 +49,7 @@ directory outside that root. Do not launch the editor GUI for this probe.
 Next: inspect and test collection preview geometry and dynamic-condition
 limitations at source/model level. Visual/runtime verification stays suspended,
 and auxiliary tools and DirectX replacement remain deferred.
+
+The current probe also submits compatible duplicate entries for one real list
+control to exercise batch merging. The fresh run is recorded in
+../Model-Performance/Complex-Page-Results.txt.

@@ -19,7 +19,7 @@ Visual position, size, text and texture editing; multiple selection and alignmen
 
 ## Validation
 
-Latest joint console run (October 19): **233 core checks and 39 targeted checks passed**. See [Session reliability](Validation/Session-Reliability/README.md). It covers real Titan list/multi-page/theme model workflows and failed-write preservation. New interface behavior remains manually unverified. Windows automation is suspended after a reported system freeze; see STATUS.md before running interface or client checks.
+Latest joint console run (October 19): **237 core checks and 39 targeted checks passed**. See [Model performance and batch reliability](Validation/Model-Performance/README.md). It covers real Titan list/multi-page/theme model workflows and failed-write preservation. New interface behavior remains manually unverified. Windows automation is suspended after a reported system freeze; see STATUS.md before running interface or client checks.
 
 
 Historical reports under `Validation` record 189 core checks, 185 UI checks, 602 Titan page/theme variants and ten direct checks against original MP1 StackLayout classes. These counts were imported from the saved release package and do not imply that all tests were rerun during import. A fresh build succeeded during import. The English migration also passed 189 core checks and 185 UI checks; fresh reports are in [Validation/English-Migration](Validation/English-Migration).
@@ -38,3 +38,5 @@ A sampled Settings UI workflow and its earlier exported candidate passed install
 See [STATUS.md](STATUS.md). This repository preserves the development baseline independently of chat history. Future changes must also be committed and uploaded to GitHub to be backed up there.
 
 License: the existing GPLv3 license in [LICENSE](LICENSE).
+
+A manual review ZIP can be prepared with `powershell -NoProfile -File .\package-review.ps1`. It packages the editor and repository demo only, verifies every file hash, and does not launch any application. Recent interface changes remain manually unverified.
