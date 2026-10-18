@@ -43,6 +43,20 @@ Fresh validation: **211 core checks and 199 UI checks passed** after a successfu
 Windows build. See [group creation validation](Validation/Group-Creation/README.md).
 These editor tests did not use Computer Use or interact with MediaPortal.
 
+## Text presentation milestone
+
+Corrected the two editor defects found during the attended Titan comparison:
+imported title/clock/date text is now presented after control textures, and font
+scaling converts the integer MP1 point size to pixels. Deferred text retains its
+original clip, including collection viewports. No skin XML is rewritten.
+
+Fresh build, **213 core checks and 199 UI checks passed**. The installed Titan
+Settings preview was rendered and visually inspected: title, sample clock/date
+are visible and text sizing is closer to the earlier client observation.
+See [text presentation validation](Validation/Text-Presentation/README.md).
+No new client input was used. Font substitution, runtime labels/plugin state and
+a full matched-state image/exported-spacing comparison remain open.
+
 ## Remaining work
 
 The preceding milestone added an **Edit grid layout** dialog with column

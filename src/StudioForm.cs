@@ -92,6 +92,7 @@ namespace MP1SkinStudio
             base.OnPaint(e);var g=e.Graphics;g.SmoothingMode=SmoothingMode.AntiAlias;
             if(Project==null){TextRenderer.DrawText(g,"Open a skin directory or load the demo",Font,ClientRectangle,Color.Gray,TextFormatFlags.HorizontalCenter|TextFormatFlags.VerticalCenter);return;}
             paintingLayout=new StackPreview(Project,State);
+            var textPass=new List<PendingSurfaceText>();pendingSurfaceText=textPass;
             try {
             UpdateTransform();
             using(var shadow=new SolidBrush(Color.FromArgb(9,12,18)))g.FillRectangle(shadow,origin.X+8,origin.Y+12,Project.Width*scale,Project.Height*scale);
@@ -105,11 +106,12 @@ namespace MP1SkinStudio
                 if(!Drawn(c))continue;
                 DrawControl(g,c,EffectiveBounds(c));
             }
+            FlushSurfaceText(g);
             DrawDesignerOverlay(g);
             g.ResetClip();g.ResetTransform();
             string footer=Project.Width+" × "+Project.Height+"  ·  "+Math.Round(scale*100)+" %  ·  Approximate layout";
             TextRenderer.DrawText(g,footer,Font,new Point(12,ClientSize.Height-25),Color.FromArgb(143,162,183));
-            } finally {paintingLayout=null;}
+            } finally {paintingLayout=null;pendingSurfaceText=null;foreach(var text in textPass)text.Clip.Dispose();}
         }
         Color ParseColor(string text, Color fallback)
         {

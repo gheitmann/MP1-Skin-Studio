@@ -10,8 +10,10 @@ namespace MP1SkinStudio
     public sealed class SkinFontSpec
     {
         public string Family;public float Height;public FontStyle Style;
-        // GUIFontManager scales the legacy height against 576 lines.
-        public float Pixels(int skinHeight){return Math.Max(1,Math.Min(512,Height*Math.Max(1,skinHeight)/576f));}
+        // GUIFontManager truncates the 576-line scale to an integer, then
+        // GUIFont creates a System.Drawing.Font in points. Normalize to 96 DPI
+        // before the canvas transform, rather than applying display DPI twice.
+        public float Pixels(int skinHeight){return Math.Max(1,Math.Min(512,(float)Math.Floor(Height*Math.Max(1,skinHeight)/576f)*96f/72f));}
     }
     public sealed partial class SkinProject
     {
@@ -42,6 +44,22 @@ namespace MP1SkinStudio
     }
     public sealed partial class SkinCanvas
     {
+        sealed class PendingSurfaceText
+        {
+            public Region Clip;
+            public Action<Graphics> Paint;
+        }
+        List<PendingSurfaceText> pendingSurfaceText;
+        void FlushSurfaceText(Graphics g)
+        {
+            var pending=pendingSurfaceText;pendingSurfaceText=null;
+            foreach(var item in pending)
+            {
+                var saved=g.Save();
+                try{g.SetClip(item.Clip,System.Drawing.Drawing2D.CombineMode.Replace);item.Paint(g);}
+                finally{g.Restore(saved);}
+            }
+        }
         readonly Dictionary<string,FontFamily> fontFamilies=new Dictionary<string,FontFamily>(StringComparer.OrdinalIgnoreCase);
         readonly HashSet<string> fallbackFonts=new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         public string[] FallbackFonts {get{return fallbackFonts.OrderBy(s=>s).ToArray();}}
@@ -58,6 +76,13 @@ namespace MP1SkinStudio
         void SurfaceText(Graphics g,SkinControl c,string text,RectangleF rect,bool focus,string fontProperty="font",string colorProperty="textcolor",string alignProperty="align",bool multiline=false)
         {
             if(String.IsNullOrEmpty(text)||rect.Width<1||rect.Height<1)return;
+            if(pendingSurfaceText!=null)
+            {
+                // MP1 presents queued font textures after control textures.
+                // Retain each collection/control clip when deferring its text.
+                pendingSurfaceText.Add(new PendingSurfaceText{Clip=g.Clip,Paint=target=>SurfaceText(target,c,text,rect,focus,fontProperty,colorProperty,alignProperty,multiline)});
+                return;
+            }
             bool button=c.Get("type").Contains("button");
             string align=c.Resolved(button?"textalign":alignProperty,"left").ToLowerInvariant();string valign=c.Resolved(button?"textvalign":"valign","top").ToLowerInvariant();
             Color color=ParseColor(c.Resolved(colorProperty,"ffffffff"),Color.White);

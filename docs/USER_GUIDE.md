@@ -222,6 +222,11 @@ the editor preview is not a runtime comparison.
 
 ## Version history
 
+- Text presentation correction: imported header/clock text uses a deferred font
+  pass with preserved clipping. Font scaling includes the MP1 point-to-pixel
+  conversion; canvas zoom still applies afterward. Unavailable font families
+  continue to use a substitute.
+
 - 0.2: multiple selection, insertion, duplication, alignment and navigation editing.
 - 0.3: editor projects for saving and restoring sessions.
 - 0.4: texture browsing, view controls, element protection and page auditing.
