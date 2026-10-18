@@ -188,3 +188,18 @@ See [complex-page model gate](Validation/Complex-Page/README.md).
 The complex page's visible rendering and runtime behavior remain unverified.
 Prior full-suite counts were not rerun. Continue with model-level investigation
 of preview limitations; auxiliary conveniences remain lower priority.
+
+## Filmstrip text geometry correction
+
+October 18, 2026: fixed filmstrip title geometry ignoring textXOff/textYOff and
+texture label dimensions. Installed Titan uses textYOff=-2000 intentionally;
+its titles now remain outside the collection viewport in calculated geometry.
+A regression probe failed before the fix and passed all six checks afterward.
+The complex-page probe passed all eleven stages again. Fresh build and core
+suite: 222 passed, zero failed. See
+[geometry validation](Validation/Collection-Geometry/README.md).
+
+No Windows automation, capture, GUI launch or MediaPortal launch was used.
+Core tests ran through a console entry point; the UI suite remains suspended.
+Visual equivalence is not established by numeric checks. Continue source/model
+work on dynamic conditions and collection preview limits; DirectX stays deferred.

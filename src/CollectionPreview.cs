@@ -15,7 +15,7 @@ namespace MP1SkinStudio
     {
         public static readonly string[] Modes={"auto","list","smallicons","largeicons","filmstrip","album","playlist","coverflow"};
         public string Mode="auto";public int Focus;
-        public readonly List<PreviewItem> Items=new List<PreviewItem>{new PreviewItem{Title="A movie for tonight",Detail="2026 · 112 Min.",Image="Studio/Icon-Movie.png"},new PreviewItem{Title="Favorite series",Detail="Season 2",Image="Studio/Icon-Movie.png"},new PreviewItem{Title="A new discovery",Detail="2025 · 98 Min.",Image="Studio/Icon-Pictures.png"},new PreviewItem{Title="My collection",Detail="12 items",Image="Studio/Icon-Music.png"},new PreviewItem{Title="An unusually long title for narrow text fields",Detail="2024 · 141 Min.",Image="Studio/Icon-Movie.png"},new PreviewItem{Title="Music and concerts",Detail="Live",Image="Studio/Icon-Music.png"}};
+        public readonly List<PreviewItem> Items=new List<PreviewItem>{new PreviewItem{Title="A movie for tonight",Detail="2026 � 112 Min.",Image="Studio/Icon-Movie.png"},new PreviewItem{Title="Favorite series",Detail="Season 2",Image="Studio/Icon-Movie.png"},new PreviewItem{Title="A new discovery",Detail="2025 � 98 Min.",Image="Studio/Icon-Pictures.png"},new PreviewItem{Title="My collection",Detail="12 items",Image="Studio/Icon-Music.png"},new PreviewItem{Title="An unusually long title for narrow text fields",Detail="2024 � 141 Min.",Image="Studio/Icon-Movie.png"},new PreviewItem{Title="Music and concerts",Detail="Live",Image="Studio/Icon-Music.png"}};
         public void Validate()
         {
             if(!Modes.Contains(Mode)||Items.Count>50||Focus<0||Focus>49)throw new InvalidDataException("Collections require at most 50 items, a valid view and selection from 1 to 50.");
@@ -60,7 +60,12 @@ namespace MP1SkinStudio
                 int columns=flow||film?Math.Max(1,(int)(rect.Width/w)):Math.Max(1,(int)(rect.Width/w));int rows=flow||film?1:Math.Max(1,(int)(rect.Height/h));int count=Math.Max(1,Math.Min(50,columns*rows));int start=flow?Math.Max(0,selected-2):Math.Max(0,(selected/count)*count);
                 for(int i=start;i<settings.Items.Count&&i-start<count;i++)
                 {float x=rect.X+(i-start)%columns*w,y=rect.Y+(i-start)/columns*h,drawW=w,drawH=h;if(flow){int offset=i-selected;drawW=w*(offset==0?1:.65f);drawH=h*(offset==0?1:.82f);x=rect.X+rect.Width/2-w/2+offset*(w*.65f+Math.Max(0,c.Number("sideGap",20)));y=rect.Y+Math.Max(0,(rect.Height-h)/2)+(offset==0?0:h*.09f);}
-                    var r=new RectangleF(x,y,drawW,drawH);float tx=flow?0:c.Number(big?"thumbPosXBig":"thumbPosX",8),ty=flow?0:c.Number(big?"thumbPosYBig":"thumbPosY",8);float tw=flow?drawW:Size(c,big?"thumbWidthBig":"thumbWidth",Math.Max(1,drawW-16)),th=flow?Math.Max(1,drawH-42):Size(c,big?"thumbHeightBig":"thumbHeight",Math.Max(1,drawH-55));result.Add(new CollectionTile{Index=i,Selected=i==selected,Bounds=r,Image=new RectangleF(x+tx,y+ty,tw,th),Title=new RectangleF(x+5,y+ty+th+3,Math.Max(1,drawW-10),Math.Max(1,drawH-th-ty-3)),Detail=RectangleF.Empty});}
+                    var r=new RectangleF(x,y,drawW,drawH);float tx=flow?0:c.Number(big?"thumbPosXBig":"thumbPosX",8),ty=flow?0:c.Number(big?"thumbPosYBig":"thumbPosY",8);float tw=flow?drawW:Size(c,big?"thumbWidthBig":"thumbWidth",Math.Max(1,drawW-16)),th=flow?Math.Max(1,drawH-42):Size(c,big?"thumbHeightBig":"thumbHeight",Math.Max(1,drawH-55));
+                    var title=new RectangleF(x+5,y+ty+th+3,Math.Max(1,drawW-10),Math.Max(1,drawH-th-ty-3));
+                    // MP1 filmstrip labels start below the texture, not the thumbnail.
+                    // Negative offsets are intentional and remain outside the viewport clip.
+                    if(film){float textureHeight=Size(c,"textureHeight",80);title=new RectangleF(x+c.Number("textXOff",0),y+textureHeight+c.Number("textYOff",0),Size(c,"textureWidth",80),textureHeight);}
+                    result.Add(new CollectionTile{Index=i,Selected=i==selected,Bounds=r,Image=new RectangleF(x+tx,y+ty,tw,th),Title=title,Detail=RectangleF.Empty});}
             }
             return result.ToArray();
         }
