@@ -62,6 +62,7 @@ namespace MP1SkinStudio
             RunElementSearchTests();
             RunGroupTests(root);
             RunGroupCreationTests(root);
+            RunGroupRemovalTests(root);
             RunSurfaceRegressionTests(root);
             RunTextEditTests(root);
             RunLanguageTests(root);RunConditionScopeTests(root);RunStackTests(root);RunGridTests(root);RunCollectionTests(root);

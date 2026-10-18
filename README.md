@@ -15,7 +15,7 @@ Demo assets are included under `Samples`. See [User Guide](docs/USER_GUIDE.md) f
 
 ## Features
 
-Visual position, size, text and texture editing; multiple selection and alignment; layer ordering and deletion; nested groups and creation from consecutive selections; StackLayout and GridLayout previews; undo/redo; project persistence; and XML export. Preview tools include language resources with fallback, simulated states and sample data, plus approximate list, grid, filmstrip and static coverflow rendering.
+Visual position, size, text and texture editing; multiple selection and alignment; layer ordering and deletion; nested groups, creation from consecutive selections and neutral-group removal; StackLayout and GridLayout previews; undo/redo; project persistence; and XML export. Preview tools include language resources with fallback, simulated states and sample data, plus approximate list, grid, filmstrip and static coverflow rendering.
 
 ## Validation
 

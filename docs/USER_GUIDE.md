@@ -204,8 +204,8 @@ Create a new visible test instance only after changes that warrant user inspecti
 Select at least two consecutive controls in the current XML page, then choose
 **Group selected controls** from the Element menu. Controls must share the same
 XML parent. Existing groups can be included, or a new group can be created inside
-an ordinary group. The new group is selected so its description or layout can be
-edited immediately.
+an ordinary group. The new group is selected so its layout can be edited
+immediately.
 
 Child XML, IDs, positions, ordering and comments between the selected controls
 are preserved. Undo restores the exact source and original multiple selection;
@@ -220,7 +220,34 @@ defaults in references.xml are rejected rather than silently applying visibility
 animation or other inherited behavior to the new wrapper. Validate exports in MP1;
 the editor preview is not a runtime comparison.
 
+## Ungrouping
+
+Select one neutral group, then choose **Ungroup selected group** from the Element
+menu. Its direct children move up one XML level and are selected together. Child
+IDs, positions, complete XML fragments and nested groups stay intact. Comments
+and processing instructions inside the wrapper are retained. Undo restores the
+exact wrapper and its selection; redo selects the promoted children again.
+
+This first implementation supports neutral wrappers, including groups created
+with **Group selected controls**. A wrapper must have absent or zero position and
+size, no active or bound layout, no style/condition/animation/extension behavior,
+and a concrete nonnegative ID if one is present. Show editor-hidden groups first.
+Locked children, automatic parent layouts and indirect edits to included sources
+are protected. Open an included source as its own page to ungroup there.
+
+Known references to the removed group ID block the operation. Checks include
+loaded-page navigation/conditions and literal references on other root/theme XML
+pages. External dynamic references and plugin code cannot be fully checked;
+review those uses before applying an export.
+
+Project files save the resulting snapshot and identities. In-session undo keeps
+each edit; after reopening a project, undo returns to the original source-file
+baseline rather than replaying the entire previous editing history.
+
 ## Version history
+
+- Ungrouping: neutral wrappers can be removed with preserved child XML, markers,
+  comments and in-session selection undo/redo. Behavioral groups remain protected.
 
 - Text presentation correction: imported header/clock text uses a deferred font
   pass with preserved clipping. Font scaling includes the MP1 point-to-pixel

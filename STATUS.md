@@ -57,6 +57,20 @@ See [text presentation validation](Validation/Text-Presentation/README.md).
 No new client input was used. Font substitution, runtime labels/plugin state and
 a full matched-state image/exported-spacing comparison remain open.
 
+## Neutral ungroup milestone
+
+Added **Ungroup selected group** with direct-child promotion, preserved nested
+XML/comments/processing instructions, structural identity remapping and exact
+in-session undo/redo of XML and selection. Neutral wrappers created by the
+grouping tool are supported. Behavioral/nonneutral groups, layout ancestors,
+locks, hidden wrappers, source boundaries and known group-ID references are
+protected. Saved projects retain the resulting snapshot and original-baseline
+undo, under the existing project-format contract.
+
+Fresh build: **221 core checks and 203 UI checks passed**. See
+[ungroup validation](Validation/Ungroup/README.md). No MediaPortal input or
+configuration changes were needed. The DirectX task remains deferred.
+
 ## Remaining work
 
 The preceding milestone added an **Edit grid layout** dialog with column
@@ -67,7 +81,7 @@ visually inspected. See [Grid dialog validation](Validation/Grid-Dialog/README.m
 
 1. Complete a real MediaPortal 1 client comparison using the user's installed client, as explicitly requested. The app-server/PATH blocker has been resolved and the installed MP1 1.39 Titan Home screen was observed after an earlier manual start. A fresh settings export changes only spacing from 7 to 15 pixels. On the latest automated attempt (October 18, approximately 19:39 local time), launch authorization succeeded, but MP1 showed a June 2010 DirectX prerequisite error despite D3DX9_43.dll existing in both Windows system directories and the earlier positive component probe. The cause remains unresolved; a manual client start is the next comparison point. Settings rendering, focus and navigation remain pending. See [current client validation](Validation/Client-Comparison/README.md). No original skin file was changed.
 2. Improve preview fidelity for complex collections, font metrics, image masks, dynamic conditions and animations. Coverflow is currently a static approximation.
-3. Extend design tools: ungroup groups, move controls between groups, and provide convenient global style editing.
+3. Extend design tools: move controls between groups and provide convenient global style editing.
 4. Continue usability and stability checks on large real-world skins.
 
 Latest client observation (October 18, approximately 19:43 local time): the user

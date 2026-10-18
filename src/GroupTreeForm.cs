@@ -41,6 +41,7 @@ namespace MP1SkinStudio
         {
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add("Group selected controls",null,(s,e)=>Attempt(GroupSelection)).Enabled=SelectedControls().Length>=2&&!SelectedControls().Any(c=>project.IsLocked(c));
+            menu.Items.Add("Ungroup selected group",null,(s,e)=>Attempt(UngroupSelection)).Enabled=SelectedControls().Length==1&&selected!=null&&selected.Get("type")=="group"&&!project.IsLocked(selected);
             menu.Items.Add("Edit group layout …",null,(s,e)=>Attempt(EditStackLayout)).Enabled=SelectedControls().Length==1&&selected!=null&&selected.Get("type")=="group"&&!project.IsLocked(selected);
             menu.Items.Add("Edit grid layout ...",null,(s,e)=>Attempt(EditGridLayout)).Enabled=SelectedControls().Length==1&&selected!=null&&selected.Get("type")=="group"&&!project.IsLocked(selected);
             menu.Items.Add("Select individual child controls",null,(s,e)=>Attempt(SelectContainedLeaves)).Enabled=SelectedControls().Length==1&&selected!=null&&project.ContainedLeaves(selected).Length>0;
