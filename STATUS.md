@@ -2,6 +2,25 @@
 
 Date: October 18, 2026. Imported version: 0.9.
 
+## Current priority: prove the core workflow
+
+The owner explicitly prioritized real edit/save/reopen/export/client validation
+over further auxiliary features. Do not resume group/style conveniences until
+this gate is resolved.
+
+The installed Titan settings page passed the production-API edit/save/reopen/ZIP
+chain for position, size, text, texture and menu spacing. The saved candidate was
+visually observed in the editor. Its export was applied exactly to a separate
+skin copy. The original skin hashes remain unchanged.
+
+The installed MP1's test launch did not produce a targetable window, and was
+canceled. The owner was given a prepared local shortcut to start that same
+installed client manually with the isolated skin and separate configuration.
+Native candidate rendering/navigation remains unverified, as does real-page
+editing through actual mouse/keyboard gestures. See the
+[core workflow gate](Validation/Core-Workflow/README.md) and its API report.
+No DirectX investigation or replacement was performed.
+
 ## Baseline
 
 Imported from the complete locally extracted `MP1-Skin-Studio-0.9` release package. Includes source code, tests, samples, build script, existing license, historical validation reports and runtime test materials. Installers, compiled binaries, error logs and temporary working directories are excluded.
@@ -79,7 +98,7 @@ protection, and exact undo/redo. Child XML positions are preserved. Fresh
 validation: **203 core checks and 195 UI checks passed**; the dialog render was
 visually inspected. See [Grid dialog validation](Validation/Grid-Dialog/README.md).
 
-1. Complete a real MediaPortal 1 client comparison using the user's installed client, as explicitly requested. The app-server/PATH blocker has been resolved and the installed MP1 1.39 Titan Home screen was observed after an earlier manual start. A fresh settings export changes only spacing from 7 to 15 pixels. On the latest automated attempt (October 18, approximately 19:39 local time), launch authorization succeeded, but MP1 showed a June 2010 DirectX prerequisite error despite D3DX9_43.dll existing in both Windows system directories and the earlier positive component probe. The cause remains unresolved; a manual client start is the next comparison point. Settings rendering, focus and navigation remain pending. See [current client validation](Validation/Client-Comparison/README.md). No original skin file was changed.
+1. Complete the core workflow gate: manually start the prepared installed-client test, observe the exported candidate and verify navigation, then restore normal Titan startup. Exercise real-page UI editing as well. See Validation/Core-Workflow/README.md. Do not claim the runtime test passed from API/export checks alone.
 2. Improve preview fidelity for complex collections, font metrics, image masks, dynamic conditions and animations. Coverflow is currently a static approximation.
 3. Extend design tools: move controls between groups and provide convenient global style editing.
 4. Continue usability and stability checks on large real-world skins.

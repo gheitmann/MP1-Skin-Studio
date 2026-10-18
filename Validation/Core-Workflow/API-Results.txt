@@ -1,0 +1,8 @@
+PASS  Loaded installed Titan settings.xml and uniquely selected menu label, icon and button group.
+PASS  Edited position, size, text, texture and stack spacing through production editor APIs; only settings.xml changed in memory.
+PASS  Saved, discarded the model and reopened the project; all edits, identity mappings and language state survived exactly.
+PASS  Exported the reopened project; ZIP contains exactly the edited settings.xml and export instructions.
+PASS  Snapshot undo restored the original XML baseline and redo restored the exported state.
+PASS  All loaded original skin source hashes remain unchanged.
+
+Client rendering and keyboard navigation must be observed separately; the API checks do not establish a successful MP1 runtime test.
