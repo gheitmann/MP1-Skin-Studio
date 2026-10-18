@@ -1,0 +1,14 @@
+Installed MP1 candidate validation - October 18, 2026
+
+PASS  The manually started installed MP1 loaded XML from the isolated CoreWorkflowSkin directory; the observed startup log contained that skin path.
+PASS  Opened Settings and visually observed STUDIO TEST at the modified heading position, the larger music icon and increased button spacing.
+PASS  Up from Allgemein wrapped to the last settings entry; Down returned to Allgemein. No PIN/security setting was toggled.
+PASS  Return on Allgemein opened the normal General submenu. Escape returned to the modified Settings page with Allgemein focused and the candidate text/icon still present.
+PASS  Original Titan settings.xml SHA256 remained 78b2b21deff4355a588cd0830865b8d3aab2d9185d6cc9fde58373aaf7e5bf31 after the runtime test.
+PASS  The test client was closed normally after observation.
+
+Scope: manual visual/runtime observations, not automated pixel equivalence. The candidate was edited through production APIs and reopened in the real editor window. The complete real-page mouse/keyboard editing journey remains a separate gate.
+
+Restore limitation: automatic normal-start attempts did not yield a targetable window. The normal-start log selected Titan with the default theme. No test parameters were written to the default configuration. A manual normal MP1 start may still be needed.
+
+Desktop images, complete runtime logs, the full copied skin and private configuration are excluded. No DirectX investigation or replacement was performed.

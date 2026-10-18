@@ -39,7 +39,7 @@ The applied settings.xml was independently checked equal to the ZIP content.
 A separate runtime configuration was prepared; it and the skin copy remain
 local and are not committed.
 
-## Runtime gate: still pending
+## Runtime gate: observed pass
 
 The running original MP1 was closed normally. A launch of the installed original
 MediaPortal.exe with /windowed, /NoTheme, an absolute /skin path and a separate
@@ -49,33 +49,45 @@ and no DirectX investigation or replacement was performed.
 
 A local Start-Core-Workflow.lnk points to the installed executable with those
 test-only parameters. The owner was asked to launch it manually after automated
-startup and Explorer navigation failed to produce a visible result. Successful
-rendering of the exported candidate has NOT yet been observed.
+startup and Explorer navigation failed to produce a visible result. The owner
+then started the prepared candidate manually; the subsequent runtime
+results below supersede that initial startup blocker.
 
 The absolute skin path is based on the upstream SkinOverride parser and
-GUIGraphicsContext.Skin using Config.GetSubFolder/Path.Combine, not an assertion
-that this installed runtime has passed the test:
+GUIGraphicsContext.Skin using Config.GetSubFolder/Path.Combine. The installed
+runtime then confirmed the external skin path in its observed XML loading:
 
 - [MediaPortal.cs](https://github.com/MediaPortal/MediaPortal-1/blob/master/mediaportal/MediaPortal.Application/MediaPortal.cs)
 - [GraphicContext.cs](https://github.com/MediaPortal/MediaPortal-1/blob/master/mediaportal/Core/guilib/GraphicContext.cs)
 - [Config.cs](https://github.com/MediaPortal/MediaPortal-1/blob/master/mediaportal/Utils/Configuration/Config.cs)
 
-After manual startup, open Settings and verify the candidate text/icon/geometry,
-focus, first/last wrapping and entry/return from a normal submenu. Do not toggle
-the PIN/security setting. Finally return to the normal installed Titan startup.
-The original skin remains available and unchanged.
+The manually started installed MP1 loaded the isolated CoreWorkflowSkin files,
+confirmed by the observed runtime log. Settings visibly showed STUDIO TEST at
+the changed heading position, the enlarged music icon and increased spacing.
+Up from Allgemein wrapped to the last entry; Down returned to Allgemein. Return
+opened the General submenu and Escape returned to the modified page. No PIN or
+other configuration control was toggled. See Client-Results.txt.
+
+The test client was closed normally. Automatic attempts to start normal MP1 did
+not yield a targetable window; the startup log selected Titan with the default
+theme. A manual normal start may still be needed. The original settings.xml hash
+remains unchanged and test parameters were not written to the default config.
 
 ## Assessment and next priority
 
 The model/persistence/export chain works on this real page and the saved result
-is visible in the editor. The decisive MP1 export-rendering/interaction gate is
-still open. Do not call the full core workflow successful until that gate passes.
-Actual real-page mouse/keyboard editing also remains to be exercised separately.
+is visible in the editor. The installed-client candidate rendering/navigation
+gate has now passed for
+this page, as recorded in Client-Results.txt. This establishes the technical
+model-to-project-to-export-to-MP1 path for the tested changes. Actual real-page
+mouse/keyboard editing remains to be exercised separately before calling the
+entire user-facing workflow proven.
 
 The editor preview includes MiniDisplay while the earlier live client hid it;
 runtime plugin state and label overrides are not yet mirrored completely. This
 is a core preview-reliability limitation to track, not a reason to add unrelated
-group/style conveniences. Further auxiliary work is deferred until this gate is
+group/style conveniences. Further auxiliary work is deferred while the remaining
+real-page UI gate is
 resolved. Private configuration, desktop captures and full copied skin assets
 are excluded from this commit.
 

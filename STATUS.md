@@ -13,11 +13,13 @@ chain for position, size, text, texture and menu spacing. The saved candidate wa
 visually observed in the editor. Its export was applied exactly to a separate
 skin copy. The original skin hashes remain unchanged.
 
-The installed MP1's test launch did not produce a targetable window, and was
-canceled. The owner was given a prepared local shortcut to start that same
-installed client manually with the isolated skin and separate configuration.
-Native candidate rendering/navigation remains unverified, as does real-page
-editing through actual mouse/keyboard gestures. See the
+The initial automatic test launch was canceled without a targetable window.
+The owner then manually started the same installed client with the prepared
+isolated skin. Native Settings rendered STUDIO TEST, the changed icon and spacing;
+focus wrapping and a submenu return passed. The test client was closed normally.
+Automatic normal-start attempts did not expose a window, although the startup log
+selected normal Titan; manual normal startup may still be needed. Actual real-page
+mouse/keyboard editing is the next unproven gate. See the
 [core workflow gate](Validation/Core-Workflow/README.md) and its API report.
 No DirectX investigation or replacement was performed.
 
@@ -98,7 +100,7 @@ protection, and exact undo/redo. Child XML positions are preserved. Fresh
 validation: **203 core checks and 195 UI checks passed**; the dialog render was
 visually inspected. See [Grid dialog validation](Validation/Grid-Dialog/README.md).
 
-1. Complete the core workflow gate: manually start the prepared installed-client test, observe the exported candidate and verify navigation, then restore normal Titan startup. Exercise real-page UI editing as well. See Validation/Core-Workflow/README.md. Do not claim the runtime test passed from API/export checks alone.
+1. Prove actual real-page UI editing (selection, property changes, save/reopen and export through the interface). The production-API round trip and installed-client candidate display/navigation have passed for Titan Settings. Verify manual normal MP1 startup if needed. See Validation/Core-Workflow/README.md.
 2. Improve preview fidelity for complex collections, font metrics, image masks, dynamic conditions and animations. Coverflow is currently a static approximation.
 3. Extend design tools: move controls between groups and provide convenient global style editing.
 4. Continue usability and stability checks on large real-world skins.
