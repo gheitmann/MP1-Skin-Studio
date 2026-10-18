@@ -77,6 +77,19 @@ Track the blocker at [openai/codex#55114](https://github.com/openai/codex/issues
 Settings rendering, focus/navigation and spacing comparison remain pending.
 The DirectX dependency replacement task remains deferred.
 
+## Attended client retry
+
+October 18, after 22:26 Europe/Berlin: the owner explicitly authorized another
+attempt with manual approval. Activation and keyboard input succeeded; Titan
+Settings opened, and first/last focus wrapping was verified without toggling
+settings. Persistent Always-allow behavior remains unverified. The earlier stop
+remains the default for unattended window-control retries.
+
+An initial installed-skin/editor comparison found missing title/clock content and
+smaller text in the editor. Full matched-state image comparison and exported
+spacing validation remain pending. See [attended retry](Validation/Client-Comparison/Attended-Retry.md).
+No original skin or client configuration was changed; DirectX remains deferred.
+
 ## Deferred backlog
 
 - [Issue #1](https://github.com/gheitmann/MP1-Skin-Studio/issues/1): assess removal
