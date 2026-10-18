@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -215,8 +215,8 @@ namespace MP1SkinStudio
         Dictionary<string,TextBox> fields=new Dictionary<string,TextBox>();Dictionary<string,string> originals=new Dictionary<string,string>();
         HashSet<string> touchedFields=new HashSet<string>(),mixedFields=new HashSet<string>();
         bool loading;
-        readonly string[] editable={"posX","posY","width","height","label","font","textcolor","texture","textureFocus","textureNoFocus","align","onleft","onright","onup","ondown","hyperlink","textXOff","textYOff","textalign","textvalign","valign","colordiffuse"};
-        readonly string[] labels={"Position X","Position Y","Width","Height","Text / data binding","Font name","Text color · AARRGGBB","Image / texture","Focused image","Unfocused image","Alignment","Navigate left → ID","Navigate right → ID","Navigate up → ID","Navigate down → ID","Target page → Window ID","Text offset X","Text offset Y","Horizontal inner text alignment","Vertical inner text alignment","Vertical text field alignment","Image tint · AARRGGBB"};
+        readonly string[] editable=new[]{"posX","posY","width","height","label","font","textcolor","texture","textureFocus","textureNoFocus","align","onleft","onright","onup","ondown","hyperlink","textXOff","textYOff","textalign","textvalign","valign","colordiffuse"}.Concat(CollectionProperties.Fields.Select(f=>f.Key)).ToArray();
+        readonly string[] labels=new[]{"Position X","Position Y","Width","Height","Text / data binding","Font name","Text color · AARRGGBB","Image / texture","Focused image","Unfocused image","Alignment","Navigate left → ID","Navigate right → ID","Navigate up → ID","Navigate down → ID","Target page → Window ID","Text offset X","Text offset Y","Horizontal inner text alignment","Vertical inner text alignment","Vertical text field alignment","Image tint · AARRGGBB"}.Concat(CollectionProperties.Fields.Select(f=>f.Label)).ToArray();
         public StudioForm(string root)
         {
             Text="MP1 Skin Studio · Prototype 0.9";StartPosition=FormStartPosition.CenterScreen;Size=new Size(1520,960);MinimumSize=new Size(1180,780);
@@ -340,7 +340,9 @@ namespace MP1SkinStudio
             tips.SetToolTip(selectionInfo,c.Source.Path+"\n"+c.IncludeCondition);
             for(int i=0;i<editable.Length;i++)
             {
-                string key=editable[i];var row=new Panel{Width=251,Height=72,Margin=new Padding(0,0,0,3)};
+                string key=editable[i];var collectionProperty=CollectionProperties.Find(key);
+                if(collectionProperty!=null&&SelectedControls().Any(item=>!collectionProperty.AppliesTo(item)))continue;
+                var row=new Panel{Width=251,Height=72,Margin=new Padding(0,0,0,3)};
                 var label=new Label{Text=labels[i],ForeColor=muted,AutoSize=true,Location=new Point(0,0)};row.Controls.Add(label);
                 bool mixed=SelectedControls().Any(item=>item.Get(key)!=c.Get(key));
                 if(mixed)mixedFields.Add(key);
@@ -391,12 +393,14 @@ namespace MP1SkinStudio
             if(selected==null)return;var values=new Dictionary<string,string>();var targets=SelectedControls();
             foreach(var key in editable)
             {
+                if(!fields.ContainsKey(key))continue;
                 string text=fields[key].Text;if(text==originals[key]&&!(mixedFields.Contains(key)&&touchedFields.Contains(key)))continue;
                 if(targets.Any(c=>c.IsBound(key))&&!unlock.Checked)throw new InvalidOperationException("„"+labels[Array.IndexOf(editable,key)]+"” contains a binding in the selection. Explicitly enable “Replace bindings locally”.");
                 if(new[]{"posX","posY","width","height","textXOff","textYOff"}.Contains(key))
                 {int n;if(!Int32.TryParse(text,NumberStyles.Integer,CultureInfo.InvariantCulture,out n)||(key=="width"||key=="height")&&n<=0)throw new InvalidOperationException("For "+key+" enter a valid integer; sizes must be positive.");}
                 if((key=="align"||key=="textalign")&&!new[]{"left","right","center"}.Contains(text))throw new InvalidOperationException("Alignment: left, right or center.");
                 if((key=="valign"||key=="textvalign")&&!new[]{"top","middle","bottom"}.Contains(text))throw new InvalidOperationException("Vertical alignment: top, middle or bottom.");
+                var collectionProperty=CollectionProperties.Find(key);if(collectionProperty!=null)collectionProperty.Validate(text);
                 values[key]=text;
             }
             if(values.Count==0)return;string identity=selected.Key;project.EditMany(targets.Select(c=>new ControlEdit(c,values)),"Change selection properties");RefreshProject(identity);

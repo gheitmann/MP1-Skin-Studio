@@ -1,5 +1,9 @@
 # Complex real-page model gate
 
+The current Probe.cs was subsequently extended with row height and spacing
+edits. The results in this directory remain the original checkpoint; the fresh
+extended run is recorded in ../Collection-Properties/Complex-Page-Results.txt.
+
 Date: October 18, 2026, Europe/Berlin. Product baseline: bb735fc46cde9783329c0f89d174a8ebde2c07f3.
 
 After the prior Windows automation connection failed, the owner reported a

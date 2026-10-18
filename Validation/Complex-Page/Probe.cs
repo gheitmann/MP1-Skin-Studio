@@ -55,14 +55,18 @@ public static class ComplexPageProbe
             report.Add("PASS: 25 preview items update selected-item/count bindings and scroll the last selection into the real list viewport without XML edits.");
             string before=list.Source.Text;
             var untouched=templates.Where(c=>c.Key!=listKey).ToDictionary(c=>c.Key,c=>c.Node.Element.OuterXml);
-            p.Edit(list,new Dictionary<string,string>{{"width","658"},{"textXOff","60"}},"Complex-page list width and text offset");
+            var values=new Dictionary<string,string>{{"width","658"},{"textXOff","60"},{"textureHeight","66"},{"spaceBetweenItems","12"}};
+            foreach(var pair in values){var field=CollectionProperties.Find(pair.Key);if(field!=null){Require(field.AppliesTo(list),"Collection field is not available for the real list.");field.Validate(pair.Value);}}
+            p.Edit(list,values,"Complex-page list geometry");
             Require(p.Sources.Values.Count(s=>s.Changed)==1&&p.Sources.Values.Single(s=>s.Changed).RelativePath==source,"Edit escaped the imported source.");
             Require(p.Controls.Single(c=>c.Key==listKey).Get("width")=="658","List edit missing.");
+            var resized=p.Controls.Single(c=>c.Key==listKey);var resizedRows=CollectionGeometry.Tiles(resized,LayoutTools.Bounds(resized),p.Editor.Collection);
+            Require(resizedRows.Length>1&&resizedRows[0].Bounds.Height==66&&resizedRows[1].Bounds.Y-resizedRows[0].Bounds.Y==78,"Row height or spacing edits were not reflected in geometry.");
             Require(untouched.All(pair=>p.Controls.Single(c=>c.Key==pair.Key).Node.Element.OuterXml==pair.Value),"An inactive view changed.");
             string edited=p.Sources.Values.Single(s=>s.Changed).Text;
             p.UndoChange();Require(!p.Dirty&&p.Controls.Single(c=>c.Key==listKey).Source.Text==before,"Undo was not exact.");
             p.RedoChange();Require(p.Controls.Single(c=>c.Key==listKey).Source.Text==edited,"Redo was not exact.");
-            report.Add("PASS: width/text-offset edits affect only the imported list source, preserve inactive view XML, and undo/redo exactly.");
+            report.Add("PASS: width/text-offset/row-height/spacing edits use compatible property definitions, update row geometry, affect only the imported list source, preserve inactive view XML, and undo/redo exactly.");
             string expected=ProjectFile.ContentSignature(p),projectPath=Path.Combine(output,"Complex-Page.mp1skinproj");
             ProjectFile.Save(p,projectPath);p=ProjectFile.Load(projectPath);
             Require(ProjectFile.ContentSignature(p)==expected&&p.Editor.Collection.Focus==24&&p.Editor.Collection.Items.Count==25,"Project round trip lost XML or preview state.");

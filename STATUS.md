@@ -113,7 +113,7 @@ remaining settings/navigation comparison; no additional input was attempted.
 
 ## Latest continuation checkpoint
 
-October 18, 2026, 20:04-20:05 Europe/Berlin: resumed from GitHub commit
+October 18, 2026, 20:04–20:05 Europe/Berlin: resumed from GitHub commit
 `4d7764d` and verified all 125 tracked baseline files by Git blob hash.
 A fresh build succeeded; fresh core validation is in
 [Resume checkpoint](Validation/Resume-20261018/README.md). Editor source was not changed.
@@ -216,3 +216,21 @@ Fresh console validation: ten dedicated checks and 223 core checks passed,
 zero failures. See [string-condition validation](Validation/String-Conditions/README.md).
 No app GUI, MediaPortal, capture or Computer Use was launched. UI/runtime
 verification remains suspended; DirectX replacement remains deferred.
+
+## Collection property editing
+
+October 19, 2026: added compatible property-panel fields for list row height,
+spacing, icon sizes, filmstrip texture/item/thumbnail sizes and small/large
+thumbnail-grid sizes. Shared catalog definitions control type applicability and
+numeric validation. Mixed selections expose only fields supported by all items;
+existing protection, binding replacement, reset and transaction paths are reused.
+
+Fresh build: 225 core checks passed. The extended real Titan console probe
+passed all eleven stages, including row geometry after height/spacing changes,
+exact undo/redo, project persistence and exported shared XML. Original source
+hashes remain unchanged. See
+[collection property validation](Validation/Collection-Properties/README.md).
+
+The new GUI wiring compiles but has not been exercised or visually inspected.
+No GUI/client launch, window capture or Computer Use was performed. Continue
+model-level core work; manual/UI verification remains pending and DirectX deferred.
