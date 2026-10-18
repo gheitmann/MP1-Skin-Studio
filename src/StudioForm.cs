@@ -215,8 +215,8 @@ namespace MP1SkinStudio
         Dictionary<string,TextBox> fields=new Dictionary<string,TextBox>();Dictionary<string,string> originals=new Dictionary<string,string>();
         HashSet<string> touchedFields=new HashSet<string>(),mixedFields=new HashSet<string>();
         bool loading;
-        readonly string[] editable=new[]{"posX","posY","width","height","label","font","textcolor","texture","textureFocus","textureNoFocus","align","onleft","onright","onup","ondown","hyperlink","textXOff","textYOff","textalign","textvalign","valign","colordiffuse"}.Concat(CollectionProperties.Fields.Select(f=>f.Key)).ToArray();
-        readonly string[] labels=new[]{"Position X","Position Y","Width","Height","Text / data binding","Font name","Text color · AARRGGBB","Image / texture","Focused image","Unfocused image","Alignment","Navigate left → ID","Navigate right → ID","Navigate up → ID","Navigate down → ID","Target page → Window ID","Text offset X","Text offset Y","Horizontal inner text alignment","Vertical inner text alignment","Vertical text field alignment","Image tint · AARRGGBB"}.Concat(CollectionProperties.Fields.Select(f=>f.Label)).ToArray();
+        readonly string[] editable=new[]{"posX","posY","width","height","label","font","textcolor","texture","textureFocus","textureNoFocus","align","onleft","onright","onup","ondown","hyperlink","textXOff","textYOff","textalign","textvalign","valign","colordiffuse","visible"}.Concat(CollectionProperties.Fields.Select(f=>f.Key)).ToArray();
+        readonly string[] labels=new[]{"Position X","Position Y","Width","Height","Text / data binding","Font name","Text color · AARRGGBB","Image / texture","Focused image","Unfocused image","Alignment","Navigate left → ID","Navigate right → ID","Navigate up → ID","Navigate down → ID","Target page → Window ID","Text offset X","Text offset Y","Horizontal inner text alignment","Vertical inner text alignment","Vertical text field alignment","Image tint · AARRGGBB","Visibility condition"}.Concat(CollectionProperties.Fields.Select(f=>f.Label)).ToArray();
         public StudioForm(string root)
         {
             Text="MP1 Skin Studio · Prototype 0.9";StartPosition=FormStartPosition.CenterScreen;Size=new Size(1520,960);MinimumSize=new Size(1180,780);
@@ -382,7 +382,7 @@ namespace MP1SkinStudio
                 if(mixed)origin="Mixed values · set for all";
                 var source=new Label{Text=origin,ForeColor=value!=null&&value.Local?Color.FromArgb(110,176,205):Color.FromArgb(124,141,160),AutoEllipsis=true,Width=247,Height=17,Location=new Point(0,50),Font=new Font("Segoe UI",8)};row.Controls.Add(source);
                 fields[key]=box;originals[key]=box.Text;properties.Controls.Add(row);
-                tips.SetToolTip(box,key+"\n"+origin+(c.IsBound(key)?"\n#Bindings are replaced only with explicit approval.":""));
+                tips.SetToolTip(box,key+"\n"+origin+(key=="visible"?"\nAn empty condition adds no restriction; parent and include conditions still apply. Unsupported runtime expressions remain unresolved in the preview and are preserved in XML.":"")+(c.IsBound(key)?"\n#Bindings are replaced only with explicit approval.":""));
             }
             properties.ResumeLayout();UpdateProtectionTools();int id;if(SkinProject.Focusable(c)&&Int32.TryParse(c.Get("id"),out id)&&id>0)state.FocusId=id;
             UpdatePreviewTree();SyncElementTreeSelection();

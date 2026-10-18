@@ -249,3 +249,17 @@ cross-page undo/redo and save/reopen, and export contains all changes. Original
 files remain unchanged. See [page loading validation](Validation/Page-Loading/README.md).
 No GUI/client launch, capture or Computer Use was performed. Visual/UI/runtime
 verification remains pending and DirectX replacement stays deferred.
+
+## Visibility condition editing
+
+October 19, 2026: added Visibility condition to the property panel, reusing
+local reset/provenance, binding protection, multi-selection and transaction
+behavior. Unknown runtime expressions are preserved and remain unresolved in
+preview. Parent/include conditions continue to apply to empty local conditions.
+
+Fresh console core run: 228 checks passed, zero failures, including new group
+visibility/descendant/attribute/undo tests and unsupported-condition project/ZIP
+preservation. See [visibility editing](Validation/Visibility-Editing/README.md).
+The UI wiring is compiled but remains manually unverified. No editor/client GUI,
+capture or Computer Use was used; the automation suspension and deferred DirectX
+task remain in force.
