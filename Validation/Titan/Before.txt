@@ -1,0 +1,14 @@
+MP1 Skin Studio - complete XML loading and editing probe
+Skin: Titan
+XML files loaded byte-identically: 528
+XML errors: 0
+Themes including default: 2
+Page variants loaded: 602
+Page loading errors: 0
+Edit + exact undo: 586
+Editing errors: 0
+Project/export probes: 10
+Modified original files: 0
+
+Warnings are model findings, not fully proven MP1 runtime errors.
+Rendering, plugins and navigation in MediaPortal have not been fully validated.

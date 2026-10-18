@@ -13,20 +13,20 @@ namespace MP1SkinStudio
         {
             var bar=new FlowLayoutPanel{Dock=DockStyle.Top,Height=40,WrapContents=false,Padding=new Padding(8,1,0,0)};
             var minus=ButtonFor("−",()=>canvas.StepZoom(false));minus.Width=32;minus.Margin=new Padding(0,0,4,0);bar.Controls.Add(minus);
-            zoomLabel=new Label{Text="Einpassen",Width=57,Height=34,TextAlign=ContentAlignment.MiddleCenter,ForeColor=ink};bar.Controls.Add(zoomLabel);
+            zoomLabel=new Label{Text="Fit",Width=57,Height=34,TextAlign=ContentAlignment.MiddleCenter,ForeColor=ink};bar.Controls.Add(zoomLabel);
             var plus=ButtonFor("+",()=>canvas.StepZoom(true));plus.Width=32;bar.Controls.Add(plus);
-            var fit=ButtonFor("Einpassen",canvas.FitView);fit.Width=85;bar.Controls.Add(fit);
+            var fit=ButtonFor("Fit",canvas.FitView);fit.Width=85;bar.Controls.Add(fit);
             var native=ButtonFor("100 %",()=>{if(project!=null)canvas.NativeView();});native.Width=65;bar.Controls.Add(native);
             protectButton=ButtonFor("Element ▾",()=>ShowProtectionMenu(protectButton));protectButton.Width=101;bar.Controls.Add(protectButton);
-            var check=ButtonFor("Prüfen",ShowAudit);check.Width=72;bar.Controls.Add(check);tips.SetToolTip(check,"Geöffnete Seite mit Includes prüfen; Fundstellen direkt anspringen. Tastenkürzel F8.");
-            var hint=new Label{Text="Mausrad: Zoom · Mitte: Schieben",Width=213,Height=34,TextAlign=ContentAlignment.MiddleLeft,ForeColor=muted};bar.Controls.Add(hint);
-            tips.SetToolTip(bar,"Mausrad über der Arbeitsfläche: Zoom am Mauszeiger. Mittlere Maustaste ziehen: Ansicht verschieben. Escape bricht Verschieben ab.");
-            tips.SetToolTip(protectButton,"Ebenenreihenfolge ändern, Elemente entfernen, sperren oder im Editor ausblenden. Auch über Rechtsklick im Elementbaum erreichbar.");
+            var check=ButtonFor("Audit",ShowAudit);check.Width=72;bar.Controls.Add(check);tips.SetToolTip(check,"Audit the open page and includes; jump directly to findings. Shortcut: F8.");
+            var hint=new Label{Text="Mouse wheel: Zoom · Middle button: Pan",Width=213,Height=34,TextAlign=ContentAlignment.MiddleLeft,ForeColor=muted};bar.Controls.Add(hint);
+            tips.SetToolTip(bar,"Mouse wheel over canvas: zoom around the pointer. Drag middle button: pan. Escape cancels dragging.");
+            tips.SetToolTip(protectButton,"Change layer order, remove, lock or hide elements in the editor. Also available through the element-tree context menu.");
             canvas.ViewChanged+=()=>{UpdateViewTools();UpdateProjectCaption();};canvas.Resize+=(s,e)=>UpdateViewTools();
             tree.NodeMouseClick+=(s,e)=>
             {
                 if(e.Button!=MouseButtons.Right||!(e.Node.Tag is SkinControl))return;
-                if(PendingProperties()){SyncElementTreeSelection();ShowNotice("Offene Eigenschaftseingaben zuerst übernehmen.");return;}
+                if(PendingProperties()){SyncElementTreeSelection();ShowNotice("Apply pending property edits first.");return;}
                 var control=(SkinControl)e.Node.Tag;
                 if(!canvas.SelectedKeys.Contains(control.Key))SelectControl(control);
                 var menu=ProtectionMenu();menu.Show(tree,e.Location);
@@ -35,7 +35,7 @@ namespace MP1SkinStudio
         }
         void UpdateViewTools(){if(zoomLabel!=null)zoomLabel.Text=canvas.ZoomText;}
         string EditorMark(SkinControl control)
-        {return (project.IsLocked(control)?"[S] ":"")+(project.IsEditorHidden(control)?"[A] ":"");}
+        {return (project.IsLocked(control)?"[L] ":"")+(project.IsEditorHidden(control)?"[H] ":"");}
         void ShowProtectionMenu(Control anchor)
         {if(project==null)return;var menu=ProtectionMenu();menu.Show(anchor,new Point(0,anchor.Height));}
         ContextMenuStrip ProtectionMenu()
@@ -43,12 +43,12 @@ namespace MP1SkinStudio
             var menu=StudioMenus.For(this,"protection");var controls=SelectedControls();
             bool locked=controls.Length>0&&controls.All(c=>project.Editor.Locked.Contains(c.Key));
             bool hidden=controls.Length>0&&controls.All(c=>project.Editor.Hidden.Contains(c.Key));
-            var lockItem=menu.Items.Add(locked?"Auswahl entsperren":"Auswahl sperren",null,(s,e)=>SetProtection(true,!locked));lockItem.Enabled=controls.Length>0;
-            var hideItem=menu.Items.Add(hidden?"Auswahl wieder einblenden":"Auswahl nur im Editor ausblenden",null,(s,e)=>SetProtection(false,!hidden));hideItem.Enabled=controls.Length>0;
+            var lockItem=menu.Items.Add(locked?"Unlock selection":"Lock selection",null,(s,e)=>SetProtection(true,!locked));lockItem.Enabled=controls.Length>0;
+            var hideItem=menu.Items.Add(hidden?"Show selection again":"Hide selection in editor only",null,(s,e)=>SetProtection(false,!hidden));hideItem.Enabled=controls.Length>0;
             AddStructureCommands(menu);AddGroupCommands(menu);AddTextCommands(menu);AddVisibilityCommands(menu);
             menu.Items.Add(new ToolStripSeparator());
-            menu.Items.Add("Alle Editor-Ausblendungen aufheben",null,(s,e)=>{project.Editor.Hidden.Clear();RefreshProject(selected==null?null:selected.Key);}).Enabled=project.Editor.Hidden.Count>0;
-            menu.Items.Add("Alle Sperren aufheben",null,(s,e)=>{project.Editor.Locked.Clear();RefreshProject(selected==null?null:selected.Key);}).Enabled=project.Editor.Locked.Count>0;
+            menu.Items.Add("Show all editor-hidden elements",null,(s,e)=>{project.Editor.Hidden.Clear();RefreshProject(selected==null?null:selected.Key);}).Enabled=project.Editor.Hidden.Count>0;
+            menu.Items.Add("Unlock all elements",null,(s,e)=>{project.Editor.Locked.Clear();RefreshProject(selected==null?null:selected.Key);}).Enabled=project.Editor.Locked.Count>0;
             return menu;
         }
         void SetProtection(bool locking,bool enabled)
@@ -56,7 +56,7 @@ namespace MP1SkinStudio
             if(project==null)return;var flags=locking?project.Editor.Locked:project.Editor.Hidden;
             foreach(var control in SelectedControls()){if(enabled)flags.Add(control.Key);else flags.Remove(control.Key);}
             RefreshProject(selected==null?null:selected.Key);
-            ShowNotice(locking?"Elementschutz aktualisiert. [S] im Baum: gesperrt; auch enthaltene Controls sind geschützt.":"Editoransicht aktualisiert. [A] im Baum: ausgeblendet; das XML-visible bleibt erhalten.");
+            ShowNotice(locking?"Element protection updated. [L] in the tree means locked; child controls are also protected.":"Editor view updated. [H] in the tree means hidden; XML visibility is preserved.");
         }
         void UpdateProtectionTools()
         {
@@ -71,33 +71,33 @@ namespace MP1SkinStudio
         {
             PrepareMultiPreview();SetProtection(true,true);
             canvas.NativeView();
-            ShowNotice("[S] = gesperrt · Mausrad zoomt · mittlere Maustaste verschiebt · Einpassen stellt die Gesamtansicht her");
+            ShowNotice("[L] = locked · Mouse wheel zooms · Middle button pans · Fit shows the full skin");
         }
         void RunViewportUiSmoke(string directory,Action<bool,string> verify)
         {
             LoadProject(DemoRoot(),"demo.xml");canvas.Update();
             var anchor=new Point(canvas.Width/2+57,canvas.Height/2-31);var delta=canvas.ExerciseZoom(anchor,240);
-            verify(Math.Abs(delta.X)<.01&&Math.Abs(delta.Y)<.01&&project.Editor.Zoom>1,"Mausrad erhält den logischen Punkt unter dem Mauszeiger");
+            verify(Math.Abs(delta.X)<.01&&Math.Abs(delta.Y)<.01&&project.Editor.Zoom>1,"Mouse-wheel zoom preserves the logical point under the pointer");
             double oldPan=project.Editor.PanX;canvas.ExercisePan(70,30);
-            verify(project.Editor.PanX>oldPan&&!project.Dirty&&project.Undo.Count==0,"Mittlere Maustaste verschiebt Ansicht ohne XML oder Undo-Schritt");
-            verify(SessionNeedsSaving(),"Reine Ansichtsänderung wird zum Sichern im Projekt vorgemerkt");
-            canvas.NativeView();verify(canvas.ZoomText=="100 %","100-Prozent-Schaltfläche zeigt einen Skinpixel pro Canvaspixel");
-            canvas.FitView();verify(project.Editor.Zoom==1&&project.Editor.PanX==0&&project.Editor.PanY==0&&!SessionNeedsSaving(),"Einpassen stellt Ausgangsansicht und Sicherungsstatus wieder her");
-            SelectControl(project.Controls.First(c=>c.Get("description")=="Filme"));SetProtection(true,true);
-            verify(project.IsLocked(selected)&&fields.Values.All(box=>box.ReadOnly)&&SessionNeedsSaving(),"Gesperrtes Element bleibt im Baum erreichbar; Eigenschaften sind schreibgeschützt");
+            verify(project.Editor.PanX>oldPan&&!project.Dirty&&project.Undo.Count==0,"Middle-button panning changes the view without XML edits or undo steps");
+            verify(SessionNeedsSaving(),"View-only changes mark the project for saving");
+            canvas.NativeView();verify(canvas.ZoomText=="100 %","The 100-percent button displays one skin pixel per canvas pixel");
+            canvas.FitView();verify(project.Editor.Zoom==1&&project.Editor.PanX==0&&project.Editor.PanY==0&&!SessionNeedsSaving(),"Fit restores the initial view and saved-state status");
+            SelectControl(project.Controls.First(c=>c.Get("description")=="Movies"));SetProtection(true,true);
+            verify(project.IsLocked(selected)&&fields.Values.All(box=>box.ReadOnly)&&SessionNeedsSaving(),"Locked elements remain accessible in the tree with read-only properties");
             string lockedKey=selected.Key,originalX=selected.Get("posX");canvas.Update();canvas.ExerciseDrag(selected,50,40,false);
-            verify(project.Controls.First(c=>c.Key==lockedKey).Get("posX")==originalX,"Canvas-Hit-Test überspringt gesperrtes Element beim Drag");
+            verify(project.Controls.First(c=>c.Key==lockedKey).Get("posX")==originalX,"Canvas hit testing skips locked elements during dragging");
             while(project.Undo.Count>0)project.UndoChange();RefreshProject(lockedKey);SelectControl(project.Controls.First(c=>c.Key==lockedKey));
             bool rejected=false;fields["width"].Text="605";try{Apply();}catch(InvalidOperationException){rejected=true;}
-            verify(rejected&&!project.Dirty,"Elementschutz blockiert auch direkte Eigenschaftsübernahme");
-            SelectControl(project.Controls.First(c=>c.Get("description")=="Serien"),true,false);rejected=false;
+            verify(rejected&&!project.Dirty,"Element protection also blocks direct property application");
+            SelectControl(project.Controls.First(c=>c.Get("description")=="Series"),true,false);rejected=false;
             try{AlignSelection("left");}catch(InvalidOperationException){rejected=true;}
-            verify(rejected&&!project.Dirty,"Ein gesperrtes Element blockiert gesamte Ausrichten-Aktion");
+            verify(rejected&&!project.Dirty,"A locked element blocks the entire alignment action");
             SetProtection(true,false);SetProtection(false,true);canvas.ShowHidden=true;
-            verify(SelectedControls().All(c=>!canvas.ExerciseDrawn(c))&&!project.Dirty,"Editor-Ausblendung gilt auch bei aktivem Versteckte-zeigen-Schalter");canvas.ShowHidden=false;
-            canvas.StepZoom(true);string file=Path.Combine(directory,"Ansicht.mp1skinproj");SaveSession(file);ResumeSession(file);
-            verify(project.Editor.Hidden.Count==2&&project.Editor.Zoom>1&&!SessionNeedsSaving()&&!project.Dirty,"Projektöffnung stellt Ausblendungen und Zoom ohne XML-Änderung wieder her");
-            project.Editor.Hidden.Clear();RefreshProject(selected.Key);verify(SessionNeedsSaving(),"Einblenden nach gespeichertem Stand markiert Editorprojekt als geändert");
+            verify(SelectedControls().All(c=>!canvas.ExerciseDrawn(c))&&!project.Dirty,"Editor hiding remains effective when showing conditionally hidden controls");canvas.ShowHidden=false;
+            canvas.StepZoom(true);string file=Path.Combine(directory,"View.mp1skinproj");SaveSession(file);ResumeSession(file);
+            verify(project.Editor.Hidden.Count==2&&project.Editor.Zoom>1&&!SessionNeedsSaving()&&!project.Dirty,"Opening projects restores hiding and zoom without XML edits");
+            project.Editor.Hidden.Clear();RefreshProject(selected.Key);verify(SessionNeedsSaving(),"Showing elements after saving marks the editor project as changed");
             LoadProject(DemoRoot(),"demo.xml");
         }
     }

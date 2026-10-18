@@ -13,17 +13,17 @@ namespace MP1SkinStudio
         public bool AllowShared{get{return shared.Checked;}}
         public DeleteControlsDialog(DeletionPlan value)
         {
-            plan=value;Text="Elemente entfernen — MP1 Skin Studio";Size=new Size(1100,650);MinimumSize=new Size(900,570);StartPosition=FormStartPosition.CenterParent;AutoScaleMode=AutoScaleMode.None;Font=new Font("Segoe UI",9.5f);BackColor=Color.FromArgb(26,33,44);ForeColor=Color.FromArgb(224,235,245);
+            plan=value;Text="Remove Elements — MP1 Skin Studio";Size=new Size(1100,650);MinimumSize=new Size(900,570);StartPosition=FormStartPosition.CenterParent;AutoScaleMode=AutoScaleMode.None;Font=new Font("Segoe UI",9.5f);BackColor=Color.FromArgb(26,33,44);ForeColor=Color.FromArgb(224,235,245);
             var top=new TextBox{Dock=DockStyle.Top,Height=130,Multiline=true,ReadOnly=true,ScrollBars=ScrollBars.Vertical,BackColor=BackColor,ForeColor=ForeColor,BorderStyle=BorderStyle.None};
-            top.Text="Entfernen: "+plan.Roots.Length+" ausgewählte Elemente / Gruppen, insgesamt "+plan.RemovedKeys.Count+" Controls.\r\n"+String.Join("\r\n",plan.Roots.Select(c=>c.Name+" — "+c.Source.RelativePath))+"\r\n\r\n"+plan.BoundControls+" Controls enthalten Bindungen; sie werden mit dem Element entfernt. Originaldateien bleiben unverändert. Die Aktion ist vollständig rückgängig zu machen.";
-            var list=new ListView{Dock=DockStyle.Fill,View=View.Details,FullRowSelect=true,HideSelection=false,BackColor=Color.FromArgb(18,24,33),ForeColor=ForeColor};list.Columns.Add("Quelle",210);list.Columns.Add("Verweisendes Element",180);list.Columns.Add("Eigenschaft",140);list.Columns.Add("ID",70);list.Columns.Add("Vorhandener Verweis",430);
+            top.Text="Remove: "+plan.Roots.Length+" selected elements / groups, containing "+plan.RemovedKeys.Count+" Controls.\r\n"+String.Join("\r\n",plan.Roots.Select(c=>c.Name+" — "+c.Source.RelativePath))+"\r\n\r\n"+plan.BoundControls+" controls contain bindings; these are removed with the element. Original files remain unchanged. The action can be fully undone.";
+            var list=new ListView{Dock=DockStyle.Fill,View=View.Details,FullRowSelect=true,HideSelection=false,BackColor=Color.FromArgb(18,24,33),ForeColor=ForeColor};list.Columns.Add("Source",210);list.Columns.Add("Referring element",180);list.Columns.Add("Property",140);list.Columns.Add("ID",70);list.Columns.Add("Existing reference",430);
             foreach(var item in plan.References)list.Items.Add(new ListViewItem(new[]{item.Source,item.Name,item.Property,item.TargetId.ToString(),item.Value}));
             var approvals=new FlowLayoutPanel{Dock=DockStyle.Bottom,Height=142,FlowDirection=FlowDirection.TopDown,WrapContents=false,Padding=new Padding(10,6,6,0)};
-            approvals.Controls.Add(new Label{Text=plan.References.Count+" mögliche Verweise in der geöffneten Seite samt geladenen Includes. Andere Seiten und dynamische Verweise werden nicht vollständig geprüft.",Width=1020,Height=39});
-            references.Text="Fundstellen geprüft: vorhandene Verweise beim Entfernen unverändert stehen lassen";references.AutoSize=true;references.Visible=plan.References.Count>0;references.CheckedChanged+=(s,e)=>UpdateRemove();approvals.Controls.Add(references);
-            shared.Text="Aus eingebundenen Quelldateien entfernen; die Änderung gilt für alle Verwendungen";shared.AutoSize=true;shared.Visible=plan.SharedFiles.Length>0;shared.CheckedChanged+=(s,e)=>UpdateRemove();approvals.Controls.Add(shared);
-            approvals.Controls.Add(new Label{Text=plan.SharedFiles.Length==0?"Die Quelldatei kann auch von anderen Seiten verwendet werden. Vor Einsatz im vollständigen Skin prüfen.":"Eingebundene Quellen: "+String.Join(", ",plan.SharedFiles),Width=1020,Height=38});
-            var bottom=new FlowLayoutPanel{Dock=DockStyle.Bottom,Height=53,FlowDirection=FlowDirection.RightToLeft,Padding=new Padding(12,8,12,8)};remove.Text="Auswahl entfernen";remove.Width=160;remove.Height=33;remove.FlatStyle=FlatStyle.Flat;remove.BackColor=Color.FromArgb(145,62,57);remove.ForeColor=ForeColor;remove.Click+=(s,e)=>AcceptRemoval();bottom.Controls.Add(remove);var cancel=new Button{Text="Abbrechen",Width=112,Height=33,FlatStyle=FlatStyle.Flat,ForeColor=ForeColor,DialogResult=DialogResult.Cancel};bottom.Controls.Add(cancel);CancelButton=cancel;
+            approvals.Controls.Add(new Label{Text=plan.References.Count+" possible references on the open page and loaded includes. Other pages and dynamic references are not fully checked.",Width=1020,Height=39});
+            references.Text="References reviewed: leave existing references unchanged when removing";references.AutoSize=true;references.Visible=plan.References.Count>0;references.CheckedChanged+=(s,e)=>UpdateRemove();approvals.Controls.Add(references);
+            shared.Text="Remove from included source files; the change affects all uses";shared.AutoSize=true;shared.Visible=plan.SharedFiles.Length>0;shared.CheckedChanged+=(s,e)=>UpdateRemove();approvals.Controls.Add(shared);
+            approvals.Controls.Add(new Label{Text=plan.SharedFiles.Length==0?"Other pages may also use this source file. Check it before applying the full skin.":"Included sources: "+String.Join(", ",plan.SharedFiles),Width=1020,Height=38});
+            var bottom=new FlowLayoutPanel{Dock=DockStyle.Bottom,Height=53,FlowDirection=FlowDirection.RightToLeft,Padding=new Padding(12,8,12,8)};remove.Text="Remove selection";remove.Width=160;remove.Height=33;remove.FlatStyle=FlatStyle.Flat;remove.BackColor=Color.FromArgb(145,62,57);remove.ForeColor=ForeColor;remove.Click+=(s,e)=>AcceptRemoval();bottom.Controls.Add(remove);var cancel=new Button{Text="Cancel",Width=112,Height=33,FlatStyle=FlatStyle.Flat,ForeColor=ForeColor,DialogResult=DialogResult.Cancel};bottom.Controls.Add(cancel);CancelButton=cancel;
             Controls.Add(list);Controls.Add(approvals);Controls.Add(bottom);Controls.Add(top);UpdateRemove();
         }
         void UpdateRemove(){remove.Enabled=(plan.References.Count==0||references.Checked)&&(plan.SharedFiles.Length==0||shared.Checked);}
@@ -60,30 +60,30 @@ namespace MP1SkinStudio
         }
         bool StructuralAction(Action action)
         {
-            if(PendingProperties())throw new InvalidOperationException("Andere Eigenschaften haben noch nicht übernommene Eingaben. Diese zuerst übernehmen.");
-            var before=CaptureSelection();int steps=project.Undo.Count;action();if(project.Undo.Count==steps){ShowNotice("Die Ebene liegt bereits an dieser Grenze ihres XML-Bereichs.");return false;}
+            if(PendingProperties())throw new InvalidOperationException("Other properties have pending edits. Apply them first.");
+            var before=CaptureSelection();int steps=project.Undo.Count;action();if(project.Undo.Count==steps){ShowNotice("The layer is already at this XML section boundary.");return false;}
             var change=project.Undo.Peek();change.SelectionBefore=before;RestoreSelection(TranslateSelection(before));change.SelectionAfter=CaptureSelection();
             return true;
         }
         void ReorderSelection(string mode)
         {
-            if(SelectedControls().Length!=1)throw new InvalidOperationException("Für die Ebenenreihenfolge genau ein Control oder eine Gruppe auswählen.");
-            if(StructuralAction(()=>project.ReorderControl(selected,mode)))ShowNotice("Ebenenreihenfolge geändert. Die Auswahl sowie Sperren und Ausblendungen folgen dem Control.");
+            if(SelectedControls().Length!=1)throw new InvalidOperationException("Select exactly one control or group to change layer order.");
+            if(StructuralAction(()=>project.ReorderControl(selected,mode)))ShowNotice("Layer order changed. Selection, locks and hidden state follow the control.");
         }
         void DeleteSelection()
         {
-            if(PendingProperties())throw new InvalidOperationException("Andere Eigenschaften haben noch nicht übernommene Eingaben. Diese zuerst übernehmen.");
+            if(PendingProperties())throw new InvalidOperationException("Other properties have pending edits. Apply them first.");
             var controls=SelectedControls();var plan=project.InspectDeletion(controls);
             using(var dialog=new DeleteControlsDialog(plan))if(dialog.ShowDialog(this)==DialogResult.OK)StructuralAction(()=>project.DeleteControls(controls,dialog.AllowReferences,dialog.AllowShared));
         }
         void AddStructureCommands(ContextMenuStrip menu)
         {
             bool any=SelectedControls().Length>0,single=SelectedControls().Length==1,locked=SelectedControls().Any(c=>project.IsLocked(c));menu.Items.Add(new ToolStripSeparator());
-            string[] modes={"forward","backward","front","back"},names={"Eine Ebene nach vorn","Eine Ebene nach hinten","Ganz nach vorn","Ganz nach hinten"};
+            string[] modes={"forward","backward","front","back"},names={"Move forward one layer","Move backward one layer","Bring to front","Send to back"};
             for(int index=0;index<modes.Length;index++){string mode=modes[index];menu.Items.Add(names[index],null,(s,e)=>Attempt(()=>ReorderSelection(mode))).Enabled=single&&!locked;}
-            menu.Items.Add("Auswahl entfernen …",null,(s,e)=>Attempt(DeleteSelection)).Enabled=any&&!locked;
+            menu.Items.Add("Remove Selection …",null,(s,e)=>Attempt(DeleteSelection)).Enabled=any&&!locked;
         }
         public void RenderDeletionTo(string path){using(var dialog=new DeleteControlsDialog(project.InspectDeletion(SelectedControls())))dialog.RenderTo(path);}
-        public void PrepareLayersPreview(){LoadProject(DemoRoot(),"demo.ebenen.xml");SelectControl(project.Controls.First(c=>c.Get("description")=="Ebene A"));}
+        public void PrepareLayersPreview(){LoadProject(DemoRoot(),"demo.layers.xml");SelectControl(project.Controls.First(c=>c.Get("description")=="Layer A"));}
     }
 }

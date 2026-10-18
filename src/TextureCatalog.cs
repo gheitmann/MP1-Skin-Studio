@@ -37,7 +37,7 @@ namespace MP1SkinStudio
                     if(!extensions.Contains(Path.GetExtension(path))||(File.GetAttributes(path)&FileAttributes.ReparsePoint)!=0)continue;
                     string relative=path.Substring(root.TrimEnd('\\').Length+1).Replace('\\','/');
                     found[relative]=new TextureAsset{RelativePath=relative,PhysicalPath=path,FromTheme=fromTheme,Size=new FileInfo(path).Length};
-                    if(found.Count>20000)throw new InvalidOperationException("Mehr als 20.000 Bilddateien. Den Skinordner auf die benötigten Medien begrenzen.");
+                    if(found.Count>20000)throw new InvalidOperationException("More than 20,000 image files. Limit the skin directory to the required media.");
                 }
                 foreach(string child in Directory.GetDirectories(folder))todo.Push(child);
             }
@@ -47,12 +47,12 @@ namespace MP1SkinStudio
             error=null;
             try
             {
-                if(new FileInfo(asset.PhysicalPath).Length>32L*1024*1024)throw new InvalidDataException("Bild ist größer als 32 MB.");
+                if(new FileInfo(asset.PhysicalPath).Length>32L*1024*1024)throw new InvalidDataException("Image exceeds 32 MB.");
                 using(var stream=new FileStream(asset.PhysicalPath,FileMode.Open,FileAccess.Read,FileShare.ReadWrite))
                 using(var image=Image.FromStream(stream,false,false))
                 {
                     asset.Width=image.Width;asset.Height=image.Height;
-                    if(image.Width>8192||image.Height>8192||(long)image.Width*image.Height>32000000)throw new InvalidDataException("Bildabmessungen sind zu groß für die Vorschau.");
+                    if(image.Width>8192||image.Height>8192||(long)image.Width*image.Height>32000000)throw new InvalidDataException("Image dimensions are too large for previews.");
                     var result=new Bitmap(width,height,PixelFormat.Format32bppArgb);
                     using(var g=Graphics.FromImage(result))
                     {g.Clear(Color.Transparent);g.InterpolationMode=InterpolationMode.HighQualityBicubic;float ratio=Math.Min(width/(float)image.Width,height/(float)image.Height);float w=image.Width*ratio,h=image.Height*ratio;g.DrawImage(image,(width-w)/2,(height-h)/2,w,h);}
@@ -67,11 +67,11 @@ namespace MP1SkinStudio
         public static void Generate(string root)
         {
             string media=Path.Combine(root,"Media","Studio");Directory.CreateDirectory(media);
-            SavePanel(Path.Combine(media,"Schaltflaeche-blau.png"),470,130,Color.FromArgb(36,133,201),Color.FromArgb(15,64,104));
-            SavePanel(Path.Combine(media,"Schaltflaeche-dunkel.png"),470,130,Color.FromArgb(43,66,87),Color.FromArgb(20,33,48));
-            SavePanel(Path.Combine(media,"Schaltflaeche-tuerkis.png"),470,130,Color.FromArgb(36,154,147),Color.FromArgb(12,64,79));
+            SavePanel(Path.Combine(media,"Button-blue.png"),470,130,Color.FromArgb(36,133,201),Color.FromArgb(15,64,104));
+            SavePanel(Path.Combine(media,"Button-dark.png"),470,130,Color.FromArgb(43,66,87),Color.FromArgb(20,33,48));
+            SavePanel(Path.Combine(media,"Button-turquoise.png"),470,130,Color.FromArgb(36,154,147),Color.FromArgb(12,64,79));
             SavePanel(Path.Combine(media,"Panel-transparent.png"),600,360,Color.FromArgb(190,36,66,96),Color.FromArgb(105,10,24,40));
-            string[] names={"Symbol-Film.png","Symbol-Musik.png","Symbol-Bilder.png"};
+            string[] names={"Icon-Movie.png","Icon-Music.png","Icon-Pictures.png"};
             for(int i=0;i<names.Length;i++)using(var bitmap=new Bitmap(200,200))
             {
                 using(var g=Graphics.FromImage(bitmap))using(var pen=new Pen(Color.FromArgb(127,210,255),10))

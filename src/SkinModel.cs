@@ -37,12 +37,12 @@ namespace MP1SkinStudio
         public static SkinSource Read(string path, string relative)
         {
             var bytes = File.ReadAllBytes(path);
-            if (bytes.Length > 20 * 1024 * 1024) throw new InvalidDataException("XML-Datei ist größer als 20 MB: " + relative);
+            if (bytes.Length > 20 * 1024 * 1024) throw new InvalidDataException("XML file exceeds 20 MB: " + relative);
             int offset = 0;
             Encoding enc = new UTF8Encoding(false, true);
             byte[] bom = new byte[0];
             if (bytes.Length >= 4 && ((bytes[0] == 0xff && bytes[1] == 0xfe && bytes[2] == 0 && bytes[3] == 0) || (bytes[0] == 0 && bytes[1] == 0 && bytes[2] == 0xfe && bytes[3] == 0xff)))
-                throw new InvalidDataException("UTF-32 wird im Prototyp nicht unterstützt.");
+                throw new InvalidDataException("UTF-32 is unsupported by this prototype.");
             if (bytes.Length >= 3 && bytes[0] == 239 && bytes[1] == 187 && bytes[2] == 191)
             { offset = 3; bom = new byte[] {239,187,191}; }
             else if (bytes.Length >= 2 && bytes[0] == 255 && bytes[1] == 254)
@@ -58,7 +58,7 @@ namespace MP1SkinStudio
                 string prefix = System.Text.Encoding.ASCII.GetString(bytes, 0, Math.Min(bytes.Length, 300));
                 var m = Regex.Match(prefix, "^\\s*<\\?xml[^?]*encoding\\s*=\\s*['\"]([^'\"]+)['\"]", RegexOptions.IgnoreCase);
                 if (m.Success) enc = System.Text.Encoding.GetEncoding(m.Groups[1].Value, EncoderFallback.ExceptionFallback, DecoderFallback.ExceptionFallback);
-                if (enc.CodePage == 1200 || enc.CodePage == 1201) throw new InvalidDataException("XML-Kodierung und Dateibytes stimmen nicht überein.");
+                if (enc.CodePage == 1200 || enc.CodePage == 1201) throw new InvalidDataException("XML encoding does not match the file bytes.");
             }
             var s = new SkinSource { Path = path, RelativePath = relative, Encoding = enc, Preamble = bom };
             s.Text = s.Original = enc.GetString(bytes, offset, bytes.Length - offset);
@@ -107,7 +107,7 @@ namespace MP1SkinStudio
                 else
                 {
                     var match = Regex.Match(Text.Substring(p + 1, end - p - 1), "^([^\\s/>]+)");
-                    if (!match.Success) throw new InvalidDataException("Ungültiger XML-Tag.");
+                    if (!match.Success) throw new InvalidDataException("Invalid XML tag.");
                     var n = new ElementSpan { Name = match.Groups[1].Value, Start = p, OpenEnd = end + 1,
                         Empty = Text[end - 1] == '/', CloseStart = end + 1, End = end + 1 };
                     if (stack.Count > 0) { n.Parent = stack.Peek(); n.Parent.Children.Add(n); }
@@ -117,10 +117,10 @@ namespace MP1SkinStudio
                 p = end + 1;
             }
             var xmlElements = doc.SelectNodes("//*").Cast<XmlElement>().ToArray();
-            if (xmlElements.Length != Elements.Count) throw new InvalidDataException("XML-Quellzuordnung fehlgeschlagen.");
+            if (xmlElements.Length != Elements.Count) throw new InvalidDataException("XML source mapping failed.");
             for (int i = 0; i < Elements.Count; i++)
             {
-                if (Elements[i].Name != xmlElements[i].Name) throw new InvalidDataException("XML-Quellzuordnung ist uneindeutig.");
+                if (Elements[i].Name != xmlElements[i].Name) throw new InvalidDataException("XML source mapping is ambiguous.");
                 Elements[i].Element = xmlElements[i];
             }
             Root = Elements.First();
@@ -130,7 +130,7 @@ namespace MP1SkinStudio
         public void SetControlProperties(int ordinal, IDictionary<string, string> values)
         {
             var controls = Elements.Where(n => n.Name == "control").ToArray();
-            if (ordinal < 0 || ordinal >= controls.Length) throw new InvalidOperationException("Control nicht mehr vorhanden.");
+            if (ordinal < 0 || ordinal >= controls.Length) throw new InvalidOperationException("Control no longer exists.");
             var control = controls[ordinal];
             var patches = new List<Tuple<int, int, string>>();
             var additions = new StringBuilder();
@@ -141,7 +141,7 @@ namespace MP1SkinStudio
             foreach (var kv in values)
             {
                 if (!Regex.IsMatch(kv.Key, "^[a-zA-Z][a-zA-Z0-9]*$") || kv.Key == "id" || kv.Key == "type")
-                    throw new InvalidOperationException("Diese Eigenschaft darf nicht verändert werden: " + kv.Key);
+                    throw new InvalidOperationException("This property cannot be changed: " + kv.Key);
                 var node = control.Child(kv.Key);
                 if (node == null)
                 {
@@ -150,7 +150,7 @@ namespace MP1SkinStudio
                 }
                 else
                 {
-                    if (node.Children.Count > 0) throw new InvalidOperationException("Verschachtelte XML-Eigenschaft bleibt geschützt: " + kv.Key);
+                    if (node.Children.Count > 0) throw new InvalidOperationException("Nested XML property remains protected: " + kv.Key);
                     if (node.Element.InnerText == kv.Value) continue;
                     if (node.Empty)
                     {
@@ -181,7 +181,7 @@ namespace MP1SkinStudio
             }
             if (additions.Length > 0)
             {
-                if (control.Empty) throw new InvalidOperationException("Leeres Control wird nicht erweitert.");
+                if (control.Empty) throw new InvalidOperationException("Empty controls cannot be expanded.");
                 int insertion = control.CloseStart;
                 while (insertion > control.OpenEnd && Char.IsWhiteSpace(Text[insertion - 1])) insertion--;
                 patches.Add(Tuple.Create(insertion, insertion, additions.ToString()));
@@ -257,9 +257,9 @@ namespace MP1SkinStudio
         public string Relative(string full) { return full.Substring(Root.TrimEnd('\\').Length + 1).Replace('\\', '/'); }
         public string SafePath(string relative)
         {
-            if (String.IsNullOrWhiteSpace(relative)) throw new InvalidDataException("Leerer Dateipfad.");
+            if (String.IsNullOrWhiteSpace(relative)) throw new InvalidDataException("Empty file path.");
             string result = System.IO.Path.GetFullPath(System.IO.Path.Combine(Root, relative.Replace('/', '\\').TrimStart('\\')));
-            if (!result.StartsWith(Root.TrimEnd('\\') + "\\", StringComparison.OrdinalIgnoreCase)) throw new InvalidDataException("Dateipfad liegt außerhalb des Skins: " + relative);
+            if (!result.StartsWith(Root.TrimEnd('\\') + "\\", StringComparison.OrdinalIgnoreCase)) throw new InvalidDataException("File path is outside the skin: " + relative);
             return result;
         }
         public string Resolve(string relative)
@@ -306,7 +306,7 @@ namespace MP1SkinStudio
                 var skin = r.Root.Child("skin"); int dimension;
                 if (skin != null) { if(Int32.TryParse(skin.Value("width"),out dimension) && dimension>0) Width=dimension; if(Int32.TryParse(skin.Value("height"),out dimension) && dimension>0) Height=dimension; }
             }
-            else Warnings.Add("references.xml fehlt; Standardwerte sind unvollständig.");
+            else Warnings.Add("references.xml is missing; default values are incomplete.");
             string fonts = Resolve("fonts.xml");
             if (File.Exists(fonts))
                 foreach (var f in Source(fonts).Root.Children.Where(n=>n.Name=="font"))
@@ -316,16 +316,16 @@ namespace MP1SkinStudio
             AddWindow(start, new Dictionary<string,string>(globalDefines), new HashSet<string>(StringComparer.OrdinalIgnoreCase), "", 0);
             var automaticKeys=new HashSet<string>(Controls.Where(c=>c.AutomaticLayout).Select(c=>c.Key));foreach(var control in Controls)if(automaticKeys.Contains(control.Key))control.AutomaticLayout=true;
             Warnings.AddRange(new StackPreview(this,null).Warnings.Distinct());
-            if (Controls.Any(c=>c.Get("type")=="group" || c.Get("type")=="actiongroup")) Warnings.Add("StackLayout wird als statische Vorschau ausgewertet; Animationen und Transformationen bleiben angenähert.");
+            if (Controls.Any(c=>c.Get("type")=="group" || c.Get("type")=="actiongroup")) Warnings.Add("StackLayout is evaluated as a static preview; animations and transformations remain approximate.");
         }
         void AddWindow(SkinSource source, Dictionary<string,string> context, HashSet<string> active, string inheritedCondition, int depth,bool automaticLayout=false,SkinControl runtimeParent=null,VisibilityTerm[] terms=null)
         {
-            if (depth > 24 || !active.Add(source.Path)) { Warnings.Add("Zyklische/zu tiefe Einbindung: " + source.RelativePath); return; }
+            if (depth > 24 || !active.Add(source.Path)) { Warnings.Add("Cyclic or excessively deep include: " + source.RelativePath); return; }
             try
             {
                 LoadDefines(source.Root,context);
                 var parent=source.Root.Child("controls");
-                if(parent==null) { if(!source.Root.Children.Any(n=>n.Name=="define"))Warnings.Add("Keine <controls> in " + source.RelativePath); return; }
+                if(parent==null) { if(!source.Root.Children.Any(n=>n.Name=="define"))Warnings.Add("No <controls> in " + source.RelativePath); return; }
                 AddNodes(source,parent,context,active,inheritedCondition,depth,automaticLayout,runtimeParent,terms);
             }
             finally { active.Remove(source.Path); }
@@ -343,11 +343,11 @@ namespace MP1SkinStudio
                     {
                         path=Resolve(target);
                         if(File.Exists(path)) AddWindow(Source(path),context,active,next,depth+1,automaticLayout,runtimeParent,PreviewState.AddTerm(terms,local,conditionContext));
-                        else Warnings.Add("Einbindung fehlt: " + target + " (" + source.RelativePath + ")");
+                        else Warnings.Add("Missing include: " + target + " (" + source.RelativePath + ")");
                         string otherwise=n.Element.GetAttribute("otherwise");
                         if(otherwise.Length>0) { path=Resolve(otherwise); if(File.Exists(path)) AddWindow(Source(path),context,active,JoinCondition(condition,"!["+local+"]"),depth+1,automaticLayout,runtimeParent,PreviewState.AddTerm(terms,"!["+local+"]",conditionContext)); }
                     }
-                    catch(Exception ex) { Warnings.Add("Einbindung " + target + ": " + ex.Message); }
+                    catch(Exception ex) { Warnings.Add("Include " + target + ": " + ex.Message); }
                     continue;
                 }
                 if(n.Name!="control") continue;
@@ -357,7 +357,7 @@ namespace MP1SkinStudio
                 ElementSpan d; string type=n.Value("type")??"";
                 if(defaults.TryGetValue(type,out d)) Merge(c,d,"references.xml · " + type,false);
                 string style=n.Element.GetAttribute("Style");
-                if(style.Length>0) { if(styles.TryGetValue(style,out d)) Merge(c,d,"Style " + style,false); else Warnings.Add("Unbekannter Style: " + style); }
+                if(style.Length>0) { if(styles.TryGetValue(style,out d)) Merge(c,d,"Style " + style,false); else Warnings.Add("Unknown style: " + style); }
                 Merge(c,n,source.RelativePath,true); Controls.Add(c);
                 if(n.Children.Any(e=>e.Name=="control"||e.Name=="include"||e.Name=="import")) AddNodes(source,n,context,active,JoinCondition(condition,c.Get("visible")),depth+1,automaticLayout||c.Get("layout").Trim().Length>0,c,PreviewState.AddTerm(terms,c.Get("visible"),c.Defines));
             }
@@ -373,9 +373,9 @@ namespace MP1SkinStudio
         public void RedoChange() { LastKeyTranslation.Clear();if(Redo.Count==0)return;var c=Redo.Pop();foreach(var f in c.Files){f.Source.Text=f.After;f.Source.Parse();}if(c.Remap!=null){c.Remap.Apply(this,true);LastKeyTranslation=c.Remap.Translation(true);}Undo.Push(c);OpenPage(Page); }
         public void Export(string target)
         {
-            if(!target.EndsWith(".zip",StringComparison.OrdinalIgnoreCase)) throw new InvalidOperationException("Als ZIP-Datei exportieren. Skin-XML-Dateien werden nicht direkt überschrieben.");
+            if(!target.EndsWith(".zip",StringComparison.OrdinalIgnoreCase)) throw new InvalidOperationException("Export as a ZIP file. Skin XML files are not overwritten directly.");
             var changed=Sources.Values.Where(s=>s.Changed).OrderBy(s=>s.RelativePath).ToArray();
-            if(changed.Length==0) throw new InvalidOperationException("Es gibt noch keine Änderungen.");
+            if(changed.Length==0) throw new InvalidOperationException("No changes yet.");
             // Validate every file before creating an archive; source directories are never written.
             foreach(var s in changed) { s.Parse(); s.Bytes(); }
             string temp=target+"."+Guid.NewGuid().ToString("N")+".tmp";
@@ -388,9 +388,9 @@ namespace MP1SkinStudio
                         var entry=zip.CreateEntry(s.RelativePath,CompressionLevel.Optimal);
                         using(var output=entry.Open()) { var bytes=s.Bytes(); output.Write(bytes,0,bytes.Length); }
                     }
-                    var info=zip.CreateEntry("_SkinStudio-Hinweise.txt");
+                    var info=zip.CreateEntry("_SkinStudio-Instructions.txt");
                     using(var writer=new StreamWriter(info.Open(),new UTF8Encoding(false)))
-                        writer.Write("MP1 Skin Studio — Prototyp\r\n\r\nNur geänderte XML-Dateien, relativ zum gewählten Skinordner.\r\nZuerst den Skinordner sichern oder kopieren. Dann diese Dateien in die Kopie übernehmen.\r\nUnveränderte Grafiken und XML-Dateien bleiben im vorhandenen Skinordner.\r\nVorschau ist angenähert, kein Test mit der MP1-Engine. In MP1 prüfen.\r\n\r\n"+String.Join("\r\n",changed.Select(s=>s.RelativePath)));
+                        writer.Write("MP1 Skin Studio — Prototype\r\n\r\nOnly modified XML files, relative to the selected skin directory.\r\nBack up or copy the complete skin directory first, then apply these files to the copy.\r\nUnmodified images and XML files remain in the existing skin directory.\r\nThe preview is approximate and is not an MP1 engine test. Validate in MP1.\r\n\r\n"+String.Join("\r\n",changed.Select(s=>s.RelativePath)));
                 }
                 if(File.Exists(target)) File.Replace(temp,target,null);
                 else File.Move(temp,target);

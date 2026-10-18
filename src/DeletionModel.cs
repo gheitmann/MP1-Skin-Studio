@@ -19,9 +19,9 @@ namespace MP1SkinStudio
     {
         public DeletionPlan InspectDeletion(IEnumerable<SkinControl> selection)
         {
-            var controls=selection.GroupBy(c=>c.Key).Select(g=>RequireCurrent(g.First())).ToArray();if(controls.Length==0)throw new InvalidOperationException("Zuerst Elemente auswählen.");
+            var controls=selection.GroupBy(c=>c.Key).Select(g=>RequireCurrent(g.First())).ToArray();if(controls.Length==0)throw new InvalidOperationException("Select elements first.");
             var roots=controls.Where(c=>!controls.Any(parent=>parent.Key!=c.Key&&parent.Source==c.Source&&Inside(c.Node,parent.Node))).ToArray();
-            foreach(var control in roots){GuardStructural(control);if(control.Node.Parent==null||(control.Node.Parent.Name!="controls"&&control.Node.Parent.Name!="control"))throw new InvalidOperationException("Diese XML-Struktur kann nicht entfernt werden.");}
+            foreach(var control in roots){GuardStructural(control);if(control.Node.Parent==null||(control.Node.Parent.Name!="controls"&&control.Node.Parent.Name!="control"))throw new InvalidOperationException("This XML structure cannot be removed.");}
             var plan=new DeletionPlan{Roots=roots};
             foreach(var control in Controls.Where(c=>roots.Any(root=>root.Source==c.Source&&Inside(c.Node,root.Node))))plan.RemovedKeys.Add(control.Key);
             var removed=Controls.Where(c=>plan.RemovedKeys.Contains(c.Key)).GroupBy(c=>c.Key).Select(g=>g.First()).ToArray();
@@ -31,7 +31,7 @@ namespace MP1SkinStudio
             {
                 foreach(string property in new[]{"onleft","onright","onup","ondown"})
                 {int target;if(Int32.TryParse(control.Resolved(property),out target)&&ids.Contains(target))plan.References.Add(new DeletionReference{ControlKey=control.Key,Name=control.Name,Source=control.Source.RelativePath,Property=property,Value=control.Get(property),TargetId=target});}
-                foreach(var pair in new[]{new KeyValuePair<string,string>("visible",control.Get("visible")),new KeyValuePair<string,string>("Include-Bedingung",control.IncludeCondition)})
+                foreach(var pair in new[]{new KeyValuePair<string,string>("visible",control.Get("visible")),new KeyValuePair<string,string>("Include condition",control.IncludeCondition)})
                     foreach(Match match in Regex.Matches(pair.Value??"",@"control\.[A-Za-z]+\(\s*([0-9]+)\s*\)",RegexOptions.IgnoreCase))
                     {int target;if(Int32.TryParse(match.Groups[1].Value,out target)&&ids.Contains(target))plan.References.Add(new DeletionReference{ControlKey=control.Key,Name=control.Name,Source=control.Source.RelativePath,Property=pair.Key,Value=pair.Value,TargetId=target});}
             }
@@ -41,8 +41,8 @@ namespace MP1SkinStudio
         public void DeleteControls(IEnumerable<SkinControl> selection,bool allowReferences=false,bool allowShared=false)
         {
             var plan=InspectDeletion(selection);
-            if(plan.References.Count>0&&!allowReferences)throw new InvalidOperationException("Die Auswahl hat mögliche Verweise in der geöffneten Seite. Diese zuerst prüfen und das unveränderte Beibehalten ausdrücklich bestätigen.");
-            if(plan.SharedFiles.Length>0&&!allowShared)throw new InvalidOperationException("Die Auswahl liegt in eingebundenen Quelldateien. Die Wirkung auf gemeinsam verwendete Dateien ausdrücklich bestätigen.");
+            if(plan.References.Count>0&&!allowReferences)throw new InvalidOperationException("The selection has possible references on the open page. Review them and explicitly confirm leaving them unchanged.");
+            if(plan.SharedFiles.Length>0&&!allowShared)throw new InvalidOperationException("The selection uses included source files. Explicitly confirm the effect on shared files.");
             var remap=new ControlKeyRemap();
             foreach(var group in plan.Roots.GroupBy(c=>c.Source))
             {
@@ -53,7 +53,7 @@ namespace MP1SkinStudio
             {
                 foreach(var group in plan.Roots.GroupBy(c=>c.Source))foreach(var control in group.OrderByDescending(c=>c.Node.Start))
                     group.Key.Text=group.Key.Text.Substring(0,control.Node.Start)+group.Key.Text.Substring(control.Node.End);
-            },"Ausgewählte Elemente entfernen",remap);
+            },"Remove selected elements",remap);
         }
     }
 }

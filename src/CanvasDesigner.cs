@@ -40,10 +40,10 @@ namespace MP1SkinStudio
             if(!SelectedKeys.Contains(hit.Key)){SelectedKeys.Clear();SelectedKeys.Add(hit.Key);}
             dragControls=Project.Controls.Where(c=>SelectedKeys.Contains(c.Key)).GroupBy(c=>c.Key).Select(g=>g.First()).ToArray();
             if(dragControls.Any(c=>Project.IsLocked(c)||Project.IsEditorHidden(c)))
-            {if(Notice!=null)Notice("Gesperrte oder im Editor ausgeblendete Elemente zuerst im Baum freigeben. Die gesamte Auswahl bleibt unverändert.");return;}
+            {if(Notice!=null)Notice("Unlock locked or editor-hidden elements in the tree first. The entire selection remains unchanged.");return;}
             string[] keys=resizing?new[]{"width","height"}:new[]{"posX","posY"};
             if(!UnlockBindings&&dragControls.Any(c=>keys.Any(c.IsBound)))
-            {if(Notice!=null)Notice("Mindestens ein Element enthält eine Bindung. Zum Ersetzen rechts ausdrücklich freigeben.");Invalidate();return;}
+            {if(Notice!=null)Notice("At least one element contains a binding. Explicitly allow replacement on the right.");Invalidate();return;}
             try{foreach(var item in dragControls){LayoutTools.RequireManualGeometry(item);LayoutTools.RequireNumeric(item,keys);}}catch(Exception ex){if(Notice!=null)Notice(ex.Message);return;}
             oldX=Selected.Number("posX",0);oldY=Selected.Number("posY",0);oldW=BoundsOf(Selected).Width;oldH=BoundsOf(Selected).Height;
             mouseStart=p;startRects.Clear();dragRects.Clear();
@@ -101,7 +101,7 @@ namespace MP1SkinStudio
                 if(SelectedKeys.Count==1&&!Project.IsLocked(c)&&!c.AutomaticLayout&&!LayoutTools.IsContainer(c)){float size=9/scale;using(var b=new SolidBrush(Color.FromArgb(100,197,255)))g.FillRectangle(b,rect.Right-size/2,rect.Bottom-size/2,size,size);}
             }
             if(!NavigationMode||Project.IsEditorHidden(Selected))return;
-            string[] directions={"onleft","onright","onup","ondown"},names={"Links","Rechts","Oben","Unten"};
+            string[] directions={"onleft","onright","onup","ondown"},names={"Left","Right","Up","Down"};
             Color[] colors={Color.FromArgb(93,223,187),Color.FromArgb(98,191,255),Color.FromArgb(191,157,255),Color.FromArgb(255,192,101)};
             var source=BoundsOf(Selected);PointF from=new PointF(source.X+source.Width/2,source.Y+source.Height/2);
             for(int i=0;i<directions.Length;i++)

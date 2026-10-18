@@ -1,0 +1,43 @@
+TITAN COMPATIBILITY VALIDATION WITH MP1 SKIN STUDIO 0.7
+Original report date: October 18, 2026
+
+Version 0.8 addendum: After.txt and Page-Run.csv were regenerated using the
+new StackLayout preview model. Before.txt records the version 0.7 baseline.
+The complete loading and editing probe continued to pass without errors
+or changes to original files.
+
+Source: https://github.com/MediaPortal/MediaPortal-1
+Commit: 43675ce01fcc9a199107b7e9fa414d408a79fa32
+Path: mediaportal/MediaPortal.Base/skin/Titan
+Git tree: c7eac1fe16f0516faca8034925a3129e3943973e
+
+Complete skin: 1,877 files, including 528 XML files, approximately 85 MB.
+German and English MediaPortal language files from the same source revision
+were also loaded for previews.
+
+Checks:
+- Load every skin XML file and return it with byte-identical content.
+- Load all selectable default-skin and blue-background theme page variants:
+  602 variants in total.
+- Change one suitable concrete position per editable page in memory and
+  restore it exactly with undo: 586 probes.
+- Save/restore projects and generate ZIP exports for ten main-page/theme probes.
+- Compare actual original XML bytes before and after the run.
+
+source-integrity.json compares every skin file with the Git tree.
+Normal Windows Git checkout line-ending conversion is recorded separately.
+Other content differences are not allowed. Editor probes independently compare
+the exact bytes of the existing checkout.
+
+Before.txt records the baseline run using the extended validation driver.
+After.txt and Page-Run.csv record the final run.
+CSV warnings describe model findings; they do not prove MediaPortal errors.
+
+There was no full MP1 runtime or plugin integration test and no pixel-exact
+image comparison with MediaPortal. StackLayout is statically approximated;
+other group layouts, animations and unknown expressions remain incomplete.
+The editor does not write the original skin or language files.
+
+The complete Titan skin is test input and is not included in this repository.
+The small bundled language demo uses editor-authored sample text.
+Report descriptions were translated into English without rerunning the historical tests.

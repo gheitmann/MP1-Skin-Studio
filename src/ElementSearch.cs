@@ -15,7 +15,7 @@ namespace MP1SkinStudio
                 {
                     case "id":int expected,actual;match=Int32.TryParse(term,out expected)&&Int32.TryParse(control.Get("id"),out actual)&&expected==actual;break;
                     case "typ":case "type":match=String.Equals(control.Get("type"),term,StringComparison.OrdinalIgnoreCase);break;
-                    case "quelle":match=term.Length>0&&Contains(control.Source.RelativePath,term);break;
+                    case "source":case "quelle":match=term.Length>0&&Contains(control.Source.RelativePath,term);break;
                     case "text":match=term.Length>0&&(Contains(control.Get("label"),term)||Contains(displayText,term));break;
                     case "name":match=term.Length>0&&(Contains(control.Name,term)||(LanguagePreview.UseLabelName(control)&&Contains(displayText,term)));break;
                     default:match=Contains(displayText,token)||Contains(control.Name,token)||Contains(control.Source.RelativePath,token)||control.Properties.Values.Any(p=>Contains(p.Value,token));break;

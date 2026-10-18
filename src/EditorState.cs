@@ -34,9 +34,9 @@ namespace MP1SkinStudio
         internal SkinSource EditorSource(string key,out int ordinal)
         {
             int split=key.LastIndexOf('|');
-            if(split<1||!Int32.TryParse(key.Substring(split+1),out ordinal)||ordinal<0)throw new InvalidDataException("Ungültiger Elementverweis im Editorprojekt.");
+            if(split<1||!Int32.TryParse(key.Substring(split+1),out ordinal)||ordinal<0)throw new InvalidDataException("Invalid element reference in editor project.");
             string relative=key.Substring(0,split);
-            if(!relative.EndsWith(".xml",StringComparison.OrdinalIgnoreCase))throw new InvalidDataException("Ungültige Editorquelle.");
+            if(!relative.EndsWith(".xml",StringComparison.OrdinalIgnoreCase))throw new InvalidDataException("Invalid editor source.");
             return Source(SafePath(relative));
         }
         internal IEnumerable<string> ActiveEditorKeys()
@@ -72,24 +72,24 @@ namespace MP1SkinStudio
         }
         static double StateNumber(XmlElement state,string name,double minimum,double maximum)
         {
-            double value;if(!Double.TryParse(state.GetAttribute(name),NumberStyles.Float,CultureInfo.InvariantCulture,out value)||Double.IsNaN(value)||Double.IsInfinity(value)||value<minimum||value>maximum)throw new InvalidDataException("Ungültiger Ansichtsstand: "+name);
+            double value;if(!Double.TryParse(state.GetAttribute(name),NumberStyles.Float,CultureInfo.InvariantCulture,out value)||Double.IsNaN(value)||Double.IsInfinity(value)||value<minimum||value>maximum)throw new InvalidDataException("Invalid view state: "+name);
             return value;
         }
         static void LoadEditorState(SkinProject project,XmlDocument doc)
         {
             var state=doc.SelectSingleNode("/skinStudioProject/editorState") as XmlElement;if(state==null)return;
             project.Editor.Zoom=StateNumber(state,"zoom",.25,16);project.Editor.PanX=StateNumber(state,"panX",-1000000,1000000);project.Editor.PanY=StateNumber(state,"panY",-1000000,1000000);
-            if(state.HasAttribute("showUnresolved")){bool unresolved;if(!Boolean.TryParse(state.GetAttribute("showUnresolved"),out unresolved))throw new InvalidDataException("Ungültige Vorschauoption.");project.Editor.ShowUnresolved=unresolved;}
+            if(state.HasAttribute("showUnresolved")){bool unresolved;if(!Boolean.TryParse(state.GetAttribute("showUnresolved"),out unresolved))throw new InvalidDataException("Invalid preview option.");project.Editor.ShowUnresolved=unresolved;}
             LoadPreviewSettings(project.Editor.Preview,state);
             LoadCollectionSettings(project.Editor.Collection,state);
-            var nodes=state.SelectNodes("control");if(nodes.Count>10000)throw new InvalidDataException("Zu viele Editor-Markierungen.");
+            var nodes=state.SelectNodes("control");if(nodes.Count>10000)throw new InvalidDataException("Too many editor markers.");
             var seen=new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             foreach(XmlElement item in nodes)
             {
                 string key=item.GetAttribute("key");int ordinal;var source=project.EditorSource(key,out ordinal);
-                if(!seen.Add(key)||ordinal>=source.Elements.Count(n=>n.Name=="control"))throw new InvalidDataException("Doppelter oder fehlender Editor-Elementverweis.");
-                if(Digest(OriginalBytes(source))!=item.GetAttribute("sourceSha256"))throw new InvalidDataException("Die Quelle einer Editor-Markierung hat sich geändert: "+source.RelativePath);
-                bool locked,hidden;if(!Boolean.TryParse(item.GetAttribute("locked"),out locked)||!Boolean.TryParse(item.GetAttribute("hidden"),out hidden))throw new InvalidDataException("Ungültige Editor-Markierung.");
+                if(!seen.Add(key)||ordinal>=source.Elements.Count(n=>n.Name=="control"))throw new InvalidDataException("Duplicate or missing editor element reference.");
+                if(Digest(OriginalBytes(source))!=item.GetAttribute("sourceSha256"))throw new InvalidDataException("The source for an editor marker has changed: "+source.RelativePath);
+                bool locked,hidden;if(!Boolean.TryParse(item.GetAttribute("locked"),out locked)||!Boolean.TryParse(item.GetAttribute("hidden"),out hidden))throw new InvalidDataException("Invalid editor marker.");
                 if(locked)project.Editor.Locked.Add(key);if(hidden)project.Editor.Hidden.Add(key);
             }
         }

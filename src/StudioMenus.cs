@@ -36,7 +36,7 @@ namespace MP1SkinStudio
         public static StudioMenu For(Control anchor,string purpose)
         {
             if(anchor==null)throw new ArgumentNullException("anchor");
-            var owner=anchor as Form??anchor.FindForm();if(owner==null||owner.IsDisposed||owner.Disposing)throw new InvalidOperationException("Das Menü benötigt ein geöffnetes Editorfenster.");
+            var owner=anchor as Form??anchor.FindForm();if(owner==null||owner.IsDisposed||owner.Disposing)throw new InvalidOperationException("The menu requires an open editor window.");
             return owners.GetValue(owner,key=>new OwnerMenus(key)).Prepare(purpose);
         }
     }

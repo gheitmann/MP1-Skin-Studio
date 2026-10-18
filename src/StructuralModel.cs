@@ -21,14 +21,14 @@ namespace MP1SkinStudio
         public void Add(SkinSource source,int[] afterOldOrdinals)
         {
             int count=source.Elements.Count(n=>n.Name=="control");Sources.Add(source.RelativePath);
-            if(source.OriginalOrdinals.Count!=count)throw new InvalidOperationException("Elementidentitäten passen nicht mehr zur XML-Quelle.");
+            if(source.OriginalOrdinals.Count!=count)throw new InvalidOperationException("Element identities no longer match the XML source.");
             IdentityOrders[source]=new[]{source.OriginalOrdinals.ToArray(),afterOldOrdinals.Select(i=>i<0?-1:source.OriginalOrdinals[i]).ToArray()};
             for(int index=0;index<count;index++)Before.Add(source.RelativePath+"|"+index);
             var seen=new HashSet<int>();
             for(int index=0;index<afterOldOrdinals.Length;index++)
             {
                 string key=source.RelativePath+"|"+index;After.Add(key);int old=afterOldOrdinals[index];
-                if(old<0)continue;if(old>=count||!seen.Add(old))throw new InvalidOperationException("Ungültige strukturelle Elementzuordnung.");Forward.Add(source.RelativePath+"|"+old,key);
+                if(old<0)continue;if(old>=count||!seen.Add(old))throw new InvalidOperationException("Invalid structural element mapping.");Forward.Add(source.RelativePath+"|"+old,key);
             }
         }
         public Dictionary<string,string> Translation(bool forward)
@@ -56,21 +56,21 @@ namespace MP1SkinStudio
         public Dictionary<string,string> LastKeyTranslation=new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
         internal SkinControl RequireCurrent(SkinControl control)
         {
-            if(control==null)throw new InvalidOperationException("Zuerst ein Element auswählen.");
+            if(control==null)throw new InvalidOperationException("Select an element first.");
             var current=Controls.FirstOrDefault(c=>c.Key==control.Key);
-            if(current==null||current.Source!=control.Source||current.Node!=control.Node)throw new InvalidOperationException("Die Auswahl ist nicht mehr aktuell. Element erneut auswählen.");return current;
+            if(current==null||current.Source!=control.Source||current.Node!=control.Node)throw new InvalidOperationException("The selection is stale. Select the element again.");return current;
         }
         static bool Inside(ElementSpan node,ElementSpan parent){return node.Start>=parent.Start&&node.End<=parent.End;}
         static bool RuntimeInside(SkinControl child,SkinControl parent){for(var owner=child.RuntimeParent;owner!=null;owner=owner.RuntimeParent)if(owner.Key==parent.Key)return true;return false;}
         internal void GuardStructural(SkinControl control)
         {
-            if(IsLocked(control)||Controls.Any(c=>(c.Source==control.Source&&Inside(c.Node,control.Node)||RuntimeInside(c,control))&&IsLocked(c)))throw new InvalidOperationException("Das Element oder ein darin enthaltenes Control ist gesperrt. Zuerst im Elementbaum entsperren.");
+            if(IsLocked(control)||Controls.Any(c=>(c.Source==control.Source&&Inside(c.Node,control.Node)||RuntimeInside(c,control))&&IsLocked(c)))throw new InvalidOperationException("The element or one of its child controls is locked. Unlock it in the element tree first.");
         }
         public void ReorderControl(SkinControl selected,string mode)
         {
             var control=RequireCurrent(selected);GuardStructural(control);
-            if(!new[]{"forward","backward","front","back"}.Contains(mode))throw new InvalidOperationException("Unbekannte Ebenenrichtung.");
-            var parent=control.Node.Parent;if(parent==null||(parent.Name!="controls"&&parent.Name!="control"))throw new InvalidOperationException("Diese XML-Struktur unterstützt noch keine Ebenenreihenfolge.");
+            if(!new[]{"forward","backward","front","back"}.Contains(mode))throw new InvalidOperationException("Unknown layer direction.");
+            var parent=control.Node.Parent;if(parent==null||(parent.Name!="controls"&&parent.Name!="control"))throw new InvalidOperationException("This XML structure does not yet support layer ordering.");
             int at=parent.Children.IndexOf(control.Node),first=at,last=at;
             while(first>0&&parent.Children[first-1].Name=="control")first--;
             while(last+1<parent.Children.Count&&parent.Children[last+1].Name=="control")last++;
@@ -82,7 +82,7 @@ namespace MP1SkinStudio
             var middle=ordered.SelectMany(slot=>Enumerable.Range(0,all.Length).Where(i=>Inside(all[i],slot)));
             var order=Enumerable.Range(0,low).Concat(middle).Concat(Enumerable.Range(high+1,all.Length-high-1)).ToArray();var remap=new ControlKeyRemap();remap.Add(source,order);
             var raws=ordered.Select(n=>source.Text.Substring(n.Start,n.End-n.Start)).ToArray();
-            Transaction(new[]{source},()=>{for(int i=slots.Length-1;i>=0;i--)source.Text=source.Text.Substring(0,slots[i].Start)+raws[i]+source.Text.Substring(slots[i].End);},"Ebenenreihenfolge ändern",remap);
+            Transaction(new[]{source},()=>{for(int i=slots.Length-1;i>=0;i--)source.Text=source.Text.Substring(0,slots[i].Start)+raws[i]+source.Text.Substring(slots[i].End);},"Change layer order",remap);
         }
     }
 }

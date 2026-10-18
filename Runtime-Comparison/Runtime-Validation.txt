@@ -1,0 +1,24 @@
+MP1 Skin Studio - prepared practical runtime test
+
+Automatically validated in the original 0.9 test:
+PASS  Loaded Titan settings.xml and increased group spacing by 8 skin pixels.
+PASS  Export contains only settings.xml and export instructions.
+PASS  Exported XML exactly matches the editor state.
+PASS  Saved the editor project and fully undid the change.
+PASS  No loaded original file was modified.
+
+NOT YET PERFORMED: full client/Direct3D image comparison.
+
+Manual steps after fully configuring MediaPortal 1:
+1. Copy the Titan skin directory and name the copy SkinStudio-Test.
+2. Replace only settings.xml in that copy with the file from Titan-Settings-Test-Export.zip.
+3. Select the copied skin in MP1 or start with /windowed /skin=SkinStudio-Test.
+4. Open Settings: buttons must have 8 additional skin pixels of spacing.
+5. Compare text, focus and navigation with the editor image.
+6. Switch back to the original Titan skin; original files remain intact.
+
+No TV server is required for this probe.
+At the time of the original test, the local file copy was not a fully registered installation.
+The official setup and Configuration.exe require administrator privileges.
+The user subsequently reported that MediaPortal is installed and starts.
+A full visual client comparison has not yet been recorded.

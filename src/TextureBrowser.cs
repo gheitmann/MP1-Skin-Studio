@@ -51,11 +51,11 @@ namespace MP1SkinStudio
                     string error;thumbnail=TextureCatalog.Thumbnail(asset,imageArea.Width,imageArea.Height,out error);cache[asset.PhysicalPath]=thumbnail;
                 }
                 if(thumbnail!=null)g.DrawImageUnscaled(thumbnail,imageArea.Location);
-                else TextRenderer.DrawText(g,"Keine Vorschau",Font,imageArea,Color.FromArgb(244,190,107),TextFormatFlags.HorizontalCenter|TextFormatFlags.VerticalCenter);
+                else TextRenderer.DrawText(g,"No preview",Font,imageArea,Color.FromArgb(244,190,107),TextFormatFlags.HorizontalCenter|TextFormatFlags.VerticalCenter);
                 var label=new Rectangle(rect.X+7,rect.Y+84,rect.Width-14,27);TextRenderer.DrawText(g,asset.RelativePath,Font,label,ForeColor,TextFormatFlags.Left|TextFormatFlags.EndEllipsis|TextFormatFlags.WordBreak);
                 using(var pen=new Pen(chosen?Color.FromArgb(85,185,255):Color.FromArgb(58,76,96),chosen?2:1))g.DrawRectangle(pen,rect);
             }
-            if(VisibleAssets.Length==0)TextRenderer.DrawText(g,"Keine passenden Bilder im Media-Ordner.",Font,new Point(18,22),ForeColor);
+            if(VisibleAssets.Length==0)TextRenderer.DrawText(g,"No matching images in the Media directory.",Font,new Point(18,22),ForeColor);
         }
         protected override void OnMouseDown(MouseEventArgs e)
         {
@@ -80,28 +80,28 @@ namespace MP1SkinStudio
         public int MatchCount{get{return grid.VisibleAssets.Length;}}
         public TextureBrowser(SkinProject project,string current)
         {
-            Text="Textur auswählen · MP1 Skin Studio";Size=new Size(1020,680);MinimumSize=new Size(800,540);StartPosition=FormStartPosition.CenterParent;AutoScaleMode=AutoScaleMode.None;Font=new Font("Segoe UI",9.5f);BackColor=Color.FromArgb(26,33,44);ForeColor=Color.FromArgb(224,235,245);
+            Text="Select Texture · MP1 Skin Studio";Size=new Size(1020,680);MinimumSize=new Size(800,540);StartPosition=FormStartPosition.CenterParent;AutoScaleMode=AutoScaleMode.None;Font=new Font("Segoe UI",9.5f);BackColor=Color.FromArgb(26,33,44);ForeColor=Color.FromArgb(224,235,245);
             var top=new Panel{Dock=DockStyle.Top,Height=87,Padding=new Padding(14)};
-            top.Controls.Add(new Label{Text="TEXTUREN AUS DEINEM SKIN",AutoSize=true,Font=new Font(Font,FontStyle.Bold),Location=new Point(14,12)});
-            top.Controls.Add(new Label{Text="Suchen",AutoSize=true,Location=new Point(14,50)});search.SetBounds(78,45,665,27);search.BackColor=Color.FromArgb(16,23,32);search.ForeColor=ForeColor;top.Controls.Add(search);
+            top.Controls.Add(new Label{Text="TEXTURES FROM YOUR SKIN",AutoSize=true,Font=new Font(Font,FontStyle.Bold),Location=new Point(14,12)});
+            top.Controls.Add(new Label{Text="Search",AutoSize=true,Location=new Point(14,50)});search.SetBounds(78,45,665,27);search.BackColor=Color.FromArgb(16,23,32);search.ForeColor=ForeColor;top.Controls.Add(search);
             count.SetBounds(770,48,200,27);top.Controls.Add(count);
             top.Resize+=(s,e)=>{search.Width=Math.Max(120,top.Width-310);count.Left=Math.Max(215,top.Width-215);};
             var bottom=new FlowLayoutPanel{Dock=DockStyle.Bottom,Height=52,FlowDirection=FlowDirection.RightToLeft,Padding=new Padding(12,8,12,8)};
-            choose.Text="Übernehmen";choose.Width=128;choose.Height=32;choose.FlatStyle=FlatStyle.Flat;choose.BackColor=Color.FromArgb(25,112,170);choose.ForeColor=ForeColor;choose.Click+=(s,e)=>AcceptChoice();bottom.Controls.Add(choose);
-            var cancel=new Button{Text="Abbrechen",Width=110,Height=32,FlatStyle=FlatStyle.Flat,ForeColor=ForeColor,DialogResult=DialogResult.Cancel};bottom.Controls.Add(cancel);CancelButton=cancel;
+            choose.Text="Apply";choose.Width=128;choose.Height=32;choose.FlatStyle=FlatStyle.Flat;choose.BackColor=Color.FromArgb(25,112,170);choose.ForeColor=ForeColor;choose.Click+=(s,e)=>AcceptChoice();bottom.Controls.Add(choose);
+            var cancel=new Button{Text="Cancel",Width=110,Height=32,FlatStyle=FlatStyle.Flat,ForeColor=ForeColor,DialogResult=DialogResult.Cancel};bottom.Controls.Add(cancel);CancelButton=cancel;
             var right=new Panel{Dock=DockStyle.Right,Width=253,Padding=new Padding(12)};preview.Dock=DockStyle.Top;preview.Height=224;preview.BackColor=Color.FromArgb(18,24,33);preview.Paint+=(s,e)=>{TextureGrid.PaintChecker(e.Graphics,preview.ClientRectangle);if(large!=null)e.Graphics.DrawImageUnscaled(large,(preview.Width-large.Width)/2,(preview.Height-large.Height)/2);};
             detail.Dock=DockStyle.Fill;detail.Padding=new Padding(0,14,0,0);detail.ForeColor=ForeColor;right.Controls.Add(detail);right.Controls.Add(preview);
             grid.Dock=DockStyle.Fill;Controls.Add(grid);Controls.Add(right);Controls.Add(top);Controls.Add(bottom);
             grid.Assets=TextureCatalog.List(project);grid.SelectionChanged+=UpdateSelection;grid.AcceptSelection+=AcceptChoice;
             search.TextChanged+=(s,e)=>{grid.Filter(search.Text);UpdateCount();};grid.Filter("");if(!String.IsNullOrWhiteSpace(current))grid.SelectRelative(current.Replace('\\','/'));UpdateCount();
         }
-        void UpdateCount(){count.Text=MatchCount+" / "+grid.Assets.Count+" Bilder";}
+        void UpdateCount(){count.Text=MatchCount+" / "+grid.Assets.Count+" images";}
         void UpdateSelection()
         {
             if(large!=null){large.Dispose();large=null;}
-            if(grid.Selected==null){choose.Enabled=false;detail.Text="Ein Bild auswählen. PNG, JPG, BMP und GIF werden unterstützt.";preview.Invalidate();return;}
+            if(grid.Selected==null){choose.Enabled=false;detail.Text="Select an image. PNG, JPG, BMP and GIF are supported.";preview.Invalidate();return;}
             string error;var a=grid.Selected;large=TextureCatalog.Thumbnail(a,228,224,out error);choose.Enabled=large!=null;
-            detail.Text=a.RelativePath+"\n\n"+(large==null?"Keine Vorschau: "+error:a.Width+" × "+a.Height+" Pixel")+"\n\n"+(a.Size/1024.0).ToString("0.0")+" KB\n\nQuelle: "+(a.FromTheme?"Gewähltes Theme":"Basis-Skin")+"\n\nTransparenz wird auf Schachbrett dargestellt.\n\nÜbernommen wird der Bildpfad. Die Bilddatei bleibt im Skinordner.";preview.Invalidate();
+            detail.Text=a.RelativePath+"\n\n"+(large==null?"No preview: "+error:a.Width+" × "+a.Height+" Pixel")+"\n\n"+(a.Size/1024.0).ToString("0.0")+" KB\n\nQuelle: "+(a.FromTheme?"Selected theme":"Base skin")+"\n\nTransparency is shown on a checkerboard.\n\nThe image path is applied. The image file remains in the skin directory.";preview.Invalidate();
         }
         void AcceptChoice(){if(grid.Selected!=null&&large!=null){DialogResult=DialogResult.OK;Close();}}
         public void Filter(string query){search.Text=query;}

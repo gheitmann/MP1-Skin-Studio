@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Eigene Ebenen-Demo des Editors; keine originale Titan-Page. -->
+<window>
+  <id>0</id>
+  <controls>
+    <control>
+      <type>label</type><id>0</id><description>Try layers</description>
+      <posX>160</posX><posY>120</posY><width>1600</width><height>90</height>
+      <font>TitanLight32</font><label>Layers: front or back?</label><textcolor>ffffffff</textcolor>
+    </control>
+    <control>
+      <type>label</type><id>0</id><description>Instructions</description>
+      <posX>165</posX><posY>235</posY><width>1600</width><height>60</height>
+      <font>TitanLight14</font><label>Select a layer in the tree. Move it forward or backward through Element or the context menu.</label><textcolor>ffb4cbe0</textcolor>
+    </control>
+    <control>
+      <type>button</type><id>201</id><description>Layer A</description>
+      <posX>270</posX><posY>370</posY><width>850</width><height>340</height>
+      <label>Layer A</label><font>TitanLight32</font>
+      <textureNoFocus>Studio/Button-blue.png</textureNoFocus><textureFocus>Studio/Button-blue.png</textureFocus>
+    </control>
+    <control>
+      <type>button</type><id>202</id><description>Layer B</description>
+      <posX>550</posX><posY>480</posY><width>850</width><height>340</height>
+      <label>Layer B</label><font>TitanLight32</font>
+      <textureNoFocus>Studio/Button-turquoise.png</textureNoFocus><textureFocus>Studio/Button-turquoise.png</textureFocus>
+    </control>
+    <control>
+      <type>button</type><id>203</id><description>Layer C</description>
+      <posX>830</posX><posY>590</posY><width>850</width><height>340</height>
+      <label>Layer C</label><font>TitanLight32</font>
+      <textureNoFocus>Studio/Button-dark.png</textureNoFocus><textureFocus>Studio/Button-dark.png</textureFocus>
+    </control>
+  </controls>
+</window>

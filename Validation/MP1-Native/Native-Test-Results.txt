@@ -1,0 +1,12 @@
+Native MP1 1.39 Core validation (original assembly from official release)
+PASS  First child at group origin (False)
+PASS  Order and spacing (False)
+PASS  Measured size includes trailing spacing (False)
+PASS  Collapsed reserves no space (False)
+PASS  Hidden remains in static StackLayout (False)
+PASS  First child at group origin (True)
+PASS  Order and spacing (True)
+PASS  Measured size includes trailing spacing (True)
+PASS  Collapsed reserves no space (True)
+PASS  Hidden remains in static StackLayout (True)
+10 native checks passed. No full client/Direct3D image comparison.

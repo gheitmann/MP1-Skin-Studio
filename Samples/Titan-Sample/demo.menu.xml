@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<!-- Beispielmenü des Editors; IDs und Navigation nur für diesen Demo-Bildschirm. -->
+<!-- Beispielmenü des Editors; IDs und Navigation nur für diesen Demo-Imageschirm. -->
 <window>
   <controls>
     <control>
-      <description>Willkommen</description>
+      <description>Welcome</description>
       <type>label</type>
       <id>0</id>
       <posX>140</posX>
@@ -11,11 +11,11 @@
       <width>1500</width>
       <height>90</height>
       <font>TitanLight32</font>
-      <label>Dein Abend. Deine Oberfläche.</label>
+      <label>Your evening. Your interface.</label>
       <textcolor>ffffffff</textcolor>
     </control>
     <control>
-      <description>Untertitel</description>
+      <description>Subtitle</description>
       <type>label</type>
       <id>0</id>
       <posX>144</posX>
@@ -23,62 +23,62 @@
       <width>1400</width>
       <height>60</height>
       <font>TitanLight14</font>
-      <label>Element anklicken, verschieben und rechts die Eigenschaften anpassen.</label>
+      <label>Click an element, move it and adjust its properties on the right.</label>
       <textcolor>ff9fb7d0</textcolor>
     </control>
     <control>
-      <description>Filme</description>
+      <description>Movies</description>
       <type>button</type>
       <id>10</id>
       <posX>140</posX>
       <posY>580</posY>
       <width>470</width>
       <height>130</height>
-      <label>Filme</label>
-      <textureNoFocus>Studio/Schaltflaeche-dunkel.png</textureNoFocus>
-      <textureFocus>Studio/Schaltflaeche-blau.png</textureFocus>
+      <label>Movies</label>
+      <textureNoFocus>Studio/Button-dark.png</textureNoFocus>
+      <textureFocus>Studio/Button-blue.png</textureFocus>
       <font>TitanLight22</font>
       <align>center</align>
       <onright>11</onright>
       <onleft>12</onleft>
       <hyperlink>25</hyperlink>
       <!-- Dieser Kommentar und der unbekannte Eintrag sollen erhalten bleiben. -->
-      <editorUnknown mustKeep="yes">Unbekannte XML-Eigenschaften bleiben erhalten.</editorUnknown>
+      <editorUnknown mustKeep="yes">Unbekannte XML-Propertyen bleiben erhalten.</editorUnknown>
     </control>
     <control>
-      <description>Serien</description>
+      <description>Series</description>
       <type>button</type>
       <id>11</id>
       <posX>720</posX>
       <posY>580</posY>
       <width>470</width>
       <height>130</height>
-      <label>Serien</label>
-      <textureNoFocus>Studio/Schaltflaeche-dunkel.png</textureNoFocus>
-      <textureFocus>Studio/Schaltflaeche-blau.png</textureFocus>
+      <label>Series</label>
+      <textureNoFocus>Studio/Button-dark.png</textureNoFocus>
+      <textureFocus>Studio/Button-blue.png</textureFocus>
       <font>TitanLight22</font>
       <align>center</align>
       <onleft>10</onleft>
       <onright>12</onright>
     </control>
     <control>
-      <description>Musik</description>
+      <description>Music</description>
       <type>button</type>
       <id>12</id>
       <posX>1300</posX>
       <posY>580</posY>
       <width>470</width>
       <height>130</height>
-      <label>Musik</label>
-      <textureNoFocus>Studio/Schaltflaeche-dunkel.png</textureNoFocus>
-      <textureFocus>Studio/Schaltflaeche-blau.png</textureFocus>
+      <label>Music</label>
+      <textureNoFocus>Studio/Button-dark.png</textureNoFocus>
+      <textureFocus>Studio/Button-blue.png</textureFocus>
       <font>TitanLight22</font>
       <align>center</align>
       <onleft>11</onleft>
       <onright>10</onright>
     </control>
     <control>
-      <description>Editor-Hinweis</description>
+      <description>Editor-Information</description>
       <type>label</type>
       <id>0</id>
       <posX>144</posX>
@@ -86,11 +86,11 @@
       <width>1600</width>
       <height>60</height>
       <font>TitanLight12</font>
-      <label>Uhr und Datum oben stammen aus Titans originaler common.time.xml.</label>
+      <label>The clock and date above come from Titan's original common.time.xml.</label>
       <textcolor>ff9fb7d0</textcolor>
     </control>
     <control>
-      <description>Beispiel-Filmtitel</description>
+      <description>Sample movie title</description>
       <type>label</type>
       <id>0</id>
       <posX>144</posX>
@@ -102,7 +102,7 @@
       <textcolor>ffbdd9ed</textcolor>
     </control>
     <control>
-      <description>Beispiel-Nachrichten</description>
+      <description>Sample news</description>
       <type>label</type>
       <id>0</id>
       <posX>144</posX>
@@ -110,7 +110,7 @@
       <width>1500</width>
       <height>45</height>
       <font>TitanLight14</font>
-      <label>Nachrichten: #myNotifier.Messages.Count.Unread</label>
+      <label>News: #myNotifier.Messages.Count.Unread</label>
       <visible>!string.equals(#myNotifier.Messages.Count.Unread,0)</visible>
       <textcolor>ffffc56c</textcolor>
     </control>

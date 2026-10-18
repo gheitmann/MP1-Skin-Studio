@@ -1,0 +1,12 @@
+Original source: https://github.com/MediaPortal/MediaPortal-1/releases/tag/Release_1.39.0
+Package: MediaPortalSetup_x64_1.39.000_2026-10-13-09-28.zip
+Official ZIP SHA256: eeaa4d3e31f77a7df035a3f9b47115a06ba3e4486f360959033fbe20c1e1c76c
+Core.dll SHA256: 0D9160A8E6FB61A6B6BFECACC80DF0207396BC4CC01D4C5DC2F5850C86BB4B39
+Core.dll file version: 1.39.0.0
+
+The probe invokes original classes from the verified MP1 1.39 Core.dll.
+It checks static StackLayout measurement, arrangement and Visibility values.
+It does not check full client startup, Direct3D rendering, plugins or image comparison.
+Run-NativeProbe.ps1 requires a writable, isolated MP1 file copy.
+At the time of the original test, system-wide installation and initial configuration were incomplete.
+The user subsequently reported a working installation; a new client comparison remains pending.

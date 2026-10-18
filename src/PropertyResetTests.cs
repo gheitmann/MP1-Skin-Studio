@@ -18,67 +18,67 @@ namespace MP1SkinStudio
         }
         static void RunPropertyResetTests(string root)
         {
-            Test("Rücksetzen entfernt nur den lokalen XML-Bereich samt seiner eigenen Leerzeile",()=>
+            Test("Reset removes only the local XML span and its own blank line",()=>
             {
                 string text="<window>\r\n  <controls>\r\n    <control>\r\n      <type>label</type>\r\n      <!--outside-->\r\n      <width>300</width>\r\n      <unknown value=\"keep\"/>\r\n    </control>\r\n  </controls>\r\n</window>";
-                var source=SkinSource.FromText(text,"a.xml");source.ResetControlProperty(0,"width");Check(source.Text==text.Replace("      <width>300</width>\r\n",""),"Andere Quellbereiche geändert.");
+                var source=SkinSource.FromText(text,"a.xml");source.ResetControlProperty(0,"width");Check(source.Text==text.Replace("      <width>300</width>\r\n",""),"Other source spans were modified.");
             });
-            Test("Kommentare und PIs bleiben beim Entfernen erhalten; CDATA-Inhalt wird nicht als Kommentar behandelt",()=>
+            Test("Removal preserves comments and processing instructions without misreading CDATA",()=>
             {
                 string text="<window><controls><control><type>label</type><label><!--keep--><?studio keep?><![CDATA[<!--value-only-->]]>Text<!--last--></label><other>keep</other></control></controls></window>";
                 var source=SkinSource.FromText(text,"a.xml");source.ResetControlProperty(0,"label");
-                Check(source.Text=="<window><controls><control><type>label</type><!--keep--><?studio keep?><!--last--><other>keep</other></control></controls></window>","Kommentare, PI oder CDATA falsch behandelt.");
+                Check(source.Text=="<window><controls><control><type>label</type><!--keep--><?studio keep?><!--last--><other>keep</other></control></controls></window>","Comments, processing instructions or CDATA were handled incorrectly.");
             });
-            Test("Rücksetzvorschau verwendet Style vor Referenz und verändert die Sitzung nicht",()=>
+            Test("Reset previews prefer styles over references without changing the session",()=>
             {
                 var p=ResetFixture(root,"reset-style");string signature=ProjectFile.ContentSignature(p);var info=p.PreviewPropertyReset(p.Controls[0],"width");
-                Check(info.HasLocal&&info.Allowed&&info.Inherited.Value=="200"&&info.Inherited.Origin=="Style Title"&&ProjectFile.ContentSignature(p)==signature&&!p.Dirty,"Vorschau falsch oder schreibend.");
-                p.ResetProperty(new[]{p.Controls[0]},"width",false);Check(p.Controls[0].Get("width")=="200"&&!p.Controls[0].Properties["width"].Local&&p.Controls[0].Node.Child("extension")!=null,"Geerbter Style oder Erweiterung verloren.");
+                Check(info.HasLocal&&info.Allowed&&info.Inherited.Value=="200"&&info.Inherited.Origin=="Style Title"&&ProjectFile.ContentSignature(p)==signature&&!p.Dirty,"Preview is incorrect or writes changes.");
+                p.ResetProperty(new[]{p.Controls[0]},"width",false);Check(p.Controls[0].Get("width")=="200"&&!p.Controls[0].Properties["width"].Local&&p.Controls[0].Node.Child("extension")!=null,"Inherited style or extension was lost.");
             });
-            Test("Mehrere Quellen übernehmen Referenz und Style in einem exakten Undo-/Redo-Schritt",()=>
+            Test("Multiple sources inherit reference and style values in one exact undo/redo step",()=>
             {
                 var p=ResetFixture(root,"reset-many");string[] before=p.Controls.Select(c=>c.Source.Text).ToArray();p.ResetProperty(p.Controls,"width",false);
-                Check(p.Controls[0].Get("width")=="200"&&p.Controls[1].Get("width")=="100"&&p.Undo.Count==1,"Unterschiedliche Vererbungen oder Transaktion falsch.");
-                string[] after=p.Controls.Select(c=>c.Source.Text).ToArray();p.UndoChange();Check(p.Controls.Select(c=>c.Source.Text).SequenceEqual(before)&&!p.Dirty,"Undo nicht exakt.");p.RedoChange();Check(p.Controls.Select(c=>c.Source.Text).SequenceEqual(after),"Redo nicht exakt.");
+                Check(p.Controls[0].Get("width")=="200"&&p.Controls[1].Get("width")=="100"&&p.Undo.Count==1,"Incorrect inheritance differences or transaction.");
+                string[] after=p.Controls.Select(c=>c.Source.Text).ToArray();p.UndoChange();Check(p.Controls.Select(c=>c.Source.Text).SequenceEqual(before)&&!p.Dirty,"Undo is not exact.");p.RedoChange();Check(p.Controls.Select(c=>c.Source.Text).SequenceEqual(after),"Redo is not exact.");
             });
-            Test("Rücksetzen ohne geerbten Wert entfernt die Eigenschaft statt einen Ersatzwert zu schreiben",()=>
+            Test("Reset without an inherited value removes the property instead of writing a substitute",()=>
             {
-                var p=ResetFixture(root,"reset-absent");var info=p.PreviewPropertyReset(p.Controls[0],"label");Check(info.Inherited==null,"Unerwartete Vererbung.");p.ResetProperty(new[]{p.Controls[0]},"label",false);
-                Check(!p.Controls[0].Properties.ContainsKey("label")&&p.Controls[0].Node.Child("label")==null,"Künstlicher Ersatzwert eingetragen.");
+                var p=ResetFixture(root,"reset-absent");var info=p.PreviewPropertyReset(p.Controls[0],"label");Check(info.Inherited==null,"Unexpected inheritance.");p.ResetProperty(new[]{p.Controls[0]},"label",false);
+                Check(!p.Controls[0].Properties.ContainsKey("label")&&p.Controls[0].Node.Child("label")==null,"Artificial substitute value was inserted.");
             });
-            Test("Nicht lokal gesetzte Werte sind ein No-op und erzeugen keinen Undo-Schritt",()=>
+            Test("Non-local values are a no-op without an undo step",()=>
             {
                 var p=ResetFixture(root,"reset-noop");string signature=ProjectFile.ContentSignature(p);p.ResetProperty(p.Controls,"font",false);
-                Check(!p.PreviewPropertyReset(p.Controls[0],"font").HasLocal&&p.Undo.Count==0&&ProjectFile.ContentSignature(p)==signature,"Geerbten Wert verändert.");
+                Check(!p.PreviewPropertyReset(p.Controls[0],"font").HasLocal&&p.Undo.Count==0&&ProjectFile.ContentSignature(p)==signature,"Inherited value was changed.");
             });
-            Test("Attribute, verschachtelte und doppelte Eigenschaften sowie Identitäten bleiben geschützt",()=>
+            Test("Attributes, nested or duplicate properties and identities remain protected",()=>
             {
                 foreach(string extra in new[]{"<width mode=\"keep\">300</width>","<width><extension>300</extension></width>","<width>300</width><width>400</width>"})
-                {var source=SkinSource.FromText("<window><controls><control><type>label</type><id>10</id>"+extra+"</control></controls></window>","a.xml");string before=source.Text;Reject(()=>source.ResetControlProperty(0,"width"));Reject(()=>source.ResetControlProperty(0,"id"));Reject(()=>source.ResetControlProperty(0,"type"));Check(source.Text==before,"Geschützte Struktur verändert.");}
+                {var source=SkinSource.FromText("<window><controls><control><type>label</type><id>10</id>"+extra+"</control></controls></window>","a.xml");string before=source.Text;Reject(()=>source.ResetControlProperty(0,"width"));Reject(()=>source.ResetControlProperty(0,"id"));Reject(()=>source.ResetControlProperty(0,"type"));Check(source.Text==before,"Protected structure was changed.");}
             });
-            Test("Geschützte Bindung blockiert gesamte Auswahl; Freigabe erlaubt Rücksetzen",()=>
+            Test("Protected bindings block the whole selection until replacement is allowed",()=>
             {
                 var p=ResetFixture(root,"reset-bindings");p.Edit(p.Controls[1],Set("width","#plugin.width"),"Bindung");string signature=ProjectFile.ContentSignature(p);int steps=p.Undo.Count;
-                Reject(()=>p.ResetProperty(p.Controls,"width",false));Check(ProjectFile.ContentSignature(p)==signature&&p.Undo.Count==steps,"Teiländerung trotz Bindung.");
-                p.ResetProperty(p.Controls,"width",true);Check(p.Controls[0].Get("width")=="200"&&p.Controls[1].Get("width")=="100","Freigabe wirkungslos.");
+                Reject(()=>p.ResetProperty(p.Controls,"width",false));Check(ProjectFile.ContentSignature(p)==signature&&p.Undo.Count==steps,"Partial change occurred despite a binding.");
+                p.ResetProperty(p.Controls,"width",true);Check(p.Controls[0].Get("width")=="200"&&p.Controls[1].Get("width")=="100","Approval had no effect.");
             });
-            Test("Gesperrte oder strukturell geschützte Auswahl wird vor jeder Teiländerung abgewiesen",()=>
+            Test("Locked or structurally protected selections are rejected before partial edits",()=>
             {
-                var p=ResetFixture(root,"reset-atomic");p.Editor.Locked.Add(p.Controls[1].Key);string before=ProjectFile.ContentSignature(p);Reject(()=>p.ResetProperty(p.Controls,"width",false));Check(before==ProjectFile.ContentSignature(p)&&!p.Dirty,"Teiländerung trotz Sperre.");p.Editor.Locked.Clear();
+                var p=ResetFixture(root,"reset-atomic");p.Editor.Locked.Add(p.Controls[1].Key);string before=ProjectFile.ContentSignature(p);Reject(()=>p.ResetProperty(p.Controls,"width",false));Check(before==ProjectFile.ContentSignature(p)&&!p.Dirty,"Partial change occurred despite a lock.");p.Editor.Locked.Clear();
                 p.Controls[1].Source.Text=p.Controls[1].Source.Text.Replace("<width>","<width keep=\"yes\">");p.Controls[1].Source.Parse();p.OpenPage("main.xml");before=ProjectFile.ContentSignature(p);
-                Reject(()=>p.ResetProperty(p.Controls,"width",false));Check(before==ProjectFile.ContentSignature(p)&&p.Undo.Count==0,"Teiländerung vor Strukturfehler.");
+                Reject(()=>p.ResetProperty(p.Controls,"width",false));Check(before==ProjectFile.ContentSignature(p)&&p.Undo.Count==0,"Partial change occurred before a structural error.");
             });
-            Test("UTF-16-Kodierung und BOM bleiben beim Rücksetzen unverändert",()=>
+            Test("Reset preserves UTF-16 encoding and BOM",()=>
             {
                 string path=Path.Combine(root,"reset-utf16.xml");File.WriteAllText(path,"<?xml version=\"1.0\" encoding=\"utf-16\"?><window><controls><control><type>label</type><width>300</width><label>Äöß</label></control></controls></window>",new UnicodeEncoding(false,true,true));
-                var source=SkinSource.Read(path,"reset-utf16.xml");byte[] disk=File.ReadAllBytes(path);source.ResetControlProperty(0,"width");Check(source.Bytes()[0]==255&&source.Bytes()[1]==254&&source.Text.Contains("Äöß")&&disk.SequenceEqual(File.ReadAllBytes(path)),"BOM, Text oder Originaldatei verändert.");
+                var source=SkinSource.Read(path,"reset-utf16.xml");byte[] disk=File.ReadAllBytes(path);source.ResetControlProperty(0,"width");Check(source.Bytes()[0]==255&&source.Bytes()[1]==254&&source.Text.Contains("Äöß")&&disk.SequenceEqual(File.ReadAllBytes(path)),"BOM, text or original file was changed.");
             });
-            Test("Editorprojekt und ZIP erhalten gezielte Rücksetzungen, ohne Style- oder Referenzdatei zu ändern",()=>
+            Test("Projects and ZIP exports preserve targeted resets without changing style or reference files",()=>
             {
                 var p=ResetFixture(root,"reset-save");byte[] reference=File.ReadAllBytes(Path.Combine(p.Root,"references.xml"));p.ResetProperty(p.Controls,"width",false);
-                string file=Path.Combine(root,"reset.mp1skinproj");ProjectFile.Save(p,file);var loaded=ProjectFile.Load(file);Check(ProjectFile.ContentSignature(p)==ProjectFile.ContentSignature(loaded)&&loaded.Controls[0].Get("width")=="200","Projekt verliert Rücksetzung.");
-                string zip=Path.Combine(root,"reset.zip");loaded.Export(zip);using(var archive=ZipFile.OpenRead(zip))Check(archive.GetEntry("references.xml")==null&&archive.GetEntry("main.xml")!=null&&archive.GetEntry("part.xml")!=null,"Falsche Quellen exportiert.");
-                Check(reference.SequenceEqual(File.ReadAllBytes(Path.Combine(p.Root,"references.xml"))),"Referenzdatei überschrieben.");
+                string file=Path.Combine(root,"reset.mp1skinproj");ProjectFile.Save(p,file);var loaded=ProjectFile.Load(file);Check(ProjectFile.ContentSignature(p)==ProjectFile.ContentSignature(loaded)&&loaded.Controls[0].Get("width")=="200","Project loses the reset.");
+                string zip=Path.Combine(root,"reset.zip");loaded.Export(zip);using(var archive=ZipFile.OpenRead(zip))Check(archive.GetEntry("references.xml")==null&&archive.GetEntry("main.xml")!=null&&archive.GetEntry("part.xml")!=null,"Wrong sources were exported.");
+                Check(reference.SequenceEqual(File.ReadAllBytes(Path.Combine(p.Root,"references.xml"))),"Reference file was overwritten.");
             });
         }
     }

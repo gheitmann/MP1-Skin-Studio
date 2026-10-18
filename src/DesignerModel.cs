@@ -21,9 +21,9 @@ namespace MP1SkinStudio
         internal int AppendControl(string raw)
         {
             var fragment=FromText(raw,"new-control.xml");
-            if(fragment.Root.Name!="control"||String.IsNullOrEmpty(fragment.Root.Value("type")))throw new InvalidDataException("Control-Vorlage ist ungültig.");
+            if(fragment.Root.Name!="control"||String.IsNullOrEmpty(fragment.Root.Value("type")))throw new InvalidDataException("Invalid control template.");
             var parent=Root.Child("controls");
-            if(parent==null)throw new InvalidOperationException("Diese Datei enthält keinen <controls>-Bereich.");
+            if(parent==null)throw new InvalidOperationException("This file contains no <controls> section.");
             int ordinal=Elements.Count(n=>n.Name=="control");
             string newline=Text.Contains("\r\n")?"\r\n":"\n";
             string indent=parent.Children.Count>0?IndentAt(parent.Children[0].Start):IndentAt(parent.Start)+"  ";
@@ -42,7 +42,7 @@ namespace MP1SkinStudio
         }
         internal void AllocateIdentity(int id)
         {
-            if(Root.Name!="control"||Elements.Count(n=>n.Name=="control")!=1||id<=0)throw new InvalidOperationException("Identitätsvergabe ist nur für neue einzelne Controls erlaubt.");
+            if(Root.Name!="control"||Elements.Count(n=>n.Name=="control")!=1||id<=0)throw new InvalidOperationException("Identity assignment is allowed only for new individual controls.");
             var identityNode=Root.Child("id");string digits=id.ToString(CultureInfo.InvariantCulture);
             if(identityNode==null)Text=Text.Insert(Root.OpenEnd,"<id>"+digits+"</id>");
             else if(identityNode.Empty)Text=Text.Substring(0,identityNode.Start)+"<id>"+digits+"</id>"+Text.Substring(identityNode.End);
@@ -78,7 +78,7 @@ namespace MP1SkinStudio
             var edits=changes.Where(e=>e.Values.Count>0).GroupBy(e=>e.Control.Key).Select(g=>g.First()).ToArray();
             foreach(var edit in edits)RequireCurrent(edit.Control);
             if(edits.Length==0)return;
-            if(edits.Any(e=>IsLocked(e.Control)))throw new InvalidOperationException("Die Auswahl enthält ein gesperrtes Element. Zuerst im Elementbaum entsperren.");
+            if(edits.Any(e=>IsLocked(e.Control)))throw new InvalidOperationException("The selection contains a locked element. Unlock it in the element tree first.");
             Transaction(edits.Select(e=>e.Control.Source),()=>
             {
                 foreach(var edit in edits)edit.Control.Source.SetControlProperties(edit.Control.Ordinal,edit.Values);
@@ -96,37 +96,37 @@ namespace MP1SkinStudio
                 foreach(var n in source.Elements.Where(n=>n.Parent!=null&&n.Parent.Name=="control"&&(n.Name=="id"||n.Name=="onleft"||n.Name=="onright"||n.Name=="onup"||n.Name=="ondown")))
                 {int id;if(Int32.TryParse(n.Element.InnerText,out id)&&id>0)used.Add(id);}
             }
-            int next=10000;while(used.Contains(next)){if(next==Int32.MaxValue)throw new InvalidOperationException("Keine freie Control-ID.");next++;}return next;
+            int next=10000;while(used.Contains(next)){if(next==Int32.MaxValue)throw new InvalidOperationException("No available control ID.");next++;}return next;
         }
         public string InsertControl(string sourceRelative,string kind)
         {
-            if(!new[]{"label","button","image"}.Contains(kind))throw new InvalidOperationException("Unbekannte Elementvorlage.");
+            if(!new[]{"label","button","image"}.Contains(kind))throw new InvalidOperationException("Unknown element template.");
             var source=Source(SafePath(sourceRelative));int identity=NextControlId(),ordinal=-1;
             string font=FontNames.Contains("TitanLight22")?"TitanLight22":FontNames.FirstOrDefault()??"font22";
             var fields=new List<KeyValuePair<string,string>>{
-                new KeyValuePair<string,string>("description",kind=="label"?"Neuer Text":kind=="button"?"Neue Schaltfläche":"Neues Bild"),
+                new KeyValuePair<string,string>("description",kind=="label"?"New text":kind=="button"?"New button":"New image"),
                 new KeyValuePair<string,string>("type",kind),new KeyValuePair<string,string>("id",identity.ToString()),
                 new KeyValuePair<string,string>("posX","300"),new KeyValuePair<string,string>("posY","300"),
                 new KeyValuePair<string,string>("width",kind=="image"?"300":"420"),new KeyValuePair<string,string>("height",kind=="image"?"300":kind=="button"?"110":"70")};
             if(kind=="image")fields.Add(new KeyValuePair<string,string>("texture",""));
-            else{fields.Add(new KeyValuePair<string,string>("font",font));fields.Add(new KeyValuePair<string,string>("textcolor","ffffffff"));fields.Add(new KeyValuePair<string,string>("label",kind=="button"?"Neue Schaltfläche":"Dein Text"));fields.Add(new KeyValuePair<string,string>("align",kind=="button"?"center":"left"));}
+            else{fields.Add(new KeyValuePair<string,string>("font",font));fields.Add(new KeyValuePair<string,string>("textcolor","ffffffff"));fields.Add(new KeyValuePair<string,string>("label",kind=="button"?"New button":"Your text"));fields.Add(new KeyValuePair<string,string>("align",kind=="button"?"center":"left"));}
             string raw="<control>\n"+String.Join("\n",fields.Select(k=>"  <"+k.Key+">"+SecurityElement.Escape(k.Value)+"</"+k.Key+">"))+"\n</control>";
             var remap=new ControlKeyRemap();remap.Add(source,Enumerable.Range(0,source.OriginalOrdinals.Count).Concat(new[]{-1}).ToArray());
-            Transaction(new[]{source},()=>ordinal=source.AppendControl(raw),"Element einfügen",remap);
+            Transaction(new[]{source},()=>ordinal=source.AppendControl(raw),"Insert element",remap);
             return source.RelativePath+"|"+ordinal;
         }
         public string DuplicateControl(SkinControl original,bool replaceBindings)
         {
             RequireCurrent(original);
-            if(original.Node.Children.Any(n=>n.Name=="control")||original.Node.Parent==null||original.Node.Parent.Name!="controls")throw new InvalidOperationException("Gruppen und verschachtelte Controls werden noch nicht dupliziert.");
-            if(!replaceBindings&&(original.IsBound("posX")||original.IsBound("posY")))throw new InvalidOperationException("Die Kopie benötigt eine neue Position. Gebundene Positionen dafür ausdrücklich lokal freigeben.");
+            if(original.Node.Children.Any(n=>n.Name=="control")||original.Node.Parent==null||original.Node.Parent.Name!="controls")throw new InvalidOperationException("Groups and nested controls cannot be duplicated yet.");
+            if(!replaceBindings&&(original.IsBound("posX")||original.IsBound("posY")))throw new InvalidOperationException("The copy requires a new position. Explicitly allow local replacement of bound positions.");
             LayoutTools.RequireNumeric(original,"posX","posY");
             int id=NextControlId(),ordinal=-1;
             string raw=original.Source.Text.Substring(original.Node.Start,original.Node.End-original.Node.Start);
             var copy=SkinSource.FromText(raw,"clone.xml");copy.AllocateIdentity(id);
-            copy.SetControlProperties(0,new Dictionary<string,string>{{"posX",((int)original.Number("posX",0)+30).ToString()},{"posY",((int)original.Number("posY",0)+30).ToString()},{"description",original.Name+" (Kopie)"}});
+            copy.SetControlProperties(0,new Dictionary<string,string>{{"posX",((int)original.Number("posX",0)+30).ToString()},{"posY",((int)original.Number("posY",0)+30).ToString()},{"description",original.Name+" (Copy)"}});
             var remap=new ControlKeyRemap();remap.Add(original.Source,Enumerable.Range(0,original.Source.OriginalOrdinals.Count).Concat(new[]{-1}).ToArray());
-            Transaction(new[]{original.Source},()=>ordinal=original.Source.AppendControl(copy.Text),"Element duplizieren",remap);
+            Transaction(new[]{original.Source},()=>ordinal=original.Source.AppendControl(copy.Text),"Duplicate element",remap);
             return original.Source.RelativePath+"|"+ordinal;
         }
         public static bool Focusable(SkinControl c)
@@ -136,22 +136,22 @@ namespace MP1SkinStudio
         public SkinControl NavigationTarget(SkinControl source,string direction)
         {
             string value=source.Resolved(direction);int id;
-            if(!Int32.TryParse(value,out id)||id<=0)throw new InvalidOperationException("Kein eindeutiges Navigationsziel für "+direction+".");
+            if(!Int32.TryParse(value,out id)||id<=0)throw new InvalidOperationException("No unambiguous navigation target for "+direction+".");
             var matches=LogicalControls().Where(c=>ControlId(c)==id).ToArray();
-            if(matches.Length!=1||!Focusable(matches[0]))throw new InvalidOperationException("Navigationsziel ID "+value+" fehlt, ist mehrdeutig oder nicht fokussierbar.");return matches[0];
+            if(matches.Length!=1||!Focusable(matches[0]))throw new InvalidOperationException("Navigation target ID "+value+" is missing, ambiguous or not focusable.");return matches[0];
         }
         public void ConnectNavigation(SkinControl source,SkinControl target,string direction,bool replaceBinding)
         {
             RequireCurrent(source);RequireCurrent(target);
             source=LogicalControl(source);target=LogicalControl(target);
             if(source.Get("type")=="facadeview"){var view=CollectionSettings.Template(this,source,Editor.Collection.Mode);if(view!=null&&ControlId(view)==ControlId(source))source=view;}
-            if(!new[]{"onleft","onright","onup","ondown"}.Contains(direction))throw new InvalidOperationException("Ungültige Navigationsrichtung.");
+            if(!new[]{"onleft","onright","onup","ondown"}.Contains(direction))throw new InvalidOperationException("Invalid navigation direction.");
             int sourceId,targetId;
             if(!Focusable(source)||!Focusable(target)||!Int32.TryParse(source.Get("id"),out sourceId)||sourceId<=0||!Int32.TryParse(target.Get("id"),out targetId)||targetId<=0)
-                throw new InvalidOperationException("Quelle und Ziel müssen fokussierbare Controls mit positiver ID sein.");
-            if(LogicalControls().Count(c=>ControlId(c)==sourceId)!=1||LogicalControls().Count(c=>ControlId(c)==targetId)!=1)throw new InvalidOperationException("Doppelte Control-ID: Verbindung ist nicht eindeutig.");
-            if(source.IsBound(direction)&&!replaceBinding)throw new InvalidOperationException("Dieses Navigationsziel ist gebunden. Zum Ersetzen ausdrücklich lokal freigeben.");
-            Edit(source,new Dictionary<string,string>{{direction,targetId.ToString()}},"Navigation verbinden");
+                throw new InvalidOperationException("Source and target must be focusable controls with positive IDs.");
+            if(LogicalControls().Count(c=>ControlId(c)==sourceId)!=1||LogicalControls().Count(c=>ControlId(c)==targetId)!=1)throw new InvalidOperationException("Duplicate control ID: the connection is ambiguous.");
+            if(source.IsBound(direction)&&!replaceBinding)throw new InvalidOperationException("This navigation target is bound. Explicitly allow local replacement.");
+            Edit(source,new Dictionary<string,string>{{direction,targetId.ToString()}},"Connect navigation");
         }
     }
 
@@ -160,13 +160,13 @@ namespace MP1SkinStudio
         public static bool IsContainer(SkinControl c){return c.Get("type")=="group"||c.Node.Children.Any(n=>n.Name=="control");}
         public static void RequireManualGeometry(SkinControl c)
         {
-            if(IsContainer(c))throw new InvalidOperationException("Gruppenrahmen nicht direkt verschieben oder ausrichten. Über Element die enthaltenen Einzel-Controls auswählen.");
-            if(c.AutomaticLayout)throw new InvalidOperationException("Das Control gehört zu einer Gruppe mit Layoutregeln. Automatisches Verschieben oder Ausrichten ist dafür noch nicht verfügbar; XML-Eigenschaften bei Bedarf ausdrücklich bearbeiten.");
+            if(IsContainer(c))throw new InvalidOperationException("Do not move or align group frames directly. Select their individual child controls through the Element menu.");
+            if(c.AutomaticLayout)throw new InvalidOperationException("The control belongs to a group with layout rules. Automatic movement or alignment is unavailable; edit XML properties explicitly if needed.");
         }
         public static void RequireNumeric(SkinControl c,params string[] keys)
         {
             foreach(var key in keys)
-            {float value;if(c.Get(key).Length>0&&!Single.TryParse(c.Resolved(key),NumberStyles.Float,CultureInfo.InvariantCulture,out value))throw new InvalidOperationException("Geometrie nicht auflösbar: "+c.Name+" · "+key+". Zuerst einen konkreten Wert setzen.");}
+            {float value;if(c.Get(key).Length>0&&!Single.TryParse(c.Resolved(key),NumberStyles.Float,CultureInfo.InvariantCulture,out value))throw new InvalidOperationException("Geometry cannot be resolved: "+c.Name+" · "+key+". Set a concrete value first.");}
         }
         public static RectangleF Bounds(SkinControl c)
         {
@@ -177,14 +177,14 @@ namespace MP1SkinStudio
         public static List<ControlEdit> Align(IEnumerable<SkinControl> selection,string mode,bool replaceBindings)
         {
             var controls=selection.GroupBy(c=>c.Key).Select(g=>g.First()).ToArray();
-            if(controls.Length<2)throw new InvalidOperationException("Mindestens zwei Elemente mit STRG auswählen.");
+            if(controls.Length<2)throw new InvalidOperationException("Select at least two elements with CTRL.");
             bool horizontal=new[]{"left","right","hcenter","hspace"}.Contains(mode);
-            if(!horizontal&&!new[]{"top","bottom","vcenter","vspace"}.Contains(mode))throw new InvalidOperationException("Unbekannte Ausrichtung.");
-            if(mode.EndsWith("space")&&controls.Length<3)throw new InvalidOperationException("Für gleiche Abstände mindestens drei Elemente auswählen.");
+            if(!horizontal&&!new[]{"top","bottom","vcenter","vspace"}.Contains(mode))throw new InvalidOperationException("Unknown alignment.");
+            if(mode.EndsWith("space")&&controls.Length<3)throw new InvalidOperationException("Select at least three elements for equal spacing.");
             string property=horizontal?"posX":"posY";
-            if(!replaceBindings&&controls.Any(c=>c.IsBound(property)))throw new InvalidOperationException("Mindestens eine Position ist gebunden. Zum Ausrichten ausdrücklich lokal freigeben.");
+            if(!replaceBindings&&controls.Any(c=>c.IsBound(property)))throw new InvalidOperationException("At least one position is bound. Explicitly allow local replacement before aligning.");
             foreach(var c in controls){RequireManualGeometry(c);RequireNumeric(c,property,horizontal?"width":"height");}
-            if(controls.Any(c=>c.Node.Parent.Name!="controls")&&!controls.All(c=>c.Source==controls[0].Source&&c.Node.Parent==controls[0].Node.Parent))throw new InvalidOperationException("Verschachtelte Controls nur innerhalb derselben Gruppe gemeinsam ausrichten.");
+            if(controls.Any(c=>c.Node.Parent.Name!="controls")&&!controls.All(c=>c.Source==controls[0].Source&&c.Node.Parent==controls[0].Node.Parent))throw new InvalidOperationException("Align nested controls together only within the same group.");
             var bounds=controls.ToDictionary(c=>c.Key,Bounds);float low=horizontal?bounds.Values.Min(r=>r.Left):bounds.Values.Min(r=>r.Top),high=horizontal?bounds.Values.Max(r=>r.Right):bounds.Values.Max(r=>r.Bottom);
             if(mode.EndsWith("space"))controls=controls.OrderBy(c=>horizontal?bounds[c.Key].Left:bounds[c.Key].Top).ToArray();
             float gap=mode.EndsWith("space")?(high-low-bounds.Values.Sum(r=>horizontal?r.Width:r.Height))/(controls.Length-1):0,cursor=low;

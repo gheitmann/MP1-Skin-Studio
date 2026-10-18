@@ -33,7 +33,7 @@ namespace MP1SkinStudio
                     SurfaceText(g,c,item.Title,tile.Title,selected,"font","textcolor","textalign");
                     if(tile.Detail.Width>1)SurfaceText(g,c,item.Detail,tile.Detail,selected,"font2","textcolor2","textalign2");
                 }
-                if(settings.Items.Count==0)DrawText(g,"Leere Sammlung",rect,24,Color.FromArgb(130,160,185),"center");
+                if(settings.Items.Count==0)DrawText(g,"Empty collection",rect,24,Color.FromArgb(130,160,185),"center");
                 bool? visible=State.Visible(c);if(visible!=true)using(var pen=new Pen(Color.FromArgb(190,232,174,78),1/scale)){pen.DashStyle=DashStyle.Dot;g.DrawRectangle(pen,rect.X,rect.Y,rect.Width,rect.Height);}
             }finally{g.Restore(saved);}
         }

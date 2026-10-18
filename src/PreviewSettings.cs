@@ -13,16 +13,16 @@ namespace MP1SkinStudio
         public readonly Dictionary<string,string> Values=new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
         public readonly HashSet<string> Plugins=new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         public static Dictionary<string,string> BaseValues()
-        {return new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase){{"#time","18:42"},{"#date","Samstag, 17. Oktober"},{"#header.label","Mein MediaPortal"},{"#WorldWeather.TodayTemperature","16 °C"},{"#myNotifier.Messages.Count.Unread","0"},{"#selecteditem","Ein Beispiel mit einem langen Filmtitel"},{"#title","Ein Beispiel mit einem langen Filmtitel"}};}
+        {return new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase){{"#time","18:42"},{"#date","Saturday, October 17"},{"#header.label","My MediaPortal"},{"#WorldWeather.TodayTemperature","16 °C"},{"#myNotifier.Messages.Count.Unread","0"},{"#selecteditem","A sample with a long movie title"},{"#title","A sample with a long movie title"}};}
         public void Validate()
         {
-            if(Values.Count>128||Plugins.Count>128)throw new InvalidDataException("Höchstens 128 eigene Beispielwerte und 128 Plugin-Namen speichern.");
+            if(Values.Count>128||Plugins.Count>128)throw new InvalidDataException("Save at most 128 custom sample values and 128 plugin names.");
             foreach(var pair in Values)
             {
-                if(pair.Key.Length>160||!Regex.IsMatch(pair.Key,@"^#[A-Za-z_][A-Za-z0-9_.]*$"))throw new InvalidDataException("Variablenname für diese Vorschau: #Name, mit Buchstaben, Ziffern, Punkt oder Unterstrich.");
-                if(pair.Value==null||pair.Value.Length>2048)throw new InvalidDataException("Ein Beispielwert darf höchstens 2048 Zeichen enthalten.");XmlConvert.VerifyXmlChars(pair.Value);
+                if(pair.Key.Length>160||!Regex.IsMatch(pair.Key,@"^#[A-Za-z_][A-Za-z0-9_.]*$"))throw new InvalidDataException("Preview variable names must start with # and use letters, digits, periods or underscores.");
+                if(pair.Value==null||pair.Value.Length>2048)throw new InvalidDataException("Sample values may contain at most 2048 characters.");XmlConvert.VerifyXmlChars(pair.Value);
             }
-            foreach(string plugin in Plugins){if(String.IsNullOrWhiteSpace(plugin)||plugin!=plugin.Trim()||plugin.Length>160||plugin.Any(Char.IsControl))throw new InvalidDataException("Plugin-Namen ohne führende Leerzeichen oder Steuerzeichen und mit höchstens 160 Zeichen eingeben.");XmlConvert.VerifyXmlChars(plugin);}
+            foreach(string plugin in Plugins){if(String.IsNullOrWhiteSpace(plugin)||plugin!=plugin.Trim()||plugin.Length>160||plugin.Any(Char.IsControl))throw new InvalidDataException("Enter plugin names without leading spaces or control characters and with at most 160 characters.");XmlConvert.VerifyXmlChars(plugin);}
         }
         public PreviewSettings Copy()
         {Validate();var copy=new PreviewSettings();foreach(var pair in Values)copy.Values.Add(pair.Key,pair.Value);foreach(string plugin in Plugins)copy.Plugins.Add(plugin);return copy;}
@@ -36,10 +36,10 @@ namespace MP1SkinStudio
         public static PreviewSettings Preset(string name)
         {
             var result=new PreviewSettings();
-            if(name=="Langer Titel"){result.Values["#title"]="Ein außergewöhnlich langer Filmtitel für die Prüfung schmaler Textfelder und abgeschnittener Beschriftungen";result.Values["#selecteditem"]=result.Values["#title"];}
-            else if(name=="Wetter"){result.Plugins.Add("World Weather");result.Values["#WorldWeather.TodayTemperature"]="−4 °C";}
-            else if(name=="Nachrichten")result.Values["#myNotifier.Messages.Count.Unread"]="12";
-            else if(name!="Basisdaten")throw new InvalidOperationException("Unbekannte Vorschauvorlage.");
+            if(name=="Long title"){result.Values["#title"]="An unusually long movie title for testing narrow text fields and truncated labels";result.Values["#selecteditem"]=result.Values["#title"];}
+            else if(name=="Weather"){result.Plugins.Add("World Weather");result.Values["#WorldWeather.TodayTemperature"]="−4 °C";}
+            else if(name=="News")result.Values["#myNotifier.Messages.Count.Unread"]="12";
+            else if(name!="Baseline data")throw new InvalidOperationException("Unknown preview preset.");
             return result;
         }
         public static string[] KnownPlugins(SkinProject project)
@@ -63,16 +63,16 @@ namespace MP1SkinStudio
         }
         static void LoadPreviewSettings(PreviewSettings settings,XmlElement state)
         {
-            var containers=state.SelectNodes("preview");if(containers.Count==0)return;if(containers.Count>1)throw new InvalidDataException("Doppelter Vorschauzustand im Projekt.");
-            var loaded=new PreviewSettings();var values=containers[0].SelectNodes("value");var plugins=containers[0].SelectNodes("plugin");if(values.Count>128||plugins.Count>128)throw new InvalidDataException("Zu viele Vorschaueinträge.");
+            var containers=state.SelectNodes("preview");if(containers.Count==0)return;if(containers.Count>1)throw new InvalidDataException("Duplicate preview state in project.");
+            var loaded=new PreviewSettings();var values=containers[0].SelectNodes("value");var plugins=containers[0].SelectNodes("plugin");if(values.Count>128||plugins.Count>128)throw new InvalidDataException("Too many preview entries.");
             foreach(XmlElement item in values)
             {
-                string key=item.GetAttribute("name"),encoding=item.GetAttribute("encoding");if(loaded.Values.ContainsKey(key))throw new InvalidDataException("Doppelter Beispielwert.");
+                string key=item.GetAttribute("name"),encoding=item.GetAttribute("encoding");if(loaded.Values.ContainsKey(key))throw new InvalidDataException("Duplicate sample value.");
                 string value;if(encoding=="base64")value=new UTF8Encoding(false,true).GetString(Convert.FromBase64String(item.InnerText));
                 else if(encoding.Length==0&&item.HasAttribute("text"))value=item.GetAttribute("text");
-                else throw new InvalidDataException("Unbekannte Kodierung oder unvollständiger Beispielwert.");loaded.Values.Add(key,value);
+                else throw new InvalidDataException("Unknown encoding or incomplete sample value.");loaded.Values.Add(key,value);
             }
-            foreach(XmlElement item in plugins)if(!loaded.Plugins.Add(item.GetAttribute("name")))throw new InvalidDataException("Doppelter Plugin-Name.");
+            foreach(XmlElement item in plugins)if(!loaded.Plugins.Add(item.GetAttribute("name")))throw new InvalidDataException("Duplicate plugin name.");
             settings.SetFrom(loaded);
         }
     }

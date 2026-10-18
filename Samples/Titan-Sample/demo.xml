@@ -2,7 +2,7 @@
 <!-- Editor-Demo: diese Zusammenstellung stammt aus dem Prototyp, nicht aus MP1. -->
 <window>
   <id>0</id>
-  <define>#header.label:Mein MediaPortal</define>
+  <define>#header.label:My MediaPortal</define>
   <controls>
     <import>common.default.background.xml</import>
     <import>demo.menu.xml</import>

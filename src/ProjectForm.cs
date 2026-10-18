@@ -18,33 +18,33 @@ namespace MP1SkinStudio
             return editorChanged||(project.Dirty&&ProjectFile.XmlSignature(project)!=exportedSignature);
         }
         void UpdateProjectCaption()
-        {Text="MP1 Skin Studio · Prototyp 0.9"+(currentProjectFile==null?"":" · "+Path.GetFileName(currentProjectFile))+(SessionNeedsSaving()?" *":"");}
+        {Text="MP1 Skin Studio · Prototype 0.9"+(currentProjectFile==null?"":" · "+Path.GetFileName(currentProjectFile))+(SessionNeedsSaving()?" *":"");}
         void SaveSession(string path)
         {
             ProjectFile.Save(project,path);currentProjectFile=path;savedProjectSignature=ProjectFile.ContentSignature(project);savedEditorSignature=ProjectFile.EditorSignature(project);UpdateProjectCaption();
-            ShowNotice("Editorprojekt gespeichert: "+path+". Quelldateien im Skinordner bleiben unverändert.");
+            ShowNotice("Editor project saved: "+path+". Source files in the skin directory remain unchanged.");
         }
         void ResumeSession(string path,string rootOverride=null)
         {
             var next=ProjectFile.Load(path,rootOverride);InstallProject(next,next.Page,path);
-            ShowNotice("Projekt wiederhergestellt. Die gespeicherten Änderungen lassen sich gemeinsam rückgängig machen.");
+            ShowNotice("Project restored. Saved changes can be undone together.");
         }
         void SaveEditorProject(bool saveAs)
         {
             if(project==null)return;
             if(!saveAs&&currentProjectFile!=null){SaveSession(currentProjectFile);return;}
-            using(var dialog=new SaveFileDialog{Filter="MP1 Skin Studio Projekt|*.mp1skinproj",DefaultExt="mp1skinproj",AddExtension=true,FileName=currentProjectFile==null?"Mein-Skin.mp1skinproj":Path.GetFileName(currentProjectFile),Title="Editorprojekt zum Weiterbearbeiten speichern"})
+            using(var dialog=new SaveFileDialog{Filter="MP1 Skin Studio Project|*.mp1skinproj",DefaultExt="mp1skinproj",AddExtension=true,FileName=currentProjectFile==null?"My-Skin.mp1skinproj":Path.GetFileName(currentProjectFile),Title="Save editor project for continued editing"})
                 if(dialog.ShowDialog(this)==DialogResult.OK)SaveSession(dialog.FileName);
         }
         void OpenEditorProject()
         {
-            using(var dialog=new OpenFileDialog{Filter="MP1 Skin Studio Projekt|*.mp1skinproj",Title="Gespeichertes Editorprojekt öffnen"})
+            using(var dialog=new OpenFileDialog{Filter="MP1 Skin Studio Project|*.mp1skinproj",Title="Open saved editor project"})
             {
                 if(dialog.ShowDialog(this)!=DialogResult.OK||!CanSwitch())return;
                 var location=ProjectFile.Inspect(dialog.FileName);string rootOverride=null;
                 if(!ProjectFile.LocalRoot(location.Root)||!Directory.Exists(location.Root))
                 {
-                    using(var folder=new FolderBrowserDialog{Description="Der ursprüngliche Skinordner fehlt. Den passenden vollständigen Skinordner wählen.",ShowNewFolderButton=false})
+                    using(var folder=new FolderBrowserDialog{Description="The original skin directory is missing. Choose the matching complete skin directory.",ShowNewFolderButton=false})
                     {if(folder.ShowDialog(this)!=DialogResult.OK)return;rootOverride=folder.SelectedPath;}
                 }
                 ResumeSession(dialog.FileName,rootOverride);
@@ -52,19 +52,19 @@ namespace MP1SkinStudio
         }
         void RunProjectUiSmoke(string directory,Action<bool,string> verify)
         {
-            SelectControl(project.Controls.First(c=>c.Get("description")=="Filme"));fields["posX"].Text="260";Apply();
-            verify(SessionNeedsSaving()&&Text.EndsWith("*"),"Fenstertitel kennzeichnet noch nicht gesicherte Änderungen");
-            string file=Path.Combine(directory,"UI-Sitzung.mp1skinproj");SaveSession(file);
-            verify(!SessionNeedsSaving()&&!Text.EndsWith("*")&&project.Dirty,"Projekt speichern sichert Sitzung, ohne Exportänderungen zu verwerfen");
+            SelectControl(project.Controls.First(c=>c.Get("description")=="Movies"));fields["posX"].Text="260";Apply();
+            verify(SessionNeedsSaving()&&Text.EndsWith("*"),"Window titles identify unsaved changes");
+            string file=Path.Combine(directory,"UI-Session.mp1skinproj");SaveSession(file);
+            verify(!SessionNeedsSaving()&&!Text.EndsWith("*")&&project.Dirty,"Project saving preserves the session and pending export changes");
             LoadProject(DemoRoot(),"demo.xml");ResumeSession(file);
-            verify(project.Controls.First(c=>c.Get("description")=="Filme").Get("posX")=="260"&&!SessionNeedsSaving(),"Projekt öffnen stellt gespeicherte Bearbeitung wieder her");
+            verify(project.Controls.First(c=>c.Get("description")=="Movies").Get("posX")=="260"&&!SessionNeedsSaving(),"Opening projects restores saved edits");
             string loadedPath=currentProjectFile;var originalProject=project;
-            bool rejected=false;try{ResumeSession(Path.Combine(directory,"nicht-vorhanden.mp1skinproj"));}catch{rejected=true;}
-            verify(rejected&&project==originalProject&&currentProjectFile==loadedPath,"Fehlgeschlagenes Öffnen erhält laufende Sitzung");
-            SelectControl(project.Controls.First(c=>c.Get("description")=="Filme"));fields["width"].Text="600";Apply();
-            verify(SessionNeedsSaving(),"Änderung nach Projektspeicherung wird erneut als ungesichert erkannt");
-            undo.PerformClick();verify(!SessionNeedsSaving(),"Undo auf gesicherten Stand entfernt die Änderungsmarkierung");
-            undo.PerformClick();verify(!project.Dirty,"Wiederhergestellte Projektänderungen sind vollständig rückgängig");
+            bool rejected=false;try{ResumeSession(Path.Combine(directory,"missing.mp1skinproj"));}catch{rejected=true;}
+            verify(rejected&&project==originalProject&&currentProjectFile==loadedPath,"Failed project opening preserves the active session");
+            SelectControl(project.Controls.First(c=>c.Get("description")=="Movies"));fields["width"].Text="600";Apply();
+            verify(SessionNeedsSaving(),"Changes after project saving are detected as unsaved");
+            undo.PerformClick();verify(!SessionNeedsSaving(),"Undoing to the saved state clears the change marker");
+            undo.PerformClick();verify(!project.Dirty,"Restored project changes can be fully undone");
             LoadProject(DemoRoot(),"demo.xml");
         }
     }

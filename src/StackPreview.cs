@@ -37,7 +37,7 @@ namespace MP1SkinStudio
         {
             string text=c.Resolved("layout").Trim();if(text.Length==0)return null;
             Rule rule;if(TryRead(text,out rule))return rule;
-            Warnings.Add(c.Name+": Layout wird noch nicht ausgewertet oder hat ungültige Parameter: "+text);return null;
+            Warnings.Add(c.Name+": Layout is unsupported or has invalid parameters: "+text);return null;
         }
         public static bool TryRead(string text,out Rule rule)
         {

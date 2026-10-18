@@ -16,36 +16,36 @@ namespace MP1SkinStudio
         }
         void JumpToIssue(string key,string property)
         {
-            var control=project.Controls.FirstOrDefault(c=>c.Key==key);if(control==null){ShowNotice("Das Control ist in der geöffneten Seite nicht mehr vorhanden. Seite erneut prüfen.");return;}
+            var control=project.Controls.FirstOrDefault(c=>c.Key==key);if(control==null){ShowNotice("The control is no longer present on the open page. Check the page again.");return;}
             SelectControl(control);
             foreach(TreeNode leaf in TreeControlNodes())
             {var item=leaf.Tag as SkinControl;if(item!=null&&item.Key==key){loading=true;tree.SelectedNode=leaf;leaf.EnsureVisible();loading=false;}}
             TextBox field;if(fields.TryGetValue(property,out field)){field.Focus();field.SelectAll();}
-            ShowNotice("Prüffund ausgewählt: "+control.Name+" · "+property+" · "+control.Source.RelativePath+(project.IsEditorHidden(control)?" · im Editor ausgeblendet":"")+(project.IsLocked(control)?" · gesperrt":""));
+            ShowNotice("Audit finding selected: "+control.Name+" · "+property+" · "+control.Source.RelativePath+(project.IsEditorHidden(control)?" · hidden in editor":"")+(project.IsLocked(control)?" · locked":""));
         }
         public void RenderAuditTo(string path)
         {using(var dialog=new SkinProblemsDialog(SkinAudit.Run(project)))dialog.RenderTo(path);}
         void RunAuditUiSmoke(Action<bool,string> verify)
         {
             LoadProject(DemoRoot(),"demo.xml");
-            var film=project.Controls.First(c=>c.Get("description")=="Filme");string key=film.Key;
-            project.Edit(film,new Dictionary<string,string>{{"onright","987654"},{"textureNoFocus","Studio/fehlt.png"}},"Prüffälle");RefreshProject(key);
+            var film=project.Controls.First(c=>c.Get("description")=="Movies");string key=film.Key;
+            project.Edit(film,new Dictionary<string,string>{{"onright","987654"},{"textureNoFocus","Studio/missing.png"}},"Audit cases");RefreshProject(key);
             var report=SkinAudit.Run(project);
             using(var dialog=new SkinProblemsDialog(report))
             {
-                dialog.Show();Application.DoEvents();verify(dialog.VisibleCount>0,"Problemliste zeigt Fundstellen der geöffneten Seite");
-                dialog.FilterForTest("NAV_MISSING",false);verify(dialog.VisibleCount==1&&dialog.CanJump,"Suche nach Prüfcode filtert exakt den fehlenden Navigationsverweis");
-                dialog.SelectCodeForTest("NAV_MISSING");verify(dialog.DetailForTest.Contains("987654")&&dialog.DetailForTest.Contains("demo.menu.xml"),"Prüfdetails zeigen Wert und tatsächliche Include-Quelle");
-                dialog.JumpForTest();verify(dialog.DialogResult==DialogResult.OK&&dialog.TargetKey==key&&dialog.TargetProperty=="onright","Fundstelle gibt Control-Schlüssel und Eigenschaft zum Anspringen zurück");
-                JumpToIssue(dialog.TargetKey,dialog.TargetProperty);verify(selected.Key==key&&fields["onright"].SelectedText=="987654","Sprung wählt richtiges Control und markiert die betroffene Eigenschaft");
+                dialog.Show();Application.DoEvents();verify(dialog.VisibleCount>0,"The problem list shows findings for the open page");
+                dialog.FilterForTest("NAV_MISSING",false);verify(dialog.VisibleCount==1&&dialog.CanJump,"Searching by audit code isolates the missing navigation reference");
+                dialog.SelectCodeForTest("NAV_MISSING");verify(dialog.DetailForTest.Contains("987654")&&dialog.DetailForTest.Contains("demo.menu.xml"),"Audit details show the value and actual include source");
+                dialog.JumpForTest();verify(dialog.DialogResult==DialogResult.OK&&dialog.TargetKey==key&&dialog.TargetProperty=="onright","Findings return the control key and property for navigation");
+                JumpToIssue(dialog.TargetKey,dialog.TargetProperty);verify(selected.Key==key&&fields["onright"].SelectedText=="987654","Jumping selects the correct control and highlights its property");
             }
             using(var dialog=new SkinProblemsDialog(report))
             {
-                dialog.Show();Application.DoEvents();dialog.FilterForTest("kein-ergebnis-839204",true);verify(dialog.VisibleCount==0&&!dialog.CanJump,"Leerer Filter deaktiviert Sprung zum Element");
-                dialog.FilterForTest("TEXTURE_UNCHECKED",true);verify(dialog.VisibleCount>0,"Dynamische Bildpfade erscheinen separat als ungeprüfte Hinweise");
-                dialog.FilterForTest("TEXTURE_UNCHECKED",false);verify(dialog.VisibleCount==0,"Hinweisschalter blendet ungeprüfte Werte aus");dialog.Close();
+                dialog.Show();Application.DoEvents();dialog.FilterForTest("no-results-839204",true);verify(dialog.VisibleCount==0&&!dialog.CanJump,"Empty filters disable jumping to elements");
+                dialog.FilterForTest("TEXTURE_UNCHECKED",true);verify(dialog.VisibleCount>0,"Dynamic image paths appear separately as unverified findings");
+                dialog.FilterForTest("TEXTURE_UNCHECKED",false);verify(dialog.VisibleCount==0,"The information toggle hides unverified values");dialog.Close();
             }
-            undo.PerformClick();var clean=SkinAudit.Run(project);verify(!clean.Issues.Any(i=>i.Code=="NAV_MISSING"&&i.ControlKey==key)&&!project.Dirty,"Erneute Prüfung nach Undo verwirft behobenen Navigationsfund");
+            undo.PerformClick();var clean=SkinAudit.Run(project);verify(!clean.Issues.Any(i=>i.Code=="NAV_MISSING"&&i.ControlKey==key)&&!project.Dirty,"Rechecking after undo removes resolved navigation findings");
         }
     }
 }

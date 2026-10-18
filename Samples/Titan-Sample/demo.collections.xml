@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window>
+  <id>9009</id><defaultcontrol>50</defaultcontrol>
+  <controls>
+    <control><type>label</type><id>0</id><posX>100</posX><posY>50</posY><width>1700</width><height>80</height><font>TitanLight32</font><label>Design collections visually</label></control>
+    <control><type>label</type><id>0</id><posX>100</posX><posY>145</posY><width>1700</width><height>60</height><font>TitanLight16</font><label>Use Collection to change the view, selection and sample data.</label></control>
+    <control><type>facadeview</type><id>50</id><description>Media collection</description>
+      <control><type>listcontrol</type><id>50</id><description>List view</description><posX>100</posX><posY>250</posY><width>1100</width><height>610</height><textureHeight>85</textureHeight><spaceBetweenItems>10</spaceBetweenItems><font>TitanLight20</font><font2>TitanLight14</font2><textXOff>100</textXOff><textYOff>18</textYOff><textXOff2>820</textXOff2><textYOff2>25</textYOff2><textalign2>right</textalign2><itemWidth>58</itemWidth><itemHeight>58</itemHeight><IconXOff>18</IconXOff><IconYOff>13</IconYOff><textureFocus>Studio/Button-blue.png</textureFocus><textureNoFocus>Studio/Button-dark.png</textureNoFocus><selectedColor>ffffffff</selectedColor></control>
+      <control><type>thumbnailpanel</type><id>50</id><description>Icon grid</description><posX>100</posX><posY>250</posY><width>1100</width><height>610</height><itemWidth>270</itemWidth><itemHeight>285</itemHeight><thumbWidth>230</thumbWidth><thumbHeight>210</thumbHeight><thumbPosX>20</thumbPosX><thumbPosY>12</thumbPosY><itemWidthBig>350</itemWidthBig><itemHeightBig>360</itemHeightBig><thumbWidthBig>300</thumbWidthBig><thumbHeightBig>275</thumbHeightBig><font>TitanLight14</font><textalign>center</textalign></control>
+      <control><type>filmstrip</type><id>50</id><description>Filmstrip</description><posX>100</posX><posY>280</posY><width>1100</width><height>510</height><itemWidth>270</itemWidth><itemHeight>460</itemHeight><thumbPosX>15</thumbPosX><thumbPosY>10</thumbPosY><thumbWidth>240</thumbWidth><thumbHeight>350</thumbHeight><font>TitanLight16</font><textalign>center</textalign></control>
+      <control><type>coverflow</type><id>50</id><description>Coverflow preview</description><posX>100</posX><posY>250</posY><width>1100</width><height>610</height><cardWidth>290</cardWidth><cardHeight>410</cardHeight><sideGap>18</sideGap><font>TitanLight16</font><textalign>center</textalign></control>
+    </control>
+    <control><type>label</type><id>0</id><posX>1280</posX><posY>250</posY><width>540</width><height>70</height><font>TitanLight20</font><label>#selecteditem</label></control>
+    <control><type>textbox</type><id>0</id><posX>1280</posX><posY>350</posY><width>520</width><height>360</height><font>TitanLight16</font><label>This textbox displays longer text with automatic line wrapping. Font family, style and height come from fonts.xml. As in MediaPortal, font sizes scale with skin height. Rendering remains a GDI+ approximation.</label><textcolor>ffbdd1e5</textcolor></control>
+    <control><type>label</type><id>0</id><posX>100</posX><posY>920</posY><width>1500</width><height>55</height><font>TitanLight16</font><label>#itemcount items · Selection #selectedindex</label></control>
+    <control><type>label</type><id>0</id><posX>1280</posX><posY>760</posY><width>500</width><height>60</height><font>TitanLight14</font><label>List mode active</label><visible>facadeview.list</visible></control>
+    <control><type>label</type><id>0</id><posX>1280</posX><posY>760</posY><width>500</width><height>60</height><font>TitanLight14</font><label>Coverflow: static approximation</label><visible>facadeview.coverflow</visible></control>
+  </controls>
+</window>

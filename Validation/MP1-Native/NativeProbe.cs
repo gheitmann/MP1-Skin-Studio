@@ -17,7 +17,7 @@ class NativeProbe
     {
         try
         {
-            report.Add("Native MP1-1.39-Core-Pruefung (Original-Assembly aus offiziellem Release)");
+            report.Add("Native MP1 1.39 Core validation (original assembly from official release)");
             foreach(bool horizontal in new[]{false,true})
             {
                 var group=new GUIGroup(0){XPosition=100,YPosition=200,Width=300,Height=100};
@@ -25,15 +25,15 @@ class NativeProbe
                 group.AddControl(first);group.AddControl(second);
                 var layout=new StackLayout(7,horizontal?Orientation.Horizontal:Orientation.Vertical);
                 var size=layout.Measure(group,new Size(300,100));group.Width=(int)size.Width;group.Height=(int)size.Height;layout.Arrange(group);
-                Check(first.XPosition==100&&first.YPosition==200,"Erstes Kind am Gruppenursprung ("+horizontal+")");
-                Check(second.XPosition==(horizontal?187:100)&&second.YPosition==(horizontal?200:237),"Reihenfolge und Abstand ("+horizontal+")");
-                Check(size.Width==(horizontal?174:80)&&size.Height==(horizontal?30:74),"Messgroesse inklusive abschliessendem Abstand ("+horizontal+")");
+                Check(first.XPosition==100&&first.YPosition==200,"First child at group origin ("+horizontal+")");
+                Check(second.XPosition==(horizontal?187:100)&&second.YPosition==(horizontal?200:237),"Order and spacing ("+horizontal+")");
+                Check(size.Width==(horizontal?174:80)&&size.Height==(horizontal?30:74),"Measured size includes trailing spacing ("+horizontal+")");
                 first.Visibility=Visibility.Collapsed;size=layout.Measure(group,new Size(300,100));group.Width=(int)size.Width;group.Height=(int)size.Height;layout.Arrange(group);
-                Check(second.XPosition==100&&second.YPosition==200,"Collapsed reserviert keinen Platz ("+horizontal+")");
+                Check(second.XPosition==100&&second.YPosition==200,"Collapsed reserves no space ("+horizontal+")");
                 first.Visibility=Visibility.Hidden;size=layout.Measure(group,new Size(300,100));group.Width=(int)size.Width;group.Height=(int)size.Height;layout.Arrange(group);
-                Check(second.XPosition==(horizontal?187:100)&&second.YPosition==(horizontal?200:237),"Hidden bleibt in statischem StackLayout enthalten ("+horizontal+")");
+                Check(second.XPosition==(horizontal?187:100)&&second.YPosition==(horizontal?200:237),"Hidden remains in static StackLayout ("+horizontal+")");
             }
-            report.Add("10 native Pruefungen bestanden. Kein vollstaendiger Client-/Direct3D-Bildvergleich.");
+            report.Add("10 native checks passed. No full client/Direct3D image comparison.");
             File.WriteAllLines(args[0],report);return 0;
         }
         catch(Exception ex){report.Add("FAIL  "+ex);File.WriteAllLines(args[0],report);return 1;}

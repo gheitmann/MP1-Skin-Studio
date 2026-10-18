@@ -11,7 +11,7 @@ powershell -NoProfile -File .\build.ps1
 .\MP1SkinStudio.exe
 ```
 
-Demo assets are included under `Samples`. The inherited `README.txt` contains the original German user guide and version history. Application UI text and historical test reports retain their original language. New GitHub documentation and discussions use English by default.
+Demo assets are included under `Samples`. See [User Guide](docs/USER_GUIDE.md) for workflows and limitations. English is the default for documentation, code comments, application text and GitHub discussions.
 
 ## Features
 
@@ -19,7 +19,7 @@ Visual position, size, text and texture editing; multiple selection and alignmen
 
 ## Validation
 
-Historical reports under `Pruefungen` record 189 core checks, 185 UI checks, 602 Titan page/theme variants and ten direct checks against original MP1 StackLayout classes. These counts were imported from the saved release package and do not imply that all tests were rerun during import. A fresh build succeeded during import.
+Historical reports under `Validation` record 189 core checks, 185 UI checks, 602 Titan page/theme variants and ten direct checks against original MP1 StackLayout classes. These counts were imported from the saved release package and do not imply that all tests were rerun during import. A fresh build succeeded during import. The English migration also passed 189 core checks and 185 UI checks; fresh reports are in [Validation/English-Migration](Validation/English-Migration).
 
 After building, run core checks with:
 
@@ -28,7 +28,7 @@ $probe = Start-Process .\MP1SkinStudio.exe -ArgumentList '--selftest', "$env:TEM
 if ($probe.ExitCode -ne 0) { throw 'Core checks failed' }
 ```
 
-The full MediaPortal client and image comparison remains pending. `Runtime-Abgleich` contains the prepared test export. Preview rendering is approximate.
+The full MediaPortal client and image comparison remains pending. `Runtime-Comparison` contains the prepared test export. Preview rendering is approximate.
 
 ## Continuing development
 

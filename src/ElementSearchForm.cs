@@ -12,11 +12,11 @@ namespace MP1SkinStudio
         Panel BuildElementSearch()
         {
             var bar=new Panel{Dock=DockStyle.Top,Height=82};
-            bar.Controls.Add(new Label{Text="ELEMENTE SUCHEN",ForeColor=muted,Location=new Point(0,0),Size=new Size(208,21)});
-            elementSearch=new TextBox{AccessibleName="Elemente der geöffneten Seite suchen",BackColor=Color.FromArgb(20,26,35),ForeColor=ink,BorderStyle=BorderStyle.FixedSingle,Location=new Point(0,23),Width=174};bar.Controls.Add(elementSearch);
-            var clear=ButtonFor("×",()=>{elementSearch.Clear();elementSearch.Focus();});clear.SetBounds(180,22,28,25);clear.Margin=Padding.Empty;clear.AccessibleName="Elementsuche löschen";bar.Controls.Add(clear);
+            bar.Controls.Add(new Label{Text="SEARCH ELEMENTS",ForeColor=muted,Location=new Point(0,0),Size=new Size(208,21)});
+            elementSearch=new TextBox{AccessibleName="Search elements on the open page",BackColor=Color.FromArgb(20,26,35),ForeColor=ink,BorderStyle=BorderStyle.FixedSingle,Location=new Point(0,23),Width=174};bar.Controls.Add(elementSearch);
+            var clear=ButtonFor("×",()=>{elementSearch.Clear();elementSearch.Focus();});clear.SetBounds(180,22,28,25);clear.Margin=Padding.Empty;clear.AccessibleName="Clear element search";bar.Controls.Add(clear);
             searchCount=new Label{ForeColor=muted,Location=new Point(0,52),Size=new Size(208,26),AutoEllipsis=true};bar.Controls.Add(searchCount);
-            tips.SetToolTip(elementSearch,"Name, ID, Typ, Text, Quelle oder Eigenschaft suchen. Mehrere Wörter müssen alle passen. Gezielt: id:10, typ:button, quelle:menu. Enter: nächster Treffer; Umschalt+Enter: zurück; Esc: löschen. Die Vorschau bleibt vollständig.");
+            tips.SetToolTip(elementSearch,"Search names, IDs, types, text, sources or properties. All words must match. Filters: id:10, type:button, source:menu. Enter: next; Shift+Enter: previous; Esc: clear. The full preview remains visible.");
             elementSearch.TextChanged+=(s,e)=>{if(project!=null&&!loading)RebuildElementTree();};
             elementSearch.KeyDown+=(s,e)=>SearchKey(e);
             return bar;
@@ -34,7 +34,7 @@ namespace MP1SkinStudio
                     var node=new TreeNode(group.Key+(group.First().Source.Changed?"  *":"")){ForeColor=Color.FromArgb(141,177,211)};
                     tree.Nodes.Add(node);AddTreeGroup(node,project.Controls.Where(c=>c.Source==group.First().Source).GroupBy(c=>c.Key).Select(g=>g.First()).ToArray(),group.ToArray());
                 }
-                int total=project.Controls.Select(c=>c.Key).Distinct().Count();searchCount.Text=matches.Length+" von "+total+" Elementen";tree.ShowNodeToolTips=true;SyncElementTreeSelection();
+                int total=project.Controls.Select(c=>c.Key).Distinct().Count();searchCount.Text=matches.Length+" of "+total+" elements";tree.ShowNodeToolTips=true;SyncElementTreeSelection();
             }
             finally{tree.EndUpdate();loading=prior;}
         }
@@ -56,7 +56,7 @@ namespace MP1SkinStudio
         }
         void NextSearchResult(bool previous)
         {
-            var matches=SearchResults();if(matches.Length==0){ShowNotice("Keine passenden Elemente in der geöffneten Seite und ihren Includes.");return;}
+            var matches=SearchResults();if(matches.Length==0){ShowNotice("No matching elements on the open page or its includes.");return;}
             int current=Array.FindIndex(matches,c=>selected!=null&&c.Key==selected.Key);
             int next=current<0?(previous?matches.Length-1:0):(current+(previous?-1:1)+matches.Length)%matches.Length;
             SelectFoundControl(matches[next]);
@@ -64,28 +64,28 @@ namespace MP1SkinStudio
         void SelectFromTree(SkinControl control)
         {
             if(PendingProperties())
-            {SyncElementTreeSelection();ShowNotice("Offene Eigenschaftseingaben zuerst übernehmen; die bisherige Auswahl bleibt erhalten.");return;}
+            {SyncElementTreeSelection();ShowNotice("Apply pending property edits first; the previous selection is preserved.");return;}
             SelectControl(control,(ModifierKeys&Keys.Control)!=0,false);
         }
         void SelectFoundControl(SkinControl control)
         {
-            if(PendingProperties())throw new InvalidOperationException("Eigenschaften haben noch nicht übernommene Eingaben. Diese zuerst übernehmen.");
+            if(PendingProperties())throw new InvalidOperationException("Properties have pending edits. Apply them first.");
             SelectControl(control);SyncElementTreeSelection();
-            ShowNotice(DisplayName(control)+" · "+control.Source.RelativePath+" · ID "+control.Get("id","-")+(project.IsLocked(control)?" · gesperrt":"")+(project.IsEditorHidden(control)?" · im Editor ausgeblendet":""));
+            ShowNotice(DisplayName(control)+" · "+control.Source.RelativePath+" · ID "+control.Get("id","-")+(project.IsLocked(control)?" · locked":"")+(project.IsEditorHidden(control)?" · hidden in editor":""));
         }
         void PickOverlapping(SkinControl[] controls,Point location)
         {
-            var menu=StudioMenus.For(this,"overlap");menu.Items.Add(controls.Length+" Elemente unter dem Mauszeiger (vorn zuerst)").Enabled=false;
+            var menu=StudioMenus.For(this,"overlap");menu.Items.Add(controls.Length+" elements under the pointer (front first)").Enabled=false;
             menu.Items.Add(new ToolStripSeparator());
             foreach(var item in controls)
             {
                 var control=item;var entry=(ToolStripMenuItem)menu.Items.Add((EditorMark(control)+DisplayName(control)+" · "+control.Get("type")+" · ID "+control.Get("id","-")+" · "+control.Source.RelativePath+" ["+control.Ordinal+"]").Replace("&","&&"),null,(s,e)=>Attempt(()=>SelectFoundControl(control)));
                 entry.Checked=selected!=null&&selected.Key==control.Key;
             }
-            if(controls.Length==0)menu.Items.Add("Hier liegt kein sichtbares Element.").Enabled=false;
+            if(controls.Length==0)menu.Items.Add("No visible element at this position.").Enabled=false;
             menu.Show(canvas,location);
         }
-        public void PrepareSearchPreview(){LoadProject(DemoRoot(),"demo.xml");elementSearch.Text="typ:button quelle:menu";}
+        public void PrepareSearchPreview(){LoadProject(DemoRoot(),"demo.xml");elementSearch.Text="type:button source:menu";}
     }
     public sealed partial class SkinCanvas
     {

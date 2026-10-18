@@ -9,22 +9,22 @@ namespace MP1SkinStudio
     {
         void EditElementText(SkinControl control)
         {
-            if(PendingProperties())throw new InvalidOperationException("Offene Eigenschaftseingaben zuerst übernehmen.");
+            if(PendingProperties())throw new InvalidOperationException("Apply pending property edits first.");
             if(control==null)return;var info=project.InspectTextEdit(control);if(!info.Allowed){ShowNotice(info.Reason);return;}
             SelectControl(control);
             using(var dialog=new TextEditDialog(info,state))if(dialog.ShowDialog(this)==DialogResult.OK)
             {
-                string key=control.Key;bool changed=project.SetControlText(control,dialog.Result,dialog.ReplaceProtected);RefreshProject(key);ShowNotice(changed?"Text übernommen. Mit Rückgängig vollständig wiederherstellen.":"Text unverändert.");
+                string key=control.Key;bool changed=project.SetControlText(control,dialog.Result,dialog.ReplaceProtected);RefreshProject(key);ShowNotice(changed?"Text applied. Undo restores it completely.":"Text unchanged.");
             }
         }
         void AddTextCommands(ContextMenuStrip menu)
         {
-            menu.Items.Add(new ToolStripSeparator());var item=menu.Items.Add("Text bearbeiten …",null,(s,e)=>Attempt(()=>EditElementText(selected)));
+            menu.Items.Add(new ToolStripSeparator());var item=menu.Items.Add("Edit text …",null,(s,e)=>Attempt(()=>EditElementText(selected)));
             item.Enabled=SelectedControls().Length==1&&selected!=null&&project.InspectTextEdit(selected).Allowed;
         }
         bool AllowCanvasGesture()
         {
-            if(!PendingProperties())return true;ShowNotice("Offene Eigenschaftseingaben zuerst übernehmen; die aktuelle Auswahl bleibt erhalten.");return false;
+            if(!PendingProperties())return true;ShowNotice("Apply pending property edits first; the current selection is preserved.");return false;
         }
         public void RenderTextEditorTo(string path)
         {var control=project.Controls.First(c=>c.Name=="Time");using(var dialog=new TextEditDialog(project.InspectTextEdit(control),state))dialog.RenderTo(path);}
