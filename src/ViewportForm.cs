@@ -47,12 +47,13 @@ namespace MP1SkinStudio
             var hideItem=menu.Items.Add(hidden?"Show selection again":"Hide selection in editor only",null,(s,e)=>SetProtection(false,!hidden));hideItem.Enabled=controls.Length>0;
             AddStructureCommands(menu);AddGroupCommands(menu);AddTextCommands(menu);AddVisibilityCommands(menu);
             menu.Items.Add(new ToolStripSeparator());
-            menu.Items.Add("Show all editor-hidden elements",null,(s,e)=>{project.Editor.Hidden.Clear();RefreshProject(selected==null?null:selected.Key);}).Enabled=project.Editor.Hidden.Count>0;
-            menu.Items.Add("Unlock all elements",null,(s,e)=>{project.Editor.Locked.Clear();RefreshProject(selected==null?null:selected.Key);}).Enabled=project.Editor.Locked.Count>0;
+            menu.Items.Add("Show all editor-hidden elements",null,(s,e)=>Attempt(()=>{RequireAppliedProperties();project.Editor.Hidden.Clear();RefreshProject(selected==null?null:selected.Key);})).Enabled=project.Editor.Hidden.Count>0;
+            menu.Items.Add("Unlock all elements",null,(s,e)=>Attempt(()=>{RequireAppliedProperties();project.Editor.Locked.Clear();RefreshProject(selected==null?null:selected.Key);})).Enabled=project.Editor.Locked.Count>0;
             return menu;
         }
         void SetProtection(bool locking,bool enabled)
         {
+            if(PendingProperties()){ShowNotice("Apply pending property edits before changing element protection or editor visibility.");return;}
             if(project==null)return;var flags=locking?project.Editor.Locked:project.Editor.Hidden;
             foreach(var control in SelectedControls()){if(enabled)flags.Add(control.Key);else flags.Remove(control.Key);}
             RefreshProject(selected==null?null:selected.Key);

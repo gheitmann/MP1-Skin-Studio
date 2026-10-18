@@ -25,6 +25,7 @@ namespace MP1SkinStudio
             var row=new FlowLayoutPanel{Dock=DockStyle.Bottom,Height=40,WrapContents=false,Visible=false,Padding=new Padding(8,4,0,0)};
             navigation=Check("Navigation",false,value=>
             {
+                if(PendingProperties()){navigation.Checked=canvas.NavigationMode;ShowNotice("Apply pending property edits before changing navigation mode.");return;}
                 canvas.NavigationMode=value;host.Height=value?80:40;row.Visible=value;
                 if(value&&selected!=null)SelectControl(selected);
                 canvas.Focus();canvas.Invalidate();
@@ -59,12 +60,14 @@ namespace MP1SkinStudio
         void InsertElement(string kind)
         {
             if(project==null)return;
+            RequireAppliedProperties();
             string source=selected==null?project.Relative(project.Resolve(project.Page)):selected.Source.RelativePath;
             string key=project.InsertControl(source,kind);canvas.SelectedKeys.Clear();RefreshProject(key);
             ShowNotice("New element in "+source+" inserted. Shared includes affect every page using them.");
         }
         void DuplicateElement()
         {
+            RequireAppliedProperties();
             if(selected==null||SelectedControls().Length!=1)throw new InvalidOperationException("Select exactly one element to duplicate.");
             string key=project.DuplicateControl(selected,unlock.Checked);canvas.SelectedKeys.Clear();RefreshProject(key);
             ShowNotice("Copy inserted with a new ID; existing IDs and original text are preserved.");
@@ -79,12 +82,14 @@ namespace MP1SkinStudio
         }
         void AlignSelection(string mode)
         {
+            RequireAppliedProperties();
             if(selected==null)return;string key=selected.Key;
             if(SelectedControls().Any(c=>project.IsLocked(c)))throw new InvalidOperationException("The selection contains a locked element. Unlock it in the element tree first.");
             var edits=LayoutTools.Align(SelectedControls(),mode,unlock.Checked);project.EditMany(edits,"Align / distribute selection");RefreshProject(key);
         }
         void ConnectTo(SkinControl target)
         {
+            RequireAppliedProperties();
             if(selected==null)throw new InvalidOperationException("Select a source in the element tree first.");
             string key=selected.Key,direction=directionKeys[Math.Max(0,navDirection.SelectedIndex)];
             project.ConnectNavigation(selected,target,direction,unlock.Checked);RefreshProject(key);canvas.Focus();
@@ -92,6 +97,7 @@ namespace MP1SkinStudio
         }
         void FollowNavigation(string direction)
         {
+            RequireAppliedProperties();
             if(selected==null)return;var target=project.NavigationTarget(selected,direction);
             SelectControl(target);canvas.Focus();ShowNotice("Focus test: "+direction+" → "+target.Name+" (ID "+target.Get("id")+").");
         }

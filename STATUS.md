@@ -263,3 +263,18 @@ preservation. See [visibility editing](Validation/Visibility-Editing/README.md).
 The UI wiring is compiled but remains manually unverified. No editor/client GUI,
 capture or Computer Use was used; the automation suspension and deferred DirectX
 task remain in force.
+
+## Unapplied property input guards
+
+October 19, 2026: extended existing pending-field protection to page/theme and
+session switching, save/export, undo/redo, insert/duplicate/alignment/navigation,
+and editor protection/visibility refresh actions. Selector values are restored
+on blocked changes; pending input marks the session unsaved and closing confirms
+discard. No draft values are automatically committed or silently saved.
+
+Fresh final build and console core suite: 228 passed, zero failed. This verifies
+compilation and existing model regressions, not the new GUI event paths.
+Manual acceptance cases are recorded in
+[pending-input validation](Validation/Pending-Properties/README.md).
+No GUI/client launch, capture or Computer Use was performed. UI validation
+remains pending under the automation suspension; DirectX stays deferred.

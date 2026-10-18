@@ -54,6 +54,7 @@ namespace MP1SkinStudio
         {canvas.SelectedKeys.Clear();foreach(string key in snapshot.Keys)if(project.Controls.Any(c=>c.Key==key))canvas.SelectedKeys.Add(key);RefreshProject(snapshot.Primary??snapshot.Keys.FirstOrDefault());}
         void UndoEditor(bool repeat)
         {
+            RequireAppliedProperties();
             var stack=repeat?project.Redo:project.Undo;if(stack.Count==0)return;var change=stack.Peek();var before=CaptureSelection();
             if(repeat)project.RedoChange();else project.UndoChange();
             RestoreSelection((repeat?change.SelectionAfter:change.SelectionBefore)??TranslateSelection(before));

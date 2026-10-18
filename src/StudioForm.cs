@@ -228,9 +228,9 @@ namespace MP1SkinStudio
             canvas.CommitBatch+=edits=>Attempt(()=>{string key=selected==null?null:selected.Key;project.EditMany(edits,"Move / resize selection");RefreshProject(key);});canvas.Notice+=ShowNotice;
             canvas.ConnectRequest+=target=>Attempt(()=>ConnectTo(target));canvas.FollowRequest+=direction=>Attempt(()=>FollowNavigation(direction));
             tree.AfterSelect+=(s,e)=>{var c=e.Node.Tag as SkinControl;if(!loading&&c!=null)SelectFromTree(c);};
-            page.SelectedIndexChanged+=(s,e)=>{if(!loading&&project!=null&&page.SelectedItem!=null)Attempt(()=>{project.OpenPage(page.SelectedItem.ToString());state.FocusId=project.DefaultControlId;RefreshProject(null);});};
-            theme.SelectedIndexChanged+=(s,e)=>{if(!loading&&project!=null)Attempt(()=>{project.Theme=theme.SelectedIndex<=0?"":theme.SelectedItem.ToString();ReloadPages(project.Page);});};
-            FormClosing+=(s,e)=>{if(SessionNeedsSaving()&&MessageBox.Show("The latest changes have not been saved as an editor project or exported as ZIP.\n\nClose anyway?","Editor changes",MessageBoxButtons.YesNo,MessageBoxIcon.Question)!=DialogResult.Yes)e.Cancel=true;};
+            page.SelectedIndexChanged+=(s,e)=>{if(!loading&&project!=null&&page.SelectedItem!=null)Attempt(OpenSelectedPage);};
+            theme.SelectedIndexChanged+=(s,e)=>{if(!loading&&project!=null)Attempt(ChangeSelectedTheme);};
+            FormClosing+=(s,e)=>{if(SessionNeedsSaving()&&MessageBox.Show("Unapplied property values or other session changes have not been saved.\n\nClose and discard unsaved changes?","Editor changes",MessageBoxButtons.YesNo,MessageBoxIcon.Question)!=DialogResult.Yes)e.Cancel=true;};
             if(Directory.Exists(root))LoadProject(root,"demo.xml");
         }
         Label LabelFor(string text,int height=23) {return new Label{Text=text,AutoSize=false,Height=height,ForeColor=muted,Dock=DockStyle.Top,TextAlign=ContentAlignment.MiddleLeft};}
@@ -289,7 +289,7 @@ namespace MP1SkinStudio
             tips.SetToolTip(unlock,"Enable only when intentionally replacing an existing #Property or #Define with a local value.");
         }
         public static string DemoRoot(){return System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"Samples","Titan-Sample");}
-        bool CanSwitch(){return !SessionNeedsSaving()||MessageBox.Show("The latest changes have not been saved as an editor project or exported as ZIP.\n\nSwitch sessions anyway?","Switch skin",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes;}
+        bool CanSwitch(){if(PendingProperties()){ShowNotice("Apply pending property edits or restore their previous values before switching sessions.");return false;}return !SessionNeedsSaving()||MessageBox.Show("The latest changes have not been saved as an editor project or exported as ZIP.\n\nSwitch sessions anyway?","Switch skin",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes;}
         void OpenFolder()
         {using(var d=new FolderBrowserDialog{Description="Choose a skin directory containing references.xml, fonts.xml and Media",ShowNewFolderButton=false})if(d.ShowDialog()==DialogResult.OK&&CanSwitch())LoadProject(d.SelectedPath,null);}
         void OpenXml()
@@ -347,7 +347,7 @@ namespace MP1SkinStudio
                 bool mixed=SelectedControls().Any(item=>item.Get(key)!=c.Get(key));
                 if(mixed)mixedFields.Add(key);
                 var box=new TextBox{Text=mixed?"":c.Get(key),Width=247,Location=new Point(0,24),BackColor=Color.FromArgb(20,26,35),ForeColor=ink,BorderStyle=BorderStyle.FixedSingle};row.Controls.Add(box);
-                box.TextChanged+=(sender,args)=>{touchedFields.Add(key);UpdateResetTools();};
+                box.TextChanged+=(sender,args)=>{touchedFields.Add(key);UpdateResetTools();if(project!=null&&!loading){UpdateProjectCaption();export.Enabled=project.Dirty||PendingProperties();}};
                 AddPropertyResetButton(row,key);
                 if(new[]{"textcolor","colordiffuse","font","align","textalign","textvalign","valign","texture","textureFocus","textureNoFocus"}.Contains(key))
                 {
@@ -407,6 +407,7 @@ namespace MP1SkinStudio
         }
         void Export()
         {
+            RequireAppliedProperties();
             if(project==null||!project.Dirty){ShowNotice("No changes yet.");return;}
             using(var d=new SaveFileDialog{Filter="ZIP containing modified skin files|*.zip",FileName="MP1-Skin-Changes.zip",Title="Export changes"})
                 if(d.ShowDialog()==DialogResult.OK){project.Export(d.FileName);exportedSignature=ProjectFile.XmlSignature(project);UpdateProjectCaption();ShowNotice("Exported: "+d.FileName+". Also save an editor project to continue editing later.");}

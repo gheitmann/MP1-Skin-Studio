@@ -12,6 +12,7 @@ namespace MP1SkinStudio
         bool SessionNeedsSaving()
         {
             if(project==null)return false;
+            if(PendingProperties())return true;
             string signature=ProjectFile.ContentSignature(project);
             if(signature==savedProjectSignature)return false;
             bool editorChanged=ProjectFile.EditorSignature(project)!=(currentProjectFile==null?initialEditorSignature:savedEditorSignature);
@@ -21,6 +22,7 @@ namespace MP1SkinStudio
         {Text="MP1 Skin Studio · Prototype 0.9"+(currentProjectFile==null?"":" · "+Path.GetFileName(currentProjectFile))+(SessionNeedsSaving()?" *":"");}
         void SaveSession(string path)
         {
+            RequireAppliedProperties();
             ProjectFile.Save(project,path);currentProjectFile=path;savedProjectSignature=ProjectFile.ContentSignature(project);savedEditorSignature=ProjectFile.EditorSignature(project);UpdateProjectCaption();
             ShowNotice("Editor project saved: "+path+". Source files in the skin directory remain unchanged.");
         }
@@ -32,6 +34,7 @@ namespace MP1SkinStudio
         void SaveEditorProject(bool saveAs)
         {
             if(project==null)return;
+            RequireAppliedProperties();
             if(!saveAs&&currentProjectFile!=null){SaveSession(currentProjectFile);return;}
             using(var dialog=new SaveFileDialog{Filter="MP1 Skin Studio Project|*.mp1skinproj",DefaultExt="mp1skinproj",AddExtension=true,FileName=currentProjectFile==null?"My-Skin.mp1skinproj":Path.GetFileName(currentProjectFile),Title="Save editor project for continued editing"})
                 if(dialog.ShowDialog(this)==DialogResult.OK)SaveSession(dialog.FileName);
