@@ -43,6 +43,12 @@ visually inspected. See [Grid dialog validation](Validation/Grid-Dialog/README.m
 3. Extend design tools: create/ungroup groups, move controls between groups, and provide convenient global style editing.
 4. Continue usability and stability checks on large real-world skins.
 
+Latest client observation (October 18, approximately 19:43 local time): the user
+manually started installed MP1 successfully and the Titan Home screen was
+captured. Activating that window was rejected with `Computer Use was not
+approved to use mediaportal`. Desktop input authorization currently blocks the
+remaining settings/navigation comparison; no additional input was attempted.
+
 ## Deferred backlog
 
 - [Issue #1](https://github.com/gheitmann/MP1-Skin-Studio/issues/1): assess removal

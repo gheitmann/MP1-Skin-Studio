@@ -43,6 +43,15 @@ runtime from the dialog alone or claim a completed client comparison. A manual
 start of the installed client is the next useful comparison point. No dependency
 replacement research, installation changes, or skin changes were performed.
 
+At approximately 19:43 local time, the user manually started the same installed
+executable without a DirectX error. Window enumeration and state capture
+confirmed `MediaPortal - Startbildschirm` with the Titan Home screen. Attempting
+to activate that returned window was then rejected with
+`Computer Use was not approved to use mediaportal`. No further input was sent.
+Manual startup is therefore working; desktop input authorization is the current
+comparison blocker. The automated-start prerequisite error does not establish
+that the user's runtime installation needs repair.
+
 The following are still pending:
 
 1. Open the installed Titan Settings page and compare its layout, text and focus
