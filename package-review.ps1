@@ -65,7 +65,7 @@ try {
             if ($reviewDigest -ne $reviewHashes[$reviewFile]) { throw "Review archive hash mismatch: $reviewFile" }
         }
     } finally { $reviewArchive.Dispose() }
-    if ([System.IO.File]::Exists($reviewTarget)) { [System.IO.File]::Replace($reviewTemp, $reviewTarget, $null) }
+    if ([System.IO.File]::Exists($reviewTarget)) { [System.IO.File]::Replace($reviewTemp, $reviewTarget, [System.Management.Automation.Language.NullString]::Value) }
     else { [System.IO.File]::Move($reviewTemp, $reviewTarget) }
     Write-Output "Verified review files: $($reviewFiles.Count) plus README and SHA256 manifest"
     Write-Output "Archive: $reviewTarget"

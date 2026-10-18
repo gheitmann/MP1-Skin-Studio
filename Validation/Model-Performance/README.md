@@ -57,6 +57,12 @@ with the validated executable. The local final archive records its source commit
 Installed Titan assets, MediaPortal binaries/configuration, saved projects and
 private runtime data are excluded. Local work output is now ignored by git.
 
+The packaging script was also tested with an already existing ZIP and an
+exclusively locked target. A PowerShell null-to-string conversion in the
+replacement call was corrected using NullString.Value. Replacement now succeeds;
+the intentional lock failure retains the prior ZIP and cleans the temporary
+archive. These checks do not launch the packaged executable.
+
 Recent GUI fields, pending-input guards and Revert Inputs remain manually
 unverified. No editor GUI, MediaPortal, Computer Use or capture was launched.
 The console core suite includes offscreen drawing tests; no UI smoke suite ran.
