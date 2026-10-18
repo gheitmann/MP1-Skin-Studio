@@ -98,3 +98,13 @@ referencing MP1SkinStudio.exe, System.Core, System.Drawing, System.Windows.Forms
 System.IO.Compression and System.IO.Compression.FileSystem. Run the probe next to
 the editor executable with three arguments: Titan root, a separate output
 directory and the MP1 language directory. Keep output outside the original skin.
+
+## Follow-up: actual UI workflow passed
+
+The attended real-page mouse/keyboard editing gate has now passed. See
+[UI-Workflow.md](UI-Workflow.md) for the exact selection/property/drag/undo/redo/
+save/reopen/export sequence and [UI-Artifact-Results.txt](UI-Artifact-Results.txt)
+for independent artifact checks. This supersedes the pending UI gate above.
+The owner also confirmed a successful normal MP1 restart after another reported
+DirectX error. DirectX remains deferred. Next priority is a complex real
+list/facade page, rather than further auxiliary editor features.

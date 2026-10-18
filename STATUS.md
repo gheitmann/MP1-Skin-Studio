@@ -100,7 +100,7 @@ protection, and exact undo/redo. Child XML positions are preserved. Fresh
 validation: **203 core checks and 195 UI checks passed**; the dialog render was
 visually inspected. See [Grid dialog validation](Validation/Grid-Dialog/README.md).
 
-1. Prove actual real-page UI editing (selection, property changes, save/reopen and export through the interface). The production-API round trip and installed-client candidate display/navigation have passed for Titan Settings. Verify manual normal MP1 startup if needed. See Validation/Core-Workflow/README.md.
+1. Exercise a complex real list/facade page to identify limitations that would prevent useful skin authoring. The real Titan Settings UI edit/save/reopen/export gate now passes, alongside the earlier production-API and installed-client candidate gates. See Validation/Core-Workflow/UI-Workflow.md.
 2. Improve preview fidelity for complex collections, font metrics, image masks, dynamic conditions and animations. Coverflow is currently a static approximation.
 3. Extend design tools: move controls between groups and provide convenient global style editing.
 4. Continue usability and stability checks on large real-world skins.
@@ -152,3 +152,20 @@ No original skin or client configuration was changed; DirectX remains deferred.
 - Distinguish inherited test reports from newly executed validation.
 - The missing chat project list is independent of the source code saved here.
 - Local window control was unavailable during import. Do not claim a visible client comparison has been completed.
+
+## Real-page UI feasibility gate
+
+October 18, 2026: attended editor control verified tree/canvas selection,
+property changes, direct drag with grid snapping, exact undo/redo, project save
+and reopen, and native-dialog ZIP export on installed Titan Settings. Five
+independent artifact checks passed; original settings.xml is unchanged.
+See [UI workflow](Validation/Core-Workflow/UI-Workflow.md). No product code
+changed and the previous full-suite counts were not rerun. The UI-created
+EDITOR TEST candidate was not loaded into MP1; the earlier STUDIO TEST candidate
+already passed installed-client display/navigation.
+
+The owner confirmed normal MP1 restarted successfully after another reported
+DirectX startup error. No startup or DirectX investigation was performed.
+The next core gate is a complex real list/facade page, with auxiliary features
+still deferred. Historical authorization/startup blockers above are superseded
+only by their explicitly recorded attended successes.

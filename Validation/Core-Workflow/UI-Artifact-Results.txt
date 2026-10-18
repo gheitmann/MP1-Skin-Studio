@@ -1,0 +1,7 @@
+PASS: saved UI project modifies only settings.xml
+PASS: UI ZIP export equals saved snapshot exactly as decoded XML text
+PASS: EDITOR TEST heading retains X=192, Y=235, width=440
+PASS: export has two entries: settings.xml and installation instructions
+PASS: installed original settings.xml SHA256 unchanged
+Original SHA256: 78b2b21deff4355a588cd0830865b8d3aab2d9185d6cc9fde58373aaf7e5bf31
+ZIP entries: settings.xml, _SkinStudio-Instructions.txt
