@@ -100,7 +100,7 @@ protection, and exact undo/redo. Child XML positions are preserved. Fresh
 validation: **203 core checks and 195 UI checks passed**; the dialog render was
 visually inspected. See [Grid dialog validation](Validation/Grid-Dialog/README.md).
 
-1. Exercise a complex real list/facade page to identify limitations that would prevent useful skin authoring. The real Titan Settings UI edit/save/reopen/export gate now passes, alongside the earlier production-API and installed-client candidate gates. See Validation/Core-Workflow/UI-Workflow.md.
+1. Inspect and test collection geometry and dynamic-condition limitations at source/model level. The complex Titan Video model/persistence/export gate now passes; visual/runtime verification is suspended after the reported system freeze. See Validation/Complex-Page/README.md.
 2. Improve preview fidelity for complex collections, font metrics, image masks, dynamic conditions and animations. Coverflow is currently a static approximation.
 3. Extend design tools: move controls between groups and provide convenient global style editing.
 4. Continue usability and stability checks on large real-world skins.
@@ -113,7 +113,7 @@ remaining settings/navigation comparison; no additional input was attempted.
 
 ## Latest continuation checkpoint
 
-October 18, 2026, 20:04–20:05 Europe/Berlin: resumed from GitHub commit
+October 18, 2026, 20:04-20:05 Europe/Berlin: resumed from GitHub commit
 `4d7764d` and verified all 125 tracked baseline files by Git blob hash.
 A fresh build succeeded; fresh core validation is in
 [Resume checkpoint](Validation/Resume-20261018/README.md). Editor source was not changed.
@@ -169,3 +169,22 @@ DirectX startup error. No startup or DirectX investigation was performed.
 The next core gate is a complex real list/facade page, with auxiliary features
 still deferred. Historical authorization/startup blockers above are superseded
 only by their explicitly recorded attended successes.
+
+## Complex-page console gate and automation suspension
+
+October 18, 2026: after the failed window-control attempt, the owner reported
+that the PC became practically unresponsive and required a hard reset. Cause
+is unconfirmed. Windows automation is suspended: no app launches, capture or
+Computer Use retries. The owner authorized source-code and test work only.
+This restriction supersedes earlier attended-retry permissions and is recorded
+in AGENTS.md. DirectX replacement remains deferred.
+
+The dedicated console probe passed eleven stages on real Titan myvideo.xml:
+211 controls, 17 loaded sources, five facade views, selected sample data and
+scrolling, isolated imported-list edits, exact undo/redo, project persistence,
+ZIP export and unchanged original-source hashes. No production source changed.
+See [complex-page model gate](Validation/Complex-Page/README.md).
+
+The complex page's visible rendering and runtime behavior remain unverified.
+Prior full-suite counts were not rerun. Continue with model-level investigation
+of preview limitations; auxiliary conveniences remain lower priority.

@@ -1,0 +1,12 @@
+PASS: loaded myvideo.xml and imported facade with 5 subviews; 211 controls across 17 loaded sources.
+PASS: list activates one real template and produces 6 sample tiles with selected content.
+PASS: smallicons activates one real template and produces 6 sample tiles with selected content.
+PASS: largeicons activates one real template and produces 6 sample tiles with selected content.
+PASS: filmstrip activates one real template and produces 6 sample tiles with selected content.
+PASS: coverflow activates one real template and produces 6 sample tiles with selected content.
+PASS: 25 preview items update selected-item/count bindings and scroll the last selection into the real list viewport without XML edits.
+PASS: width/text-offset edits affect only the imported list source, preserve inactive view XML, and undo/redo exactly.
+PASS: project save/reopen preserves imported XML edits and independent collection preview state.
+PASS: export contains exactly the edited shared XML plus instructions; sample titles are excluded.
+PASS: all 17 loaded original source hashes remain unchanged.
+LIMIT: no editor GUI, renderer or MediaPortal was launched. Visual fidelity, masks, animations and runtime plugin behavior remain unverified.
