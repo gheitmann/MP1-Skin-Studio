@@ -49,6 +49,21 @@ captured. Activating that window was rejected with `Computer Use was not
 approved to use mediaportal`. Desktop input authorization currently blocks the
 remaining settings/navigation comparison; no additional input was attempted.
 
+## Latest continuation checkpoint
+
+October 18, 2026, 20:04–20:05 Europe/Berlin: resumed from GitHub commit
+`4d7764d` and verified all 125 tracked baseline files by Git blob hash.
+A fresh build succeeded; fresh core validation is in
+[Resume checkpoint](Validation/Resume-20261018/README.md). Editor source was not changed.
+
+Activation of the user's running MediaPortal succeeded and Titan Home was
+observed, but the repeated approval loop recurred despite Always allow.
+All Computer Use calls have been stopped, including activation and capture,
+under the owner's explicit stop instruction. Do not retry during this continuation.
+Track the blocker at [openai/codex#55114](https://github.com/openai/codex/issues/55114).
+Settings rendering, focus/navigation and spacing comparison remain pending.
+The DirectX dependency replacement task remains deferred.
+
 ## Deferred backlog
 
 - [Issue #1](https://github.com/gheitmann/MP1-Skin-Studio/issues/1): assess removal
