@@ -27,8 +27,21 @@ program copy. Continue with that installation.
 The installed client was closed normally during the earlier switch to the test
 runtime. Subsequent attempts to launch either runtime through desktop automation
 were rejected with `Computer Use was not approved to use mediaportal`.
-This is the current access blocker; do not infer another missing DLL from it.
-The user can start the installed client manually before another observation.
+That launch authorization blocker no longer reproduces on the latest attempt.
+
+At approximately 19:39 local time on October 18, the installed executable was
+launched successfully through desktop automation. Its accessible startup dialog
+reported: `Please install a newer DirectX 9.0c redist!` and required the June 2010
+runtime. No Titan page was reached during this attempt. Read-only checks found
+`D3DX9_43.dll` in both Windows System32 and SysWOW64. The startup log identifies
+MP1 1.39 x64, Titan, and German. The dialog/window subsequently disappeared;
+window enumeration found no MediaPortal window.
+
+This contradicts the earlier successful manual start and positive prerequisite
+probe; the cause of the difference is not established. Do not infer a missing
+runtime from the dialog alone or claim a completed client comparison. A manual
+start of the installed client is the next useful comparison point. No dependency
+replacement research, installation changes, or skin changes were performed.
 
 The following are still pending:
 
@@ -38,9 +51,10 @@ The following are still pending:
 3. Verify the exported spacing change in the client with a reversible skin change
    only after preserving the original. Do not change the live TV configuration.
 
-The current repo remains at 200 core checks and 188 UI checks from the GridLayout
-milestone, plus ten native grid checks. No new editor code was changed in this
-client-validation checkpoint, so those tests were not rerun.
+The latest editor milestone has 203 core checks and 195 UI checks, recorded in
+`../Grid-Dialog`, plus ten earlier native grid checks in `../Grid-Preview`.
+No editor code was changed in this client-validation checkpoint, so those tests
+were not rerun.
 
 Private client configuration, complete personal runtime logs and the desktop
 capture (which included an overlapping personal window) are not committed.
