@@ -199,6 +199,27 @@ Historical results and newly performed tests are documented separately.
 
 Create a new visible test instance only after changes that warrant user inspection.
 
+## Creating groups
+
+Select at least two consecutive controls in the current XML page, then choose
+**Group selected controls** from the Element menu. Controls must share the same
+XML parent. Existing groups can be included, or a new group can be created inside
+an ordinary group. The new group is selected so its description or layout can be
+edited immediately.
+
+Child XML, IDs, positions, ordering and comments between the selected controls
+are preserved. Undo restores the exact source and original multiple selection;
+redo selects the new group again. Saving a project preserves the structure and
+editor markers. Original skin files are changed only through your separate export
+workflow.
+
+Grouping is unavailable across skipped controls, imports, different parents or
+files, inside automatic layouts, or when any affected control is locked. Open an
+included file as its own page to group its contents. Skins with behavioral group
+defaults in references.xml are rejected rather than silently applying visibility,
+animation or other inherited behavior to the new wrapper. Validate exports in MP1;
+the editor preview is not a runtime comparison.
+
 ## Version history
 
 - 0.2: multiple selection, insertion, duplication, alignment and navigation editing.

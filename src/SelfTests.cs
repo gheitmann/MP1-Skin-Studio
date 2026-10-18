@@ -61,6 +61,7 @@ namespace MP1SkinStudio
             RunStructuralTests(root);
             RunElementSearchTests();
             RunGroupTests(root);
+            RunGroupCreationTests(root);
             RunTextEditTests(root);
             RunLanguageTests(root);RunConditionScopeTests(root);RunStackTests(root);RunGridTests(root);RunCollectionTests(root);
             report.Add("");report.Add(passed+" passed, "+failed+" failed.");

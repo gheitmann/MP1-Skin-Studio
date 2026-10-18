@@ -474,6 +474,7 @@ namespace MP1SkinStudio
             RunStructuralUiSmoke(verify);
             RunSearchUiSmoke(verify);
             RunGroupUiSmoke(verify);
+            RunGroupCreationUiSmoke(verify);
             RunTextEditUiSmoke(verify);
             RunLanguageUiSmoke(directory,verify);
             RunStackUiSmoke(directory,verify);RunGridUiSmoke(directory,verify);

@@ -30,9 +30,22 @@ The demo `Samples/Titan-Sample/demo.grid.xml` and its rendered screenshot were
 visually inspected. Two remaining mixed-language compiler/error messages were
 also translated into English.
 
+## Group creation milestone
+
+Added **Group selected controls** to the Element menu. Consecutive siblings on
+the open XML page can be wrapped in a neutral ordinary group, including nested
+group subtrees. Child XML, positions and IDs are preserved. Undo/redo restores
+structure and selection; project persistence retains control identities and flags.
+Automatic layouts, locked descendants, shared-source edits and behavioral group
+defaults are protected.
+
+Fresh validation: **211 core checks and 199 UI checks passed** after a successful
+Windows build. See [group creation validation](Validation/Group-Creation/README.md).
+These editor tests did not use Computer Use or interact with MediaPortal.
+
 ## Remaining work
 
-The latest completed milestone adds an **Edit grid layout** dialog with column
+The preceding milestone added an **Edit grid layout** dialog with column
 and row counts, independent spacing, fill direction, binding replacement
 protection, and exact undo/redo. Child XML positions are preserved. Fresh
 validation: **203 core checks and 195 UI checks passed**; the dialog render was
@@ -40,7 +53,7 @@ visually inspected. See [Grid dialog validation](Validation/Grid-Dialog/README.m
 
 1. Complete a real MediaPortal 1 client comparison using the user's installed client, as explicitly requested. The app-server/PATH blocker has been resolved and the installed MP1 1.39 Titan Home screen was observed after an earlier manual start. A fresh settings export changes only spacing from 7 to 15 pixels. On the latest automated attempt (October 18, approximately 19:39 local time), launch authorization succeeded, but MP1 showed a June 2010 DirectX prerequisite error despite D3DX9_43.dll existing in both Windows system directories and the earlier positive component probe. The cause remains unresolved; a manual client start is the next comparison point. Settings rendering, focus and navigation remain pending. See [current client validation](Validation/Client-Comparison/README.md). No original skin file was changed.
 2. Improve preview fidelity for complex collections, font metrics, image masks, dynamic conditions and animations. Coverflow is currently a static approximation.
-3. Extend design tools: create/ungroup groups, move controls between groups, and provide convenient global style editing.
+3. Extend design tools: ungroup groups, move controls between groups, and provide convenient global style editing.
 4. Continue usability and stability checks on large real-world skins.
 
 Latest client observation (October 18, approximately 19:43 local time): the user
