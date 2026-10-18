@@ -203,3 +203,16 @@ No Windows automation, capture, GUI launch or MediaPortal launch was used.
 Core tests ran through a console entry point; the UI suite remains suspended.
 Visual equivalence is not established by numeric checks. Continue source/model
 work on dynamic conditions and collection preview limits; DirectX stays deferred.
+
+## Known-value string visibility conditions
+
+Continuation begun October 18, 2026: the preview now evaluates two-argument
+string.contains and string.starts when operands are known, using captured
+sample/define scopes. Native trimming, case normalization and empty-search
+semantics also apply to equality. Unknown values/functions remain unresolved.
+The actual Titan scrolling popup was checked with explicit yes/no/missing flags.
+
+Fresh console validation: ten dedicated checks and 223 core checks passed,
+zero failures. See [string-condition validation](Validation/String-Conditions/README.md).
+No app GUI, MediaPortal, capture or Computer Use was launched. UI/runtime
+verification remains suspended; DirectX replacement remains deferred.

@@ -1,0 +1,11 @@
+PASS: Contains resolves known samples and compares without case sensitivity
+PASS: Starts trims operands and handles quoted commas
+PASS: Empty search operands follow native equality semantics
+PASS: Equality trims operands as MP1 does
+PASS: Negating a missing property remains unknown
+PASS: Unsupported expressions and invalid argument counts remain unknown
+PASS: Real Titan list scrolling condition becomes visible with explicit sample state
+PASS: Real Titan scrolling popup hides when both known scroll flags are no
+PASS: Real Titan scrolling popup stays unresolved when a required scroll flag is missing
+PASS: Condition evaluation and sample changes preserve XML and history
+10 condition checks passed.
