@@ -1,0 +1,3 @@
+Original MP1 prerequisite component probe
+Component: MediaPortal.Configuration.DirectXCheck in Utils.dll
+IsInstalled: True

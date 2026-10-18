@@ -32,7 +32,7 @@ also translated into English.
 
 ## Remaining work
 
-1. Complete a real MediaPortal 1 client comparison: apply the prepared Titan test export to an isolated copy, and compare rendering and remote-control navigation. The installation and a Titan startup/shutdown have now been confirmed from local files and the installed client log. Visible comparison remains blocked because the Windows automation runtime cannot launch its app-server, including after a JavaScript session reset. Runtime-Comparison records the original installation context; a new client comparison is still required.
+1. Complete a real MediaPortal 1 client comparison using the user's installed client, as explicitly requested. The app-server/PATH blocker has been resolved and the installed MP1 1.39 Titan Home screen has been observed. The DirectX prerequisite component reports True after the user installed the legacy runtime. A fresh settings export changes only spacing from 7 to 15 pixels. Settings rendering, focus and navigation still require comparison: desktop automation currently rejects launching MediaPortal with "Computer Use was not approved to use mediaportal". See [current client validation](Validation/Client-Comparison/README.md). No original skin file was changed.
 2. Improve preview fidelity for complex collections, font metrics, image masks, dynamic conditions and animations. Coverflow is currently a static approximation.
 3. Extend design tools: create/ungroup groups, move controls between groups, and provide convenient global style editing.
 4. Continue usability and stability checks on large real-world skins.
