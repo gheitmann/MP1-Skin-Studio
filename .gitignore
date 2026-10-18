@@ -1,4 +1,4 @@
-# Buildprodukte und lokale Protokolle
+# Build products and local logs
 *.exe
 *.dll
 *.pdb
@@ -10,7 +10,7 @@ TestResults/
 *.user
 *.suo
 
-# Lokale Konfiguration und Zugangsdaten
+# Local configuration and credentials
 .env
 .env.*
 !.env.example

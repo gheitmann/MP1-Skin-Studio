@@ -1,22 +1,24 @@
-# Arbeitsstand und nächste Schritte
+# Development status and next steps
 
-Stand: 18.10.2026, übernommene Version 0.9.
+Date: October 18, 2026. Imported version: 0.9.
 
-## Herkunft
+## Baseline
 
-Import aus dem vollständigen lokal entpackten Releasepaket `MP1-Skin-Studio-0.9`. Quellcode, Tests, Beispiele, Buildskript, vorhandene Lizenz, Prüfberichte und Runtime-Testmaterial wurden übernommen. Installer, ausführbare Builddateien, Fehlerprotokolle und temporäre Arbeitsordner sind nicht Teil des Imports.
+Imported from the complete locally extracted `MP1-Skin-Studio-0.9` release package. Includes source code, tests, samples, build script, existing license, historical validation reports and runtime test materials. Installers, compiled binaries, error logs and temporary working directories are excluded.
 
-## Offen
+Historical reports and the original user guide retain their German text as source records. New repository documentation, commit messages, issues and pull requests should use English unless the user requests another language.
 
-1. Echten MediaPortal-1-Clientvergleich abschließen: Installation und Erstkonfiguration prüfen, vorbereiteten Titan-Testexport isoliert anwenden, Darstellung und Fernbedienungsnavigation vergleichen. Laut Benutzer ist MediaPortal inzwischen installiert und startet; das wurde in dieser Sitzung noch nicht praktisch verifiziert. Ältere Installationshinweise in README.txt beschreiben den damaligen Paketstand.
-2. Vorschautreue weiter verbessern: komplexe Sammlungen, Schriftmetriken, Bildmasken, dynamische Bedingungen und Animationen. Coverflow ist derzeit statisch angenähert.
-3. Weitere Gestaltung: Gruppen erstellen/auflösen, Controls zwischen Gruppen verschieben und globale Styles komfortabel bearbeiten.
-4. Bedienung und Stabilität bei großen realen Skins weiter prüfen.
+## Remaining work
 
-## Regeln für die Fortsetzung
+1. Complete a real MediaPortal 1 client comparison: verify installation and initial configuration, apply the prepared Titan test export to an isolated copy, and compare rendering and remote-control navigation. The user reports that MediaPortal is now installed and starts; this has not yet been verified in this session. Installation notes in README.txt reflect the older release-package state.
+2. Improve preview fidelity for complex collections, font metrics, image masks, dynamic conditions and animations. Coverflow is currently a static approximation.
+3. Extend design tools: create/ungroup groups, move controls between groups, and provide convenient global style editing.
+4. Continue usability and stability checks on large real-world skins.
 
-- Original-Skins unverändert lassen; mit isolierten Kopien und Exporten arbeiten.
-- Vorschauzustände nicht als Änderungen am Skin-XML exportieren.
-- Vorhandene Prüfberichte von tatsächlich neu ausgeführten Tests unterscheiden.
-- Die gestörte Chat-Projektliste ist unabhängig vom hier gesicherten Quellcode.
-- Die lokale Fenstersteuerung war beim Import nicht verfügbar. Nicht behaupten, einen sichtbaren Clientvergleich durchgeführt zu haben.
+## Rules for continuing work
+
+- Preserve original skins; use isolated copies and exports.
+- Do not export preview-only state as skin XML changes.
+- Distinguish inherited test reports from newly executed validation.
+- The missing chat project list is independent of the source code saved here.
+- Local window control was unavailable during import. Do not claim a visible client comparison has been completed.
