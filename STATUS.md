@@ -1,27 +1,31 @@
 # Development status and next steps
 
-Date: October 18, 2026. Imported version: 0.9.
+Date: October 19, 2026. Imported version: 0.9.
 
-## Current priority: prove the core workflow
+## Current priority: reliable core editing
 
-The owner explicitly prioritized real edit/save/reopen/export/client validation
-over further auxiliary features. Do not resume group/style conveniences until
-this gate is resolved.
+The owner prioritized practical edit/save/reopen/export behavior over auxiliary
+features. The actual Titan Settings UI workflow and an earlier exported candidate's
+installed-MP1 display/navigation passed before automation was suspended. Real
+Video/list, multi-page and theme workflows now have console/model validation.
+These successes do not establish complete visual fidelity or plugin equivalence.
 
-The installed Titan settings page passed the production-API edit/save/reopen/ZIP
-chain for position, size, text, texture and menu spacing. The saved candidate was
-visually observed in the editor. Its export was applied exactly to a separate
-skin copy. The original skin hashes remain unchanged.
+Windows app automation remains suspended after the owner reported a PC freeze
+requiring a hard reset. Do not launch the editor GUI or MediaPortal, capture
+windows or retry Computer Use without explicit new authorization. Continue
+source/model and console work only. DirectX replacement remains deferred.
 
-The initial automatic test launch was canceled without a targetable window.
-The owner then manually started the same installed client with the prepared
-isolated skin. Native Settings rendered STUDIO TEST, the changed icon and spacing;
-focus wrapping and a submenu return passed. The test client was closed normally.
-Automatic normal-start attempts did not expose a window, although the startup log
-selected normal Titan; manual normal startup may still be needed. Actual real-page
-mouse/keyboard editing is the next unproven gate. See the
-[core workflow gate](Validation/Core-Workflow/README.md) and its API report.
-No DirectX investigation or replacement was performed.
+Latest joint validation: fresh final build, **233 core checks and 39 targeted
+checks passed**. Coverage includes filmstrip geometry, string conditions, real
+Titan imported-list edits, save/export, multiple pages and Christmas/default
+theme preparation. Write-failure tests preserve existing archives and clean
+intermediate files. New UI wiring, Revert Inputs and pending-input guards remain
+manually unverified; prior UI counts are historical.
+See [session reliability validation](Validation/Session-Reliability/README.md).
+
+The next substantial gate is manual validation of the changed interface and
+remaining preview/runtime differences when that work is authorized. Auxiliary
+group/style conveniences remain lower priority. Historical milestones follow.
 
 ## Baseline
 
@@ -278,3 +282,17 @@ Manual acceptance cases are recorded in
 [pending-input validation](Validation/Pending-Properties/README.md).
 No GUI/client launch, capture or Computer Use was performed. UI validation
 remains pending under the automation suspension; DirectX stays deferred.
+
+## Combined session reliability checkpoint
+
+October 19, 2026: session preparation now loads/validates pages, theme lists and
+preview state before replacing the active editor project. Theme preparation
+restores the prior theme on failure and preserves base edits/history on success.
+Revert Inputs restores uncommitted fields without changing XML or undo history.
+
+Fresh final build: 233 core checks and 39 targeted real-skin/model checks passed.
+The latter include installed Christmas/default theme preparation and three-file
+edit/save/reopen/export. Forced project/ZIP replacement failures retain usable
+previous files, unchanged in-memory edits and no leftover temporary archives.
+See Validation/Session-Reliability/README.md. No GUI/client launch, capture or
+Computer Use was performed; interface paths remain manually unverified.

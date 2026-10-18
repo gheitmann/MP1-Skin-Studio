@@ -1,0 +1,7 @@
+PASS: Filmstrip text offsets use the item origin and texture height, independently of thumbnail bounds
+PASS: Filmstrip label dimensions use texture dimensions
+PASS: Filmstrip thumbnail geometry remains independent
+PASS: Calculating geometry does not rewrite XML
+PASS: Negative text offsets keep intentionally hidden labels outside the clipped viewport
+PASS: Real Titan filmstrip suppresses offscreen labels through its original negative offset
+6 geometry checks passed.

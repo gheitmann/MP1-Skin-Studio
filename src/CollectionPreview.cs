@@ -15,7 +15,7 @@ namespace MP1SkinStudio
     {
         public static readonly string[] Modes={"auto","list","smallicons","largeicons","filmstrip","album","playlist","coverflow"};
         public string Mode="auto";public int Focus;
-        public readonly List<PreviewItem> Items=new List<PreviewItem>{new PreviewItem{Title="A movie for tonight",Detail="2026 � 112 Min.",Image="Studio/Icon-Movie.png"},new PreviewItem{Title="Favorite series",Detail="Season 2",Image="Studio/Icon-Movie.png"},new PreviewItem{Title="A new discovery",Detail="2025 � 98 Min.",Image="Studio/Icon-Pictures.png"},new PreviewItem{Title="My collection",Detail="12 items",Image="Studio/Icon-Music.png"},new PreviewItem{Title="An unusually long title for narrow text fields",Detail="2024 � 141 Min.",Image="Studio/Icon-Movie.png"},new PreviewItem{Title="Music and concerts",Detail="Live",Image="Studio/Icon-Music.png"}};
+        public readonly List<PreviewItem> Items=new List<PreviewItem>{new PreviewItem{Title="A movie for tonight",Detail="2026 · 112 Min.",Image="Studio/Icon-Movie.png"},new PreviewItem{Title="Favorite series",Detail="Season 2",Image="Studio/Icon-Movie.png"},new PreviewItem{Title="A new discovery",Detail="2025 · 98 Min.",Image="Studio/Icon-Pictures.png"},new PreviewItem{Title="My collection",Detail="12 items",Image="Studio/Icon-Music.png"},new PreviewItem{Title="An unusually long title for narrow text fields",Detail="2024 · 141 Min.",Image="Studio/Icon-Movie.png"},new PreviewItem{Title="Music and concerts",Detail="Live",Image="Studio/Icon-Music.png"}};
         public void Validate()
         {
             if(!Modes.Contains(Mode)||Items.Count>50||Focus<0||Focus>49)throw new InvalidDataException("Collections require at most 50 items, a valid view and selection from 1 to 50.");

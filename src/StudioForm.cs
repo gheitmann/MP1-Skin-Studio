@@ -282,8 +282,11 @@ namespace MP1SkinStudio
             selectionInfo=new Label{Text="Click in the preview or element tree.",ForeColor=muted};selectionInfo.SetBounds(0,31,270,63);propHeader.Controls.Add(selectionInfo);
             unlock=new CheckBox{Text="Replace bindings locally",AutoSize=true,ForeColor=Color.FromArgb(243,191,102)};unlock.SetBounds(0,101,267,25);unlock.CheckedChanged+=(s,e)=>{canvas.UnlockBindings=unlock.Checked;UpdateResetTools();};propHeader.Controls.Add(unlock);
             properties.Dock=DockStyle.Fill;properties.FlowDirection=FlowDirection.TopDown;properties.WrapContents=false;properties.AutoScroll=true;
-            var apply=ButtonFor("Apply Properties",Apply,true);apply.Dock=DockStyle.Bottom;apply.Height=38;
-            right.Controls.Add(properties);right.Controls.Add(propHeader);right.Controls.Add(apply);main.Controls.Add(right,2,0);
+            var propertyActions=new FlowLayoutPanel{Dock=DockStyle.Bottom,Height=38,WrapContents=false,Margin=Padding.Empty};
+            var apply=ButtonFor("Apply Properties",Apply,true);apply.Width=150;apply.Height=38;apply.Margin=Padding.Empty;propertyActions.Controls.Add(apply);
+            var revert=ButtonFor("Revert Inputs",RevertPropertyInputs);revert.Width=105;revert.Height=38;revert.Margin=new Padding(6,0,0,0);propertyActions.Controls.Add(revert);
+            tips.SetToolTip(revert,"Restore the property fields from the current model. Applied XML edits and undo history remain unchanged.");
+            right.Controls.Add(properties);right.Controls.Add(propHeader);right.Controls.Add(propertyActions);main.Controls.Add(right,2,0);
             status=new Label{Dock=DockStyle.Bottom,Height=31,Padding=new Padding(20,5,0,0),BackColor=panel,ForeColor=muted,Text="Ready"};
             Controls.Add(main);Controls.Add(toolbar);Controls.Add(header);Controls.Add(status);
             tips.SetToolTip(unlock,"Enable only when intentionally replacing an existing #Property or #Define with a local value.");
@@ -298,18 +301,23 @@ namespace MP1SkinStudio
         {InstallProject(new SkinProject(root),requested,null);}
         void InstallProject(SkinProject next,string requested,string editorFile)
         {
-            project=next;currentProjectFile=editorFile;savedProjectSignature=editorFile==null?null:ProjectFile.ContentSignature(project);initialEditorSignature=ProjectFile.EditorSignature(project);savedEditorSignature=initialEditorSignature;exportedSignature=null;state=new PreviewState(project);canvas.Project=project;canvas.State=state;canvas.ResetAssets();
-            loading=true;elementSearch.Clear();theme.Items.Clear();theme.Items.Add("Default skin");
-            string themes=System.IO.Path.Combine(project.Root,"Themes");if(Directory.Exists(themes))foreach(var d in Directory.GetDirectories(themes))theme.Items.Add(System.IO.Path.GetFileName(d));int themeIndex=project.Theme.Length==0?0:theme.FindStringExact(project.Theme);theme.SelectedIndex=Math.Max(0,themeIndex);loading=false;
-            folderName.Text=System.IO.Path.GetFileName(project.Root.TrimEnd('\\'));tips.SetToolTip(folderName,project.Root);ReloadPages(requested);
+            var prepared=PreparedSkinSession.Create(next,requested);
+            project=next;currentProjectFile=editorFile;savedProjectSignature=editorFile==null?null:ProjectFile.ContentSignature(project);initialEditorSignature=ProjectFile.EditorSignature(project);savedEditorSignature=initialEditorSignature;exportedSignature=null;state=prepared.Preview;canvas.Project=project;canvas.State=state;canvas.ResetAssets();
+            bool prior=loading;loading=true;
+            try
+            {
+                elementSearch.Clear();theme.Items.Clear();theme.Items.Add("Default skin");theme.Items.AddRange(prepared.Themes.Cast<object>());
+                theme.SelectedIndex=project.Theme.Length==0?0:theme.FindStringExact(project.Theme);
+                PopulatePageChoices(prepared.Pages);
+            }
+            finally{loading=prior;}
+            folderName.Text=System.IO.Path.GetFileName(project.Root.TrimEnd('\\'));tips.SetToolTip(folderName,project.Root);RefreshProject(null);
         }
-        void ReloadPages(string requested)
+        void PopulatePageChoices(string[] pages)
         {
-            loading=true;page.Items.Clear();foreach(var p in project.Pages())page.Items.Add(p);
-            if(page.Items.Count==0){loading=false;throw new InvalidDataException("No skin XML files found.");}
-            int index=requested==null?-1:page.FindStringExact(requested);
-            if(index<0)index=page.FindStringExact("myHome.xml");if(index<0)index=page.FindStringExact("BasicHome.xml");if(index<0)index=0;
-            page.SelectedIndex=index;loading=false;project.OpenPage(page.SelectedItem.ToString());state.FocusId=project.DefaultControlId;canvas.ResetAssets();RefreshProject(null);
+            bool prior=loading;loading=true;
+            try{page.Items.Clear();page.Items.AddRange(pages.Cast<object>());page.SelectedIndex=page.FindStringExact(project.Page);}
+            finally{loading=prior;}
         }
         void RefreshProject(string selectedKey)
         {

@@ -15,7 +15,14 @@ public static class PageLoadingProbe
         try
         {
             string output=Path.GetFullPath(args[1]);Directory.CreateDirectory(output);
-            var p=new SkinProject(args[0]);p.OpenPage("myvideo.xml");
+            var p=new SkinProject(args[0]);var prepared=PreparedSkinSession.Create(p,"myvideo.xml");
+            Check(prepared.Project==p&&prepared.Preview.Project==p&&prepared.Pages.Contains("myvideo.xml")&&p.Page=="myvideo.xml","Real Titan session is fully prepared before publication");
+            string theme=prepared.Themes.OrderBy(name=>name,StringComparer.Ordinal).FirstOrDefault();
+            if(theme!=null)
+            {
+                p.PrepareTheme(theme);Check(p.Theme==theme&&p.Page=="myvideo.xml","Installed theme prepares successfully: "+theme);
+                p.PrepareTheme("");Check(p.Theme==""&&p.Page=="myvideo.xml","Returning from the installed theme prepares the default page");
+            }
             p.Edit(List(p),new Dictionary<string,string>{{"textureHeight","72"}},"Shared row height");
             p.OpenPage("myvideoTitle.xml");Check(List(p).Get("textureHeight")=="72","Shared video list edit survives switching to another importing page");
             var icon=p.Controls.Single(c=>c.Source.RelativePath=="myvideoTitle.xml"&&c.Get("type")=="image"&&c.Get("texture")=="icon_movies.png");

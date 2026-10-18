@@ -40,3 +40,7 @@ Compile Probe.cs as a console executable referencing MP1SkinStudio.exe, System,
 System.Core, System.IO.Compression and System.IO.Compression.FileSystem. Pass
 the installed Titan root and a separate scratch output directory outside it.
 The core suite can be run through Validation/Collection-Geometry/RunCore.cs.
+
+The current Probe.cs also tests prepared-session startup and an installed theme.
+The historical nine-stage report above is retained; its fresh extended run is in
+../Session-Reliability/Page-Results.txt.

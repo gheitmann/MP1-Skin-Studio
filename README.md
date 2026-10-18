@@ -19,6 +19,9 @@ Visual position, size, text and texture editing; multiple selection and alignmen
 
 ## Validation
 
+Latest joint console run (October 19): **233 core checks and 39 targeted checks passed**. See [Session reliability](Validation/Session-Reliability/README.md). It covers real Titan list/multi-page/theme model workflows and failed-write preservation. New interface behavior remains manually unverified. Windows automation is suspended after a reported system freeze; see STATUS.md before running interface or client checks.
+
+
 Historical reports under `Validation` record 189 core checks, 185 UI checks, 602 Titan page/theme variants and ten direct checks against original MP1 StackLayout classes. These counts were imported from the saved release package and do not imply that all tests were rerun during import. A fresh build succeeded during import. The English migration also passed 189 core checks and 185 UI checks; fresh reports are in [Validation/English-Migration](Validation/English-Migration).
 
 After building, run core checks with:
@@ -28,7 +31,7 @@ $probe = Start-Process .\MP1SkinStudio.exe -ArgumentList '--selftest', "$env:TEM
 if ($probe.ExitCode -ne 0) { throw 'Core checks failed' }
 ```
 
-The full MediaPortal client and image comparison remains pending. `Runtime-Comparison` contains the prepared test export. Preview rendering is approximate.
+A sampled Settings UI workflow and its earlier exported candidate passed installed-client display/navigation checks. Full matched-state image comparison and complex-page runtime verification remain pending. `Runtime-Comparison` contains the prepared test export. Preview rendering is approximate.
 
 ## Continuing development
 

@@ -27,6 +27,37 @@ namespace MP1SkinStudio
         }
         static void RunProjectFileTests(string root)
         {
+            Test("Session preparation loads requested pages and default fallbacks before publication",()=>
+            {
+                var p=SessionFixture(root,"prepare-session");var prepared=PreparedSkinSession.Create(p,"MAIN.XML");
+                Check(prepared.Project==p&&p.Page=="main.xml"&&prepared.Pages.Contains("part.xml")&&prepared.Preview.Project==p&&prepared.Preview.FocusId==p.DefaultControlId,"Prepared session is incomplete.");
+                Write(p.Root,"myHome.xml","<window><id>35</id><controls/></window>");prepared=PreparedSkinSession.Create(p,"not-listed.xml");Check(p.Page=="myHome.xml"&&p.WindowId==35,"Fallback page was not prepared.");
+                string empty=Path.Combine(root,"prepare-empty");Directory.CreateDirectory(empty);Write(empty,"references.xml","<controls/>");Reject(()=>PreparedSkinSession.Create(new SkinProject(empty),null));
+            });
+            Test("Failed theme preparation preserves the edited active session",()=>
+            {
+                var p=SessionFixture(root,"prepare-theme-failure");p.Edit(p.Controls[0],Set("posX","60"),"Move");var control=p.Controls[0];string signature=ProjectFile.ContentSignature(p);int count=p.Sources.Count;
+                string theme=Path.Combine(p.Root,"Themes","Broken");Directory.CreateDirectory(theme);Write(theme,"main.xml","<window><controls>");
+                foreach(string target in new[]{"Missing","Broken"}){Reject(()=>p.PrepareTheme(target));Check(p.Theme==""&&p.Page=="main.xml"&&p.Controls[0]==control&&p.Sources.Count==count&&ProjectFile.ContentSignature(p)==signature&&p.Undo.Count==1,"Failed theme preparation damaged the session.");}
+                p.UndoChange();Check(!p.Dirty,"History stopped working after theme failure.");
+            });
+            Test("Successful theme switching retains base edits and history",()=>
+            {
+                var p=SessionFixture(root,"prepare-theme-success");p.Edit(p.Controls[0],Set("posX","60"),"Move");string theme=Path.Combine(p.Root,"Themes","Night");Directory.CreateDirectory(theme);Write(theme,"main.xml","<window><id>9</id><controls><control><type>button</type><id>10</id><posX>300</posX></control></controls></window>");
+                var prepared=p.PrepareTheme("Night");Check(p.Theme=="Night"&&p.Controls[0].Get("posX")=="300"&&prepared.Preview.Project==p&&p.Undo.Count==1,"Theme was not prepared.");p.PrepareTheme("");Check(p.Controls[0].Get("posX")=="60"&&p.Undo.Count==1,"Base edit disappeared while switching themes.");p.UndoChange();Check(!p.Dirty,"Base edit history was lost.");
+            });
+            Test("Failed project replacement preserves the previous archive and cleans temporary files",()=>
+            {
+                var p=SessionFixture(root,"project-write-failure");p.Edit(p.Controls[0],Set("posX","60"),"First");string path=Path.Combine(p.Root,"saved.mp1skinproj");ProjectFile.Save(p,path);byte[] before=File.ReadAllBytes(path);p.Edit(p.Controls[0],Set("posX","80"),"Second");string signature=ProjectFile.ContentSignature(p);
+                using(var locked=new FileStream(path,FileMode.Open,FileAccess.Read,FileShare.None))Reject(()=>ProjectFile.Save(p,path));
+                Check(File.ReadAllBytes(path).SequenceEqual(before)&&ProjectFile.ContentSignature(p)==signature&&Directory.GetFiles(p.Root,"saved.mp1skinproj.*.tmp").Length==0,"Failed save changed old archive, model or temporary-file state.");Check(ProjectFile.Load(path).Controls[0].Get("posX")=="60","Previous archive is no longer usable.");
+            });
+            Test("Failed ZIP replacement preserves the previous export and cleans temporary files",()=>
+            {
+                var p=SessionFixture(root,"export-write-failure");p.Edit(p.Controls[0],Set("posX","60"),"First");string path=Path.Combine(p.Root,"saved.zip");p.Export(path);byte[] before=File.ReadAllBytes(path);p.Edit(p.Controls[0],Set("posX","80"),"Second");string signature=ProjectFile.ContentSignature(p);
+                using(var locked=new FileStream(path,FileMode.Open,FileAccess.Read,FileShare.None))Reject(()=>p.Export(path));
+                Check(File.ReadAllBytes(path).SequenceEqual(before)&&ProjectFile.ContentSignature(p)==signature&&Directory.GetFiles(p.Root,"saved.zip.*.tmp").Length==0,"Failed export changed old archive, model or temporary-file state.");using(var zip=ZipFile.OpenRead(path))using(var reader=new StreamReader(zip.GetEntry("main.xml").Open()))Check(reader.ReadToEnd().Contains("<posX>60</posX>"),"Previous export is no longer usable.");
+            });
             Test("Failed page loads preserve the current edited page and history",()=>
             {
                 var p=SessionFixture(root,"page-load-failure");p.Edit(p.Controls[0],Set("posX","60"),"Move");
