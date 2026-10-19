@@ -1,0 +1,14 @@
+Controls: 211; hidden: 115; unresolved: 62
+control.hastext(7773) = False
+control.hasthumb(60) = True
+!control.hasthumb(60) = False
+control.hasthumb(159357) = unknown
+Selected item Label: False
+Selected item Label: True
+ClearLogo: 
+Default Cover Art: False
+Cover Art: True
+PASS unchanged XML, undo history and all 17 loaded source hashes
+PASS nested localization against installed German snapshot
+PASS project roundtrip retains list focus and content condition result
+PASS offscreen production renderer completed

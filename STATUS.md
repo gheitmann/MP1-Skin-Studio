@@ -2,7 +2,11 @@
 
 Date: October 19, 2026. Imported version: 0.9.
 
-## Latest source milestone: reproducible clean Video preview
+## Latest source milestone: Video sample state and text anchors
+
+October 19, 2026: standalone labels now use native-style XML text anchors instead of fabricated designer extents. The Video folder sample explicitly sets unwatched and idle-scroll state. 248 core checks and the targeted Titan probe passed; the production offscreen render was visually inspected. The explicit sample leaves 62 unresolved conditions, down from 87. All 17 loaded source hashes remained unchanged. No new MP1 client test was run. See [validation](Validation/Label-Anchors/README.md).
+
+## Previous source milestone: reproducible clean Video preview
 
 October 19, 2026: saved projects retain page-scoped preview focus. The Video folder preset now reopens with the list focused and hidden menu closed. Clean mode omits unresolved labels and missing image placeholders while preserving diagnostics and XML. 247 core checks and the targeted real Titan probe passed; the reopened GUI was visually inspected. All 17 loaded Titan source hashes remained unchanged. The unresolved-condition count remains 87; this improves presentation and persistence rather than inventing runtime values. See [validation](Validation/Preview-Session/README.md). DirectX work is handled in a separate chat.
 

@@ -9,6 +9,13 @@ namespace MP1SkinStudio
     {
         static void RunSurfaceRegressionTests(string root)
         {
+            Test("Standalone labels use native center and right anchors without invented extents",()=>
+            {
+                var p=AuditFixture(root,"label-anchors","<control><type>label</type><posX>200</posX><posY>100</posY><align>center</align><label>0%</label></control>");var c=p.Controls[0];
+                var area=SurfaceGeometry.LabelArea(c,LayoutTools.Bounds(c),new SizeF(40,20));Check(area.X==180&&area.Y==90&&area.Width==41,"Zero-size centered label used designer fallback dimensions.");
+                p.Edit(c,Set("align","right"),"Align");c=p.Controls[0];area=SurfaceGeometry.LabelArea(c,LayoutTools.Bounds(c),new SizeF(40,20));Check(area.X==160&&area.Y==100,"Right label did not use its X coordinate as the right anchor.");
+                p.Edit(c,new System.Collections.Generic.Dictionary<string,string>{{"align","center"},{"width","100"},{"height","40"}},"Extent");c=p.Controls[0];area=SurfaceGeometry.LabelArea(c,LayoutTools.Bounds(c),new SizeF(40,20));Check(area.X==230&&area.Y==110,"Explicit centered extents were ignored.");
+            });
             Test("Included title text survives a later opaque background texture",()=>
             {
                 var p=AuditFixture(root,"deferred-header","<import>header.xml</import><control><type>image</type><width>240</width><height>180</height><texture>black.png</texture></control>");

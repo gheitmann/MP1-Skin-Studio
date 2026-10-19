@@ -32,6 +32,18 @@ namespace MP1SkinStudio
     }
     public static class SurfaceGeometry
     {
+        public static RectangleF LabelArea(SkinControl control,RectangleF bounds,SizeF text)
+        {
+            float width=control.Number("width",0),height=control.Number("height",0);
+            if(control.AutomaticLayout){width=bounds.Width;height=bounds.Height;}
+            string align=control.Resolved("align","left").ToLowerInvariant(),valign=control.Resolved("valign","top").ToLowerInvariant();
+            float x=bounds.X,y=bounds.Y;
+            // Designer bounds already extend left of the XML anchor for these alignments.
+            if(align=="right")x+=bounds.Width;else if(align=="center")x+=bounds.Width/2;
+            if(align=="center"){x+=width>0?Math.Max(0,(width-text.Width)/2):-text.Width/2;y+=(height-text.Height)/2;}
+            else{if(align=="right")x-=text.Width;if(valign=="middle"||valign=="center")y+=(float)Math.Ceiling((height-text.Height)/2);else if(valign=="bottom")y+=height-text.Height;}
+            return new RectangleF(x,y,width>0?Math.Min(width,text.Width+1):text.Width+1,text.Height+1);
+        }
         public static RectangleF TextArea(SkinControl control,RectangleF bounds)
         {
             bool button=control.Get("type").Contains("button");
@@ -93,6 +105,11 @@ namespace MP1SkinStudio
                 format.Alignment=align=="right"?StringAlignment.Far:align=="center"?StringAlignment.Center:StringAlignment.Near;
                 format.LineAlignment=valign=="bottom"?StringAlignment.Far:valign=="middle"||valign=="center"?StringAlignment.Center:StringAlignment.Near;
                 format.Trimming=multiline?StringTrimming.EllipsisWord:StringTrimming.EllipsisCharacter;if(!multiline)format.FormatFlags=StringFormatFlags.NoWrap;
+                if((c.Get("type")=="label"||c.Get("type")=="fadelabel")&&alignProperty=="align"&&!multiline)
+                {
+                    var extent=g.MeasureString(text,font,new SizeF(100000,10000),format);
+                    rect=SurfaceGeometry.LabelArea(c,rect,extent);format.Alignment=StringAlignment.Near;format.LineAlignment=StringAlignment.Near;
+                }
                 var saved=g.Save();try{g.SetClip(rect,System.Drawing.Drawing2D.CombineMode.Intersect);
                     float distance=c.Number("shadowDistance",0);if(distance>0&&distance<500){float angle=c.Number("shadowAngle",0)*(float)Math.PI/180;var shadow=rect;shadow.Offset((float)Math.Cos(angle)*distance,(float)Math.Sin(angle)*distance);using(var brush=new SolidBrush(ParseColor(c.Resolved("shadowColor","ff000000"),Color.Black)))g.DrawString(text,font,brush,shadow,format);}
                     using(var brush=new SolidBrush(color))g.DrawString(text,font,brush,rect,format);
