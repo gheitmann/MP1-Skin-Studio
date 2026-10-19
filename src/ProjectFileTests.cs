@@ -27,6 +27,17 @@ namespace MP1SkinStudio
         }
         static void RunProjectFileTests(string root)
         {
+            Test("Saved preview focus survives session preparation without changing source XML",()=>
+            {
+                var p=SessionFixture(root,"saved-focus");string xml=ProjectFile.XmlSignature(p),initial=ProjectFile.EditorSignature(p);
+                new PreviewState(p).SetFocus(p.DefaultControlId);Check(ProjectFile.EditorSignature(p)==initial,"Initial default focus creates an unsaved change.");
+                new PreviewState(p).SetFocus(10);string path=Path.Combine(root,"focus.mp1skinproj");ProjectFile.Save(p,path);
+                var loaded=ProjectFile.Load(path);var prepared=PreparedSkinSession.Create(loaded,loaded.Page);
+                Check(prepared.Preview.FocusId==10&&loaded.Editor.PreviewFocusPage=="main.xml"&&ProjectFile.XmlSignature(loaded)==xml&&!loaded.Dirty,"Focus did not survive save/reopen.");
+                prepared=PreparedSkinSession.Create(loaded,"part.xml");Check(prepared.Preview.FocusId==loaded.DefaultControlId,"Focus leaked into another page.");
+                prepared=PreparedSkinSession.Create(loaded,"main.xml");Check(prepared.Preview.FocusId==10,"Returning to the saved page lost focus.");
+                RewriteManifest(path,t=>t.Replace("focusId=\"10\"","focusId=\"-2\""));Reject(()=>ProjectFile.Load(path));
+            });
             Test("Session preparation loads requested pages and default fallbacks before publication",()=>
             {
                 var p=SessionFixture(root,"prepare-session");var prepared=PreparedSkinSession.Create(p,"MAIN.XML");

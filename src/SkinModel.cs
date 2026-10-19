@@ -410,11 +410,22 @@ namespace MP1SkinStudio
         public Dictionary<string,string> Values = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
         public PreviewState(SkinProject p)
         {
-            Project=p;FocusId=p.DefaultControlId;
+            Project=p;RestoreFocus();
             Values=PreviewSettings.BaseValues();p.Editor.Preview.Validate();
             foreach(var pair in p.Editor.Preview.Values)Values[pair.Key]=pair.Value;
             foreach(string plugin in p.Editor.Preview.Plugins)Plugins.Add(plugin);
             UpdateCollectionValues();
+        }
+        public void RestoreFocus()
+        {
+            FocusId=Project.DefaultControlId;
+            if(String.Equals(Project.Editor.PreviewFocusPage,Project.Page,StringComparison.OrdinalIgnoreCase)&&Project.Controls.Any(c=>SkinProject.Focusable(c)&&SkinProject.ControlId(c)==Project.Editor.PreviewFocusId))FocusId=Project.Editor.PreviewFocusId;
+        }
+        public void SetFocus(int id)
+        {
+            FocusId=id;
+            if(id==Project.DefaultControlId&&!String.Equals(Project.Editor.PreviewFocusPage,Project.Page,StringComparison.OrdinalIgnoreCase))return;
+            Project.Editor.PreviewFocusId=id;Project.Editor.PreviewFocusPage=Project.Page;
         }
         public string Text(SkinControl c,string value)
         {

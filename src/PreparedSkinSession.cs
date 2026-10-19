@@ -20,7 +20,7 @@ namespace MP1SkinStudio
             var themes=Directory.Exists(folder)?Directory.GetDirectories(folder).Select(Path.GetFileName).ToArray():new string[0];
             var preview=new PreviewState(project);
             // OpenPage restores existing page metadata if this last fallible load fails.
-            project.OpenPage(chosen);preview.FocusId=project.DefaultControlId;
+            project.OpenPage(chosen);preview.RestoreFocus();
             return new PreparedSkinSession{Project=project,Preview=preview,Pages=pages,Themes=themes};
         }
     }

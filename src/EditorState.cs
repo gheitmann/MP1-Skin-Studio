@@ -12,6 +12,8 @@ namespace MP1SkinStudio
     {
         public double Zoom=1,PanX,PanY;
         public bool ShowUnresolved=true;
+        public int PreviewFocusId=-1;
+        public string PreviewFocusPage="";
         public readonly PreviewSettings Preview=new PreviewSettings();
         public readonly LanguagePreview Language=new LanguagePreview();
         public readonly CollectionSettings Collection=new CollectionSettings();
@@ -53,6 +55,7 @@ namespace MP1SkinStudio
             var value=new StringBuilder(Number(project.Editor.Zoom)+","+Number(project.Editor.PanX)+","+Number(project.Editor.PanY));
             foreach(var key in project.ActiveEditorKeys())value.Append('\n').Append(key).Append(':').Append(project.Editor.Locked.Contains(key)?"L":"").Append(project.Editor.Hidden.Contains(key)?"H":"");
             value.Append('\n').Append(project.Editor.Preview.SignatureText()).Append('\n').Append(project.Editor.Language.Signature()).Append(project.Editor.ShowUnresolved?'U':'-').Append(project.Editor.Collection.Signature());
+            value.Append('\n').Append(project.Editor.PreviewFocusPage).Append(':').Append(project.Editor.PreviewFocusId);
             return Digest(Encoding.UTF8.GetBytes(value.ToString()));
         }
         public static string ContentSignature(SkinProject project)
@@ -63,6 +66,7 @@ namespace MP1SkinStudio
             state.SetAttribute("zoom",Number(project.Editor.Zoom));state.SetAttribute("panX",Number(project.Editor.PanX));state.SetAttribute("panY",Number(project.Editor.PanY));
             state.SetAttribute("showUnresolved",project.Editor.ShowUnresolved?"true":"false");SavePreviewSettings(project.Editor.Preview,state);
             SaveCollectionSettings(project.Editor.Collection,state);
+            if(project.Editor.PreviewFocusId>0){state.SetAttribute("focusPage",project.Editor.PreviewFocusPage);state.SetAttribute("focusId",project.Editor.PreviewFocusId.ToString(CultureInfo.InvariantCulture));}
             foreach(var key in project.ActiveEditorKeys())
             {
                 int ordinal;var source=project.EditorSource(key,out ordinal);var item=doc.CreateElement("control");
@@ -82,6 +86,11 @@ namespace MP1SkinStudio
             if(state.HasAttribute("showUnresolved")){bool unresolved;if(!Boolean.TryParse(state.GetAttribute("showUnresolved"),out unresolved))throw new InvalidDataException("Invalid preview option.");project.Editor.ShowUnresolved=unresolved;}
             LoadPreviewSettings(project.Editor.Preview,state);
             LoadCollectionSettings(project.Editor.Collection,state);
+            if(state.HasAttribute("focusId")||state.HasAttribute("focusPage"))
+            {
+                int focus;if(!Int32.TryParse(state.GetAttribute("focusId"),NumberStyles.None,CultureInfo.InvariantCulture,out focus)||focus<=0||String.IsNullOrWhiteSpace(state.GetAttribute("focusPage")))throw new InvalidDataException("Invalid preview focus.");
+                project.SafePath(state.GetAttribute("focusPage"));project.Editor.PreviewFocusPage=state.GetAttribute("focusPage");project.Editor.PreviewFocusId=focus;
+            }
             var nodes=state.SelectNodes("control");if(nodes.Count>10000)throw new InvalidDataException("Too many editor markers.");
             var seen=new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             foreach(XmlElement item in nodes)

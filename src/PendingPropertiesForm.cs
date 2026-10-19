@@ -19,7 +19,7 @@ namespace MP1SkinStudio
             try
             {
                 RequireAppliedProperties();project.OpenPage(page.SelectedItem.ToString());
-                state.FocusId=project.DefaultControlId;RefreshProject(null);
+                state.RestoreFocus();RefreshProject(null);
             }
             catch
             {

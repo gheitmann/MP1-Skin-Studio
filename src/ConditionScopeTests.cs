@@ -91,6 +91,12 @@ namespace MP1SkinStudio
             {var p=ScopeFixture(root,"scope-delete-lock","<window><controls><control><type>group</type><id>1</id><include>part.xml</include></control></controls></window>","<window><controls><control><type>button</type><id>8</id></control></controls></window>");p.Editor.Locked.Add(p.Controls.First(c=>c.Get("id")=="8").Key);Reject(()=>p.DeleteControls(new[]{p.Controls[0]}));Check(!p.Dirty,"Protected group was modified.");});
             Test("Window default focus loads independently of label selection",()=>
             {var p=Demo();p.OpenPage("demo.language.xml");var s=new PreviewState(p);Check(p.DefaultControlId==501&&s.FocusId==501&&s.Evaluate("control.hasfocus(501)",new HashSet<string>())==true,"Default focus is missing.");});
+            Test("Clean preview distinguishes literal samples from unresolved label bindings",()=>
+            {
+                var p=Demo();p.Editor.Language.SetFrom(DemoLanguage());var s=new PreviewState(p);var c=p.Controls[0];
+                Check(!s.ResolvedLabel(c,"#unknown.runtime")&&!s.ResolvedLabel(c,"99999999")&&s.ResolvedLabel(c,"10003")&&s.ResolvedLabel(c,"-"),"Unverified labels were treated as known.");
+                p.Editor.Preview.Values["#custom"]="#literal";s=new PreviewState(p);Check(s.ResolvedLabel(c,"#custom")&&s.Text(c,"#custom")=="#literal","Explicit literal samples were hidden.");
+            });
             Test("Parentheses inside quoted comparison values do not change condition structure",()=>
             {var state=new PreviewState(Demo());Check(state.Evaluate("[string.equals(']','x')]+true",new HashSet<string>())==false,"Quoted parenthesis was incorrectly parsed as an expression boundary.");});
             Test("A dash texture placeholder is not reported as a missing image",()=>

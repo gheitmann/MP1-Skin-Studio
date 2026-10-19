@@ -53,6 +53,13 @@ namespace MP1SkinStudio
             if(value=="-")return "";int id;string text,origin;if(Project.Editor.Language.Active&&TryLabelId(control,value,out id))return Project.Editor.Language.TryGet(id,out text,out origin)?Text(control,text):"["+id+"]";
             return Text(control,value);
         }
+        internal bool ResolvedLabel(SkinControl control,string value)
+        {
+            if(value=="-")return true;int id;string text,origin;
+            if(Project.Editor.Language.Active&&TryLabelId(control,value,out id))
+            {if(!Project.Editor.Language.TryGet(id,out text,out origin))return false;value=text;}
+            return TryText(control,value,out text);
+        }
         public bool TryLabelId(SkinControl control,string value,out int id)
         {
             id=0;if(Project.Editor.Preview.Values.ContainsKey(value))return false;string raw=value,next;var seen=new HashSet<string>();while(control.Defines!=null&&control.Defines.TryGetValue(raw,out next)&&seen.Add(raw))raw=next;return LanguagePreview.TryId(raw,out id);

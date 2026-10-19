@@ -8,7 +8,8 @@ namespace MP1SkinStudio
     {
         public static void Apply(SkinProject project)
         {
-            if(!project.Controls.Any(c=>c.Get("type")=="listcontrol"))
+            var list=project.Controls.FirstOrDefault(c=>c.Get("type")=="listcontrol"&&SkinProject.ControlId(c)>0)??project.Controls.FirstOrDefault(c=>c.Get("type")=="listcontrol");
+            if(list==null)
                 throw new InvalidOperationException("Open a page with a list control before applying the video folder preview.");
             var preview=project.Editor.Preview.Copy();
             foreach(string key in new[]{"#title","#plot","#genre","#director","#year","#runtime","#imdbnumber","#rating","#iscollection","#isgroup","#Is3D","#IsHDR"})preview.Values[key]="";
@@ -20,6 +21,7 @@ namespace MP1SkinStudio
             // Validate both copies before replacing either active state.
             preview.Validate();collection.Validate();
             project.Editor.Preview.SetFrom(preview);project.Editor.Collection.SetFrom(collection);
+            if(SkinProject.ControlId(list)>0){project.Editor.PreviewFocusId=SkinProject.ControlId(list).Value;project.Editor.PreviewFocusPage=project.Page;}project.Editor.ShowUnresolved=false;
         }
     }
     public sealed partial class StudioForm
@@ -27,7 +29,7 @@ namespace MP1SkinStudio
         void ApplyVideoFolderPreview()
         {
             RequireAppliedProperties();VideoFolderPreview.Apply(project);
-            var list=project.Controls.First(c=>c.Get("type")=="listcontrol");
+            var list=project.Controls.FirstOrDefault(c=>c.Get("type")=="listcontrol"&&SkinProject.ControlId(c)>0)??project.Controls.First(c=>c.Get("type")=="listcontrol");
             ApplyPreviewSettings(project.Editor.Preview);SelectControl(list);
             SetUnresolvedPreview(false);
             ShowNotice("Video folder sample applied. Other unknown properties remain unresolved; skin XML is unchanged. Save the editor project.");

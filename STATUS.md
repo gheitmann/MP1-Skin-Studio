@@ -2,7 +2,11 @@
 
 Date: October 19, 2026. Imported version: 0.9.
 
-## Latest validation milestone: installed Video export
+## Latest source milestone: reproducible clean Video preview
+
+October 19, 2026: saved projects retain page-scoped preview focus. The Video folder preset now reopens with the list focused and hidden menu closed. Clean mode omits unresolved labels and missing image placeholders while preserving diagnostics and XML. 247 core checks and the targeted real Titan probe passed; the reopened GUI was visually inspected. All 17 loaded Titan source hashes remained unchanged. The unresolved-condition count remains 87; this improves presentation and persistence rather than inventing runtime values. See [validation](Validation/Preview-Session/README.md). DirectX work is handled in a separate chat.
+
+## Latest installed-client validation milestone: Video export
 
 October 19, 2026: the exported two-file Video candidate loaded in the installed MP1 client using an isolated skin copy. The header marker, narrower list focus band and side-menu keyboard navigation passed. Titan was restored in the UI and its normal Video page verified. A fresh comparison checked all 2,050 original Titan files with zero differences; the isolated copy differs in exactly the two intended XML files. See [runtime validation](Validation/Video-Runtime-20261019/README.md). This does not establish complete preview fidelity or playback coverage.
 

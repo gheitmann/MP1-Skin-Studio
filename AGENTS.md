@@ -20,3 +20,5 @@
 
 - Start future projects in English with a private GitHub repository from the beginning,
   and record their current state and remaining work there.
+
+- Work in substantial blocks; run necessary validation at milestones rather than after every edit. Avoid repeating successful checks without a relevant change. Make routine implementation decisions independently and keep progress reports concise.

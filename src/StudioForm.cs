@@ -146,7 +146,7 @@ namespace MP1SkinStudio
             {
                 SurfaceImage(g,c,image,rect);
             }
-            else if(State.Text(c,texture).Trim()!="-"&&(type.Contains("button")||type=="listcontrol"||type=="facadeview"||type=="image"||type=="videowindow"||type=="filmstrip"||type=="coverflow"))
+            else if(ShowTexturePlaceholder(c,texture)&&(type.Contains("button")||type=="listcontrol"||type=="facadeview"||type=="image"||type=="videowindow"||type=="filmstrip"||type=="coverflow"))
             {
                 if(rect.Width*rect.Height<Project.Width*Project.Height*.8f)
                 {
@@ -157,7 +157,7 @@ namespace MP1SkinStudio
                 }
             }
             string label=State.Label(c,c.Get("label"));
-            if(type=="label"||type=="fadelabel"||type=="textbox"||type=="textboxscrollup"||type.Contains("button"))
+            if((Project.Editor.ShowUnresolved||State.ResolvedLabel(c,c.Get("label")))&&(type=="label"||type=="fadelabel"||type=="textbox"||type=="textboxscrollup"||type.Contains("button")))
             {
                 SurfaceText(g,c,label,SurfaceGeometry.TextArea(c,rect),FocusPreview&&selected,"font","textcolor","align",type=="textbox"||type=="textboxscrollup");
             }
@@ -166,6 +166,13 @@ namespace MP1SkinStudio
                 using(var pen=new Pen(visible==false?Color.FromArgb(150,130,150,175):Color.FromArgb(170,232,174,78),1/scale))
                 {pen.DashStyle=DashStyle.Dot;g.DrawRectangle(pen,rect.X,rect.Y,rect.Width,rect.Height);}
             }
+        }
+        bool ShowTexturePlaceholder(SkinControl c,string texture)
+        {
+            string resolved;bool known=State.TryText(c,texture,out resolved);
+            if(known&&(resolved.Trim()=="-"||(c.Get("type")=="image"&&resolved.Trim().Length==0)))return false;
+            if(c.Get("type")=="image"&&!Project.Editor.ShowUnresolved)return false;
+            return known||Project.Editor.ShowUnresolved;
         }
         void DrawText(Graphics g,string text,RectangleF rect,float size,Color color,string align)
         {
@@ -324,7 +331,7 @@ namespace MP1SkinStudio
             state.UpdateCollectionValues();
             var keep=selectedKey==null?new string[0]:canvas.SelectedKeys.ToArray();
             RebuildElementTree();
-            var next=project.Controls.FirstOrDefault(c=>c.Key==selectedKey)??project.Controls.FirstOrDefault(c=>SkinProject.Focusable(c)&&SkinProject.ControlId(c)==project.DefaultControlId)??project.Controls.FirstOrDefault(c=>c.Get("description")=="Movies")??project.Controls.FirstOrDefault(c=>c.Get("description")=="Time")??project.Controls.FirstOrDefault();
+            var next=project.Controls.FirstOrDefault(c=>c.Key==selectedKey)??project.Controls.FirstOrDefault(c=>SkinProject.Focusable(c)&&SkinProject.ControlId(c)==state.FocusId)??project.Controls.FirstOrDefault(c=>c.Get("description")=="Movies")??project.Controls.FirstOrDefault(c=>c.Get("description")=="Time")??project.Controls.FirstOrDefault();
             canvas.SelectedKeys.Clear();foreach(var key in keep)if(project.Controls.Any(c=>c.Key==key))canvas.SelectedKeys.Add(key);
             SelectControl(next,false,canvas.SelectedKeys.Count>0);undo.Enabled=project.Undo.Count>0;redo.Enabled=project.Redo.Count>0;export.Enabled=project.Dirty;
             status.Text=project.Controls.Count+" elements  · "+project.Sources.Values.Count(s=>s.Changed)+" modified files  ·  CTRL+click: multiple selection  ·  Originals remain intact";
@@ -392,7 +399,7 @@ namespace MP1SkinStudio
                 fields[key]=box;originals[key]=box.Text;properties.Controls.Add(row);
                 tips.SetToolTip(box,key+"\n"+origin+(key=="visible"?"\nAn empty condition adds no restriction; parent and include conditions still apply. Unsupported runtime expressions remain unresolved in the preview and are preserved in XML.":"")+(c.IsBound(key)?"\n#Bindings are replaced only with explicit approval.":""));
             }
-            properties.ResumeLayout();UpdateProtectionTools();int id;if(SkinProject.Focusable(c)&&Int32.TryParse(c.Get("id"),out id)&&id>0)state.FocusId=id;
+            properties.ResumeLayout();UpdateProtectionTools();int id;if(SkinProject.Focusable(c)&&Int32.TryParse(c.Get("id"),out id)&&id>0)state.SetFocus(id);
             UpdatePreviewTree();SyncElementTreeSelection();
             canvas.Invalidate();UpdateDiagnostics();
         }
@@ -426,8 +433,8 @@ namespace MP1SkinStudio
             var lines=new List<string>{"Static GDI+ preview: font families and 576-line scaling from fonts.xml; unavailable families are substituted. Animations and masks remain unverified."};
             if(project.Controls.Any(CollectionSettings.IsCollection))lines.Add("Collection: "+CollectionSettings.EffectiveMode(project)+", "+project.Editor.Collection.Items.Count+" sample items. Coverflow is a static approximation without a 3D engine.");
             int unknown=project.Controls.Count(c=>state.Visible(c)==null),hidden=project.Controls.Count(c=>state.Visible(c)==false);
-            lines.Add("Conditions: "+hidden+" hidden, "+unknown+" unresolved (dotted). Unknown conditions remain unchanged in XML.");
-            lines.Add("Sample data: "+project.Editor.Preview.Values.Count+" custom sample values; "+state.Plugins.Count+" plugin states active. Adjust through Sample Data. Images come from Media; missing images use placeholders.");
+            lines.Add("Conditions: "+hidden+" hidden, "+unknown+" unresolved. Unknown conditions remain unchanged in XML.");
+            lines.Add("Sample data: "+project.Editor.Preview.Values.Count+" custom sample values; "+state.Plugins.Count+" plugin states active. Adjust through Sample Data. Images come from Media; missing images appear only with Show unverified content.");
             if(selected!=null&&!String.IsNullOrEmpty(selected.Get("visible")))lines.Add("Selection · visible: "+selected.Get("visible"));
             if(project.Editor.Language.Active)lines.Add("Language preview: "+(project.Editor.Language.Primary==null?"no primary language":project.Editor.Language.Primary.Name)+(project.Editor.Language.Fallback==null?"":" · Fallback: "+project.Editor.Language.Fallback.Name)+" · Original IDs are preserved.");
             lines.AddRange(project.Warnings.Distinct());
