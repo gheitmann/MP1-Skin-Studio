@@ -2,9 +2,13 @@
 
 Date: October 19, 2026. Imported version: 0.9.
 
+## Latest validation milestone: installed Video export
+
+October 19, 2026: the exported two-file Video candidate loaded in the installed MP1 client using an isolated skin copy. The header marker, narrower list focus band and side-menu keyboard navigation passed. Titan was restored in the UI and its normal Video page verified. A fresh comparison checked all 2,050 original Titan files with zero differences; the isolated copy differs in exactly the two intended XML files. See [runtime validation](Validation/Video-Runtime-20261019/README.md). This does not establish complete preview fidelity or playback coverage.
+
 ## Latest source milestone: known preview content
 
-October 19, 2026: static known-content conditions and nested localization now work in previews. Fresh Windows build: 245 core checks, 25 expression checks and eleven real Titan model stages passed. The isolated folder state has 87 unresolved conditions, down from 89. A production offscreen render was visually inspected; no new interactive client validation or export installation occurred. See [content validation](Validation/Preview-Content/README.md). Windows access was confirmed in earlier attended checkpoints; DirectX remains deferred.
+October 19, 2026: static known-content conditions and nested localization now work in previews. Fresh Windows build: 245 core checks, 25 expression checks and eleven real Titan model stages passed. The isolated folder state has 87 unresolved conditions, down from 89. A production offscreen render was visually inspected at that source checkpoint; the later runtime checkpoint above validates a separate exported candidate. See [content validation](Validation/Preview-Content/README.md). Windows access was confirmed in earlier attended checkpoints; DirectX remains deferred.
 
 ## Current priority: reliable core editing
 
@@ -16,8 +20,7 @@ These successes do not establish complete visual fidelity or plugin equivalence.
 
 The owner explicitly reauthorized attended Windows automation on October 19.
 The real Titan Video edit/save/reopen/export UI workflow now passed, with manual
-completion of native dialogs that Computer Use could not target. No new MP1
-client run occurred. DirectX replacement remains deferred.
+completion of native dialogs that Computer Use could not target. The later installed-client checkpoint above now covers the exported Video candidate. DirectX replacement remains deferred.
 
 Latest joint validation: fresh final build, **237 core checks and 39 targeted
 checks passed**. Coverage includes filmstrip geometry, string conditions, real
@@ -30,7 +33,7 @@ See [model performance and batch validation](Validation/Model-Performance/README
 See [attended Titan Video UI validation](Validation/Attended-Video-UI/README.md).
 The complex-page preview visibly contains unresolved expressions and overlapping
 placeholders. Useful preview states and expression evaluation are the next core
-priority; the new export still needs MP1 runtime validation. Auxiliary group/style
+priority; sampled export runtime validation has now passed, while broader page/theme coverage remains open. Auxiliary group/style
 conveniences remain lower priority. Historical milestones follow.
 
 ## Baseline
