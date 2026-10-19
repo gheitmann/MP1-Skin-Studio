@@ -129,7 +129,7 @@ namespace MP1SkinStudio
             Test("Facade navigation uses the active template rather than a stale or empty facade direction",()=>
             {
                 var p=CollectionDemo();var facade=CollectionControl(p,"facadeview");var list=CollectionControl(p,"listcontrol");var film=CollectionControl(p,"filmstrip");string key=p.InsertControl(p.Page,"button");var button=p.Controls.First(c=>c.Key==key);
-                p.Editor.Collection.Mode="list";p.ConnectNavigation(CollectionControl(p,"facadeview"),button,"onright",false);facade=CollectionControl(p,"facadeview");Check(p.NavigationTarget(facade,"onright").Key==key,"Active list navigation was not used.");
+                p.Editor.Collection.Mode="list";p.ConnectNavigation(CollectionControl(p,"facadeview"),button,"onright",false);facade=CollectionControl(p,"facadeview");Check(p.NavigationTarget(facade,"onright").Key==key&&p.PreviewNavigationTarget(new PreviewState(p){FocusId=SkinProject.ControlId(facade).Value},"onright").Key==key,"Active list navigation was not used.");
                 p.Editor.Collection.Mode="filmstrip";p.ConnectNavigation(CollectionControl(p,"facadeview"),p.Controls.First(c=>c.Key==key),"onleft",false);Check(p.NavigationTarget(CollectionControl(p,"facadeview"),"onleft").Key==key,"Active filmstrip navigation was not used.");
             });
             Test("Navigation protects dynamic target bindings",()=>
@@ -137,6 +137,20 @@ namespace MP1SkinStudio
                 var p=Demo();p.Edit(Named(p,"Movies"),Set("onright","#target"),"Bindung");
                 Reject(()=>p.ConnectNavigation(Named(p,"Movies"),Named(p,"Music"),"onright",false));
                 p.ConnectNavigation(Named(p,"Movies"),Named(p,"Music"),"onright",true);Check(Named(p,"Movies").Get("onright")=="12","Approved connection was not saved.");
+            });
+            Test("Automatic stack navigation skips known hidden buttons and preserves explicit directions",()=>
+            {
+                var p=AuditFixture(root,"stack-navigation","<control><type>group</type><layout>StackLayout(7, Vertical, true)</layout><control><type>button</type><id>1</id></control><control><type>label</type><id>20</id></control><control><type>button</type><id>2</id><visible>false</visible></control><control><type>button</type><id>3</id></control></control>");
+                var state=new PreviewState(p){FocusId=1};string signature=ProjectFile.ContentSignature(p);Check(p.PreviewNavigationTarget(state,"ondown").Get("id")=="3"&&state.FocusId==1,"Hidden button was not skipped or focus leaked.");
+                state.FocusId=3;Check(p.PreviewNavigationTarget(state,"ondown").Get("id")=="3"&&p.PreviewNavigationTarget(state,"onup").Get("id")=="1","Stack boundary or reverse navigation failed.");
+                Check(signature==ProjectFile.ContentSignature(p),"Automatic navigation wrote derived links into XML.");
+                p.Edit(p.Controls.First(c=>c.Get("id")=="1"),Set("ondown","2"),"Explicit target");state.FocusId=1;Reject(()=>p.PreviewNavigationTarget(state,"ondown"));
+            });
+            Test("Automatic stack navigation stops at unknown visibility and supports horizontal stacks",()=>
+            {
+                var p=AuditFixture(root,"stack-navigation-unknown","<control><type>group</type><layout>StackLayout(7, Horizontal, true)</layout><control><type>button</type><id>1</id></control><control><type>button</type><id>2</id><visible>unknown.condition()</visible></control><control><type>button</type><id>3</id></control></control>");var state=new PreviewState(p){FocusId=1};string signature=ProjectFile.ContentSignature(p);
+                Reject(()=>p.PreviewNavigationTarget(state,"onright"));Reject(()=>p.PreviewNavigationTarget(state,"ondown"));Check(state.FocusId==1&&signature==ProjectFile.ContentSignature(p),"Rejected stack navigation mutated state.");
+                p.Edit(p.Controls.First(c=>c.Get("id")=="2"),Set("visible","true"),"Known target");Check(p.PreviewNavigationTarget(state,"onright").Get("id")=="2","Horizontal stack direction failed.");
             });
             Test("Navigation recognizes equal numeric IDs with leading zeros",()=>
             {

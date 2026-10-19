@@ -2,7 +2,11 @@
 
 Date: October 19, 2026. Imported version: 0.9.
 
-## Latest source milestone: focus-based preview navigation
+## Latest source milestone: bounded automatic stack navigation
+
+October 19, 2026: the preview handles absent/zero directions along linear StackLayout button menus while preserving explicit mappings. A complete eleven-button Settings down/up loop and both BasicHome theme routes passed, together with 258 core checks. No XML links are generated. This is a bounded subset of native geometric navigation; nested/grid/free-position search remains unsupported. No new interactive UI/client run occurred. See [validation](Validation/Stack-Navigation/README.md).
+
+## Previous source milestone: focus-based preview navigation
 
 October 19, 2026: existing arrow navigation now uses simulated focus and the active facade template. Prospective target visibility is checked without leaking rejected focus changes; unavailable routes produce status notices. 256 core checks and real Titan BasicHome routes in Default/Christmas passed, including saved final focus and unchanged source hashes. Settings explicit edges passed; automatic group-generated directions remain unsupported and are the next concrete gap. No new interactive UI/client run occurred. See [validation](Validation/Preview-Navigation/README.md).
 

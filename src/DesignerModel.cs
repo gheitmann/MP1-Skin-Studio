@@ -157,9 +157,13 @@ namespace MP1SkinStudio
         public SkinControl PreviewNavigationTarget(PreviewState state,string direction)
         {
             if(state==null||state.Project!=this)throw new InvalidOperationException("Preview state belongs to another project.");
+            if(!new[]{"onleft","onright","onup","ondown"}.Contains(direction))throw new InvalidOperationException("Invalid navigation direction.");
             var sources=LogicalControls().Where(c=>Focusable(c)&&ControlId(c)==state.FocusId).ToArray();
             if(sources.Length!=1)throw new InvalidOperationException("The simulated focus is missing or ambiguous.");
-            var target=NavigationTarget(sources[0],direction);int before=state.FocusId;
+            var mappedSource=sources[0];
+            if(mappedSource.Get("type")=="facadeview"){var view=CollectionSettings.Template(this,mappedSource,Editor.Collection.Mode);if(view!=null&&ControlId(view)==ControlId(mappedSource))mappedSource=view;}
+            string mapping=mappedSource.Resolved(direction).Trim();
+            var target=mapping.Length==0||mapping=="0"?StackNavigationTarget(state,sources[0],direction):NavigationTarget(sources[0],direction);int before=state.FocusId;
             try
             {
                 state.FocusId=ControlId(target).Value;bool? visible=state.Visible(target);
