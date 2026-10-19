@@ -136,11 +136,11 @@ namespace MP1SkinStudio
         }
         void DrawControl(Graphics g,SkinControl c,RectangleF rect)
         {
-            string type=c.Get("type");bool selected=Selected!=null&&Selected.Key==c.Key;
+            string type=c.Get("type");bool focused=FocusPreview&&SkinProject.Focusable(c)&&SkinProject.ControlId(c)>0&&SkinProject.ControlId(c)==State.FocusId;
             bool? visible=State.Visible(c);
             if(CollectionSettings.IsCollection(c)){DrawCollection(g,c,rect);return;}
             string texture=c.Get("texture");
-            if(type.Contains("button"))texture=FocusPreview&&selected?c.Get("textureFocus"):c.Get("textureNoFocus");
+            if(type.Contains("button"))texture=focused?c.Get("textureFocus"):c.Get("textureNoFocus");
             Bitmap image=Texture(c,texture);
             if(image!=null)
             {
@@ -150,7 +150,7 @@ namespace MP1SkinStudio
             {
                 if(rect.Width*rect.Height<Project.Width*Project.Height*.8f)
                 {
-                    Color fill=type.Contains("button")&&selected&&FocusPreview?Color.FromArgb(245,31,118,181):Color.FromArgb(150,32,54,77);
+                    Color fill=type.Contains("button")&&focused?Color.FromArgb(245,31,118,181):Color.FromArgb(150,32,54,77);
                     using(var brush=new SolidBrush(fill))g.FillRectangle(brush,rect);
                     using(var pen=new Pen(Color.FromArgb(110,106,144,177),1/scale)){if(type=="image")pen.DashStyle=DashStyle.Dash;g.DrawRectangle(pen,rect.X,rect.Y,rect.Width,rect.Height);}
                     if(type=="image"||type=="videowindow")DrawText(g,type=="videowindow"?"VIDEO PREVIEW":System.IO.Path.GetFileName(texture),rect,20,Color.FromArgb(169,190,209),"center");
@@ -159,7 +159,7 @@ namespace MP1SkinStudio
             string label=State.Label(c,c.Get("label"));
             if((Project.Editor.ShowUnresolved||State.ResolvedLabel(c,c.Get("label")))&&(type=="label"||type=="fadelabel"||type=="textbox"||type=="textboxscrollup"||type.Contains("button")))
             {
-                SurfaceText(g,c,label,SurfaceGeometry.TextArea(c,rect),FocusPreview&&selected,"font","textcolor","align",type=="textbox"||type=="textboxscrollup");
+                SurfaceText(g,c,label,SurfaceGeometry.TextArea(c,rect),focused,"font","textcolor","align",type=="textbox"||type=="textboxscrollup");
             }
             if(visible==null||visible==false)
             {

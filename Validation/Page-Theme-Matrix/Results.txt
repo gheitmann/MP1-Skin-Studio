@@ -1,0 +1,13 @@
+PASS Default-BasicHome: 238 controls; edit, project/session roundtrip, exact export, undo/redo, 32 original hashes unchanged
+PASS Default-myHome: 370 controls; edit, project/session roundtrip, exact export, undo/redo, 20 original hashes unchanged
+PASS Default-settings: 20 controls; edit, project/session roundtrip, exact export, undo/redo, 4 original hashes unchanged
+PASS Default-myvideo: 211 controls; edit, project/session roundtrip, exact export, undo/redo, 17 original hashes unchanged
+PASS Default-mymusicgenres: 127 controls; edit, project/session roundtrip, exact export, undo/redo, 13 original hashes unchanged
+PASS Default-mypics: 116 controls; edit, project/session roundtrip, exact export, undo/redo, 13 original hashes unchanged
+PASS Christmas-BasicHome: 238 controls; edit, project/session roundtrip, exact export, undo/redo, 32 original hashes unchanged
+PASS Christmas-myHome: 370 controls; edit, project/session roundtrip, exact export, undo/redo, 20 original hashes unchanged
+PASS Christmas-settings: 20 controls; edit, project/session roundtrip, exact export, undo/redo, 4 original hashes unchanged
+PASS Christmas-myvideo: 211 controls; edit, project/session roundtrip, exact export, undo/redo, 17 original hashes unchanged
+PASS Christmas-mymusicgenres: 127 controls; edit, project/session roundtrip, exact export, undo/redo, 13 original hashes unchanged
+PASS Christmas-mypics: 116 controls; edit, project/session roundtrip, exact export, undo/redo, 13 original hashes unchanged
+12 page/theme workflows passed; 0 failed. No MP1 client run.

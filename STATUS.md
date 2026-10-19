@@ -2,7 +2,11 @@
 
 Date: October 19, 2026. Imported version: 0.9.
 
-## Latest source milestone: explicit stopped playback preview
+## Latest source milestone: page/theme workflows and button focus
+
+October 19, 2026: button focus appearance now follows simulated MP1 focus independently of designer selection. 250 core checks and twelve edit/save/reopen/export/undo workflows across six pages in Default and Christmas passed. All loaded source hashes stayed unchanged. Settings rendering was visually inspected after the fix. BasicHome theme assets load, but dynamic menu content remains incomplete. No new installed-client run occurred. See [matrix validation](Validation/Page-Theme-Matrix/README.md).
+
+## Previous source milestone: explicit stopped playback preview
 
 October 19, 2026: explicit samples now evaluate five common player conditions. The Video folder preset chooses stopped playback; Element > Playback preview can apply or remove that scenario independently. Absent flags stay unknown. 249 core checks and the targeted real Titan probe passed. In this scenario 19 conditions remain unresolved, down from 62. All 17 loaded source hashes remain unchanged. No new interactive client test occurred. See [validation and remaining unknowns](Validation/Playback-Preview/README.md).
 

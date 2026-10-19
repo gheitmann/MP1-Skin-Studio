@@ -313,3 +313,5 @@ Standalone label and fadelabel previews honor XML text anchors, including omitte
 ## Playback preview
 
 Element > Playback preview > Stopped sets five explicit player sample flags to false. Unverified removes those overrides. The Video folder preset includes stopped playback. Missing flags stay unknown; the real player is never controlled. Sample Data exposes #preview.player.hasmedia, #preview.player.hasaudio, #preview.player.hasvideo, #preview.player.playing and #preview.player.paused. Set true or false to inspect individual conditions; independent flags can describe inconsistent scenarios. Apply or revert pending property inputs first. Save the editor project to retain the samples; exported XML remains unchanged. Other player conditions remain unsupported.
+
+Button focus textures and text colors follow the simulated MP1 focus ID. Selecting a non-focusable element changes the editor selection without clearing that focus. Turn off Focus to inspect unfocused appearance. BasicHome runtime menu content still requires appropriate sample data and is not fully reproduced.

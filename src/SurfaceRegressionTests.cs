@@ -9,6 +9,21 @@ namespace MP1SkinStudio
     {
         static void RunSurfaceRegressionTests(string root)
         {
+            Test("Button focus textures follow simulated focus independently of designer selection",()=>
+            {
+                var p=AuditFixture(root,"button-preview-focus","<control><type>button</type><id>7</id><textureFocus>green.png</textureFocus><textureNoFocus>red.png</textureNoFocus><label>-</label></control><control><type>button</type><id>8</id><textureFocus>green.png</textureFocus><textureNoFocus>red.png</textureNoFocus><label>-</label></control>");
+                Directory.CreateDirectory(Path.Combine(p.Root,"Media"));
+                foreach(var pair in new[]{new{File="green.png",Color=Color.Lime},new{File="red.png",Color=Color.Red}})
+                    using(var texture=new Bitmap(4,4))using(var g=Graphics.FromImage(texture)){g.Clear(pair.Color);texture.Save(Path.Combine(p.Root,"Media",pair.File));}
+                var state=new PreviewState(p){FocusId=7};string signature=ProjectFile.ContentSignature(p);
+                using(var canvas=new SkinCanvas{Project=p,State=state,Selected=p.Controls[1]})using(var image=new Bitmap(80,30))using(var g=Graphics.FromImage(image))
+                {
+                    canvas.ControlSurfaceForTest(g,p.Controls[0],new RectangleF(0,0,30,30));canvas.ControlSurfaceForTest(g,p.Controls[1],new RectangleF(40,0,30,30));
+                    Check(image.GetPixel(10,10).G>240&&image.GetPixel(50,10).R>240,"Editor selection displaced simulated focus.");
+                    canvas.FocusPreview=false;canvas.ControlSurfaceForTest(g,p.Controls[0],new RectangleF(0,0,30,30));Check(image.GetPixel(10,10).R>240,"Disabling focus preview still draws the focus texture.");
+                }
+                Check(ProjectFile.ContentSignature(p)==signature&&!p.Dirty,"Drawing focus modified project state.");
+            });
             Test("Standalone labels use native center and right anchors without invented extents",()=>
             {
                 var p=AuditFixture(root,"label-anchors","<control><type>label</type><posX>200</posX><posY>100</posY><align>center</align><label>0%</label></control>");var c=p.Controls[0];
@@ -48,6 +63,7 @@ namespace MP1SkinStudio
     }
     public sealed partial class SkinCanvas
     {
+        internal void ControlSurfaceForTest(Graphics g,SkinControl c,RectangleF rect){DrawControl(g,c,rect);}
         internal void BeginTextPassForTest(){pendingSurfaceText=new System.Collections.Generic.List<PendingSurfaceText>();}
         internal void FlushTextPassForTest(Graphics g)
         {
