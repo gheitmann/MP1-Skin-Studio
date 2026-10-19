@@ -62,7 +62,7 @@ namespace MP1SkinStudio
         void UpdateProtectionTools()
         {
             bool locked=project!=null&&SelectedControls().Any(c=>project.IsLocked(c));
-            foreach(var box in fields.Values){box.ReadOnly=locked;box.ForeColor=locked?muted:ink;}
+            foreach(var pair in fields){bool bound=(pair.Key=="posX"||pair.Key=="posY")&&SelectedControls().Any(c=>{PropertyValue p;return c.Properties.TryGetValue(pair.Key,out p)&&p.Expression.Length>0;});pair.Value.ReadOnly=locked||bound;pair.Value.ForeColor=locked||bound?muted:ink;}
             foreach(Control row in properties.Controls)foreach(Control item in row.Controls)if(item is Button)item.Enabled=!locked;
             unlock.Enabled=!locked;
             if(protectButton!=null)protectButton.Enabled=project!=null;

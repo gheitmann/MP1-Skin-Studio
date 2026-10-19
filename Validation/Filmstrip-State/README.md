@@ -1,0 +1,27 @@
+# Filmstrip state and property-position checkpoint
+
+October 20, 2026. Fresh final build: 322 core checks passed, zero failures. Six real Titan Video filmstrip workflows passed across Default/Christmas and Locked/Unlocked/Unverified PIN samples. All 17 distinct loaded original XML hashes stayed unchanged. Six production canvas renders were generated and Default Locked was visually inspected. A pre-delivery Windows build restored the saved filmstrip project and exposed zero unresolved visibility in its accessibility diagnostics; see Windows-Results.txt for the narrower interactive scope.
+
+## Behavior
+
+The selected static thumbnail in the supported ID-50 facade now publishes #facadeview.focus.X/Y/Width/Height to preview data. Navigation updates these coordinates together with item metadata. Leaving focus, changing view/page, hidden/ambiguous facades, property-driven/automatic facade geometry or unsupported layouts clear derived values rather than leaking stale coordinates. Explicit Sample Data values override individual derived fields. Empty supported filmstrips expose explicit empty values. Derived values are recomputed after reopening and do not become persisted overrides.
+
+Image posX/posY property attributes retain their merged reference/style/local origins. Supported integer expressions drive preview positions; unknown, negative or excessive coordinates retain the fixed XML fallback and receive informational Ctrl+F8 geometry explanations. An inherited property attribute survives a local scalar fallback override; an explicitly empty property attribute clears it. Binding provenance is retained separately from the fallback value origin. Position attributes and their XML fallbacks remain protected from edits, movement, duplication and alignment; other properties can still be edited. The property pane identifies the protected fallback and its expression, with read-only position fields. Skin XML and exports retain original attributes.
+
+Element > Video PIN preview selects explicit Locked, Unlocked or Unverified samples. This changes #MyVideos.PinLocked only; it does not inspect or modify actual PINs, configuration or media access. No default PIN state is inferred. Values persist through the existing project sample storage.
+
+## Primary source verification and supported subset
+
+Read locally downloaded upstream [GUIFilmstripControl.cs](https://github.com/MediaPortal/MediaPortal-1/blob/master/mediaportal/Core/guilib/GUIFilmstripControl.cs), around lines 895–931: native focus properties describe the focused thumbnail rectangle and clear during scrolling. This preview uses its own static selected thumbnail bounds; native zoom, oversized focus effects, animation and scrolling timing are not modeled. Derivation is restricted to a uniquely identified, visible filmstrip facade focused as ID 50, with static geometry and no automatic ancestor layout. Other facades and coverflow are not synthesized.
+
+Read [GUIImage.cs](https://github.com/MediaPortal/MediaPortal-1/blob/master/mediaportal/Core/guilib/GUIImage.cs), declarations around 116–117 and Calculate around 1115–1160: native property positions are parsed as integers and apply nonnegative values. The preview accepts 0 through 100000 and uses the XML fallback for unsupported values; it does not simulate the native last-valid-position cache. Only image posX/posY property attributes are supported.
+
+Read [Functions.cs](https://github.com/MediaPortal/MediaPortal-1/blob/master/mediaportal/Core/guilib/Functions.cs), cint around 326 and add/sub around 608–664. The bounded preview adds integer cint/add/sub: missing operands remain unknown, known invalid cint strings return zero, and arithmetic overflow remains unknown. Floating arithmetic and other numerical functions remain unsupported. Existing expression depth, input and arity limits apply.
+
+## Validation and limits
+
+Core-Results.txt includes 11 new focused checks covering thumbnail geometry/navigation, stale-value clearing, explicit overrides, empty/hidden/ambiguous facades, integer arithmetic, attribute provenance/scope, invalid geometry diagnostics, atomic editing rejection, PIN state and save/export/undo. Reference/style/local attribute layering was checked against [GUIControlFactory.cs](https://github.com/MediaPortal/MediaPortal-1/blob/master/mediaportal/Core/guilib/GUIControlFactory.cs), Create and UpdateControlWithXmlData: absent local attributes retain inherited values. The final delivery build passed the full core suite and real-page matrix after correcting this separate-attribute inheritance behavior.
+
+Probe.cs and Results.txt cover actual Titan attributes and nested expressions. Two Right actions move the chosen overlay X from 130 to 610; PIN icon X becomes 810. Clean and edited projects reopen with identical derived geometry. XML exports match the edited source exactly, and restored Undo/Redo preserves the original property attributes. Sample image fixtures are explicitly chosen skin graphics, not actual runtime artwork.
+
+With explicit artwork and PIN scenarios, both themes have zero unknown visibility in the tested filmstrip scene. Choosing Unverified PIN retains two unknown conditions. This is scenario coverage, not full skin or runtime equivalence. Previous artwork/page/client reports are historical and were not rerun. No fresh installed-client run or new attended PIN submenu/position-field acceptance occurred. Installed XML, saved projects, language snapshots, rendered screenshots and desktop captures are excluded from the commit.

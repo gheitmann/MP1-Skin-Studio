@@ -18,7 +18,7 @@ namespace MP1SkinStudio
         public StackPreview(SkinProject project,PreviewState preview)
         {
             state=preview;
-            foreach(var c in project.Controls)rectangles[c]=Raw(c);
+            foreach(var c in project.Controls){var rect=Raw(c);float position;if(preview!=null&&preview.TryImagePosition(c,"posX",out position))rect.X=position;if(preview!=null&&preview.TryImagePosition(c,"posY",out position))rect.Y=position;rectangles[c]=rect;}
             foreach(var g in project.Controls.Where(c=>c.RuntimeParent!=null).GroupBy(c=>c.RuntimeParent))children[g.Key]=g.ToArray();
             foreach(var c in project.Controls.Where(c=>c.RuntimeParent==null))Measure(c);
             foreach(var c in project.Controls.Where(c=>c.RuntimeParent==null))Arrange(c);

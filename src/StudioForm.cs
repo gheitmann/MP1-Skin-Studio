@@ -396,10 +396,11 @@ namespace MP1SkinStudio
                     tips.SetToolTip(picker,key.StartsWith("texture",StringComparison.Ordinal)?"Select an image from the skin Media directory with a preview.":key=="textcolor"?"Choose a color; existing transparency is preserved.":key=="font"?"Select a font from fonts.xml.":"Select alignment.");
                 }
                 PropertyValue value;string origin=c.Properties.TryGetValue(key,out value)?(value.Local?"Local":value.Origin):"Not set · preview uses a fallback value";
+                if(value!=null&&value.Expression.Length>0&&(key=="posX"||key=="posY"))origin="Property-driven · protected XML fallback";
                 if(mixed)origin="Mixed values · set for all";
                 var source=new Label{Text=origin,ForeColor=value!=null&&value.Local?Color.FromArgb(110,176,205):Color.FromArgb(124,141,160),AutoEllipsis=true,Width=247,Height=17,Location=new Point(0,50),Font=new Font("Segoe UI",8)};row.Controls.Add(source);
                 fields[key]=box;originals[key]=box.Text;properties.Controls.Add(row);
-                tips.SetToolTip(box,key+"\n"+origin+(key=="visible"?"\nAn empty condition adds no restriction; parent and include conditions still apply. Unsupported runtime expressions remain unresolved in the preview and are preserved in XML.":"")+(c.IsBound(key)?"\n#Bindings are replaced only with explicit approval.":""));
+                tips.SetToolTip(box,key+"\n"+origin+(value!=null&&value.Expression.Length>0?"\nProperty expression: "+value.Expression+"\nAdjust Sample Data to inspect this protected binding.":"")+(key=="visible"?"\nAn empty condition adds no restriction; parent and include conditions still apply. Unsupported runtime expressions remain unresolved in the preview and are preserved in XML.":"")+(c.IsBound(key)&&!(value!=null&&value.Expression.Length>0)?"\n#Bindings are replaced only with explicit approval.":""));
             }
             properties.ResumeLayout();UpdateProtectionTools();int id;if(SkinProject.Focusable(c)&&Int32.TryParse(c.Get("id"),out id)&&id>0)state.SetFocus(id);
             UpdatePreviewTree();SyncElementTreeSelection();

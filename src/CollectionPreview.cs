@@ -83,11 +83,13 @@ namespace MP1SkinStudio
     {
         public void UpdateCollectionValues()
         {
+            ResetFacadeFocusValues();
             var baseline=PreviewSettings.BaseValues();
             foreach(string key in new[]{"#itemcount","#selecteditem","#selecteditem2","#selectedindex","#selectedthumb"})
             {string value;if(Project.Editor.Preview.Values.TryGetValue(key,out value)||baseline.TryGetValue(key,out value))Values[key]=value;else Values.Remove(key);}
             if(!Project.Controls.Any(CollectionSettings.IsCollection))return;var settings=Project.Editor.Collection;int index=settings.SelectedIndex;var values=new Dictionary<string,string>{{"#itemcount",settings.Items.Count.ToString(CultureInfo.InvariantCulture)},{"#selecteditem",index<0?"":settings.Items[index].Title},{"#selecteditem2",index<0?"":settings.Items[index].Detail},{"#selectedindex",(index+1).ToString(CultureInfo.InvariantCulture)},{"#selectedthumb",index<0?"":settings.Items[index].Image}};
             foreach(var pair in values)if(!Project.Editor.Preview.Values.ContainsKey(pair.Key))Values[pair.Key]=pair.Value;
+            UpdateFacadeFocusValues();
         }
     }
     public static partial class ProjectFile

@@ -10,7 +10,7 @@ namespace MP1SkinStudio
     // Read-only explanations of the current explicit preview, not runtime errors.
     public static class PreviewProblems
     {
-        static readonly HashSet<string> functions=new HashSet<string>(new[]{"window.isvisible","control.hasfocus","control.isvisible","control.hastext","control.hasthumb","plugin.isenabled","system.idletime","string.equals","string.contains","string.starts","not","and","or","L","iif","eq","neq","string.trim","string.ltrim","string.rtrim","string.replace","string.length"},StringComparer.OrdinalIgnoreCase);
+        static readonly HashSet<string> functions=new HashSet<string>(new[]{"window.isvisible","control.hasfocus","control.isvisible","control.hastext","control.hasthumb","plugin.isenabled","system.idletime","string.equals","string.contains","string.starts","not","and","or","L","iif","eq","neq","string.trim","string.ltrim","string.rtrim","string.replace","string.length","cint","add","sub"},StringComparer.OrdinalIgnoreCase);
         static string Unquoted(string text)
         {
             var value=new StringBuilder();char quote='\0';
@@ -68,7 +68,7 @@ namespace MP1SkinStudio
             string details=String.Join("\r\n",notes.OrderBy(n=>n,StringComparer.OrdinalIgnoreCase));
             if(details.Length==0)details="This dependency is cyclic, exceeds preview limits, or uses syntax/content not supported by the bounded preview. No runtime value was guessed.";
             return new SkinIssue{Code=code,ControlKey=control.Key,ControlName=control.Name,Property=property,Source=control.Source.RelativePath,Line=line,Information=true,
-                Message=code=="PREVIEW_CONDITION"?"Visibility is unverified in the current sample state.":code=="PREVIEW_ARTWORK"?"Artwork is unavailable or unverified in the current sample state.":"Text is unverified in the current sample state.",
+                Message=code=="PREVIEW_CONDITION"?"Visibility is unverified in the current sample state.":code=="PREVIEW_GEOMETRY"?"Image position uses an unverified property binding; the XML fallback is shown.":code=="PREVIEW_ARTWORK"?"Artwork is unavailable or unverified in the current sample state.":"Text is unverified in the current sample state.",
                 Detail="Expression / text:\r\n"+Short(value)+"\r\n\r\nInputs and dependencies to inspect:\r\n"+details+"\r\n\r\nElement source: "+control.Source.RelativePath+":"+line+". Inherited expressions are listed above; their include locations may differ. Original XML is unchanged. An unverified preview is not proof of a MediaPortal error."};
         }
         public static SkinAuditReport Run(SkinProject project,PreviewState state)
@@ -107,6 +107,14 @@ namespace MP1SkinStudio
                 var issue=Issue(control,property,code,String.Join("\r\nAND ",expressions.Select(e=>e.Key)),notes,lineCache);
                 if(seen.Add(control.Key+"\n"+code+"\n"+issue.Detail))report.Issues.Add(issue);
                 if(report.Issues.Count>=1024){report.Issues.Add(new SkinIssue{Code="PREVIEW_LIMIT",Information=true,Message="The preview report is limited to 1024 element findings.",Detail="Inspect a smaller page or resolve explicit samples before checking again."});break;}
+            }
+            if(report.Issues.Any(i=>i.Code=="PREVIEW_LIMIT"))return report;
+            foreach(var control in project.Controls.Where(c=>c.Get("type")=="image"&&state.Visible(c)==true))foreach(string key in new[]{"posX","posY"})
+            {
+                PropertyValue property;float position;if(!control.Properties.TryGetValue(key,out property)||property.Expression.Length==0||state.TryImagePosition(control,key,out position))continue;
+                var notes=new HashSet<string>();Explain(state,property.Expression,control.Defines,ids,notes,new HashSet<int>(),0);notes.Add("The property attribute cannot be resolved to a supported integer image position (0 to 100000). The fixed XML position is retained as a fallback; the binding remains protected.");notes.Add("Binding origin: "+(property.ExpressionOrigin.Length>0?property.ExpressionOrigin:property.Origin)+". Static filmstrip thumbnail coordinates are derived only for the supported facade; Sample Data can explicitly override them.");
+                report.Issues.Add(Issue(control,key,"PREVIEW_GEOMETRY",property.Expression,notes,lineCache));
+                if(report.Issues.Count>=1024){report.Issues.Add(new SkinIssue{Code="PREVIEW_LIMIT",Information=true,Message="The preview report is limited to 1024 element findings.",Detail="Inspect a smaller page or resolve explicit samples before checking again."});return report;}
             }
             return report;
         }

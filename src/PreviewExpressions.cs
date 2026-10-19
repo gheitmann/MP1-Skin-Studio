@@ -24,6 +24,10 @@ namespace MP1SkinStudio
             string name=call.Groups[1].Value;var parts=ExpressionArguments(call.Groups[2].Value);if(parts==null||parts.Count>16)return false;
             var args=new List<object>();foreach(string part in parts){object arg;if(!ExpressionValue(part,defines,depth+1,out arg))return false;args.Add(arg);}
             Func<int,string> str=i=>args[i] as string;
+            if(name=="cint"&&args.Count==1)
+            {if(args[0] is int){value=args[0];return true;}int converted;value=str(0)!=null&&Int32.TryParse(str(0),NumberStyles.Integer,CultureInfo.InvariantCulture,out converted)?converted:0;return true;}
+            if((name=="add"&&args.Count>=2||name=="sub"&&args.Count==2)&&args.TrueForAll(a=>a is int))
+            {long number=(int)args[0];for(int i=1;i<args.Count;i++)number+=name=="add"?(long)(int)args[i]:-(long)(int)args[i];if(number<Int32.MinValue||number>Int32.MaxValue)return false;value=(int)number;return true;}
             if(name=="plugin.isenabled"&&args.Count==1&&str(0)!=null){value=Plugins.Contains(str(0));return true;}
             if((name=="not"&&args.Count==1)||((name=="and"||name=="or")&&args.Count>=2))
             {

@@ -2,7 +2,13 @@
 
 Date: October 20, 2026. Imported version: 0.9.
 
-## Latest source milestone: explicit sample artwork
+## Latest source milestone: filmstrip coordinates and image position bindings
+
+October 20, 2026: supported static filmstrip facades expose selected thumbnail coordinates; overlays with image posX/posY property attributes follow those coordinates. Integer cint/add/sub expressions and explicit Video PIN samples complete the tested Titan filmstrip scene while keeping unknown PIN state unverified. Property-driven position fields remain protected; XML bindings and fallbacks are preserved.
+
+Fresh validation: 322 core checks, six real Titan filmstrip workflows, 17 unchanged original source hashes and six production canvas renders. A pre-delivery Windows build restored the saved nine-item filmstrip with zero unresolved visibility in accessibility diagnostics; the new PIN submenu and position fields were not newly exercised through attended input. No fresh installed-client run. See [validation and limits](Validation/Filmstrip-State/README.md).
+
+## Previous source milestone: explicit sample artwork
 
 October 20, 2026: Sample Artwork provides searchable, explicit local image/empty/original scenarios for image texture expressions. Rendering and Control.HasThumb follow the chosen samples; XML bindings, exports and XML undo history remain unchanged. Samples persist across save/reopen and retain normal theme asset precedence. Ctrl+F8 also explains unavailable visible artwork. Duplicate IDs remain unverified.
 
@@ -78,9 +84,9 @@ October 19, 2026: static known-content conditions and nested localization now wo
 
 The owner prioritizes practical edit/save/reopen/export workflows and substantial autonomous work blocks. Routine follow-up steps do not require another continuation prompt. Necessary checks run at integrated milestones.
 
-Current validation: 311 core checks, eight real Titan artwork workflows and attended Windows Sample Artwork menu/search/empty/Apply/save. All 23 loaded original XML hashes remained unchanged. Earlier page, collection, group and installed-client results remain historical; see their checkpoint reports.
+Current validation: 322 core checks and six complete real Titan filmstrip workflows with 17 unchanged original source hashes. Pre-delivery Windows startup was observed; new interactive PIN/position-field acceptance is not claimed. Earlier artwork, page, collection, group and installed-client results remain historical.
 
-Next core work is real-page preview fidelity and navigation coverage, particularly facade focus coordinates and explicit PIN scenarios in filmstrip, while retaining duplicate-ID uncertainty. Existing samples make BasicHome, Settings and Video useful without claiming complete runtime equivalence. Masks, animation, full geometric navigation and plugin-specific values remain approximate or unresolved. Continue real-skin edit/save/reopen/export acceptance around any such changes, preserving original files. Auxiliary global-style and cross-group movement tools remain lower priority.
+Next core work is broader real-page preview fidelity and navigation coverage, particularly unsupported geometric layouts, other facade types and plugin states, while retaining duplicate-ID uncertainty. Existing samples make BasicHome, Settings and Video useful without claiming complete runtime equivalence. Masks, animation, full geometric navigation and plugin-specific values remain approximate or unresolved. Continue real-skin edit/save/reopen/export acceptance around any such changes, preserving original files. Auxiliary global-style and cross-group movement tools remain lower priority.
 
 Historical milestones follow; older suspension notes describe the state at their recorded time. Attended Windows automation was subsequently reauthorized and exercised successfully.
 ## Baseline

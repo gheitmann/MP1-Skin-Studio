@@ -77,6 +77,8 @@ namespace MP1SkinStudio
         {
             var requested=changes.Where(e=>e.Values.Count>0).ToArray();
             foreach(var edit in requested)RequireCurrent(edit.Control);
+            foreach(var edit in requested)foreach(var value in edit.Values)
+            {PropertyValue property;if((value.Key=="posX"||value.Key=="posY")&&edit.Control.Properties.TryGetValue(value.Key,out property)&&property.Expression.Length>0&&value.Value!=property.Value)throw new InvalidOperationException("Property-driven positions remain protected. Adjust preview samples to inspect "+edit.Control.Name+" · "+value.Key+".");}
             var edits=requested.GroupBy(e=>e.Control.Key).Select(group=>
             {
                 var values=new Dictionary<string,string>();
@@ -209,6 +211,7 @@ namespace MP1SkinStudio
         }
         public static void RequireNumeric(SkinControl c,params string[] keys)
         {
+            if(keys.Any(k=>{PropertyValue p;return c.Properties.TryGetValue(k,out p)&&p.Expression.Length>0;}))throw new InvalidOperationException("Property-driven geometry remains protected. Use preview samples to inspect its position.");
             foreach(var key in keys)
             {float value;if(c.Get(key).Length>0&&!Single.TryParse(c.Resolved(key),NumberStyles.Float,CultureInfo.InvariantCulture,out value))throw new InvalidOperationException("Geometry cannot be resolved: "+c.Name+" · "+key+". Set a concrete value first.");}
         }

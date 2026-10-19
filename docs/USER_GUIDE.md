@@ -375,3 +375,13 @@ Identical trimmed expressions share the same sample across pages and themes; mat
 Save the editor project to retain samples. XML bindings, XML Undo/Redo and exported XML remain unchanged; sample images stay in the skin directory and are not embedded. Sample Data preserves mappings during ordinary variable edits; selecting one of its replacement presets resets the artwork scenario too. The media folder presets preserve existing artwork samples.
 
 Ctrl+F8 also lists unavailable or unverified visible artwork, including missing/corrupt chosen samples. Explicit empty and known-hidden images are omitted. At most 128 mappings are supported; choose ordinary PNG, JPG, BMP or GIF files below Media. Absolute paths, parent paths and image-path bindings cannot be used as sample replacements. Images above 32 MB, 8192 pixels on either axis or 32 million pixels stay unverified. This does not simulate native image caches, masks or animation.
+
+## Filmstrip focus and property-driven images
+
+The supported static filmstrip facade (ID 50) derives #facadeview.focus.X, Y, Width and Height from the selected preview thumbnail. Arrow navigation updates them with the selected item. Coordinates are recomputed after reopening. They remain unknown for unsupported/ambiguous/hidden facades, other views, automatic or property-driven facade geometry, or when focus leaves the facade. Sample Data can explicitly override any coordinate; clear the override to resume derivation. Unset rows can therefore use derived values rather than being missing data.
+
+Image posX and posY attributes named property can use these values and the supported integer cint/add/sub expressions. Unknown, negative or out-of-range results retain the fixed XML fallback and appear as informational geometry findings under Ctrl+F8. Coordinates are limited to 0 through 100000. Native animation, scrolling effects and the last-valid-position cache remain approximate or unsupported.
+
+The property pane labels these fixed positions as protected XML fallbacks and makes them read-only. Their bindings remain protected during movement, alignment, copying and direct edits; inspect positions by changing preview samples. Other editable properties, such as image width, still retain their ordinary undo/export workflow.
+
+Element > Video PIN preview > Locked / Unlocked chooses an explicit #MyVideos.PinLocked sample. Unverified removes it and keeps missing runtime state unknown. This never changes actual PINs, configuration or media access. Save the editor project to retain the sample. Exported XML preserves original position attributes and contains no PIN sample data.

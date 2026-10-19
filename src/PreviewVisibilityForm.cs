@@ -15,6 +15,7 @@ namespace MP1SkinStudio
             menu.Items.Add("Music folder preview",null,(s,e)=>Attempt(()=>ApplyMediaFolderPreview("music")));
             menu.Items.Add("Pictures folder preview",null,(s,e)=>Attempt(()=>ApplyMediaFolderPreview("pictures")));
             menu.Items.Add("BasicHome preview",null,(s,e)=>Attempt(ApplyBasicHomePreview));
+            var pin=new ToolStripMenuItem("Video PIN preview");pin.DropDownItems.Add("Locked",null,(s,e)=>Attempt(()=>ApplyVideoPinPreview(true)));pin.DropDownItems.Add("Unlocked",null,(s,e)=>Attempt(()=>ApplyVideoPinPreview(false)));pin.DropDownItems.Add("Unverified",null,(s,e)=>Attempt(()=>ApplyVideoPinPreview(null)));menu.Items.Add(pin);
             var playback=new ToolStripMenuItem("Playback preview");
             playback.DropDownItems.Add("Stopped",null,(s,e)=>Attempt(()=>ApplyPlaybackPreview(true)));
             playback.DropDownItems.Add("Unverified",null,(s,e)=>Attempt(()=>ApplyPlaybackPreview(false)));menu.Items.Add(playback);

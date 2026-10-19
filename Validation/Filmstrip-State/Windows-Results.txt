@@ -1,0 +1,5 @@
+October 20, 2026 — Windows startup observation
+PASS Fresh Filmstrip-State-Final build starts and restores Windows-Filmstrip.mp1skinproj.
+PASS Accessibility reports filmstrip, nine sample items, zero unresolved visibility, saved clean project caption and German language preview.
+The new PIN submenu and protected-position fields were not newly exercised through attended input in this checkpoint. Native image geometry and navigation were checked through the production canvas/model probe and renders. Prior attended menu, artwork and save acceptance remains historical. No new installed MediaPortal client run.
+The startup observation used the pre-delivery Filmstrip-State-Final build. The later attribute-inheritance correction was compiled and passed the final 322 core checks plus six real Titan workflows in Filmstrip-State-Delivery; native startup/input was not repeated for that correction.

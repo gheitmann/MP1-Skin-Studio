@@ -1,0 +1,7 @@
+PASS Default-Locked: 0 unverified visibility; thumbnail/overlay X 130 -> 610, PIN icon X 810; scene/read-only geometry/navigation/save/reopen/export/undo/redo and original bindings preserved.
+PASS Default-Unlocked: 0 unverified visibility; thumbnail/overlay X 130 -> 610, PIN icon X 810; scene/read-only geometry/navigation/save/reopen/export/undo/redo and original bindings preserved.
+PASS Default-Unverified: 2 unverified visibility; thumbnail/overlay X 130 -> 610, PIN icon X 810; scene/read-only geometry/navigation/save/reopen/export/undo/redo and original bindings preserved.
+PASS Christmas-Locked: 0 unverified visibility; thumbnail/overlay X 130 -> 610, PIN icon X 810; scene/read-only geometry/navigation/save/reopen/export/undo/redo and original bindings preserved.
+PASS Christmas-Unlocked: 0 unverified visibility; thumbnail/overlay X 130 -> 610, PIN icon X 810; scene/read-only geometry/navigation/save/reopen/export/undo/redo and original bindings preserved.
+PASS Christmas-Unverified: 2 unverified visibility; thumbnail/overlay X 130 -> 610, PIN icon X 810; scene/read-only geometry/navigation/save/reopen/export/undo/redo and original bindings preserved.
+PASS 6 real Titan filmstrip workflows; 17 distinct original source hashes unchanged. Six production canvas renders generated.

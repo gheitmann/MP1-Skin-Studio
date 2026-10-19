@@ -161,6 +161,7 @@ namespace MP1SkinStudio
                 {
                     if (node.Children.Count > 0) throw new InvalidOperationException("Nested XML property remains protected: " + kv.Key);
                     if (node.Element.InnerText == kv.Value) continue;
+                    if((kv.Key=="posX"||kv.Key=="posY")&&node.Element.GetAttribute("property").Length>0)throw new InvalidOperationException("Property-driven positions remain protected. Adjust preview samples to inspect the position.");
                     if (node.Empty)
                     {
                         string opening = Text.Substring(node.Start, node.End - node.Start);
@@ -214,7 +215,7 @@ namespace MP1SkinStudio
 
     public sealed class PropertyValue
     {
-        public string Value, Origin;
+        public string Value, Origin, Expression="", ExpressionOrigin="";
         public bool Local;
         public PropertyValue(string value, string origin, bool local) { Value = value; Origin = origin; Local = local; }
     }
@@ -240,7 +241,7 @@ namespace MP1SkinStudio
         public float Number(string key, float fallback)
         { float n; return Single.TryParse(Resolved(key), NumberStyles.Float, CultureInfo.InvariantCulture, out n) ? n : fallback; }
         public string Name { get { return Get("description", Get("label", Get("type", "Control"))); } }
-        public bool IsBound(string key) { return Get(key).Contains("#"); }
+        public bool IsBound(string key) { PropertyValue p;return Get(key).Contains("#")||(Properties.TryGetValue(key,out p)&&p.Expression.Length>0); }
     }
 
     public sealed class FileChange
@@ -375,7 +376,13 @@ namespace MP1SkinStudio
         }
         static string JoinCondition(string a,string b) { return String.IsNullOrEmpty(a)?b:String.IsNullOrEmpty(b)?a:"["+a+"]+["+b+"]"; }
         static void Merge(SkinControl c, ElementSpan n,string origin,bool local)
-        { foreach(var p in n.Children.Where(e=>e.Name!="control")) c.Properties[p.Name]=new PropertyValue(p.Element.InnerText,origin,local); }
+        {
+            foreach(var p in n.Children.Where(e=>e.Name!="control"))
+            {
+                PropertyValue inherited;c.Properties.TryGetValue(p.Name,out inherited);bool attribute=p.Element.HasAttribute("property");
+                c.Properties[p.Name]=new PropertyValue(p.Element.InnerText,origin,local){Expression=attribute?p.Element.GetAttribute("property"):inherited==null?"":inherited.Expression,ExpressionOrigin=attribute?origin:inherited==null?"":inherited.ExpressionOrigin};
+            }
+        }
         public void Edit(SkinControl control, IDictionary<string,string> values, string description)
         {
             EditMany(new[]{new ControlEdit(control,values)},description);
@@ -434,8 +441,8 @@ namespace MP1SkinStudio
         public void SetFocus(int id)
         {
             int previous;
-            if(id==Project.DefaultControlId&&!Project.Editor.TryFocus(Project.Page,Project.Theme,out previous)){FocusId=id;return;}
-            Project.Editor.RememberFocus(Project.Page,Project.Theme,id);FocusId=id;
+            if(id==Project.DefaultControlId&&!Project.Editor.TryFocus(Project.Page,Project.Theme,out previous)){FocusId=id;UpdateCollectionValues();return;}
+            Project.Editor.RememberFocus(Project.Page,Project.Theme,id);FocusId=id;UpdateCollectionValues();
         }
         public string Text(SkinControl c,string value)
         {
