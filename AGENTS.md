@@ -13,11 +13,10 @@
   substantial completed milestone.
 - Distinguish historical test reports from newly executed validation.
 - Use isolated skin copies and preserve original skin files.
-- Windows app automation is suspended after the owner reported a system freeze
-  requiring a hard reset during the last attempt. Continue with source code and
-  console/model tests only. Do not launch MediaPortal or the editor GUI, capture
-  windows, or retry Computer Use unless the owner explicitly reauthorizes that
-  activity after this incident. DirectX replacement remains deferred.
+- The owner reauthorized attended Windows app automation on October 19 after the
+  earlier hard-reset incident. Use current observations, avoid repeated failed
+  input attempts, and let the owner complete permission prompts and native
+  dialogs when Computer Use cannot target them. DirectX replacement remains deferred.
 
 - Start future projects in English with a private GitHub repository from the beginning,
   and record their current state and remaining work there.

@@ -10,22 +10,24 @@ installed-MP1 display/navigation passed before automation was suspended. Real
 Video/list, multi-page and theme workflows now have console/model validation.
 These successes do not establish complete visual fidelity or plugin equivalence.
 
-Windows app automation remains suspended after the owner reported a PC freeze
-requiring a hard reset. Do not launch the editor GUI or MediaPortal, capture
-windows or retry Computer Use without explicit new authorization. Continue
-source/model and console work only. DirectX replacement remains deferred.
+The owner explicitly reauthorized attended Windows automation on October 19.
+The real Titan Video edit/save/reopen/export UI workflow now passed, with manual
+completion of native dialogs that Computer Use could not target. No new MP1
+client run occurred. DirectX replacement remains deferred.
 
 Latest joint validation: fresh final build, **237 core checks and 39 targeted
 checks passed**. Coverage includes filmstrip geometry, string conditions, real
 Titan imported-list edits, save/export, multiple pages and Christmas/default
 theme preparation. Write-failure tests preserve existing archives and clean
-intermediate files. New UI wiring, Revert Inputs and pending-input guards remain
-manually unverified; prior UI counts are historical.
+intermediate files. Revert Inputs and the Save Project pending-input guard now have attended UI
+validation; other new UI paths remain unverified. Prior UI counts are historical.
 See [model performance and batch validation](Validation/Model-Performance/README.md).
 
-The next substantial gate is manual validation of the changed interface and
-remaining preview/runtime differences when that work is authorized. Auxiliary
-group/style conveniences remain lower priority. Historical milestones follow.
+See [attended Titan Video UI validation](Validation/Attended-Video-UI/README.md).
+The complex-page preview visibly contains unresolved expressions and overlapping
+placeholders. Useful preview states and expression evaluation are the next core
+priority; the new export still needs MP1 runtime validation. Auxiliary group/style
+conveniences remain lower priority. Historical milestones follow.
 
 ## Baseline
 
