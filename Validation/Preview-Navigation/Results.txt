@@ -1,0 +1,3 @@
+PASS Default BasicHome: 4→6→7→5→3→2→4→4→6; focus 6 survives saved session; all 32 original hashes unchanged
+PASS Christmas BasicHome: 4→6→7→5→3→2→4→4→6; focus 6 survives saved session; all 32 original hashes unchanged
+PASS Settings explicit edges: 3→20→3; absent ondown is rejected with focus preserved. Automatic group navigation remains unsupported. No XML edits or undo entries

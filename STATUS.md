@@ -2,7 +2,11 @@
 
 Date: October 19, 2026. Imported version: 0.9.
 
-## Latest source milestone: usable BasicHome sample
+## Latest source milestone: focus-based preview navigation
+
+October 19, 2026: existing arrow navigation now uses simulated focus and the active facade template. Prospective target visibility is checked without leaking rejected focus changes; unavailable routes produce status notices. 256 core checks and real Titan BasicHome routes in Default/Christmas passed, including saved final focus and unchanged source hashes. Settings explicit edges passed; automatic group-generated directions remain unsupported and are the next concrete gap. No new interactive UI/client run occurred. See [validation](Validation/Preview-Navigation/README.md).
+
+## Previous source milestone: usable BasicHome sample
 
 October 19, 2026: BasicHome now has an explicit saved preview preset. Static absent-control visibility and supported boolean expression conditions resolve correctly; large button text offsets no longer erase captions. 254 core checks and real Titan Default/Christmas sample roundtrips passed. Both rendered themes show six tile pictures and German labels with TV focused; eleven conditions remain unverified. All 32 loaded original source hashes are unchanged. No new interactive client run occurred. See [validation](Validation/BasicHome-Preview/README.md).
 

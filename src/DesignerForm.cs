@@ -98,7 +98,9 @@ namespace MP1SkinStudio
         void FollowNavigation(string direction)
         {
             RequireAppliedProperties();
-            if(selected==null)return;var target=project.NavigationTarget(selected,direction);
+            SkinControl target;
+            try{target=project.PreviewNavigationTarget(state,direction);}
+            catch(InvalidOperationException ex){ShowNotice("Focus test: "+ex.Message);return;}
             SelectControl(target);canvas.Focus();ShowNotice("Focus test: "+direction+" → "+target.Name+" (ID "+target.Get("id")+").");
         }
         public void PrepareNavigationPreview()

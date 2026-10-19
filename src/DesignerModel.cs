@@ -146,10 +146,27 @@ namespace MP1SkinStudio
         {int id;return Int32.TryParse(c.Resolved("id"),out id)?(int?)id:null;}
         public SkinControl NavigationTarget(SkinControl source,string direction)
         {
+            if(!new[]{"onleft","onright","onup","ondown"}.Contains(direction))throw new InvalidOperationException("Invalid navigation direction.");
+            source=LogicalControl(source);
+            if(source.Get("type")=="facadeview"){var view=CollectionSettings.Template(this,source,Editor.Collection.Mode);if(view!=null&&ControlId(view)==ControlId(source))source=view;}
             string value=source.Resolved(direction);int id;
             if(!Int32.TryParse(value,out id)||id<=0)throw new InvalidOperationException("No unambiguous navigation target for "+direction+".");
             var matches=LogicalControls().Where(c=>ControlId(c)==id).ToArray();
             if(matches.Length!=1||!Focusable(matches[0]))throw new InvalidOperationException("Navigation target ID "+value+" is missing, ambiguous or not focusable.");return matches[0];
+        }
+        public SkinControl PreviewNavigationTarget(PreviewState state,string direction)
+        {
+            if(state==null||state.Project!=this)throw new InvalidOperationException("Preview state belongs to another project.");
+            var sources=LogicalControls().Where(c=>Focusable(c)&&ControlId(c)==state.FocusId).ToArray();
+            if(sources.Length!=1)throw new InvalidOperationException("The simulated focus is missing or ambiguous.");
+            var target=NavigationTarget(sources[0],direction);int before=state.FocusId;
+            try
+            {
+                state.FocusId=ControlId(target).Value;bool? visible=state.Visible(target);
+                if(IsEditorHidden(target)||visible!=true)throw new InvalidOperationException(visible==null?"The navigation target has unverified visibility. Apply suitable sample data first.":"The navigation target is hidden in this preview.");
+                return target;
+            }
+            finally{state.FocusId=before;}
         }
         public void ConnectNavigation(SkinControl source,SkinControl target,string direction,bool replaceBinding)
         {

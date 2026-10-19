@@ -118,6 +118,20 @@ namespace MP1SkinStudio
                 Write(folder,"main.xml","<window><controls><control><type>button</type><id>1</id></control><control><type>button</type><id>2</id></control><control><type>button</type><id>2</id></control></controls></window>");
                 var q=new SkinProject(folder);q.OpenPage("main.xml");Reject(()=>q.ConnectNavigation(q.Controls[0],q.Controls[1],"onright",false));Check(!q.Dirty,"Ambiguous connection was saved.");
             });
+            Test("Preview navigation probes target-focus visibility without committing rejected state",()=>
+            {
+                var p=AuditFixture(root,"preview-navigation","<control><type>button</type><id>1</id><onright>2</onright><onleft>3</onleft><onup>4</onup></control><control><type>button</type><id>2</id><visible>control.hasfocus(2)</visible></control><control><type>button</type><id>3</id><visible>false</visible></control><control><type>button</type><id>4</id><visible>unknown.condition()</visible></control>");
+                var state=new PreviewState(p){FocusId=1};string signature=ProjectFile.ContentSignature(p);
+                Check(p.PreviewNavigationTarget(state,"onright").Get("id")=="2"&&state.FocusId==1,"Target focus was not probed or leaked into active state.");
+                Reject(()=>p.PreviewNavigationTarget(state,"onleft"));Reject(()=>p.PreviewNavigationTarget(state,"onup"));Reject(()=>p.NavigationTarget(p.Controls[0],"id"));
+                Check(state.FocusId==1&&ProjectFile.ContentSignature(p)==signature&&!p.Dirty,"Rejected navigation changed focus or XML.");
+            });
+            Test("Facade navigation uses the active template rather than a stale or empty facade direction",()=>
+            {
+                var p=CollectionDemo();var facade=CollectionControl(p,"facadeview");var list=CollectionControl(p,"listcontrol");var film=CollectionControl(p,"filmstrip");string key=p.InsertControl(p.Page,"button");var button=p.Controls.First(c=>c.Key==key);
+                p.Editor.Collection.Mode="list";p.ConnectNavigation(CollectionControl(p,"facadeview"),button,"onright",false);facade=CollectionControl(p,"facadeview");Check(p.NavigationTarget(facade,"onright").Key==key,"Active list navigation was not used.");
+                p.Editor.Collection.Mode="filmstrip";p.ConnectNavigation(CollectionControl(p,"facadeview"),p.Controls.First(c=>c.Key==key),"onleft",false);Check(p.NavigationTarget(CollectionControl(p,"facadeview"),"onleft").Key==key,"Active filmstrip navigation was not used.");
+            });
             Test("Navigation protects dynamic target bindings",()=>
             {
                 var p=Demo();p.Edit(Named(p,"Movies"),Set("onright","#target"),"Bindung");

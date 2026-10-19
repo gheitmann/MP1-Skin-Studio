@@ -321,3 +321,7 @@ Button focus textures and text colors follow the simulated MP1 focus ID. Selecti
 On BasicHome.xml (window 35), choose Element > BasicHome preview. This explicitly selects FanartHandler background mode, disables the Titan update indicator, sets stopped playback, hides unverified content and restores the default focus. Save the editor project to retain it. The Titan Default and Christmas samples show six menu tiles with labels; runtime fanart, latest media, notifications and submenu animation remain approximate or unverified. Other pages reject this preset without changing state.
 
 Supported boolean #(...) expressions can drive visibility/include conditions. Missing values and unsupported functions remain unverified. A static control.isvisible lookup with no target returns false; duplicate targets and cycles remain unverified. Large button textYOff values use the remaining label height rather than subtracting the offset twice.
+
+## Preview navigation checks
+
+Enable Navigation and use arrow keys on the canvas to follow explicit skin directions from the simulated focus. The active collection template supplies facade directions. A target must resolve uniquely and be visibly supported after receiving focus; unavailable routes leave focus unchanged and display a status notice. Pending fields must be applied or reverted first. Successful focus changes are saved with the editor project. Native automatic group navigation and hidden-target skipping are not simulated yet; no neighbor links are inferred or written to XML.
