@@ -419,7 +419,7 @@ namespace MP1SkinStudio
         {
             string v;if(Project.Editor.Preview.Values.TryGetValue(value,out v))return v;
             var visited=new HashSet<string>();while(c.Defines!=null&&c.Defines.TryGetValue(value,out v)&&visited.Add(value))value=v;
-            return Regex.Replace(value,@"#[A-Za-z_][A-Za-z0-9_.]*",match=>Values.TryGetValue(match.Value,out v)?v:match.Value);
+            return ExpressionText(c,value);
         }
         public bool? Visible(SkinControl c) { return VisibleFor(c,new HashSet<string>()); }
         static bool? And(bool? a,bool? b) { if(a==false||b==false)return false;if(a==null||b==null)return null;return true; }

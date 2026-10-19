@@ -1,0 +1,26 @@
+PASS Trim a known sample binding
+PASS Nested functions and comma-bearing values
+PASS Typed comparison and conditional
+PASS Numeric and string literals stay distinct
+PASS Quoted commas and parentheses
+PASS Custom trim characters
+PASS Multiple independent expressions
+PASS Expression string comparison ignores case
+PASS Expression comparison preserves spaces
+PASS Missing runtime value stays unresolved
+PASS Unsupported expression is preserved atomically
+PASS Malformed expression stays intact
+PASS Invalid argument is rejected
+PASS Inserted values are not recursively evaluated
+PASS Embedded scoped define chain resolves
+PASS Expression uses scoped define chain
+PASS Define cycles remain unresolved
+PASS Nesting limit preserves expression
+PASS Existing token boundaries stay intact
+PASS Scoped define overrides built-in sample
+PASS Explicit sample overrides scoped define
+PASS Empty replacement search preserves text
+PASS Expansion limit preserves expression
+PASS Preview evaluation preserves XML
+PASS no XML edits or undo entries
+25 checks passed

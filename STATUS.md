@@ -2,6 +2,20 @@
 
 Date: October 19, 2026. Imported version: 0.9.
 
+## Latest source milestone: preview text expressions
+
+A bounded subset of nested MP1 text expressions now evaluates in preview text:
+trim/replace/length, string comparisons, eq/neq and iif. Unknown functions and
+missing runtime values preserve the whole expression. Embedded local define
+chains resolve without changing XML. See
+[expression validation](Validation/Preview-Expressions/README.md).
+
+Fresh Linux validation: all production sources compile with Mono; 25 targeted
+console checks passed. The Windows full suite and real Titan visuals were not
+rerun. Historical Windows counts below are not fresh validation of this change.
+The current session cannot access the Windows desktop. Complex-page visibility
+and remaining runtime expressions still need work. DirectX replacement remains deferred.
+
 ## Current priority: reliable core editing
 
 The owner prioritized practical edit/save/reopen/export behavior over auxiliary
