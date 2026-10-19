@@ -52,7 +52,7 @@ namespace MP1SkinStudio
                     }
                     else
                     {
-                        string raw=target.Get(kind=="hasthumb"?"texture":"label");Explain(state,raw,target.Defines,ids,notes,active,depth+1);
+                        string raw=kind=="hasthumb"?state.ImageTexture(target):target.Get("label");Explain(state,raw,target.Defines,ids,notes,active,depth+1);
                         string resolved;if(kind=="hasthumb"&&state.TryText(target,raw,out resolved)&&(Path.IsPathRooted(resolved)||resolved.Replace('\\','/').Split('/').Contains("..")))notes.Add("Control "+id+" uses runtime/cache artwork outside the skin Media directory; that cache is not simulated.");
                     }
                 }
@@ -68,7 +68,7 @@ namespace MP1SkinStudio
             string details=String.Join("\r\n",notes.OrderBy(n=>n,StringComparer.OrdinalIgnoreCase));
             if(details.Length==0)details="This dependency is cyclic, exceeds preview limits, or uses syntax/content not supported by the bounded preview. No runtime value was guessed.";
             return new SkinIssue{Code=code,ControlKey=control.Key,ControlName=control.Name,Property=property,Source=control.Source.RelativePath,Line=line,Information=true,
-                Message=code=="PREVIEW_CONDITION"?"Visibility is unverified in the current sample state.":"Text is unverified in the current sample state.",
+                Message=code=="PREVIEW_CONDITION"?"Visibility is unverified in the current sample state.":code=="PREVIEW_ARTWORK"?"Artwork is unavailable or unverified in the current sample state.":"Text is unverified in the current sample state.",
                 Detail="Expression / text:\r\n"+Short(value)+"\r\n\r\nInputs and dependencies to inspect:\r\n"+details+"\r\n\r\nElement source: "+control.Source.RelativePath+":"+line+". Inherited expressions are listed above; their include locations may differ. Original XML is unchanged. An unverified preview is not proof of a MediaPortal error."};
         }
         public static SkinAuditReport Run(SkinProject project,PreviewState state)
@@ -87,10 +87,23 @@ namespace MP1SkinStudio
                 }
                 else if(visible==true&&(new[]{"label","fadelabel","textbox","textboxscrollup"}.Contains(control.Get("type"))||control.Get("type").Contains("button"))&&(control.Get("label").Length>8192||!state.ResolvedLabel(control,control.Get("label"))))
                 {property="label";code="PREVIEW_TEXT";expressions.Add(new KeyValuePair<string,Dictionary<string,string>>(control.Get("label"),control.Defines));}
+                else if(visible==true&&control.Get("type")=="image")
+                {
+                    string texture=state.ImageTexture(control),resolved;
+                    if(state.TryText(control,texture,out resolved)&&(resolved.Trim().Length==0||resolved.Trim()=="-"))continue;
+                    if(state.ArtworkAvailable(control)==true)continue;
+                    property="texture";code="PREVIEW_ARTWORK";expressions.Add(new KeyValuePair<string,Dictionary<string,string>>(texture,control.Defines));
+                }
                 else continue;
                 var notes=new HashSet<string>();foreach(var expression in expressions)Explain(state,expression.Key,expression.Value,ids,notes,new HashSet<int>(),0);
                 if(code=="PREVIEW_TEXT")
                 {int id;string value,origin;if(project.Editor.Language.Active&&state.TryLabelId(control,control.Get("label"),out id)&&!project.Editor.Language.TryGet(id,out value,out origin))notes.Add("Language ID "+id+" is absent from the loaded primary and fallback packs.");}
+                if(code=="PREVIEW_ARTWORK")
+                {
+                    string sample;bool explicitSample=project.Editor.Preview.Artwork.TryGetValue(control.Get("texture").Trim(),out sample);
+                    notes.Add(state.ArtworkAvailable(control)==false?"No readable image exists at this skin Media path.":"The image binding, runtime/cache path or file cannot be verified by the local preview.");
+                    notes.Add(explicitSample?"An explicit artwork sample is selected but unavailable. Choose another skin image, empty artwork, or restore the original expression in Sample Artwork.":"Use Sample Artwork to choose an explicit skin image or empty artwork for this expression. Original XML is preserved.");
+                }
                 var issue=Issue(control,property,code,String.Join("\r\nAND ",expressions.Select(e=>e.Key)),notes,lineCache);
                 if(seen.Add(control.Key+"\n"+code+"\n"+issue.Detail))report.Issues.Add(issue);
                 if(report.Issues.Count>=1024){report.Issues.Add(new SkinIssue{Code="PREVIEW_LIMIT",Information=true,Message="The preview report is limited to 1024 element findings.",Detail="Inspect a smaller page or resolve explicit samples before checking again."});break;}

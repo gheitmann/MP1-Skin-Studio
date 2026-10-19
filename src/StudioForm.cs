@@ -128,8 +128,9 @@ namespace MP1SkinStudio
                 string path=Project.Resolve("Media/"+name);Bitmap image;
                 if(images.TryGetValue(path,out image))return image;
                 if(!File.Exists(path)){missing.Add(name);return null;}
+                if(new FileInfo(path).Length>32L*1024*1024){missing.Add(name);return null;}
                 using(var stream=File.OpenRead(path))using(var original=Image.FromStream(stream))
-                {if(original.Width>10000||original.Height>10000)return null; image=new Bitmap(original);}
+                {if(original.Width>8192||original.Height>8192||(long)original.Width*original.Height>32000000)return null; image=new Bitmap(original);}
                 images[path]=image;return image;
             }
             catch { missing.Add(name);return null; }
@@ -139,7 +140,7 @@ namespace MP1SkinStudio
             string type=c.Get("type");bool focused=FocusPreview&&SkinProject.Focusable(c)&&SkinProject.ControlId(c)>0&&SkinProject.ControlId(c)==State.FocusId;
             bool? visible=State.Visible(c);
             if(CollectionSettings.IsCollection(c)){DrawCollection(g,c,rect);return;}
-            string texture=c.Get("texture");
+            string texture=State.ImageTexture(c);
             if(type.Contains("button"))texture=focused?c.Get("textureFocus"):c.Get("textureNoFocus");
             Bitmap image=Texture(c,texture);
             if(image!=null)
@@ -435,7 +436,7 @@ namespace MP1SkinStudio
             if(project.Controls.Any(CollectionSettings.IsCollection))lines.Add("Collection: "+CollectionSettings.EffectiveMode(project)+", "+project.Editor.Collection.Items.Count+" sample items. Coverflow is a static approximation without a 3D engine.");
             int unknown=project.Controls.Count(c=>state.Visible(c)==null),hidden=project.Controls.Count(c=>state.Visible(c)==false);
             lines.Add("Conditions: "+hidden+" hidden, "+unknown+" unresolved. Unknown conditions remain unchanged in XML.");
-            lines.Add("Sample data: "+project.Editor.Preview.Values.Count+" custom sample values; "+state.Plugins.Count+" plugin states active. Adjust through Sample Data. Images come from Media; missing images appear only with Show unverified content.");
+            lines.Add("Sample data: "+project.Editor.Preview.Values.Count+" custom sample values; "+state.Plugins.Count+" plugin states active; "+project.Editor.Preview.Artwork.Count+" artwork samples. Adjust through Sample Data or Sample Artwork. Images come from Media; missing images appear only with Show unverified content.");
             if(selected!=null&&!String.IsNullOrEmpty(selected.Get("visible")))lines.Add("Selection · visible: "+selected.Get("visible"));
             if(project.Editor.Language.Active)lines.Add("Language preview: "+(project.Editor.Language.Primary==null?"no primary language":project.Editor.Language.Primary.Name)+(project.Editor.Language.Fallback==null?"":" · Fallback: "+project.Editor.Language.Fallback.Name)+" · Original IDs are preserved.");
             lines.AddRange(project.Warnings.Distinct());

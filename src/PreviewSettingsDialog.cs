@@ -14,6 +14,7 @@ namespace MP1SkinStudio
         readonly CheckedListBox plugins=new CheckedListBox();
         readonly TextBox pluginName=new TextBox();
         readonly ChoiceBox presets=new ChoiceBox();
+        readonly PreviewSettings artworkState=new PreviewSettings();
         public PreviewSettings Result{get;private set;}
         public PreviewSettingsDialog(SkinProject skin)
         {
@@ -40,6 +41,7 @@ namespace MP1SkinStudio
         }
         void Populate(PreviewSettings settings)
         {
+            artworkState.SetFrom(settings);
             var current=PreviewSettings.BaseValues();foreach(var pair in settings.Values)current[pair.Key]=pair.Value;
             var keys=new HashSet<string>(current.Keys,StringComparer.OrdinalIgnoreCase);
             foreach(string key in PlaybackPreview.Keys)keys.Add(key);
@@ -51,7 +53,7 @@ namespace MP1SkinStudio
         }
         PreviewSettings Collect()
         {
-            values.EndEdit();var settings=new PreviewSettings();var baseline=PreviewSettings.BaseValues();var seen=new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            values.EndEdit();var settings=new PreviewSettings();foreach(var pair in artworkState.Artwork)settings.Artwork.Add(pair.Key,pair.Value);var baseline=PreviewSettings.BaseValues();var seen=new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             foreach(DataGridViewRow row in values.Rows)
             {
                 if(row.IsNewRow)continue;string key=Convert.ToString(row.Cells[0].Value).Trim();if(key.Length==0)continue;if(!seen.Add(key))throw new InvalidOperationException("Duplicate variable: "+key);
@@ -77,7 +79,7 @@ namespace MP1SkinStudio
         void ApplyPreviewSettings(PreviewSettings settings)
         {
             project.Editor.Preview.SetFrom(settings);int focus=state.FocusId;state=new PreviewState(project){FocusId=focus};canvas.State=state;canvas.ResetAssets();
-            UpdatePreviewTree();canvas.Invalidate();UpdateDiagnostics();UpdateProjectCaption();ShowNotice("Preview state applied: "+settings.Values.Count+" custom sample values, "+settings.Plugins.Count+" active plugin states. Save the editor project.");
+            UpdatePreviewTree();canvas.Invalidate();UpdateDiagnostics();UpdateProjectCaption();ShowNotice("Preview state applied: "+settings.Values.Count+" custom sample values, "+settings.Plugins.Count+" active plugin states, "+settings.Artwork.Count+" artwork samples. Save the editor project.");
         }
         void UpdatePreviewTree()
         {

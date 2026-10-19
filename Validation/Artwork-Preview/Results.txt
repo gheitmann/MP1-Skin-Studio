@@ -1,0 +1,9 @@
+PASS Default-video-list: 55 runtime image controls explicitly sampled empty; 1 -> 0 unknown visibility; selected sample/HasThumb/save/reopen/report/export/undo/redo and original uncertainty restoration.
+PASS Default-video-filmstrip: 55 runtime image controls explicitly sampled empty; 5 -> 3 unknown visibility; selected sample/HasThumb/save/reopen/report/export/undo/redo and original uncertainty restoration.
+PASS Default-music-list: 31 runtime image controls explicitly sampled empty; 4 -> 2 unknown visibility; selected sample/HasThumb/save/reopen/report/export/undo/redo and original uncertainty restoration.
+PASS Default-music-filmstrip: 31 runtime image controls explicitly sampled empty; 2 -> 1 unknown visibility; selected sample/HasThumb/save/reopen/report/export/undo/redo and original uncertainty restoration.
+PASS Christmas-video-list: 55 runtime image controls explicitly sampled empty; 1 -> 0 unknown visibility; selected sample/HasThumb/save/reopen/report/export/undo/redo and original uncertainty restoration.
+PASS Christmas-video-filmstrip: 55 runtime image controls explicitly sampled empty; 5 -> 3 unknown visibility; selected sample/HasThumb/save/reopen/report/export/undo/redo and original uncertainty restoration.
+PASS Christmas-music-list: 31 runtime image controls explicitly sampled empty; 4 -> 2 unknown visibility; selected sample/HasThumb/save/reopen/report/export/undo/redo and original uncertainty restoration.
+PASS Christmas-music-filmstrip: 31 runtime image controls explicitly sampled empty; 2 -> 1 unknown visibility; selected sample/HasThumb/save/reopen/report/export/undo/redo and original uncertainty restoration.
+PASS 8 real Titan artwork workflows; 23 distinct loaded original XML hashes unchanged. Render output generated for list workflows only.

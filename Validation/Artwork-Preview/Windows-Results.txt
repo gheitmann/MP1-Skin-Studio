@@ -1,0 +1,9 @@
+October 20, 2026 — attended Windows acceptance
+PASS Element > Sample Artwork opens the new dialog.
+PASS Search ClearArt\Movies\ selects the original runtime image expression and displays its current Media/DefaultFolderBig.png sample.
+PASS Empty artwork changes the dialog draft; Apply updates the preview without enabling XML Undo or Export.
+PASS Ctrl+S saves the editor project and clears its unsaved caption marker.
+PASS Saved manifest contains 36 artwork samples, explicit empty movie ClearArt, and zero modified XML snapshots.
+A native layout check exposed invisible Apply/Cancel controls in the first build. Their flow-panel docking was corrected; the delivery build shows both buttons and the real Apply path passed.
+The final form-only button docking correction was compiled and exercised in Windows after the 311-check run. Unchanged model workflows were not repeated. Skin image selection/empty/removal, rendering, persistence and validation were exercised by the core suite and real-page probe; the image-picker acceptance path was not newly repeated through attended Windows automation.
+No new installed MediaPortal client run.

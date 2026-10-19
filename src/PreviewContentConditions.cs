@@ -31,7 +31,7 @@ namespace MP1SkinStudio
         bool? KnownControlThumb(SkinControl control)
         {
             if(control.Get("type")!="image")return false;
-            string texture;if(!TryText(control,control.Get("texture"),out texture))return null;
+            string texture;if(!TryText(control,ImageTexture(control),out texture))return null;
             texture=texture.Trim();if(texture.Length==0||texture=="-")return false;
             if(texture.Contains("#")||Path.IsPathRooted(texture)||texture.Replace('\\','/').Split('/').Length>64)return null;
             foreach(string part in texture.Replace('\\','/').Split('/'))if(part=="..")return null;

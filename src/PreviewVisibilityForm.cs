@@ -10,6 +10,7 @@ namespace MP1SkinStudio
         void AddVisibilityCommands(ContextMenuStrip menu)
         {
             menu.Items.Add("Collection Preview …",null,(s,e)=>Attempt(ShowCollectionSettings));
+            menu.Items.Add("Sample Artwork …",null,(s,e)=>Attempt(ShowArtworkPreview));
             menu.Items.Add("Video folder preview",null,(s,e)=>Attempt(ApplyVideoFolderPreview));
             menu.Items.Add("Music folder preview",null,(s,e)=>Attempt(()=>ApplyMediaFolderPreview("music")));
             menu.Items.Add("Pictures folder preview",null,(s,e)=>Attempt(()=>ApplyMediaFolderPreview("pictures")));

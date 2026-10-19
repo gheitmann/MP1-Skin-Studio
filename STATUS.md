@@ -2,7 +2,13 @@
 
 Date: October 20, 2026. Imported version: 0.9.
 
-## Latest source milestone: explained and bounded preview states
+## Latest source milestone: explicit sample artwork
+
+October 20, 2026: Sample Artwork provides searchable, explicit local image/empty/original scenarios for image texture expressions. Rendering and Control.HasThumb follow the chosen samples; XML bindings, exports and XML undo history remain unchanged. Samples persist across save/reopen and retain normal theme asset precedence. Ctrl+F8 also explains unavailable visible artwork. Duplicate IDs remain unverified.
+
+Fresh validation: 311 core checks, eight real Titan artwork workflows, 23 unchanged loaded original XML hashes, and attended Windows menu/search/empty/Apply/save acceptance. A final button docking correction was compiled and exercised in Windows after the model runs. No fresh installed-client run. See [validation and limits](Validation/Artwork-Preview/README.md).
+
+## Previous source milestone: explained and bounded preview states
 
 October 20, 2026: matching Video/Music/Pictures folder presets, explicit idle samples and Ctrl+F8 explanations make unresolved conditions inspectable without changing XML. Bounded condition evaluation retains unknown states. Canonical source cache paths fix mixed-slash alias consistency through save/reopen and undo/redo. Pending property drafts are preserved when a finding jump is blocked.
 
@@ -64,7 +70,7 @@ October 19, 2026: saved projects retain page-scoped preview focus. The Video fol
 
 October 19, 2026: the exported two-file Video candidate loaded in the installed MP1 client using an isolated skin copy. The header marker, narrower list focus band and side-menu keyboard navigation passed. Titan was restored in the UI and its normal Video page verified. A fresh comparison checked all 2,050 original Titan files with zero differences; the isolated copy differs in exactly the two intended XML files. See [runtime validation](Validation/Video-Runtime-20261019/README.md). This does not establish complete preview fidelity or playback coverage.
 
-## Latest source milestone: known preview content
+## Previous source milestone: known preview content
 
 October 19, 2026: static known-content conditions and nested localization now work in previews. Fresh Windows build: 245 core checks, 25 expression checks and eleven real Titan model stages passed. The isolated folder state has 87 unresolved conditions, down from 89. A production offscreen render was visually inspected at that source checkpoint; the later runtime checkpoint above validates a separate exported candidate. See [content validation](Validation/Preview-Content/README.md). Windows access was confirmed in earlier attended checkpoints; DirectX remains deferred.
 
@@ -72,9 +78,9 @@ October 19, 2026: static known-content conditions and nested localization now wo
 
 The owner prioritizes practical edit/save/reopen/export workflows and substantial autonomous work blocks. Routine follow-up steps do not require another continuation prompt. Necessary checks run at integrated milestones.
 
-Current validation: 300 core checks, 22 real Titan preview/edit/save/reopen/export/undo/redo workflows, two idle transitions and attended Windows report/search/draft protection. Earlier collection, group and installed-client results remain historical; see the checkpoint reports.
+Current validation: 311 core checks, eight real Titan artwork workflows and attended Windows Sample Artwork menu/search/empty/Apply/save. All 23 loaded original XML hashes remained unchanged. Earlier page, collection, group and installed-client results remain historical; see their checkpoint reports.
 
-Next core work is broader real-page preview fidelity and navigation coverage, especially collections and unsupported dynamic conditions. Existing samples make BasicHome, Settings and Video useful without claiming complete runtime equivalence. Masks, animation, full geometric navigation and plugin-specific values remain approximate or unresolved. Continue real-skin edit/save/reopen/export acceptance around any such changes, preserving original files. Auxiliary global-style and cross-group movement tools remain lower priority.
+Next core work is real-page preview fidelity and navigation coverage, particularly facade focus coordinates and explicit PIN scenarios in filmstrip, while retaining duplicate-ID uncertainty. Existing samples make BasicHome, Settings and Video useful without claiming complete runtime equivalence. Masks, animation, full geometric navigation and plugin-specific values remain approximate or unresolved. Continue real-skin edit/save/reopen/export acceptance around any such changes, preserving original files. Auxiliary global-style and cross-group movement tools remain lower priority.
 
 Historical milestones follow; older suspension notes describe the state at their recorded time. Attended Windows automation was subsequently reauthorized and exercised successfully.
 ## Baseline

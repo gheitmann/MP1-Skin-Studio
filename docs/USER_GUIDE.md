@@ -365,3 +365,13 @@ Press Ctrl+F8 or choose Element > Inspect unverified preview to inspect the curr
 Element > Music folder preview and Pictures folder preview provide matching folder items and images on pages with a list control. All three media folder presets explicitly close the hidden menu, set #hideinfo to False, stop playback and select zero idle seconds; unrelated samples and plugin states remain intact. These choices are saved only in the editor project.
 
 Element > Idle-time preview selects Active input (0 seconds), Idle (60 seconds), or Unverified. Sample Data exposes #preview.system.idleseconds and accepts whole seconds from 0 to 86400. Supported system.idletime expressions require a positive integer threshold, capped at 1000 seconds as in MP1. Missing samples or invalid thresholds remain unknown. Other conditions still apply when idle changes. This preview never changes actual Windows activity. Exported skin XML remains unchanged.
+
+## Sample artwork
+
+Choose Element > Sample Artwork to search image texture expressions on the open page and existing saved mappings. Selecting an image control first preselects its expression. Choose skin image opens the existing Media browser, Empty artwork explicitly supplies no image, and Use original expression removes the sample. Apply commits the dialog draft; Cancel leaves the project unchanged. Apply or revert pending property fields before opening the dialog.
+
+Identical trimmed expressions share the same sample across pages and themes; matching is exact and case sensitive. This is useful for repeated runtime CD-Art/ClearArt bindings. It affects image controls and Control.HasThumb, with the current theme overriding base Media images. General text variables, button textures and collection item images keep their separate settings. Duplicate IDs still make condition lookups ambiguous. Removing a sample can restore an unknown runtime condition.
+
+Save the editor project to retain samples. XML bindings, XML Undo/Redo and exported XML remain unchanged; sample images stay in the skin directory and are not embedded. Sample Data preserves mappings during ordinary variable edits; selecting one of its replacement presets resets the artwork scenario too. The media folder presets preserve existing artwork samples.
+
+Ctrl+F8 also lists unavailable or unverified visible artwork, including missing/corrupt chosen samples. Explicit empty and known-hidden images are omitted. At most 128 mappings are supported; choose ordinary PNG, JPG, BMP or GIF files below Media. Absolute paths, parent paths and image-path bindings cannot be used as sample replacements. Images above 32 MB, 8192 pixels on either axis or 32 million pixels stay unverified. This does not simulate native image caches, masks or animation.

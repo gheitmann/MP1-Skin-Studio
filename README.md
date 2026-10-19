@@ -19,7 +19,7 @@ Visual position, size, text and texture editing; multiple selection and alignmen
 
 ## Validation
 
-Latest joint console run (October 19): **237 core checks and 39 targeted checks passed**. See [Model performance and batch reliability](Validation/Model-Performance/README.md). It covers real Titan list/multi-page/theme model workflows and failed-write preservation. New interface behavior remains manually unverified. Windows automation is suspended after a reported system freeze; see STATUS.md before running interface or client checks.
+Latest checkpoint (October 20): **311 core checks and eight real Titan artwork workflows passed**, with attended Windows menu/search/empty/Apply/save acceptance. Sample Artwork adds explicit local image/empty scenarios without rewriting bindings. All 23 loaded original XML hashes stayed unchanged. The final button docking correction was compiled and checked in Windows after the model runs. See [artwork validation and limits](Validation/Artwork-Preview/README.md) and STATUS.md. Earlier model and installed-client reports remain historical.
 
 
 Historical reports under `Validation` record 189 core checks, 185 UI checks, 602 Titan page/theme variants and ten direct checks against original MP1 StackLayout classes. These counts were imported from the saved release package and do not imply that all tests were rerun during import. A fresh build succeeded during import. The English migration also passed 189 core checks and 185 UI checks; fresh reports are in [Validation/English-Migration](Validation/English-Migration).
