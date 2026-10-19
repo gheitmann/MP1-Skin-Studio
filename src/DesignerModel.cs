@@ -153,7 +153,7 @@ namespace MP1SkinStudio
             return original.Source.RelativePath+"|"+ordinal;
         }
         public static bool Focusable(SkinControl c)
-        {return c.Get("type").Contains("button")||new[]{"listcontrol","facadeview","filmstrip","coverflow","slider","spincontrol","textbox","checkmark"}.Contains(c.Get("type"));}
+        {return CollectionSettings.IsCollection(c)||c.Get("type").Contains("button")||new[]{"slider","spincontrol","textbox","checkmark"}.Contains(c.Get("type"));}
         public static int? ControlId(SkinControl c)
         {int id;return Int32.TryParse(c.Resolved("id"),out id)?(int?)id:null;}
         public SkinControl NavigationTarget(SkinControl source,string direction)

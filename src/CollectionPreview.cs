@@ -45,26 +45,35 @@ namespace MP1SkinStudio
     public static class CollectionGeometry
     {
         static float Size(SkinControl c,string key,float fallback){float v=c.Number(key,fallback);return Single.IsNaN(v)||Single.IsInfinity(v)?fallback:Math.Max(1,Math.Min(10000,v));}
+        static float Offset(SkinControl c,string key,float fallback){float v=c.Number(key,fallback);return Single.IsNaN(v)||Single.IsInfinity(v)?fallback:Math.Max(-10000,Math.Min(10000,v));}
+        static bool Finite(float value){return !Single.IsNaN(value)&&!Single.IsInfinity(value);}
+        public static bool ValidBounds(RectangleF rect){return Finite(rect.X)&&Finite(rect.Y)&&Finite(rect.Width)&&Finite(rect.Height)&&rect.Width>0&&rect.Height>0;}
+        public static int Columns(SkinControl c,RectangleF rect,CollectionSettings settings)
+        {
+            if(!ValidBounds(rect))return 0;
+            string kind=CollectionSettings.Kind(c,settings.Mode);float width=Size(c,kind=="coverflow"?"cardWidth":kind=="largeicons"?"itemWidthBig":"itemWidth",kind=="coverflow"?230:200);
+            return (int)Math.Max(1,Math.Min(50,Math.Floor(rect.Width/width)));
+        }
         public static CollectionTile[] Tiles(SkinControl c,RectangleF rect,CollectionSettings settings)
         {
-            var result=new List<CollectionTile>();if(rect.Width<=0||rect.Height<=0||settings.Items.Count==0)return result.ToArray();string kind=CollectionSettings.Kind(c,settings.Mode);int selected=settings.SelectedIndex;
+            var result=new List<CollectionTile>();if(!ValidBounds(rect)||settings.Items.Count==0)return result.ToArray();string kind=CollectionSettings.Kind(c,settings.Mode);int selected=settings.SelectedIndex;
             if(kind=="list"||kind=="playlist"||kind=="album")
             {
-                float height=Size(c,"textureHeight",64),gap=Math.Max(0,Math.Min(1000,c.Number("spaceBetweenItems",2)));int visible=Math.Max(1,Math.Min(50,(int)(rect.Height/(height+gap))));int start=Math.Max(0,selected-visible+1);
+                float height=Size(c,"textureHeight",64),gap=Math.Max(0,Math.Min(1000,Offset(c,"spaceBetweenItems",2)));int visible=(int)Math.Max(1,Math.Min(50,Math.Floor((rect.Height+gap)/(height+gap))));int start=Math.Max(0,selected-visible+1);
                 for(int i=start;i<settings.Items.Count&&i-start<visible;i++)
-                {var r=new RectangleF(rect.X,rect.Y+(i-start)*(height+gap),rect.Width,height);float x=c.Number("textXOff",20),y=c.Number("textYOff",0),x2=c.Number("textXOff2",rect.Width-160);result.Add(new CollectionTile{Index=i,Selected=i==selected,Bounds=r,Image=new RectangleF(r.X+c.Number("IconXOff",8),r.Y+c.Number("IconYOff",5),Size(c,"itemWidth",0),Size(c,"itemHeight",0)),Title=new RectangleF(r.X+x,r.Y+y,Math.Max(1,Math.Min(r.Width-x,x2-x-12)),Math.Max(1,height-y)),Detail=new RectangleF(r.X+x2,r.Y+c.Number("textYOff2",y),Math.Max(1,r.Width-x2),Math.Max(1,height-y))});}
+                {var r=new RectangleF(rect.X,rect.Y+(i-start)*(height+gap),rect.Width,height);float x=Offset(c,"textXOff",20),y=Offset(c,"textYOff",0),x2=Offset(c,"textXOff2",rect.Width-160),y2=Offset(c,"textYOff2",y);result.Add(new CollectionTile{Index=i,Selected=i==selected,Bounds=r,Image=new RectangleF(r.X+Offset(c,"IconXOff",8),r.Y+Offset(c,"IconYOff",5),Size(c,"itemWidth",0),Size(c,"itemHeight",0)),Title=new RectangleF(r.X+x,r.Y+y,Math.Max(1,Math.Min(r.Width-x,x2-x-12)),Math.Max(1,height-y)),Detail=new RectangleF(r.X+x2,r.Y+y2,Math.Max(1,r.Width-x2),Math.Max(1,height-y2))});}
             }
             else
             {
                 bool flow=kind=="coverflow",film=kind=="filmstrip",big=kind=="largeicons";float w=Size(c,flow?"cardWidth":big?"itemWidthBig":"itemWidth",flow?230:200),h=Size(c,flow?"cardHeight":big?"itemHeightBig":"itemHeight",flow?300:250);
-                int columns=flow||film?Math.Max(1,(int)(rect.Width/w)):Math.Max(1,(int)(rect.Width/w));int rows=flow||film?1:Math.Max(1,(int)(rect.Height/h));int count=Math.Max(1,Math.Min(50,columns*rows));int start=flow?Math.Max(0,selected-2):Math.Max(0,(selected/count)*count);
+                int columns=Columns(c,rect,settings),rows=flow||film?1:(int)Math.Max(1,Math.Min(50,Math.Floor(rect.Height/h)));int count=Math.Max(1,Math.Min(50,columns*rows));int start=flow?Math.Max(0,selected-(count-1)/2):film?Math.Max(0,selected-count+1):Math.Max(0,(selected/count)*count);
                 for(int i=start;i<settings.Items.Count&&i-start<count;i++)
-                {float x=rect.X+(i-start)%columns*w,y=rect.Y+(i-start)/columns*h,drawW=w,drawH=h;if(flow){int offset=i-selected;drawW=w*(offset==0?1:.65f);drawH=h*(offset==0?1:.82f);x=rect.X+rect.Width/2-w/2+offset*(w*.65f+Math.Max(0,c.Number("sideGap",20)));y=rect.Y+Math.Max(0,(rect.Height-h)/2)+(offset==0?0:h*.09f);}
-                    var r=new RectangleF(x,y,drawW,drawH);float tx=flow?0:c.Number(big?"thumbPosXBig":"thumbPosX",8),ty=flow?0:c.Number(big?"thumbPosYBig":"thumbPosY",8);float tw=flow?drawW:Size(c,big?"thumbWidthBig":"thumbWidth",Math.Max(1,drawW-16)),th=flow?Math.Max(1,drawH-42):Size(c,big?"thumbHeightBig":"thumbHeight",Math.Max(1,drawH-55));
+                {float x=rect.X+(i-start)%columns*w,y=rect.Y+(i-start)/columns*h,drawW=w,drawH=h;if(flow){int offset=i-selected;drawW=w*(offset==0?1:.65f);drawH=h*(offset==0?1:.82f);x=rect.X+rect.Width/2-w/2+offset*(w*.65f+Math.Max(0,Offset(c,"sideGap",20)));y=rect.Y+Math.Max(0,(rect.Height-h)/2)+(offset==0?0:h*.09f);}
+                    var r=new RectangleF(x,y,drawW,drawH);float tx=flow?0:Offset(c,big?"thumbPosXBig":"thumbPosX",8),ty=flow?0:Offset(c,big?"thumbPosYBig":"thumbPosY",8);float tw=flow?drawW:Size(c,big?"thumbWidthBig":"thumbWidth",Math.Max(1,drawW-16)),th=flow?Math.Max(1,drawH-42):Size(c,big?"thumbHeightBig":"thumbHeight",Math.Max(1,drawH-55));
                     var title=new RectangleF(x+5,y+ty+th+3,Math.Max(1,drawW-10),Math.Max(1,drawH-th-ty-3));
                     // MP1 filmstrip labels start below the texture, not the thumbnail.
                     // Negative offsets are intentional and remain outside the viewport clip.
-                    if(film){float textureHeight=Size(c,"textureHeight",80);title=new RectangleF(x+c.Number("textXOff",0),y+textureHeight+c.Number("textYOff",0),Size(c,"textureWidth",80),textureHeight);}
+                    if(film){float textureHeight=Size(c,"textureHeight",80);title=new RectangleF(x+Offset(c,"textXOff",0),y+textureHeight+Offset(c,"textYOff",0),Size(c,"textureWidth",80),textureHeight);}
                     result.Add(new CollectionTile{Index=i,Selected=i==selected,Bounds=r,Image=new RectangleF(x+tx,y+ty,tw,th),Title=title,Detail=RectangleF.Empty});}
             }
             return result.ToArray();
@@ -74,7 +83,10 @@ namespace MP1SkinStudio
     {
         public void UpdateCollectionValues()
         {
-            if(!Project.Controls.Any(CollectionSettings.IsCollection))return;var settings=Project.Editor.Collection;int index=settings.SelectedIndex;var values=new Dictionary<string,string>{{"#itemcount",settings.Items.Count.ToString(CultureInfo.InvariantCulture)},{"#selecteditem",index<0?"":settings.Items[index].Title},{"#selecteditem2",index<0?"":settings.Items[index].Detail},{"#selectedindex",(index+1).ToString(CultureInfo.InvariantCulture)}};
+            var baseline=PreviewSettings.BaseValues();
+            foreach(string key in new[]{"#itemcount","#selecteditem","#selecteditem2","#selectedindex","#selectedthumb"})
+            {string value;if(Project.Editor.Preview.Values.TryGetValue(key,out value)||baseline.TryGetValue(key,out value))Values[key]=value;else Values.Remove(key);}
+            if(!Project.Controls.Any(CollectionSettings.IsCollection))return;var settings=Project.Editor.Collection;int index=settings.SelectedIndex;var values=new Dictionary<string,string>{{"#itemcount",settings.Items.Count.ToString(CultureInfo.InvariantCulture)},{"#selecteditem",index<0?"":settings.Items[index].Title},{"#selecteditem2",index<0?"":settings.Items[index].Detail},{"#selectedindex",(index+1).ToString(CultureInfo.InvariantCulture)},{"#selectedthumb",index<0?"":settings.Items[index].Image}};
             foreach(var pair in values)if(!Project.Editor.Preview.Values.ContainsKey(pair.Key))Values[pair.Key]=pair.Value;
         }
     }

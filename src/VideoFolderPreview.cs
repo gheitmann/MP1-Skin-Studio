@@ -13,9 +13,8 @@ namespace MP1SkinStudio
                 throw new InvalidOperationException("Open a page with a list control before applying the video folder preview.");
             var preview=project.Editor.Preview.Copy();
             foreach(string key in new[]{"#title","#plot","#genre","#director","#year","#runtime","#imdbnumber","#rating","#iscollection","#isgroup","#Is3D","#IsHDR"})preview.Values[key]="";
-            foreach(string key in new[]{"#itemcount","#selecteditem","#selecteditem2","#selectedindex"})preview.Values.Remove(key);
+            foreach(string key in new[]{"#itemcount","#selecteditem","#selecteditem2","#selectedindex","#selectedthumb"})preview.Values.Remove(key);
             preview.Values["#currentmodule"]="Videos";
-            preview.Values["#selectedthumb"]="DefaultFolderBig.png";
             preview.Values["#watchedcount"]="0";preview.Values["#watchedpercent"]="0";
             preview.Values["#scrolling.up"]="no";preview.Values["#scrolling.down"]="no";
             PlaybackPreview.Stopped(preview);

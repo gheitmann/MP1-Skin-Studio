@@ -34,7 +34,14 @@ namespace MP1SkinStudio
     {
         void ShowCollectionSettings(){if(PendingProperties())throw new InvalidOperationException("Apply pending property edits first.");using(var dialog=new CollectionDialog(project.Editor.Collection))if(dialog.ShowDialog(this)==DialogResult.OK)ApplyCollectionSettings(dialog.Result);}
         void ApplyCollectionSettings(CollectionSettings settings)
-        {project.Editor.Collection.SetFrom(settings);state.UpdateCollectionValues();UpdatePreviewTree();canvas.Invalidate();UpdateDiagnostics();UpdateProjectCaption();ShowNotice("Collection preview applied. Save the editor project; skin XML is unchanged.");}
+        {
+            var logical=selected==null?null:project.LogicalControl(selected);
+            project.Editor.Collection.SetFrom(settings);state.UpdateCollectionValues();UpdatePreviewTree();
+            var active=logical!=null&&logical.Get("type")=="facadeview"?CollectionSettings.Template(project,logical,settings.Mode):null;
+            if(active!=null)SelectControl(active);else{canvas.Invalidate();UpdateDiagnostics();UpdateProjectCaption();}
+            if(canvas.NavigationMode)canvas.Focus();
+            ShowNotice("Collection preview applied. Navigation arrows browse samples; boundary arrows follow control links. Save the editor project; skin XML is unchanged.");
+        }
         public void PrepareCollectionPreview(string mode){LoadProject(DemoRoot(),"demo.collections.xml");var settings=project.Editor.Collection.Copy();settings.Mode=mode;ApplyCollectionSettings(settings);}
         public void RenderCollectionDialogTo(string path){using(var dialog=new CollectionDialog(project.Editor.Collection))dialog.RenderTo(path);}
     }

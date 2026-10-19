@@ -104,7 +104,12 @@ namespace MP1SkinStudio
         {
             RequireAppliedProperties();
             SkinControl target;
-            try{target=project.PreviewNavigationTarget(state,direction);}
+            try
+            {
+                if(project.TryMoveCollectionSelection(state,direction))
+                {UpdatePreviewTree();canvas.Invalidate();UpdateDiagnostics();UpdateProjectCaption();ShowNotice("Collection sample: "+(project.Editor.Collection.SelectedIndex+1)+" / "+project.Editor.Collection.Items.Count+". Save the editor project to retain the selection.");return;}
+                target=project.PreviewNavigationTarget(state,direction);
+            }
             catch(InvalidOperationException ex){ShowNotice("Focus test: "+ex.Message);return;}
             SelectControl(target);canvas.Focus();ShowNotice("Focus test: "+direction+" → "+target.Name+" (ID "+target.Get("id")+").");
         }

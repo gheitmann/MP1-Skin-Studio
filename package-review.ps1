@@ -36,10 +36,11 @@ use Revert Inputs to discard unapplied fields; test Undo/Redo; save an editor
 project, reopen it and export changes as ZIP. Use separate skin copies for real
 editing and retain original files. The preview remains approximate.
 
-Fresh validation covers 272 core checks, two Titan group workflows and attended
-Windows group duplication, selection, Undo/Redo, save and reopen. The latest
-change has no new installed MediaPortal client validation. See the user guide
-for supported group copies and remaining preview limitations.
+Validation covers 286 core checks, 70 real Titan collection workflows and attended
+Windows list/grid/coverflow selection, focus, active properties and save/reopen.
+Final form-only changes were compiled and checked in Windows after the model suite.
+No new installed MediaPortal client run was performed. See the user guide for
+supported preview navigation and remaining rendering limitations.
 "@
 function Add-ReviewText($Archive, $Name, $Text) {
     $reviewEntry = $Archive.CreateEntry($Name)
@@ -74,5 +75,6 @@ try {
 } finally {
     if ([System.IO.File]::Exists($reviewTemp)) { [System.IO.File]::Delete($reviewTemp) }
 }
+
 
 

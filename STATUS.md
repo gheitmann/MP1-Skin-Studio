@@ -2,7 +2,13 @@
 
 Date: October 19, 2026. Imported version: 0.9.
 
-## Latest source milestone: self-contained group duplication
+## Latest source milestone: collection interaction and complete workflow coverage
+
+October 19, 2026: Navigation arrows browse sample items in lists, icon grids, filmstrip and coverflow; boundary arrows retain explicit control-link testing. Focused collection appearance follows simulated focus. Selection stays visible, list row/detail geometry is corrected, clean preview suppresses invented placeholders, selected-thumbnail metadata follows the row and page preparation clears stale derived values. Active facade views expose their concrete property fields and regain canvas keyboard focus after dialog changes.
+
+Fresh model/render validation: 286 core checks and 70 complete real Titan page/theme/view workflows passed; 33 distinct loaded original source hashes unchanged. Final form-only changes were compiled and tested through attended Windows list/grid/coverflow navigation, side-menu focus, save and close/reopen. Saved XML snapshot hashes are unchanged by UI preview actions. The passing model suite/matrix were not repeated for those form-only changes. No new installed-client run. See [validation and limits](Validation/Collection-Interaction/README.md).
+
+## Previous source milestone: self-contained group duplication
 
 October 19, 2026: Duplicate copies top-level groups and nested ordinary groups with new IDs, internal navigation/default-control/known visibility references and one structural undo step. Inherited style references are overridden locally; originals and shared styles remain unchanged. Insert/Duplicate now restore selection through Undo/Redo. ID allocation also reserves static default/visibility references in unopened files. Unsupported shared/template/dynamic cases fail before source mutation.
 
@@ -60,7 +66,7 @@ October 19, 2026: static known-content conditions and nested localization now wo
 
 The owner prioritizes practical edit/save/reopen/export workflows and substantial autonomous work blocks. Routine follow-up steps do not require another continuation prompt. Necessary checks run at integrated milestones.
 
-Current build validation: 272 core checks, complete Default/Christmas group-copy workflows and attended Windows duplication/selection/undo/save/reopen. Earlier milestones cover the six-page/two-theme editing matrix, focused BasicHome/Video samples and the installed-client Video export. These older results are historical, not rerun by the latest core suite.
+Current validation: 286 core checks, 70 complete real-page collection workflows and attended Windows list/grid/coverflow selection, active property editing, focus transitions and save/reopen. Group duplication and its attended checks remain covered by the earlier milestone. Earlier milestones cover the six-page/two-theme editing matrix, focused BasicHome/Video samples and the installed-client Video export. These older results are historical, not rerun by the latest core suite.
 
 Next core work is broader real-page preview fidelity and navigation coverage, especially collections and unsupported dynamic conditions. Existing samples make BasicHome, Settings and Video useful without claiming complete runtime equivalence. Masks, animation, full geometric navigation and plugin-specific values remain approximate or unresolved. Continue real-skin edit/save/reopen/export acceptance around any such changes, preserving original files. Auxiliary global-style and cross-group movement tools remain lower priority.
 
@@ -369,6 +375,7 @@ October 19, 2026: added Element > Video folder preview and fixed initialization 
 ## Known content and localized expressions
 
 Added bounded Control.HasText/HasThumb evaluation for known preview content and L(...) resolution from saved language snapshots. Unknown/ambiguous inputs remain unresolved. Fresh validation: 245 core checks, 25 expression checks, eleven real Titan model stages and the targeted before/after probe passed. Hidden controls increased from 89 to 91, unresolved conditions decreased from 89 to 87; XML and all 17 loaded sources stayed unchanged. See Validation/Preview-Content/README.md. No fresh interactive UI/client test or export installation occurred.
+
 
 
 

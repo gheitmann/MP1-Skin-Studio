@@ -14,6 +14,7 @@ namespace MP1SkinStudio
         static SkinControl CollectionControl(SkinProject p,string type){return p.Controls.First(c=>c.Get("type")==type);}
         static void RunCollectionTests(string root)
         {
+            RunCollectionInteractionTests(root);
             Test("Project format 4 protects collection data while format 3 remains readable",()=>{
                 var p=CollectionDemo();string path=Path.Combine(root,"collection-format.mp1skinproj");ProjectFile.Save(p,path);using(var zip=ZipFile.OpenRead(path))using(var reader=new StreamReader(zip.GetEntry("project.xml").Open()))Check(reader.ReadToEnd().Contains("version=\"4\""),"New project does not use format 4.");RewriteManifest(path,text=>{var doc=new System.Xml.XmlDocument();doc.LoadXml(text);doc.DocumentElement.SetAttribute("version","3");var node=doc.SelectSingleNode("/skinStudioProject/editorState/collection");node.ParentNode.RemoveChild(node);return doc.OuterXml;});Check(ProjectFile.Load(path).Editor.Collection.Mode=="auto","Format 3 is incompatible.");});
             Test("Facade navigation uses logical IDs and changes only the active source template",()=>{

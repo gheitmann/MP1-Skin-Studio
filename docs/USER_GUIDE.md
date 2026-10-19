@@ -133,7 +133,10 @@ Collection mode, selection and data are stored only in editor projects.
 ## Navigation and page auditing
 
 In navigation mode, select a source, choose a direction and click a focusable target.
-Arrow keys test supported remote-control paths in the editor.
+Arrow keys browse the focused collection's sample items first: up/down in lists,
+left/right in filmstrip or coverflow, and row/column movement in icon grids.
+At a collection boundary, arrows test supported control links. Selection and
+thumbnail metadata are saved with the editor project; XML and undo history stay unchanged.
 Duplicate positive IDs and bound navigation targets are protected.
 
 Press F8 or choose Audit to inspect the open page and loaded includes.
@@ -332,7 +335,7 @@ Supported boolean #(...) expressions can drive visibility/include conditions. Mi
 
 ## Preview navigation checks
 
-Enable Navigation and use arrow keys on the canvas to follow explicit skin directions from the simulated focus. The active collection template supplies facade directions. A target must resolve uniquely and be visibly supported after receiving focus; unavailable routes leave focus unchanged and display a status notice. Pending fields must be applied or reverted first. Successful focus changes are saved with the editor project. Automatic navigation is limited to the linear StackLayout case below; full geometric search and native hidden-target skipping remain unsupported. No neighbor links are written to XML.
+Enable Navigation and use arrow keys on the canvas to browse supported collection samples, then follow explicit skin directions at boundaries or on other controls. The active collection template supplies facade directions. A target must resolve uniquely and be visibly supported after receiving focus; unavailable routes leave focus unchanged and display a status notice. Pending fields must be applied or reverted first. Successful focus changes are saved with the editor project. Automatic navigation is limited to the linear StackLayout case below; full geometric search and native hidden-target skipping remain unsupported. No neighbor links are written to XML.
 
 For direct button children of a linear StackLayout, preview navigation also handles absent or zero mappings along the stack axis. Known hidden candidates are skipped, unknown visibility stops navigation, and unlinked boundaries retain focus. Explicit mappings always take precedence. This covers Titan Settings menus; nested groups, other layouts and full native geometric search remain unsupported. Derived neighbors are never written into XML.
 
@@ -340,4 +343,15 @@ The editor project remembers preview focus independently for each page and theme
 
 Changing the active page or theme is a project change: save to retain the last selected view when reopening. Returning to the previous view removes that change if nothing else changed. View selection does not modify skin XML or the export contents.
 
+
+
+## Collection interaction and clean previews
+
+Enable Navigation to browse sample rows/cards with the arrow keys. Grid movement uses the concrete view's item width and available columns; horizontal grid boundaries do not wrap into another row. Empty collections or hidden/unverified collections do not consume a sample movement. At a boundary, normal supported control-link testing applies. This is bounded preview behavior, not complete native MP1 navigation.
+
+Collection Preview keeps the selected sample visible in narrow coverflow/filmstrip views. After applying a facade view, its concrete control is selected for property editing and keyboard focus returns to the canvas when Navigation is enabled. Opening a saved project likewise selects the active concrete view. Collection mode/data/selection remain shared editor settings; they are not separate per-page datasets.
+
+The selected item's image feeds #selectedthumb along with the title/detail/index/count values. Explicit Sample Data values override derived data; clear such an override to follow the selected row. The Video folder preset uses its sample row image. On pages without collections, derived values return to baseline or explicit samples instead of leaking from the preceding page.
+
+Focused row/card textures and selected colors follow simulated focus. Leaving the collection retains its sample selection while removing focused appearance. Clean preview hides missing collection image/frame placeholders and the Empty collection notice. Explicitly empty images always remain empty. Show unverified content restores diagnostic placeholders. Coverflow still approximates a static arrangement; masks, perspective and animation remain unsupported.
 

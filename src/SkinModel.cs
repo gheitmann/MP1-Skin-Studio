@@ -427,6 +427,7 @@ namespace MP1SkinStudio
         {
             FocusId=Project.DefaultControlId;
             int saved;if(Project.Editor.TryFocus(Project.Page,Project.Theme,out saved)&&Project.LogicalControls().Count(c=>SkinProject.Focusable(c)&&SkinProject.ControlId(c)==saved)==1)FocusId=saved;
+            UpdateCollectionValues();
         }
         public void SetFocus(int id)
         {

@@ -332,6 +332,7 @@ namespace MP1SkinStudio
             var keep=selectedKey==null?new string[0]:canvas.SelectedKeys.ToArray();
             RebuildElementTree();
             var next=project.Controls.FirstOrDefault(c=>c.Key==selectedKey)??project.Controls.FirstOrDefault(c=>SkinProject.Focusable(c)&&SkinProject.ControlId(c)==state.FocusId)??project.Controls.FirstOrDefault(c=>c.Get("description")=="Movies")??project.Controls.FirstOrDefault(c=>c.Get("description")=="Time")??project.Controls.FirstOrDefault();
+            if(selectedKey==null&&next!=null&&next.Get("type")=="facadeview")next=CollectionSettings.Template(project,next,project.Editor.Collection.Mode)??next;
             canvas.SelectedKeys.Clear();foreach(var key in keep)if(project.Controls.Any(c=>c.Key==key))canvas.SelectedKeys.Add(key);
             SelectControl(next,false,canvas.SelectedKeys.Count>0);undo.Enabled=project.Undo.Count>0;redo.Enabled=project.Redo.Count>0;export.Enabled=project.Dirty;
             status.Text=project.Controls.Count+" elements  · "+project.Sources.Values.Count(s=>s.Changed)+" modified files  ·  CTRL+click: multiple selection  ·  Originals remain intact";

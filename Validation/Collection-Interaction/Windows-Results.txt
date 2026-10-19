@@ -1,0 +1,1 @@
+PASS Windows saved mode=coverflow, selected item=13, control focus=50; existing edited XML SHA256 unchanged against the baseline.
