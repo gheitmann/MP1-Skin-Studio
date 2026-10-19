@@ -14,6 +14,19 @@ namespace MP1SkinStudio
         }
         static void RunConditionScopeTests(string root)
         {
+            Test("Boolean expression include conditions retain scope and unknown values",()=>
+            {
+                var p=ScopeFixture(root,"expression-condition","<window><define>#mode:Home</define><controls><include condition=\"#(eq(#mode,'Home'))\" otherwise='alternate.xml'>part.xml</include></controls></window>","<window><define>#mode:Other</define><controls><control><type>label</type><id>8</id><visible>#(not(eq(#mode,'Home')))</visible></control></controls></window>","<window><controls><control><type>label</type><id>9</id></control></controls></window>");
+                var state=new PreviewState(p);Check(state.Visible(p.Controls.First(c=>c.Get("id")=="8"))==true&&state.Visible(p.Controls.First(c=>c.Get("id")=="9"))==false,"Expression condition lost include scope or otherwise semantics.");
+                Check(state.Evaluate("#(and(true,not(false)))",new HashSet<string>())==true&&state.Evaluate("#(or(false,false))",new HashSet<string>())==false&&state.Evaluate("#(plugin.isenabled('Missing'))",new HashSet<string>())==false,"Boolean functions failed.");
+                Check(state.Evaluate("#(eq(#unknown,'Home'))",new HashSet<string>())==null&&state.Evaluate("#(3)",new HashSet<string>())==null&&state.Evaluate("#(unsupported(true))",new HashSet<string>())==null,"Unknown or nonboolean expression was coerced.");
+            });
+            Test("Visibility of absent static controls is false while ambiguous and cyclic controls stay unknown",()=>
+            {
+                var p=ScopeFixture(root,"absent-visible","<window><controls><control><type>label</type><id>8</id><visible>!control.isvisible(999)</visible></control><control><type>label</type><id>9</id><visible>control.isvisible(9)</visible></control><control><type>label</type><id>10</id></control><control><type>label</type><id>10</id></control></controls></window>","<window/>");
+                var state=new PreviewState(p);Check(state.Visible(p.Controls[0])==true&&state.Evaluate("control.isvisible(999)",new HashSet<string>())==false&&state.Evaluate("control.isvisible(10)",new HashSet<string>())==null&&state.Visible(p.Controls[1])==null,"Absent, ambiguous or cyclic visibility was evaluated incorrectly.");
+                Check(state.Evaluate("control.hastext(999)",new HashSet<string>())==null,"Missing content lookup semantics changed.");
+            });
             Test("Nested localization expressions use loaded language snapshots and retain missing IDs",()=>
             {
                 var p=ResetFixture(root,"content-localize");var c=p.Controls[0];string xml=ProjectFile.XmlSignature(p);

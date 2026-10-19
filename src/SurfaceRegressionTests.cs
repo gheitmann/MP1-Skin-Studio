@@ -9,6 +9,11 @@ namespace MP1SkinStudio
     {
         static void RunSurfaceRegressionTests(string root)
         {
+            Test("Large button text offsets retain the remaining label area",()=>
+            {
+                var p=AuditFixture(root,"button-large-offset","<control><type>button</type><width>594</width><height>241</height><textYOff>175</textYOff><label>TV</label></control>");
+                Check(SurfaceGeometry.TextArea(p.Controls[0],new RectangleF(100,200,594,241))==new RectangleF(100,375,594,66),"Vertical label offset was subtracted twice and erased the caption.");
+            });
             Test("Button focus textures follow simulated focus independently of designer selection",()=>
             {
                 var p=AuditFixture(root,"button-preview-focus","<control><type>button</type><id>7</id><textureFocus>green.png</textureFocus><textureNoFocus>red.png</textureNoFocus><label>-</label></control><control><type>button</type><id>8</id><textureFocus>green.png</textureFocus><textureNoFocus>red.png</textureNoFocus><label>-</label></control>");

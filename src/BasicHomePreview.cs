@@ -1,0 +1,27 @@
+using System;
+using System.Linq;
+
+namespace MP1SkinStudio
+{
+    public static class BasicHomePreview
+    {
+        public static void Apply(SkinProject project)
+        {
+            if(project.WindowId!=35||!String.Equals(System.IO.Path.GetFileName(project.Page),"BasicHome.xml",StringComparison.OrdinalIgnoreCase))throw new InvalidOperationException("Open BasicHome.xml before applying its sample state.");
+            var preview=project.Editor.Preview.Copy();
+            preview.Values["#skin.basichome.background"]="FanartHandler";
+            preview.Values["#Titan.ShowUpdateInd"]="false";PlaybackPreview.Stopped(preview);preview.Validate();
+            project.Editor.Preview.SetFrom(preview);project.Editor.ShowUnresolved=false;
+            if(project.DefaultControlId>0&&project.Controls.Any(c=>SkinProject.Focusable(c)&&SkinProject.ControlId(c)==project.DefaultControlId))
+            {project.Editor.PreviewFocusId=project.DefaultControlId;project.Editor.PreviewFocusPage=project.Page;}
+        }
+    }
+    public sealed partial class StudioForm
+    {
+        void ApplyBasicHomePreview()
+        {
+            RequireAppliedProperties();BasicHomePreview.Apply(project);ApplyPreviewSettings(project.Editor.Preview);state.RestoreFocus();RefreshProject(null);
+            ShowNotice("BasicHome sample applied: stopped playback, FanartHandler mode, update indicator off. Runtime fanart and latest items remain unverified. Save the editor project.");
+        }
+    }
+}

@@ -1,0 +1,2 @@
+PASS Default: six visible menu buttons, focus 4, exact project/session roundtrip, production render; 238 controls, 184 hidden, 11 unresolved; 32 original hashes unchanged
+PASS Christmas: six visible menu buttons, focus 4, exact project/session roundtrip, production render; 238 controls, 184 hidden, 11 unresolved; 32 original hashes unchanged

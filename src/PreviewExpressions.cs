@@ -18,11 +18,20 @@ namespace MP1SkinStudio
             {string body=s.Substring(1,s.Length-2);if(body.IndexOf('\'')>=0)return false;value=body;return true;}
             if(Regex.IsMatch(s,@"^#[A-Za-z_][A-Za-z0-9_.]*$"))
             {string result;if(!Operand(s,defines,out result))return false;value=result;return true;}
+            bool literal;if(Boolean.TryParse(s,out literal)){value=literal;return true;}
             int integer;if(Int32.TryParse(s,NumberStyles.AllowLeadingSign,CultureInfo.InvariantCulture,out integer)){value=integer;return true;}
             var call=Regex.Match(s,@"^([a-zA-Z][a-zA-Z0-9_.]*)\((.*)\)$",RegexOptions.Singleline);if(!call.Success)return false;
             string name=call.Groups[1].Value;var parts=ExpressionArguments(call.Groups[2].Value);if(parts==null||parts.Count>16)return false;
             var args=new List<object>();foreach(string part in parts){object arg;if(!ExpressionValue(part,defines,depth+1,out arg))return false;args.Add(arg);}
             Func<int,string> str=i=>args[i] as string;
+            if(name=="plugin.isenabled"&&args.Count==1&&str(0)!=null){value=Plugins.Contains(str(0));return true;}
+            if((name=="not"&&args.Count==1)||((name=="and"||name=="or")&&args.Count>=2))
+            {
+                bool result=name=="and";
+                foreach(object arg in args){bool boolean;if(arg is bool)boolean=(bool)arg;else if(!(arg is string)||!Boolean.TryParse((string)arg,out boolean))return false;
+                    if(name=="not")result=!boolean;else if(name=="and")result&=boolean;else result|=boolean;}
+                value=result;return true;
+            }
             if(name=="L"&&args.Count==1)
             {
                 int id;string localized,origin;

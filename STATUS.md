@@ -2,7 +2,11 @@
 
 Date: October 19, 2026. Imported version: 0.9.
 
-## Latest source milestone: page/theme workflows and button focus
+## Latest source milestone: usable BasicHome sample
+
+October 19, 2026: BasicHome now has an explicit saved preview preset. Static absent-control visibility and supported boolean expression conditions resolve correctly; large button text offsets no longer erase captions. 254 core checks and real Titan Default/Christmas sample roundtrips passed. Both rendered themes show six tile pictures and German labels with TV focused; eleven conditions remain unverified. All 32 loaded original source hashes are unchanged. No new interactive client run occurred. See [validation](Validation/BasicHome-Preview/README.md).
+
+## Previous source milestone: page/theme workflows and button focus
 
 October 19, 2026: button focus appearance now follows simulated MP1 focus independently of designer selection. 250 core checks and twelve edit/save/reopen/export/undo workflows across six pages in Default and Christmas passed. All loaded source hashes stayed unchanged. Settings rendering was visually inspected after the fix. BasicHome theme assets load, but dynamic menu content remains incomplete. No new installed-client run occurred. See [matrix validation](Validation/Page-Theme-Matrix/README.md).
 

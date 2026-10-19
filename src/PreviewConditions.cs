@@ -42,6 +42,8 @@ namespace MP1SkinStudio
             if(expr.StartsWith("!")){var value=EvaluateInternal(expr.Substring(1),active,defines);return value==null?null:!value;}
             if(expr.Equals("yes",StringComparison.OrdinalIgnoreCase)||expr.Equals("true",StringComparison.OrdinalIgnoreCase))return true;
             if(expr.Equals("no",StringComparison.OrdinalIgnoreCase)||expr.Equals("false",StringComparison.OrdinalIgnoreCase))return false;
+            if(expr.StartsWith("#(",StringComparison.Ordinal)&&expr.EndsWith(")",StringComparison.Ordinal))
+            {object value;bool boolean;if(!ExpressionValue(expr.Substring(2,expr.Length-3),defines,0,out value))return null;if(value is bool)return (bool)value;return value is string&&Boolean.TryParse((string)value,out boolean)?(bool?)boolean:null;}
             if(PlaybackPreview.Supports(expr))
             {string sample;bool value;return Project.Editor.Preview.Values.TryGetValue("#preview."+expr,out sample)&&Boolean.TryParse(sample,out value)?(bool?)value:null;}
             if(Regex.IsMatch(expr,@"^#[A-Za-z_][A-Za-z0-9_.]*$"))
@@ -60,7 +62,7 @@ namespace MP1SkinStudio
             }
             if(!Int32.TryParse(arg,out id))return null;if(fun=="window.isvisible")return Project.WindowId==id;if(fun=="control.hasfocus")return FocusId==id;
             string activeKey=(fun=="control.isvisible"?"visible:":fun+":")+id;if(!active.Add(activeKey))return null;
-            try{var controls=Project.LogicalControls().Where(c=>SkinProject.ControlId(c)==id).ToArray();if(controls.Length!=1)return null;if(fun=="control.hastext")return KnownControlText(controls[0]);if(fun=="control.hasthumb")return KnownControlThumb(controls[0]);return VisibleFor(controls[0],active);}finally{active.Remove(activeKey);}
+            try{var controls=Project.LogicalControls().Where(c=>SkinProject.ControlId(c)==id).ToArray();if(controls.Length==0&&fun=="control.isvisible")return false;if(controls.Length!=1)return null;if(fun=="control.hastext")return KnownControlText(controls[0]);if(fun=="control.hasthumb")return KnownControlThumb(controls[0]);return VisibleFor(controls[0],active);}finally{active.Remove(activeKey);}
         }
     }
 }

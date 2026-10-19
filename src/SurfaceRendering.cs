@@ -48,7 +48,7 @@ namespace MP1SkinStudio
         {
             bool button=control.Get("type").Contains("button");
             float x=control.Number("textXOff",0),y=control.Number("textYOff",0);
-            if(button){bounds.X+=x;bounds.Width=Math.Max(0,bounds.Width-2*x);bounds.Y+=y;bounds.Height=Math.Max(0,bounds.Height-2*y);}
+            if(button){bounds.X+=x;bounds.Width=Math.Max(0,bounds.Width-2*x);bounds.Y+=y;bounds.Height=Math.Max(0,bounds.Height-y);}
             return bounds;
         }
         public static RectangleF Fit(RectangleF target,Size source,bool aspect)
