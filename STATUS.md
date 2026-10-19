@@ -2,7 +2,11 @@
 
 Date: October 19, 2026. Imported version: 0.9.
 
-## Latest source milestone: bounded automatic stack navigation
+## Latest source milestone: attended navigation and focus caption
+
+October 19, 2026: actual Windows-editor checkbox/arrow navigation passed on BasicHome and Settings. Saved focus survived closing/reopening BasicHome; automatic General→GUI navigation passed in Settings. A missing caption refresh was corrected: focus changes now display an unsaved asterisk, cleared by Ctrl+S. Saved manifests and unchanged XML were checked. The prior 258 core checks are historical; no full-suite rerun or MP1 client run occurred for this caption-only change. See [attended validation](Validation/Attended-Navigation/README.md).
+
+## Previous source milestone: bounded automatic stack navigation
 
 October 19, 2026: the preview handles absent/zero directions along linear StackLayout button menus while preserving explicit mappings. A complete eleven-button Settings down/up loop and both BasicHome theme routes passed, together with 258 core checks. No XML links are generated. This is a bounded subset of native geometric navigation; nested/grid/free-position search remains unsupported. No new interactive UI/client run occurred. See [validation](Validation/Stack-Navigation/README.md).
 

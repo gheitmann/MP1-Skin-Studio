@@ -401,7 +401,7 @@ namespace MP1SkinStudio
             }
             properties.ResumeLayout();UpdateProtectionTools();int id;if(SkinProject.Focusable(c)&&Int32.TryParse(c.Get("id"),out id)&&id>0)state.SetFocus(id);
             UpdatePreviewTree();SyncElementTreeSelection();
-            canvas.Invalidate();UpdateDiagnostics();
+            canvas.Invalidate();UpdateDiagnostics();UpdateProjectCaption();
         }
         void Apply()
         {
