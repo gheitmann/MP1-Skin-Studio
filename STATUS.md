@@ -335,3 +335,7 @@ October 19, 2026: restored GitHub commit `4fbc846` with all 198 tracked file has
 ## Windows test environment access confirmed
 
 October 19, 2026: attended access test launched the editor and installed MP1, opened/closed the editor Sample Data dialog, moved Titan Home focus from TV to Videos and opened the real Videos page. Successive inputs and captures completed without an observed approval loop. This validates current-session access only; no export was installed and original skins were not edited. See [access test](Validation/Windows-Access-20261019/README.md). DirectX remains deferred.
+
+## Attended Titan Video preview comparison
+
+October 19, 2026: fresh complex-page probe passed all eleven stages on a complete isolated Titan copy. Attended UI checks loaded myvideo.xml, selected the concrete list, hid unverified conditions, loaded German language without prefixes and saved a preview-only project. Full SHA256 comparison: 2,050 skin files, zero mismatches. The list selection closes the simulated side menu and localization fixes numeric title IDs, but unknown metadata and six movie sample rows still differ from the client's single Videos folder. No export was installed; runtime comparison remains pending. See [comparison findings](Validation/Titan-Video-Comparison-20261019/README.md).
