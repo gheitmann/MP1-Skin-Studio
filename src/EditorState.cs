@@ -67,6 +67,8 @@ namespace MP1SkinStudio
         public static string EditorSignature(SkinProject project)
         {
             var value=new StringBuilder(Number(project.Editor.Zoom)+","+Number(project.Editor.PanX)+","+Number(project.Editor.PanY));
+            string page=project.Page??"",theme=project.Theme??"";
+            value.Append('\n').Append(page.Length).Append(':').Append(page).Append(theme.Length).Append(':').Append(theme);
             foreach(var key in project.ActiveEditorKeys())value.Append('\n').Append(key).Append(':').Append(project.Editor.Locked.Contains(key)?"L":"").Append(project.Editor.Hidden.Contains(key)?"H":"");
             value.Append('\n').Append(project.Editor.Preview.SignatureText()).Append('\n').Append(project.Editor.Language.Signature()).Append(project.Editor.ShowUnresolved?'U':'-').Append(project.Editor.Collection.Signature());
             value.Append('\n').Append(project.Editor.PreviewFocusPage).Append(':').Append(project.Editor.PreviewFocusId);

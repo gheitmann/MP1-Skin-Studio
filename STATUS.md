@@ -2,7 +2,11 @@
 
 Date: October 19, 2026. Imported version: 0.9.
 
-## Latest source milestone: independent page/theme focus states
+## Latest source milestone: active page/theme save detection
+
+October 19, 2026: switching the active page or theme now marks the editor project as unsaved. Returning to the previous location restores its signature if no other state changed. Saved projects reopen at the selected location without modifying skin XML or export state. Fresh build: 263 core checks and four real Titan view roundtrips passed; 34 loaded source hashes unchanged. No fresh interactive UI/client run. See [validation](Validation/Active-View/README.md).
+
+## Previous source milestone: independent page/theme focus states
 
 October 19, 2026: editor projects retain separate focus states for each page/theme rather than only the latest page. Restoring an existing slot leaves the editor signature unchanged. Legacy single-focus projects migrate. 261 core checks and four real Titan focus states across BasicHome/Settings and Default/Christmas passed, including exact save/reopen and 34 unchanged original source hashes. No new interactive UI/client run occurred. See [validation](Validation/Focus-Map/README.md).
 
@@ -376,3 +380,4 @@ October 19, 2026: added Element > Video folder preview and fixed initialization 
 ## Known content and localized expressions
 
 Added bounded Control.HasText/HasThumb evaluation for known preview content and L(...) resolution from saved language snapshots. Unknown/ambiguous inputs remain unresolved. Fresh validation: 245 core checks, 25 expression checks, eleven real Titan model stages and the targeted before/after probe passed. Hidden controls increased from 89 to 91, unresolved conditions decreased from 89 to 87; XML and all 17 loaded sources stayed unchanged. See Validation/Preview-Content/README.md. No fresh interactive UI/client test or export installation occurred.
+

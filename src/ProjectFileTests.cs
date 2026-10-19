@@ -27,6 +27,24 @@ namespace MP1SkinStudio
         }
         static void RunProjectFileTests(string root)
         {
+            Test("Active page changes are saved editor state without XML edits",()=>
+            {
+                var p=SessionFixture(root,"active-page");string initial=ProjectFile.ContentSignature(p),xml=ProjectFile.XmlSignature(p);
+                PreparedSkinSession.Create(p,"part.xml");Check(ProjectFile.ContentSignature(p)!=initial,"Page switch was not detected as unsaved.");
+                string selected=ProjectFile.ContentSignature(p),file=Path.Combine(root,"active-page.mp1skinproj");ProjectFile.Save(p,file);var loaded=ProjectFile.Load(file);PreparedSkinSession.Create(loaded,loaded.Page);
+                Check(loaded.Page=="part.xml"&&ProjectFile.ContentSignature(loaded)==selected,"Saved active page was not restored cleanly.");
+                PreparedSkinSession.Create(p,"main.xml");Check(ProjectFile.ContentSignature(p)==initial,"Returning to the original page creates a spurious change.");
+                Check(ProjectFile.XmlSignature(p)==xml&&!p.Dirty&&p.Undo.Count==0,"Page selection edited XML or history.");
+            });
+            Test("Active theme changes are saved editor state without XML edits",()=>
+            {
+                var p=SessionFixture(root,"active-theme");string folder=Path.Combine(p.Root,"Themes","Blue");Directory.CreateDirectory(folder);Write(folder,"main.xml","<window><controls/></window>");
+                string initial=ProjectFile.ContentSignature(p),xml=ProjectFile.XmlSignature(p);p.PrepareTheme("Blue");Check(ProjectFile.ContentSignature(p)!=initial,"Theme switch was not detected as unsaved.");
+                string selected=ProjectFile.ContentSignature(p),file=Path.Combine(root,"active-theme.mp1skinproj");ProjectFile.Save(p,file);var loaded=ProjectFile.Load(file);PreparedSkinSession.Create(loaded,loaded.Page);
+                Check(loaded.Theme=="Blue"&&ProjectFile.ContentSignature(loaded)==selected,"Saved active theme was not restored cleanly.");
+                p.PrepareTheme("");Check(ProjectFile.ContentSignature(p)==initial,"Returning to the original theme creates a spurious change.");
+                Check(ProjectFile.XmlSignature(p)==xml&&!p.Dirty&&p.Undo.Count==0,"Theme selection edited XML or history.");
+            });
             Test("Preview focus is retained independently across pages and themes",()=>
             {
                 var p=SessionFixture(root,"focus-page-theme");new PreviewState(p).SetFocus(10);
@@ -34,7 +52,7 @@ namespace MP1SkinStudio
                 string theme=Path.Combine(p.Root,"Themes","Blue");Directory.CreateDirectory(theme);Write(theme,"main.xml","<window><defaultcontrol>10</defaultcontrol><controls><control><type>button</type><id>10</id></control><control><type>button</type><id>11</id></control></controls></window>");
                 PreparedSkinSession.Create(p,"main.xml");var themed=p.PrepareTheme("Blue");themed.Preview.SetFocus(11);Check(p.PrepareTheme("").Preview.FocusId==10,"Theme focus replaced default-page focus.");
                 Check(PreparedSkinSession.Create(p,"other.xml").Preview.FocusId==21,"Second page focus was lost.");
-                string unchanged=ProjectFile.EditorSignature(p);var restoredFocus=PreparedSkinSession.Create(p,"main.xml").Preview;restoredFocus.SetFocus(10);Check(ProjectFile.EditorSignature(p)==unchanged,"Restoring an existing focus creates a spurious unsaved change.");PreparedSkinSession.Create(p,"other.xml");
+                var restoredFocus=PreparedSkinSession.Create(p,"main.xml").Preview;string unchanged=ProjectFile.EditorSignature(p);restoredFocus.SetFocus(10);Check(ProjectFile.EditorSignature(p)==unchanged,"Restoring an existing focus creates a spurious unsaved change.");PreparedSkinSession.Create(p,"other.xml");
                 string file=Path.Combine(root,"focus-map.mp1skinproj"),signature=ProjectFile.ContentSignature(p);ProjectFile.Save(p,file);p=ProjectFile.Load(file);Check(ProjectFile.ContentSignature(p)==signature,"Focus map changed during persistence.");
                 Check(PreparedSkinSession.Create(p,"main.xml").Preview.FocusId==10&&p.PrepareTheme("Blue").Preview.FocusId==11,"Reopened page/theme focus was lost.");
                 Check(!p.Dirty&&p.Undo.Count==0,"Focus transitions edited source XML.");

@@ -1,0 +1,1 @@
+PASS four real Titan active-view save/reopen combinations (BasicHome/Settings, Default/Christmas); distinct location signatures, exact return to baseline, unchanged XML/export signatures and empty undo history. All 34 loaded source hashes unchanged.

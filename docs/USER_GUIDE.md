@@ -329,3 +329,5 @@ Enable Navigation and use arrow keys on the canvas to follow explicit skin direc
 For direct button children of a linear StackLayout, preview navigation also handles absent or zero mappings along the stack axis. Known hidden candidates are skipped, unknown visibility stops navigation, and unlinked boundaries retain focus. Explicit mappings always take precedence. This covers Titan Settings menus; nested groups, other layouts and full native geometric search remain unsupported. Derived neighbors are never written into XML.
 
 The editor project remembers preview focus independently for each page and theme (up to 128 combinations). Returning to an existing saved focus does not itself create an unsaved change. New focus choices are retained when you save the project. Older single-focus projects remain readable and migrate automatically. Missing or ambiguous saved targets use the page default.
+
+Changing the active page or theme is a project change: save to retain the last selected view when reopening. Returning to the previous view removes that change if nothing else changed. View selection does not modify skin XML or the export contents.
