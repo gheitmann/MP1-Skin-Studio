@@ -96,6 +96,8 @@ namespace MP1SkinStudio
             },description);
         }
         public int NextControlId()
+        {return AllocateControlIds(1)[0];}
+        int[] AllocateControlIds(int count)
         {
             var candidates=Directory.GetFiles(Root,"*.xml").ToList();
             string themes=System.IO.Path.Combine(Root,"Themes");
@@ -104,10 +106,19 @@ namespace MP1SkinStudio
             foreach(var path in candidates.Distinct(StringComparer.OrdinalIgnoreCase))
             {
                 var source=Source(path);
-                foreach(var n in source.Elements.Where(n=>n.Parent!=null&&n.Parent.Name=="control"&&(n.Name=="id"||n.Name=="onleft"||n.Name=="onright"||n.Name=="onup"||n.Name=="ondown")))
+                foreach(var n in source.Elements.Where(n=>n.Name=="defaultcontrol"||n.Parent!=null&&n.Parent.Name=="control"&&(n.Name=="id"||n.Name=="onleft"||n.Name=="onright"||n.Name=="onup"||n.Name=="ondown")))
                 {int id;if(Int32.TryParse(n.Element.InnerText,out id)&&id>0)used.Add(id);}
+                foreach(var n in source.Elements)
+                {
+                    var values=n.Element.Attributes.Cast<System.Xml.XmlAttribute>().Select(a=>a.Value);
+                    if(n.Children.Count==0)values=values.Concat(new[]{n.Element.InnerText});
+                    foreach(string value in values)foreach(System.Text.RegularExpressions.Match match in CloneControlReference.Matches(value))
+                    {int id;if(Int32.TryParse(match.Groups["id"].Value,out id)&&id>0)used.Add(id);}
+                }
             }
-            int next=10000;while(used.Contains(next)){if(next==Int32.MaxValue)throw new InvalidOperationException("No available control ID.");next++;}return next;
+            var result=new List<int>();int next=10000;
+            while(result.Count<count){if(!used.Contains(next))result.Add(next);if(result.Count<count){if(next==Int32.MaxValue)throw new InvalidOperationException("No available control ID.");next++;}}
+            return result.ToArray();
         }
         public string InsertControl(string sourceRelative,string kind)
         {
@@ -129,7 +140,8 @@ namespace MP1SkinStudio
         public string DuplicateControl(SkinControl original,bool replaceBindings)
         {
             RequireCurrent(original);
-            if(original.Node.Children.Any(n=>n.Name=="control")||original.Node.Parent==null||original.Node.Parent.Name!="controls")throw new InvalidOperationException("Groups and nested controls cannot be duplicated yet.");
+            if(original.Get("type")=="group")return DuplicateGroup(original,replaceBindings);
+            if(original.Node.Children.Any(n=>n.Name=="control")||original.Node.Parent==null||original.Node.Parent.Name!="controls")throw new InvalidOperationException("Select a top-level element or a self-contained top-level group to duplicate.");
             if(!replaceBindings&&(original.IsBound("posX")||original.IsBound("posY")))throw new InvalidOperationException("The copy requires a new position. Explicitly allow local replacement of bound positions.");
             LayoutTools.RequireNumeric(original,"posX","posY");
             int id=NextControlId(),ordinal=-1;

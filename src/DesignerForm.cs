@@ -37,7 +37,7 @@ namespace MP1SkinStudio
             row.Controls.Add(new Label{Text="Click target · Test with arrows",ForeColor=muted,Width=230,Height=27,TextAlign=ContentAlignment.MiddleLeft});
             host.Controls.Add(row);host.Controls.Add(commands);
             tips.SetToolTip(alignButton,"Use CTRL to select multiple elements; the entire action is one undo step.");
-            tips.SetToolTip(duplicateButton,"Copy one control with a new available ID and an offset position.");
+            tips.SetToolTip(duplicateButton,"Copy one top-level element or self-contained group with new IDs and an offset position.");
             return host;
         }
         void UpdateSelectionTools()
@@ -62,15 +62,20 @@ namespace MP1SkinStudio
             if(project==null)return;
             RequireAppliedProperties();
             string source=selected==null?project.Relative(project.Resolve(project.Page)):selected.Source.RelativePath;
-            string key=project.InsertControl(source,kind);canvas.SelectedKeys.Clear();RefreshProject(key);
+            CreateDesignerElement(()=>project.InsertControl(source,kind));
             ShowNotice("New element in "+source+" inserted. Shared includes affect every page using them.");
         }
         void DuplicateElement()
         {
             RequireAppliedProperties();
             if(selected==null||SelectedControls().Length!=1)throw new InvalidOperationException("Select exactly one element to duplicate.");
-            string key=project.DuplicateControl(selected,unlock.Checked);canvas.SelectedKeys.Clear();RefreshProject(key);
-            ShowNotice("Copy inserted with a new ID; existing IDs and original text are preserved.");
+            CreateDesignerElement(()=>project.DuplicateControl(selected,unlock.Checked));
+            ShowNotice("Copy inserted with new IDs. Group navigation and supported local visibility references follow the copied controls; external references are retained.");
+        }
+        void CreateDesignerElement(Func<string> create)
+        {
+            var before=CaptureSelection();string key=create();var change=project.Undo.Peek();change.SelectionBefore=before;
+            canvas.SelectedKeys.Clear();RefreshProject(key);change.SelectionAfter=CaptureSelection();
         }
         void ShowAlignMenu(Control anchor)
         {

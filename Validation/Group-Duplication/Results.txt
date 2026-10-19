@@ -1,0 +1,3 @@
+PASS Default: 12-control Settings clone, 11-button down/up loops, save/reopen/export and both undo/redo paths; 361 source hashes unchanged.
+PASS Christmas: 12-control Settings clone, 11-button down/up loops, save/reopen/export and both undo/redo paths; 361 source hashes unchanged.
+PASS 2 complete real Titan group workflows.

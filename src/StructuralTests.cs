@@ -15,6 +15,7 @@ namespace MP1SkinStudio
         }
         static void RunStructuralTests(string root)
         {
+            RunGroupDuplicationTests(root);
             Test("Projects with fully cleared sources support opening, undo and redo",()=>
             {
                 var p=ResetFixture(root,"structure-empty-project");p.DeleteControls(p.Controls,false,true);string file=Path.Combine(root,"structure-empty.mp1skinproj");ProjectFile.Save(p,file);var loaded=ProjectFile.Load(file);Check(loaded.Controls.Count==0,"Empty state was not restored.");loaded.UndoChange();Check(loaded.Controls.Count==2&&!loaded.Dirty,"Empty sources were not restored.");loaded.RedoChange();Check(loaded.Controls.Count==0,"Incorrect redo of empty sources.");

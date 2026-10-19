@@ -2,7 +2,13 @@
 
 Date: October 19, 2026. Imported version: 0.9.
 
-## Latest source milestone: active page/theme save detection
+## Latest source milestone: self-contained group duplication
+
+October 19, 2026: Duplicate copies top-level groups and nested ordinary groups with new IDs, internal navigation/default-control/known visibility references and one structural undo step. Inherited style references are overridden locally; originals and shared styles remain unchanged. Insert/Duplicate now restore selection through Undo/Redo. ID allocation also reserves static default/visibility references in unopened files. Unsupported shared/template/dynamic cases fail before source mutation.
+
+Fresh build: 272 core checks passed. Complete Default/Christmas Titan Settings clone/navigation/save/reopen/export/undo workflows passed, with 361 original source hashes unchanged per workflow. Attended Windows copying, selection, Undo/Redo, save and close/reopen passed; the saved Christmas selection was also checked. No fresh installed-client run. See [validation and limits](Validation/Group-Duplication/README.md).
+
+## Previous source milestone: active page/theme save detection
 
 October 19, 2026: switching the active page or theme now marks the editor project as unsaved. Returning to the previous location restores its signature if no other state changed. Saved projects reopen at the selected location without modifying skin XML or export state. Fresh build: 263 core checks and four real Titan view roundtrips passed; 34 loaded source hashes unchanged. No fresh interactive UI/client run. See [validation](Validation/Active-View/README.md).
 
@@ -52,30 +58,13 @@ October 19, 2026: static known-content conditions and nested localization now wo
 
 ## Current priority: reliable core editing
 
-The owner prioritized practical edit/save/reopen/export behavior over auxiliary
-features. The actual Titan Settings UI workflow and an earlier exported candidate's
-installed-MP1 display/navigation passed before automation was suspended. Real
-Video/list, multi-page and theme workflows now have console/model validation.
-These successes do not establish complete visual fidelity or plugin equivalence.
+The owner prioritizes practical edit/save/reopen/export workflows and substantial autonomous work blocks. Routine follow-up steps do not require another continuation prompt. Necessary checks run at integrated milestones.
 
-The owner explicitly reauthorized attended Windows automation on October 19.
-The real Titan Video edit/save/reopen/export UI workflow now passed, with manual
-completion of native dialogs that Computer Use could not target. The later installed-client checkpoint above now covers the exported Video candidate. DirectX replacement remains deferred.
+Current build validation: 272 core checks, complete Default/Christmas group-copy workflows and attended Windows duplication/selection/undo/save/reopen. Earlier milestones cover the six-page/two-theme editing matrix, focused BasicHome/Video samples and the installed-client Video export. These older results are historical, not rerun by the latest core suite.
 
-Latest joint validation: fresh final build, **237 core checks and 39 targeted
-checks passed**. Coverage includes filmstrip geometry, string conditions, real
-Titan imported-list edits, save/export, multiple pages and Christmas/default
-theme preparation. Write-failure tests preserve existing archives and clean
-intermediate files. Revert Inputs and the Save Project pending-input guard now have attended UI
-validation; other new UI paths remain unverified. Prior UI counts are historical.
-See [model performance and batch validation](Validation/Model-Performance/README.md).
+Next core work is broader real-page preview fidelity and navigation coverage, especially collections and unsupported dynamic conditions. Existing samples make BasicHome, Settings and Video useful without claiming complete runtime equivalence. Masks, animation, full geometric navigation and plugin-specific values remain approximate or unresolved. Continue real-skin edit/save/reopen/export acceptance around any such changes, preserving original files. Auxiliary global-style and cross-group movement tools remain lower priority.
 
-See [attended Titan Video UI validation](Validation/Attended-Video-UI/README.md).
-The complex-page preview visibly contains unresolved expressions and overlapping
-placeholders. Useful preview states and expression evaluation are the next core
-priority; sampled export runtime validation has now passed, while broader page/theme coverage remains open. Auxiliary group/style
-conveniences remain lower priority. Historical milestones follow.
-
+Historical milestones follow; older suspension notes describe the state at their recorded time. Attended Windows automation was subsequently reauthorized and exercised successfully.
 ## Baseline
 
 Imported from the complete locally extracted `MP1-Skin-Studio-0.9` release package. Includes source code, tests, samples, build script, existing license, historical validation reports and runtime test materials. Installers, compiled binaries, error logs and temporary working directories are excluded.
@@ -145,7 +134,7 @@ Fresh build: **221 core checks and 203 UI checks passed**. See
 [ungroup validation](Validation/Ungroup/README.md). No MediaPortal input or
 configuration changes were needed. The DirectX task remains deferred.
 
-## Remaining work
+## Historical remaining work (October 18)
 
 The preceding milestone added an **Edit grid layout** dialog with column
 and row counts, independent spacing, fill direction, binding replacement
@@ -380,4 +369,6 @@ October 19, 2026: added Element > Video folder preview and fixed initialization 
 ## Known content and localized expressions
 
 Added bounded Control.HasText/HasThumb evaluation for known preview content and L(...) resolution from saved language snapshots. Unknown/ambiguous inputs remain unresolved. Fresh validation: 245 core checks, 25 expression checks, eleven real Titan model stages and the targeted before/after probe passed. Hidden controls increased from 89 to 91, unresolved conditions decreased from 89 to 87; XML and all 17 loaded sources stayed unchanged. See Validation/Preview-Content/README.md. No fresh interactive UI/client test or export installation occurred.
+
+
 

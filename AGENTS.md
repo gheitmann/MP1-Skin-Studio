@@ -22,3 +22,5 @@
   and record their current state and remaining work there.
 
 - Work in substantial blocks; run necessary validation at milestones rather than after every edit. Avoid repeating successful checks without a relevant change. Make routine implementation decisions independently and keep progress reports concise.
+
+- Continue routine follow-up work without asking for another continuation prompt. Pause only at a substantial integrated milestone, a genuine blocker, or the owner's request; keep updates brief and combine implementation, validation, documentation and GitHub delivery.

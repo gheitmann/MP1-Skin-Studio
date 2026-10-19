@@ -130,6 +130,13 @@ namespace MP1SkinStudio
         }
 
         public void SetControlProperties(int ordinal, IDictionary<string, string> values)
+        {SetControlPropertiesCore(ordinal,values,false);}
+        internal void SetFragmentIdentity(int ordinal,int identity)
+        {
+            if(Root.Name!="control"||identity<=0)throw new InvalidOperationException("Identity assignment requires a new control fragment.");
+            SetControlPropertiesCore(ordinal,new Dictionary<string,string>{{"id",identity.ToString(CultureInfo.InvariantCulture)}},true);
+        }
+        void SetControlPropertiesCore(int ordinal, IDictionary<string, string> values,bool allowIdentity)
         {
             var controls = Elements.Where(n => n.Name == "control").ToArray();
             if (ordinal < 0 || ordinal >= controls.Length) throw new InvalidOperationException("Control no longer exists.");
@@ -142,7 +149,7 @@ namespace MP1SkinStudio
             if (childIndent.Length == 0) childIndent = "  ";
             foreach (var kv in values)
             {
-                if (!Regex.IsMatch(kv.Key, "^[a-zA-Z][a-zA-Z0-9]*$") || kv.Key == "id" || kv.Key == "type")
+                if (!Regex.IsMatch(kv.Key, "^[a-zA-Z][a-zA-Z0-9]*$") || (kv.Key == "id"&&!allowIdentity) || kv.Key == "type")
                     throw new InvalidOperationException("This property cannot be changed: " + kv.Key);
                 var node = control.Child(kv.Key);
                 if (node == null)

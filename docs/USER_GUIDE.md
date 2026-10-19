@@ -1,6 +1,6 @@
 # MP1 Skin Studio user guide
 
-Version 0.9 · October 18, 2026
+Version 0.9 · October 19, 2026
 
 ## Getting started
 
@@ -44,7 +44,15 @@ Explicit approval is required where applicable. References are not rewritten.
 A removal operation remains one undo step, including nested controls.
 
 Insert text, buttons or images with a new available ID. Duplication preserves the
-original and its unknown XML. Group duplication is not yet supported.
+original and its unknown XML. Select a top-level group and choose Duplicate to copy
+up to 512 self-contained controls, including ordinary nested groups. Copied controls
+receive new IDs; internal directional/default-control links and literal
+Control.HasFocus/IsVisible/HasText/HasThumb visibility references follow the copies.
+Inherited style references become local clone overrides. External targets and shared
+styles remain unchanged. Only the outer group is offset; child positions remain intact.
+Groups with external includes, view templates, locked descendants, ambiguous IDs or
+dynamic navigation are rejected. Scripts and other dynamic references require manual
+review. Insert/Duplicate Undo restores the prior selection; Redo selects the new item.
 Control IDs and types are protected against ordinary property editing.
 
 ## Find elements and inspect overlap
@@ -331,3 +339,5 @@ For direct button children of a linear StackLayout, preview navigation also hand
 The editor project remembers preview focus independently for each page and theme (up to 128 combinations). Returning to an existing saved focus does not itself create an unsaved change. New focus choices are retained when you save the project. Older single-focus projects remain readable and migrate automatically. Missing or ambiguous saved targets use the page default.
 
 Changing the active page or theme is a project change: save to retain the last selected view when reopening. Returning to the previous view removes that change if nothing else changed. View selection does not modify skin XML or the export contents.
+
+

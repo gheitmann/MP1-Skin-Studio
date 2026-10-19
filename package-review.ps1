@@ -36,9 +36,10 @@ use Revert Inputs to discard unapplied fields; test Undo/Redo; save an editor
 project, reopen it and export changes as ZIP. Use separate skin copies for real
 editing and retain original files. The preview remains approximate.
 
-Recent GUI changes remain manually unverified. Windows automation is suspended
-after a reported system freeze; this build does not lift that restriction.
-The DirectX replacement task remains deferred.
+Fresh validation covers 272 core checks, two Titan group workflows and attended
+Windows group duplication, selection, Undo/Redo, save and reopen. The latest
+change has no new installed MediaPortal client validation. See the user guide
+for supported group copies and remaining preview limitations.
 "@
 function Add-ReviewText($Archive, $Name, $Text) {
     $reviewEntry = $Archive.CreateEntry($Name)
@@ -73,4 +74,5 @@ try {
 } finally {
     if ([System.IO.File]::Exists($reviewTemp)) { [System.IO.File]::Delete($reviewTemp) }
 }
+
 
