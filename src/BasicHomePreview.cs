@@ -11,9 +11,11 @@ namespace MP1SkinStudio
             var preview=project.Editor.Preview.Copy();
             preview.Values["#skin.basichome.background"]="FanartHandler";
             preview.Values["#Titan.ShowUpdateInd"]="false";PlaybackPreview.Stopped(preview);preview.Validate();
+            bool focus=project.DefaultControlId>0&&project.Controls.Any(c=>SkinProject.Focusable(c)&&SkinProject.ControlId(c)==project.DefaultControlId);
+            if(focus)project.Editor.ValidateFocus(project.Page,project.Theme,project.DefaultControlId);
             project.Editor.Preview.SetFrom(preview);project.Editor.ShowUnresolved=false;
-            if(project.DefaultControlId>0&&project.Controls.Any(c=>SkinProject.Focusable(c)&&SkinProject.ControlId(c)==project.DefaultControlId))
-            {project.Editor.PreviewFocusId=project.DefaultControlId;project.Editor.PreviewFocusPage=project.Page;}
+            if(focus)
+            {project.Editor.RememberFocus(project.Page,project.Theme,project.DefaultControlId);}
         }
     }
     public sealed partial class StudioForm

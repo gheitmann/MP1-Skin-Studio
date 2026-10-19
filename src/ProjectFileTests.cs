@@ -27,6 +27,30 @@ namespace MP1SkinStudio
         }
         static void RunProjectFileTests(string root)
         {
+            Test("Preview focus is retained independently across pages and themes",()=>
+            {
+                var p=SessionFixture(root,"focus-page-theme");new PreviewState(p).SetFocus(10);
+                Write(p.Root,"other.xml","<window><defaultcontrol>20</defaultcontrol><controls><control><type>button</type><id>20</id></control><control><type>button</type><id>21</id></control></controls></window>");p.OpenPage("other.xml");new PreviewState(p).SetFocus(21);
+                string theme=Path.Combine(p.Root,"Themes","Blue");Directory.CreateDirectory(theme);Write(theme,"main.xml","<window><defaultcontrol>10</defaultcontrol><controls><control><type>button</type><id>10</id></control><control><type>button</type><id>11</id></control></controls></window>");
+                PreparedSkinSession.Create(p,"main.xml");var themed=p.PrepareTheme("Blue");themed.Preview.SetFocus(11);Check(p.PrepareTheme("").Preview.FocusId==10,"Theme focus replaced default-page focus.");
+                Check(PreparedSkinSession.Create(p,"other.xml").Preview.FocusId==21,"Second page focus was lost.");
+                string unchanged=ProjectFile.EditorSignature(p);var restoredFocus=PreparedSkinSession.Create(p,"main.xml").Preview;restoredFocus.SetFocus(10);Check(ProjectFile.EditorSignature(p)==unchanged,"Restoring an existing focus creates a spurious unsaved change.");PreparedSkinSession.Create(p,"other.xml");
+                string file=Path.Combine(root,"focus-map.mp1skinproj"),signature=ProjectFile.ContentSignature(p);ProjectFile.Save(p,file);p=ProjectFile.Load(file);Check(ProjectFile.ContentSignature(p)==signature,"Focus map changed during persistence.");
+                Check(PreparedSkinSession.Create(p,"main.xml").Preview.FocusId==10&&p.PrepareTheme("Blue").Preview.FocusId==11,"Reopened page/theme focus was lost.");
+                Check(!p.Dirty&&p.Undo.Count==0,"Focus transitions edited source XML.");
+            });
+            Test("Legacy single-focus projects migrate and duplicate focus slots are rejected",()=>
+            {
+                var p=SessionFixture(root,"focus-legacy");new PreviewState(p).SetFocus(10);string file=Path.Combine(root,"focus-legacy.mp1skinproj");ProjectFile.Save(p,file);
+                RewriteManifest(file,t=>System.Text.RegularExpressions.Regex.Replace(t,@"<focus\b[^>]*/>","").Replace(" focusTheme=\"\"",""));var loaded=ProjectFile.Load(file);Check(new PreviewState(loaded).FocusId==10,"Legacy focus did not migrate.");
+                ProjectFile.Save(loaded,file);RewriteManifest(file,t=>{var d=new XmlDocument();d.LoadXml(t);var slot=d.SelectSingleNode("/skinStudioProject/editorState/focus");slot.ParentNode.AppendChild(slot.CloneNode(true));return d.OuterXml;});Reject(()=>ProjectFile.Load(file));
+            });
+            Test("A full focus map rejects a new preset before modifying sample values",()=>
+            {
+                var p=SessionFixture(root,"focus-map-limit");Write(p.Root,"BasicHome.xml","<window><id>35</id><defaultcontrol>4</defaultcontrol><controls><control><type>button</type><id>4</id></control></controls></window>");p.OpenPage("BasicHome.xml");
+                for(int i=0;i<128;i++)p.Editor.RememberFocus("page"+i+".xml","",1);
+                string before=ProjectFile.ContentSignature(p);Reject(()=>BasicHomePreview.Apply(p));Check(ProjectFile.ContentSignature(p)==before,"Rejected focus capacity changed the preview.");
+            });
             Test("Saved preview focus survives session preparation without changing source XML",()=>
             {
                 var p=SessionFixture(root,"saved-focus");string xml=ProjectFile.XmlSignature(p),initial=ProjectFile.EditorSignature(p);

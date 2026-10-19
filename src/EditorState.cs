@@ -14,6 +14,20 @@ namespace MP1SkinStudio
         public bool ShowUnresolved=true;
         public int PreviewFocusId=-1;
         public string PreviewFocusPage="";
+        public string PreviewFocusTheme="";
+        internal sealed class FocusEntry {public string Page,Theme;public int Id;}
+        internal readonly Dictionary<string,FocusEntry> FocusEntries=new Dictionary<string,FocusEntry>(StringComparer.OrdinalIgnoreCase);
+        internal bool TryFocus(string page,string theme,out int id)
+        {FocusEntry entry;if(FocusEntries.TryGetValue((theme??"")+"\n"+page,out entry)){id=entry.Id;return true;}id=-1;return false;}
+        internal void RememberFocus(string page,string theme,int id)
+        {
+            string key=(theme??"")+"\n"+page;
+            ValidateFocus(page,theme,id);
+            FocusEntry previous;if(FocusEntries.TryGetValue(key,out previous)&&previous.Id==id)return;
+            FocusEntries[key]=new FocusEntry{Page=page,Theme=theme??"",Id=id};PreviewFocusPage=page;PreviewFocusTheme=theme??"";PreviewFocusId=id;
+        }
+        internal void ValidateFocus(string page,string theme,int id)
+        {if(id<=0||String.IsNullOrWhiteSpace(page)||(!FocusEntries.ContainsKey((theme??"")+"\n"+page)&&FocusEntries.Count>=128))throw new InvalidDataException("Invalid preview focus or more than 128 saved page/theme focus states.");}
         public readonly PreviewSettings Preview=new PreviewSettings();
         public readonly LanguagePreview Language=new LanguagePreview();
         public readonly CollectionSettings Collection=new CollectionSettings();
@@ -56,6 +70,8 @@ namespace MP1SkinStudio
             foreach(var key in project.ActiveEditorKeys())value.Append('\n').Append(key).Append(':').Append(project.Editor.Locked.Contains(key)?"L":"").Append(project.Editor.Hidden.Contains(key)?"H":"");
             value.Append('\n').Append(project.Editor.Preview.SignatureText()).Append('\n').Append(project.Editor.Language.Signature()).Append(project.Editor.ShowUnresolved?'U':'-').Append(project.Editor.Collection.Signature());
             value.Append('\n').Append(project.Editor.PreviewFocusPage).Append(':').Append(project.Editor.PreviewFocusId);
+            value.Append(':').Append(project.Editor.PreviewFocusTheme);
+            foreach(var entry in project.Editor.FocusEntries.OrderBy(p=>p.Key,StringComparer.OrdinalIgnoreCase))value.Append('\n').Append(entry.Key.Length).Append(':').Append(entry.Key.ToLowerInvariant()).Append(':').Append(entry.Value.Id);
             return Digest(Encoding.UTF8.GetBytes(value.ToString()));
         }
         public static string ContentSignature(SkinProject project)
@@ -66,7 +82,9 @@ namespace MP1SkinStudio
             state.SetAttribute("zoom",Number(project.Editor.Zoom));state.SetAttribute("panX",Number(project.Editor.PanX));state.SetAttribute("panY",Number(project.Editor.PanY));
             state.SetAttribute("showUnresolved",project.Editor.ShowUnresolved?"true":"false");SavePreviewSettings(project.Editor.Preview,state);
             SaveCollectionSettings(project.Editor.Collection,state);
-            if(project.Editor.PreviewFocusId>0){state.SetAttribute("focusPage",project.Editor.PreviewFocusPage);state.SetAttribute("focusId",project.Editor.PreviewFocusId.ToString(CultureInfo.InvariantCulture));}
+            if(project.Editor.PreviewFocusId>0){state.SetAttribute("focusPage",project.Editor.PreviewFocusPage);state.SetAttribute("focusTheme",project.Editor.PreviewFocusTheme);state.SetAttribute("focusId",project.Editor.PreviewFocusId.ToString(CultureInfo.InvariantCulture));}
+            foreach(var entry in project.Editor.FocusEntries.OrderBy(p=>p.Key,StringComparer.OrdinalIgnoreCase).Select(p=>p.Value))
+            {var item=doc.CreateElement("focus");item.SetAttribute("page",entry.Page);item.SetAttribute("theme",entry.Theme);item.SetAttribute("id",entry.Id.ToString(CultureInfo.InvariantCulture));state.AppendChild(item);}
             foreach(var key in project.ActiveEditorKeys())
             {
                 int ordinal;var source=project.EditorSource(key,out ordinal);var item=doc.CreateElement("control");
@@ -89,7 +107,21 @@ namespace MP1SkinStudio
             if(state.HasAttribute("focusId")||state.HasAttribute("focusPage"))
             {
                 int focus;if(!Int32.TryParse(state.GetAttribute("focusId"),NumberStyles.None,CultureInfo.InvariantCulture,out focus)||focus<=0||String.IsNullOrWhiteSpace(state.GetAttribute("focusPage")))throw new InvalidDataException("Invalid preview focus.");
-                project.SafePath(state.GetAttribute("focusPage"));project.Editor.PreviewFocusPage=state.GetAttribute("focusPage");project.Editor.PreviewFocusId=focus;
+                string focusTheme=state.HasAttribute("focusTheme")?state.GetAttribute("focusTheme"):project.Theme;
+                project.SafePath(state.GetAttribute("focusPage"));if(focusTheme.Length>0)project.SafePath("Themes/"+focusTheme);project.Editor.RememberFocus(state.GetAttribute("focusPage"),focusTheme,focus);
+            }
+            var focusNodes=state.SelectNodes("focus");if(focusNodes.Count>128)throw new InvalidDataException("Too many saved preview focus states.");
+            if(focusNodes.Count>0)
+            {
+                var seenFocus=new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                foreach(XmlElement item in focusNodes)
+                {
+                    int id;string page=item.GetAttribute("page"),theme=item.GetAttribute("theme");
+                    if(!Int32.TryParse(item.GetAttribute("id"),NumberStyles.None,CultureInfo.InvariantCulture,out id)||id<=0||String.IsNullOrWhiteSpace(page)||!seenFocus.Add(theme+"\n"+page))throw new InvalidDataException("Invalid or duplicate saved preview focus.");
+                    project.SafePath(page);if(theme.Length>0)project.SafePath("Themes/"+theme);
+                    project.Editor.FocusEntries[theme+"\n"+page]=new EditorState.FocusEntry{Page=page,Theme=theme,Id=id};
+                }
+                int last;if(project.Editor.FocusEntries.Count>128||(project.Editor.PreviewFocusId>0&&(!seenFocus.Contains(project.Editor.PreviewFocusTheme+"\n"+project.Editor.PreviewFocusPage)||!project.Editor.TryFocus(project.Editor.PreviewFocusPage,project.Editor.PreviewFocusTheme,out last)||last!=project.Editor.PreviewFocusId)))throw new InvalidDataException("Inconsistent saved preview focus.");
             }
             var nodes=state.SelectNodes("control");if(nodes.Count>10000)throw new InvalidDataException("Too many editor markers.");
             var seen=new HashSet<string>(StringComparer.OrdinalIgnoreCase);

@@ -23,8 +23,9 @@ namespace MP1SkinStudio
             collection.Items.Clear();collection.Items.Add(new PreviewItem{Title="Videos",Image="DefaultFolderBig.png"});
             // Validate both copies before replacing either active state.
             preview.Validate();collection.Validate();
+            if(SkinProject.ControlId(list)>0)project.Editor.ValidateFocus(project.Page,project.Theme,SkinProject.ControlId(list).Value);
             project.Editor.Preview.SetFrom(preview);project.Editor.Collection.SetFrom(collection);
-            if(SkinProject.ControlId(list)>0){project.Editor.PreviewFocusId=SkinProject.ControlId(list).Value;project.Editor.PreviewFocusPage=project.Page;}project.Editor.ShowUnresolved=false;
+            if(SkinProject.ControlId(list)>0)project.Editor.RememberFocus(project.Page,project.Theme,SkinProject.ControlId(list).Value);project.Editor.ShowUnresolved=false;
         }
     }
     public sealed partial class StudioForm

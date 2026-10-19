@@ -419,13 +419,13 @@ namespace MP1SkinStudio
         public void RestoreFocus()
         {
             FocusId=Project.DefaultControlId;
-            if(String.Equals(Project.Editor.PreviewFocusPage,Project.Page,StringComparison.OrdinalIgnoreCase)&&Project.Controls.Any(c=>SkinProject.Focusable(c)&&SkinProject.ControlId(c)==Project.Editor.PreviewFocusId))FocusId=Project.Editor.PreviewFocusId;
+            int saved;if(Project.Editor.TryFocus(Project.Page,Project.Theme,out saved)&&Project.LogicalControls().Count(c=>SkinProject.Focusable(c)&&SkinProject.ControlId(c)==saved)==1)FocusId=saved;
         }
         public void SetFocus(int id)
         {
-            FocusId=id;
-            if(id==Project.DefaultControlId&&!String.Equals(Project.Editor.PreviewFocusPage,Project.Page,StringComparison.OrdinalIgnoreCase))return;
-            Project.Editor.PreviewFocusId=id;Project.Editor.PreviewFocusPage=Project.Page;
+            int previous;
+            if(id==Project.DefaultControlId&&!Project.Editor.TryFocus(Project.Page,Project.Theme,out previous)){FocusId=id;return;}
+            Project.Editor.RememberFocus(Project.Page,Project.Theme,id);FocusId=id;
         }
         public string Text(SkinControl c,string value)
         {

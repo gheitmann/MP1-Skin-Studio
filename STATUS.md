@@ -2,7 +2,11 @@
 
 Date: October 19, 2026. Imported version: 0.9.
 
-## Latest source milestone: attended navigation and focus caption
+## Latest source milestone: independent page/theme focus states
+
+October 19, 2026: editor projects retain separate focus states for each page/theme rather than only the latest page. Restoring an existing slot leaves the editor signature unchanged. Legacy single-focus projects migrate. 261 core checks and four real Titan focus states across BasicHome/Settings and Default/Christmas passed, including exact save/reopen and 34 unchanged original source hashes. No new interactive UI/client run occurred. See [validation](Validation/Focus-Map/README.md).
+
+## Previous source milestone: attended navigation and focus caption
 
 October 19, 2026: actual Windows-editor checkbox/arrow navigation passed on BasicHome and Settings. Saved focus survived closing/reopening BasicHome; automatic General→GUI navigation passed in Settings. A missing caption refresh was corrected: focus changes now display an unsaved asterisk, cleared by Ctrl+S. Saved manifests and unchanged XML were checked. The prior 258 core checks are historical; no full-suite rerun or MP1 client run occurred for this caption-only change. See [attended validation](Validation/Attended-Navigation/README.md).
 

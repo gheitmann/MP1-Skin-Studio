@@ -1,0 +1,1 @@
+PASS four independent real Titan focus states: Default BasicHome=7, Settings=4; Christmas BasicHome=2, Settings=5. Repeated page/theme restoration leaves signature unchanged; save/reopen retains all slots; XML clean, no undo entries; all 34 loaded original source hashes unchanged. Real legacy BasicHome project migrated with focus 5.
