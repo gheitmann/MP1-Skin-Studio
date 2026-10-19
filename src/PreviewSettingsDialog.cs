@@ -43,6 +43,7 @@ namespace MP1SkinStudio
             var current=PreviewSettings.BaseValues();foreach(var pair in settings.Values)current[pair.Key]=pair.Value;
             var keys=new HashSet<string>(current.Keys,StringComparer.OrdinalIgnoreCase);
             foreach(string key in PlaybackPreview.Keys)keys.Add(key);
+            keys.Add(IdlePreview.Key);
             foreach(var control in project.Controls)foreach(string raw in control.Properties.Values.Select(p=>p.Value).Concat(new[]{control.IncludeCondition}))
                 foreach(Match match in Regex.Matches(raw??"",@"#[A-Za-z_][A-Za-z0-9_.]*"))keys.Add(match.Value);
             values.Rows.Clear();foreach(string key in keys.OrderBy(k=>k,StringComparer.OrdinalIgnoreCase)){string value;values.Rows.Add(key,current.TryGetValue(key,out value)?value:null);}

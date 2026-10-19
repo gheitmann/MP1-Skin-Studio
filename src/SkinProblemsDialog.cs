@@ -18,16 +18,16 @@ namespace MP1SkinStudio
         public string TargetProperty{get;private set;}
         public int VisibleCount{get{return list.Items.Count;}}
         const string scope="Only the open page and loaded includes are checked. This is not a full MP1 runtime test. Bindings are preserved.";
-        public SkinProblemsDialog(SkinAuditReport result)
+        public SkinProblemsDialog(SkinAuditReport result,bool preview=false)
         {
-            report=result;Text="Audit Page — MP1 Skin Studio";Size=new Size(1180,720);MinimumSize=new Size(1020,600);StartPosition=FormStartPosition.CenterParent;AutoScaleMode=AutoScaleMode.None;Font=new Font("Segoe UI",9.5f);
+            report=result;Text=preview?"Unverified Preview — MP1 Skin Studio":"Audit Page — MP1 Skin Studio";Size=new Size(1180,720);MinimumSize=new Size(1020,600);StartPosition=FormStartPosition.CenterParent;AutoScaleMode=AutoScaleMode.None;Font=new Font("Segoe UI",9.5f);
             BackColor=Color.FromArgb(26,33,44);ForeColor=Color.FromArgb(224,235,245);
             var top=new Panel{Dock=DockStyle.Top,Height=114,Padding=new Padding(14)};
-            var title=new Label{Text="PAGE AUDIT · "+report.Page+(String.IsNullOrEmpty(report.Theme)?"":" · Theme "+report.Theme),Location=new Point(14,10),Height=23,Width=1120,AutoEllipsis=true,Font=new Font(Font,FontStyle.Bold)};top.Controls.Add(title);
+            var title=new Label{Text=(preview?"UNVERIFIED PREVIEW · ":"PAGE AUDIT · ")+report.Page+(String.IsNullOrEmpty(report.Theme)?"":" · Theme "+report.Theme),Location=new Point(14,10),Height=23,Width=1120,AutoEllipsis=true,Font=new Font(Font,FontStyle.Bold)};top.Controls.Add(title);
             summary.SetBounds(14,38,1110,22);top.Controls.Add(summary);
             top.Controls.Add(new Label{Text="Search",Location=new Point(14,78),Width=62,Height=24});
             search.SetBounds(78,73,680,28);search.BackColor=Color.FromArgb(16,23,32);search.ForeColor=ForeColor;search.BorderStyle=BorderStyle.FixedSingle;search.TextChanged+=(s,e)=>Filter();top.Controls.Add(search);
-            information.Text="Unverified values / information";information.AutoSize=true;information.SetBounds(790,76,340,28);information.CheckedChanged+=(s,e)=>Filter();top.Controls.Add(information);
+            information.Text="Unverified values / information";information.Checked=preview;information.AutoSize=true;information.SetBounds(790,76,340,28);information.CheckedChanged+=(s,e)=>Filter();top.Controls.Add(information);
             top.Resize+=(s,e)=>{title.Width=top.Width-28;summary.Width=top.Width-28;search.Width=top.Width-390;information.Left=top.Width-296;};
             var bottom=new FlowLayoutPanel{Dock=DockStyle.Bottom,Height=53,FlowDirection=FlowDirection.RightToLeft,Padding=new Padding(12,8,12,8)};
             jump.Text="Go to element";jump.Width=140;jump.Height=33;jump.FlatStyle=FlatStyle.Flat;jump.BackColor=Color.FromArgb(25,112,170);jump.ForeColor=ForeColor;jump.Click+=(s,e)=>Jump();bottom.Controls.Add(jump);

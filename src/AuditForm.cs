@@ -16,6 +16,7 @@ namespace MP1SkinStudio
         }
         void JumpToIssue(string key,string property)
         {
+            if(PendingProperties()){ShowNotice("Apply Properties or Revert Inputs before jumping to a finding. Current inputs and selection are preserved.");return;}
             var control=project.Controls.FirstOrDefault(c=>c.Key==key);if(control==null){ShowNotice("The control is no longer present on the open page. Check the page again.");return;}
             SelectControl(control);
             foreach(TreeNode leaf in TreeControlNodes())

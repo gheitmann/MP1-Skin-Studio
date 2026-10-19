@@ -33,7 +33,17 @@ namespace MP1SkinStudio
             value=current;return true;
         }
         public bool? Evaluate(string expression,HashSet<string> active){return EvaluateInternal(expression,active,null);}
+        internal bool? EvaluateScoped(string expression,Dictionary<string,string> defines){return EvaluateInternal(expression,new HashSet<string>(),defines);}
+        internal bool TryOperand(string expression,Dictionary<string,string> defines,out string value){return Operand(expression,defines,out value);}
+        int conditionDepth,conditionWork;
         bool? EvaluateInternal(string expr,HashSet<string> active,Dictionary<string,string> defines)
+        {
+            if(conditionDepth==0)conditionWork=0;
+            if(conditionDepth>=64||++conditionWork>4096||(expr!=null&&expr.Length>8192))return null;
+            conditionDepth++;
+            try{return EvaluateCondition(expr,active,defines);}finally{conditionDepth--;}
+        }
+        bool? EvaluateCondition(string expr,HashSet<string> active,Dictionary<string,string> defines)
         {
             if(String.IsNullOrWhiteSpace(expr))return true;expr=expr.Trim();
             if(expr.Length>2&&((expr[0]=='['&&expr[expr.Length-1]==']')||(expr[0]=='('&&expr[expr.Length-1]==')'))&&Encloses(expr))return EvaluateInternal(expr.Substring(1,expr.Length-2),active,defines);
@@ -49,9 +59,15 @@ namespace MP1SkinStudio
             if(Regex.IsMatch(expr,@"^#[A-Za-z_][A-Za-z0-9_.]*$"))
             {string value,key="define:"+expr;if(!Operand(expr,defines,out value)||value==expr||!active.Add(key))return null;try{return EvaluateInternal(value,active,defines);}finally{active.Remove(key);}}
             if(expr.StartsWith("facadeview.",StringComparison.OrdinalIgnoreCase)&&CollectionSettings.Modes.Contains(expr.Substring(11).ToLowerInvariant()))return CollectionSettings.EffectiveMode(Project)==expr.Substring(11).ToLowerInvariant();
-            var match=Regex.Match(expr,@"^(window\.isvisible|control\.hasfocus|control\.isvisible|control\.hastext|control\.hasthumb|plugin\.isenabled|string\.equals|string\.contains|string\.starts)\((.*)\)$",RegexOptions.IgnoreCase);if(!match.Success)return null;
+            var match=Regex.Match(expr,@"^(window\.isvisible|control\.hasfocus|control\.isvisible|control\.hastext|control\.hasthumb|plugin\.isenabled|string\.equals|string\.contains|string\.starts|system\.idletime)\((.*)\)$",RegexOptions.IgnoreCase);if(!match.Success)return null;
             string fun=match.Groups[1].Value.ToLowerInvariant(),arg=match.Groups[2].Value.Trim();int id;
             if(fun=="plugin.isenabled")return Plugins.Contains(arg.Trim('\'', '"'));
+            if(fun=="system.idletime")
+            {
+                string threshold,sample;int seconds,elapsed;
+                if(!Operand(arg,defines,out threshold)||!Int32.TryParse(threshold,System.Globalization.NumberStyles.Integer,System.Globalization.CultureInfo.InvariantCulture,out seconds)||seconds<=0||!Project.Editor.Preview.Values.TryGetValue(IdlePreview.Key,out sample)||!IdlePreview.TrySeconds(sample,out elapsed))return null;
+                return elapsed>=Math.Min(1000,seconds);
+            }
             if(fun=="string.equals"||fun=="string.contains"||fun=="string.starts")
             {
                 var args=Split(arg,',');string left,right;if(args.Count!=2||!Operand(args[0],defines,out left)||!Operand(args[1],defines,out right))return null;

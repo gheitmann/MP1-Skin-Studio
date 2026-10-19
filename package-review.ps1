@@ -36,9 +36,9 @@ use Revert Inputs to discard unapplied fields; test Undo/Redo; save an editor
 project, reopen it and export changes as ZIP. Use separate skin copies for real
 editing and retain original files. The preview remains approximate.
 
-Validation covers 286 core checks, 70 real Titan collection workflows and attended
-Windows list/grid/coverflow selection, focus, active properties and save/reopen.
-Final form-only changes were compiled and checked in Windows after the model suite.
+Validation covers 300 core checks, 22 real Titan preview/edit/save/reopen/export
+workflows, two idle transitions and attended Windows report/search/draft protection.
+All 57 distinct loaded original source hashes stayed unchanged.
 No new installed MediaPortal client run was performed. See the user guide for
 supported preview navigation and remaining rendering limitations.
 "@

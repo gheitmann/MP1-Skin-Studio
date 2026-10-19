@@ -1,8 +1,14 @@
 # Development status and next steps
 
-Date: October 19, 2026. Imported version: 0.9.
+Date: October 20, 2026. Imported version: 0.9.
 
-## Latest source milestone: collection interaction and complete workflow coverage
+## Latest source milestone: explained and bounded preview states
+
+October 20, 2026: matching Video/Music/Pictures folder presets, explicit idle samples and Ctrl+F8 explanations make unresolved conditions inspectable without changing XML. Bounded condition evaluation retains unknown states. Canonical source cache paths fix mixed-slash alias consistency through save/reopen and undo/redo. Pending property drafts are preserved when a finding jump is blocked.
+
+Fresh validation: 300 core checks, 22 complete real Titan workflows, two idle transitions and 57 unchanged loaded original source hashes. Attended Windows report/search/draft protection passed. No fresh installed-client run. See [validation and limits](Validation/Preview-Reliability/README.md).
+
+## Previous source milestone: collection interaction and complete workflow coverage
 
 October 19, 2026: Navigation arrows browse sample items in lists, icon grids, filmstrip and coverflow; boundary arrows retain explicit control-link testing. Focused collection appearance follows simulated focus. Selection stays visible, list row/detail geometry is corrected, clean preview suppresses invented placeholders, selected-thumbnail metadata follows the row and page preparation clears stale derived values. Active facade views expose their concrete property fields and regain canvas keyboard focus after dialog changes.
 
@@ -66,7 +72,7 @@ October 19, 2026: static known-content conditions and nested localization now wo
 
 The owner prioritizes practical edit/save/reopen/export workflows and substantial autonomous work blocks. Routine follow-up steps do not require another continuation prompt. Necessary checks run at integrated milestones.
 
-Current validation: 286 core checks, 70 complete real-page collection workflows and attended Windows list/grid/coverflow selection, active property editing, focus transitions and save/reopen. Group duplication and its attended checks remain covered by the earlier milestone. Earlier milestones cover the six-page/two-theme editing matrix, focused BasicHome/Video samples and the installed-client Video export. These older results are historical, not rerun by the latest core suite.
+Current validation: 300 core checks, 22 real Titan preview/edit/save/reopen/export/undo/redo workflows, two idle transitions and attended Windows report/search/draft protection. Earlier collection, group and installed-client results remain historical; see the checkpoint reports.
 
 Next core work is broader real-page preview fidelity and navigation coverage, especially collections and unsupported dynamic conditions. Existing samples make BasicHome, Settings and Video useful without claiming complete runtime equivalence. Masks, animation, full geometric navigation and plugin-specific values remain approximate or unresolved. Continue real-skin edit/save/reopen/export acceptance around any such changes, preserving original files. Auxiliary global-style and cross-group movement tools remain lower priority.
 

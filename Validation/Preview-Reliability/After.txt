@@ -1,0 +1,60 @@
+Default/BasicHome.xml: 11 unresolved / 238 controls
+  common.music.play.fanart.xml | 897688 | FANART IMAGE 1 | control.isvisible(91919295)+control.isvisible(91919294) [parents: ]
+  common.music.play.fanart.xml | 897689 | FANART IMAGE 2 | control.isvisible(91919296)+control.isvisible(91919294) [parents: ]
+  BasicHome.Main.Dummy.xml | 20902 | DUMMY Visible Exit Indicator | string.equals(#myNotifier.Messages.Count.Unread,0)+!Control.IsVisble(90909) [parents: ]
+  BasicHome.Buttons/P1.L11.MusicActiveLatests.xml | 0 | New indicator | control.isvisible(2)+string.equals(#latestMediaHandler.music.hasnew,true) [parents: ]
+  BasicHome.Buttons/P1.L21.Pictures.xml | 0 | New indicator | control.isvisible(3)+string.equals(#latestMediaHandler.picture.hasnew,true) [parents: ]
+  BasicHome.Buttons/P1.L12.TV.xml | 0 | New indicator | control.isvisible(4)+string.equals(#latestMediaHandler.tvrecordings.hasnew,true) [parents: ]
+  BasicHome.Buttons/P1.L13.MyVideoActiveLatests.xml | 0 | New indicator | control.isvisible(6)+string.equals(#latestMediaHandler.myvideo.hasnew,true) [parents: ]
+  BasicHome.xml | 0 | exit menu button | Control.IsVisible(20902) [parents: ]
+  BasicHome.FHLMH.Update.xml | 0 | MPEIUPDATE:fb03aa80-a2e3-4d77-a84d-4c0ae17eb49c | string.equals(#mpei.fb03aa80_a2e3_4d77_a84d_4c0ae17eb49c.haveupdate,true) [parents: ]
+  BasicHome.FHLMH.Update.xml | 0 | MPEIUPDATE:814a6918-0183-4323-a3b4-c00fac11b4f6 | string.equals(#mpei.814a6918_0183_4323_a3b4_c00fac11b4f6.haveupdate,true) [parents: ]
+  common.Latests.xml | 0 | Latests Animation | string.equals(#latestMediaHandler.scanned,true) [parents: ]
+Default/settings.xml: 0 unresolved / 20 controls
+Default/myvideo.xml: 1 unresolved / 211 controls
+  myvideo.views.default.xml | 0 | ClearLogo | ![facadeview.filmstrip|facadeview.coverflow]+Control.IsVisible(50)+!control.hasthumb(159357) [parents: ]
+Default/mymusicsongs.xml: 4 unresolved / 125 controls
+  common.facade.music.xml | 0 | CD Image | [facadeview.list|facadeview.playlist]+!string.contains(#selecteditem, ..)+![control.hasthumb(55555)|control.hasthumb(55055)] [parents: ]
+  common.facade.music.xml | 55555 | CD Art Image | [facadeview.list|facadeview.playlist]+!string.contains(#selecteditem, ..)+!control.hasthumb(55055) [parents: ]
+  common.facade.music.xml | 258456951 | ClearArt | ![facadeview.filmstrip|facadeview.coverflow]+!control.hasthumb(258456950) [parents: ]
+  common.facade.music.xml | 0 | ClearArt | ![facadeview.filmstrip|facadeview.coverflow]+!control.hasthumb(258456950)+!control.hasthumb(258456951) [parents: ]
+Default/mypics.xml: 0 unresolved / 116 controls
+Christmas/BasicHome.xml: 11 unresolved / 238 controls
+  common.music.play.fanart.xml | 897688 | FANART IMAGE 1 | control.isvisible(91919295)+control.isvisible(91919294) [parents: ]
+  common.music.play.fanart.xml | 897689 | FANART IMAGE 2 | control.isvisible(91919296)+control.isvisible(91919294) [parents: ]
+  BasicHome.Main.Dummy.xml | 20902 | DUMMY Visible Exit Indicator | string.equals(#myNotifier.Messages.Count.Unread,0)+!Control.IsVisble(90909) [parents: ]
+  BasicHome.Buttons/P1.L11.MusicActiveLatests.xml | 0 | New indicator | control.isvisible(2)+string.equals(#latestMediaHandler.music.hasnew,true) [parents: ]
+  BasicHome.Buttons/P1.L21.Pictures.xml | 0 | New indicator | control.isvisible(3)+string.equals(#latestMediaHandler.picture.hasnew,true) [parents: ]
+  BasicHome.Buttons/P1.L12.TV.xml | 0 | New indicator | control.isvisible(4)+string.equals(#latestMediaHandler.tvrecordings.hasnew,true) [parents: ]
+  BasicHome.Buttons/P1.L13.MyVideoActiveLatests.xml | 0 | New indicator | control.isvisible(6)+string.equals(#latestMediaHandler.myvideo.hasnew,true) [parents: ]
+  BasicHome.xml | 0 | exit menu button | Control.IsVisible(20902) [parents: ]
+  BasicHome.FHLMH.Update.xml | 0 | MPEIUPDATE:fb03aa80-a2e3-4d77-a84d-4c0ae17eb49c | string.equals(#mpei.fb03aa80_a2e3_4d77_a84d_4c0ae17eb49c.haveupdate,true) [parents: ]
+  BasicHome.FHLMH.Update.xml | 0 | MPEIUPDATE:814a6918-0183-4323-a3b4-c00fac11b4f6 | string.equals(#mpei.814a6918_0183_4323_a3b4_c00fac11b4f6.haveupdate,true) [parents: ]
+  common.Latests.xml | 0 | Latests Animation | string.equals(#latestMediaHandler.scanned,true) [parents: ]
+Christmas/settings.xml: 0 unresolved / 20 controls
+Christmas/myvideo.xml: 1 unresolved / 211 controls
+  myvideo.views.default.xml | 0 | ClearLogo | ![facadeview.filmstrip|facadeview.coverflow]+Control.IsVisible(50)+!control.hasthumb(159357) [parents: ]
+Christmas/mymusicsongs.xml: 4 unresolved / 125 controls
+  common.facade.music.xml | 0 | CD Image | [facadeview.list|facadeview.playlist]+!string.contains(#selecteditem, ..)+![control.hasthumb(55555)|control.hasthumb(55055)] [parents: ]
+  common.facade.music.xml | 55555 | CD Art Image | [facadeview.list|facadeview.playlist]+!string.contains(#selecteditem, ..)+!control.hasthumb(55055) [parents: ]
+  common.facade.music.xml | 258456951 | ClearArt | ![facadeview.filmstrip|facadeview.coverflow]+!control.hasthumb(258456950) [parents: ]
+  common.facade.music.xml | 0 | ClearArt | ![facadeview.filmstrip|facadeview.coverflow]+!control.hasthumb(258456950)+!control.hasthumb(258456951) [parents: ]
+Christmas/mypics.xml: 0 unresolved / 116 controls
+
+Unique unresolved expressions:
+2 x control.isvisible(91919295)+control.isvisible(91919294) [parents: ]
+2 x control.isvisible(91919296)+control.isvisible(91919294) [parents: ]
+2 x string.equals(#myNotifier.Messages.Count.Unread,0)+!Control.IsVisble(90909) [parents: ]
+2 x control.isvisible(2)+string.equals(#latestMediaHandler.music.hasnew,true) [parents: ]
+2 x control.isvisible(3)+string.equals(#latestMediaHandler.picture.hasnew,true) [parents: ]
+2 x control.isvisible(4)+string.equals(#latestMediaHandler.tvrecordings.hasnew,true) [parents: ]
+2 x control.isvisible(6)+string.equals(#latestMediaHandler.myvideo.hasnew,true) [parents: ]
+2 x Control.IsVisible(20902) [parents: ]
+2 x string.equals(#mpei.fb03aa80_a2e3_4d77_a84d_4c0ae17eb49c.haveupdate,true) [parents: ]
+2 x string.equals(#mpei.814a6918_0183_4323_a3b4_c00fac11b4f6.haveupdate,true) [parents: ]
+2 x string.equals(#latestMediaHandler.scanned,true) [parents: ]
+2 x ![facadeview.filmstrip|facadeview.coverflow]+Control.IsVisible(50)+!control.hasthumb(159357) [parents: ]
+2 x [facadeview.list|facadeview.playlist]+!string.contains(#selecteditem, ..)+![control.hasthumb(55555)|control.hasthumb(55055)] [parents: ]
+2 x [facadeview.list|facadeview.playlist]+!string.contains(#selecteditem, ..)+!control.hasthumb(55055) [parents: ]
+2 x ![facadeview.filmstrip|facadeview.coverflow]+!control.hasthumb(258456950) [parents: ]
+2 x ![facadeview.filmstrip|facadeview.coverflow]+!control.hasthumb(258456950)+!control.hasthumb(258456951) [parents: ]

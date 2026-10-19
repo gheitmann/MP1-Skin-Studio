@@ -1,0 +1,23 @@
+PASS Default/BasicHome.xml/auto: 11 unverified visibility, 11 explained preview findings; read-only report, exact profile/report/edit/save/reopen/export/undo/redo.
+PASS Default/settings.xml/auto: 0 unverified visibility, 0 explained preview findings; read-only report, exact profile/report/edit/save/reopen/export/undo/redo.
+PASS Default/myvideo.xml/list: 1 unverified visibility, 3 explained preview findings; read-only report, exact profile/report/edit/save/reopen/export/undo/redo.
+PASS Default/myvideo.xml/filmstrip: 5 unverified visibility, 6 explained preview findings; read-only report, exact profile/report/edit/save/reopen/export/undo/redo.
+PASS Default/myvideo.xml/coverflow: 1 unverified visibility, 2 explained preview findings; read-only report, exact profile/report/edit/save/reopen/export/undo/redo.
+PASS Default/mymusicsongs.xml/list: 4 unverified visibility, 4 explained preview findings; read-only report, exact profile/report/edit/save/reopen/export/undo/redo.
+PASS Default/mymusicsongs.xml/filmstrip: 2 unverified visibility, 2 explained preview findings; read-only report, exact profile/report/edit/save/reopen/export/undo/redo.
+PASS Default/mymusicsongs.xml/coverflow: 2 unverified visibility, 2 explained preview findings; read-only report, exact profile/report/edit/save/reopen/export/undo/redo.
+PASS Default/mypics.xml/list: 0 unverified visibility, 1 explained preview findings; read-only report, exact profile/report/edit/save/reopen/export/undo/redo.
+PASS Default/mypics.xml/filmstrip: 0 unverified visibility, 0 explained preview findings; read-only report, exact profile/report/edit/save/reopen/export/undo/redo.
+PASS Default/mypics.xml/coverflow: 0 unverified visibility, 0 explained preview findings; read-only report, exact profile/report/edit/save/reopen/export/undo/redo.
+PASS Christmas/BasicHome.xml/auto: 11 unverified visibility, 11 explained preview findings; read-only report, exact profile/report/edit/save/reopen/export/undo/redo.
+PASS Christmas/settings.xml/auto: 0 unverified visibility, 0 explained preview findings; read-only report, exact profile/report/edit/save/reopen/export/undo/redo.
+PASS Christmas/myvideo.xml/list: 1 unverified visibility, 3 explained preview findings; read-only report, exact profile/report/edit/save/reopen/export/undo/redo.
+PASS Christmas/myvideo.xml/filmstrip: 5 unverified visibility, 6 explained preview findings; read-only report, exact profile/report/edit/save/reopen/export/undo/redo.
+PASS Christmas/myvideo.xml/coverflow: 1 unverified visibility, 2 explained preview findings; read-only report, exact profile/report/edit/save/reopen/export/undo/redo.
+PASS Christmas/mymusicsongs.xml/list: 4 unverified visibility, 4 explained preview findings; read-only report, exact profile/report/edit/save/reopen/export/undo/redo.
+PASS Christmas/mymusicsongs.xml/filmstrip: 2 unverified visibility, 2 explained preview findings; read-only report, exact profile/report/edit/save/reopen/export/undo/redo.
+PASS Christmas/mymusicsongs.xml/coverflow: 2 unverified visibility, 2 explained preview findings; read-only report, exact profile/report/edit/save/reopen/export/undo/redo.
+PASS Christmas/mypics.xml/list: 0 unverified visibility, 1 explained preview findings; read-only report, exact profile/report/edit/save/reopen/export/undo/redo.
+PASS Christmas/mypics.xml/filmstrip: 0 unverified visibility, 0 explained preview findings; read-only report, exact profile/report/edit/save/reopen/export/undo/redo.
+PASS Christmas/mypics.xml/coverflow: 0 unverified visibility, 0 explained preview findings; read-only report, exact profile/report/edit/save/reopen/export/undo/redo.
+PASS 22 real Titan workflows, 2 explicit idle transitions; 57 distinct original source hashes unchanged.

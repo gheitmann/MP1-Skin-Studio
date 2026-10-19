@@ -282,6 +282,8 @@ namespace MP1SkinStudio
         }
         public SkinSource Source(string path)
         {
+            path=System.IO.Path.GetFullPath(path.Replace('/', '\\'));
+            if(!path.StartsWith(Root.TrimEnd('\\')+"\\",StringComparison.OrdinalIgnoreCase))throw new InvalidDataException("File path is outside the skin: "+path);
             SkinSource s;
             if (Sources.TryGetValue(path, out s)) return s;
             s = SkinSource.Read(path, Relative(path)); Sources[path] = s; return s;

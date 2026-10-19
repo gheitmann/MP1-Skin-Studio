@@ -355,3 +355,13 @@ The selected item's image feeds #selectedthumb along with the title/detail/index
 
 Focused row/card textures and selected colors follow simulated focus. Leaving the collection retains its sample selection while removing focused appearance. Clean preview hides missing collection image/frame placeholders and the Empty collection notice. Explicitly empty images always remain empty. Show unverified content restores diagnostic placeholders. Coverflow still approximates a static arrangement; masks, perspective and animation remain unsupported.
 
+
+## Explain unverified preview states
+
+Press Ctrl+F8 or choose Element > Inspect unverified preview to inspect the current page and loaded includes. Search the informational findings and use Go to element to inspect the source property. Missing samples, unsupported functions, ambiguous IDs, dependency cycles, absent language entries and runtime/cache artwork remain explicitly unverified. A spelling suggestion never changes the original expression. Pending property drafts must be applied or reverted before jumping; opening and searching the report is read-only. The report is not proof of a runtime error. Very deep, long or expensive expressions remain unknown; output and dependency traversal are bounded.
+
+## Music, Pictures and idle scenarios
+
+Element > Music folder preview and Pictures folder preview provide matching folder items and images on pages with a list control. All three media folder presets explicitly close the hidden menu, set #hideinfo to False, stop playback and select zero idle seconds; unrelated samples and plugin states remain intact. These choices are saved only in the editor project.
+
+Element > Idle-time preview selects Active input (0 seconds), Idle (60 seconds), or Unverified. Sample Data exposes #preview.system.idleseconds and accepts whole seconds from 0 to 86400. Supported system.idletime expressions require a positive integer threshold, capped at 1000 seconds as in MP1. Missing samples or invalid thresholds remain unknown. Other conditions still apply when idle changes. This preview never changes actual Windows activity. Exported skin XML remains unchanged.

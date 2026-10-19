@@ -455,6 +455,7 @@ namespace MP1SkinStudio
             if(keyData==(Keys.Control|Keys.F)){elementSearch.Focus();elementSearch.SelectAll();return true;}
             if(keyData==Keys.F2&&(canvas.Focused||(tree.Focused&&tree.SelectedNode!=null&&tree.SelectedNode.Tag is SkinControl))&&SelectedControls().Length==1){Attempt(()=>EditElementText(selected));return true;}
             if(keyData==Keys.F8){Attempt(ShowAudit);return true;}
+            if(keyData==(Keys.Control|Keys.F8)){Attempt(ShowPreviewProblems);return true;}
             if(keyData==Keys.Delete&&(canvas.Focused||(tree.Focused&&tree.SelectedNode!=null&&tree.SelectedNode.Tag is SkinControl))){Attempt(DeleteSelection);return true;}
             return base.ProcessCmdKey(ref msg,keyData);
         }

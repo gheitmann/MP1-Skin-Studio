@@ -1,0 +1,6 @@
+October 20, 2026 — attended Windows editor acceptance
+PASS Ctrl+F8 opens Unverified Preview while a width draft remains unapplied.
+PASS BasicHome shows 11 informational findings; search Control.IsVisble narrows this to two findings with source lines and a spelling explanation. No XML correction is performed.
+PASS Go to element with pending width 777 keeps BasicHome TV selected and preserves the draft, with an explanatory status message.
+PASS Revert Inputs restores width 594 and removes the unsaved caption marker.
+Scope: new report, search and pending-input protection. Typed folder profiles and idle transitions were exercised by the fresh model workflow probe, not by new attended menu tests. Previous Windows collection and client validation is historical.
