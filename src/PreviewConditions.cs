@@ -42,6 +42,8 @@ namespace MP1SkinStudio
             if(expr.StartsWith("!")){var value=EvaluateInternal(expr.Substring(1),active,defines);return value==null?null:!value;}
             if(expr.Equals("yes",StringComparison.OrdinalIgnoreCase)||expr.Equals("true",StringComparison.OrdinalIgnoreCase))return true;
             if(expr.Equals("no",StringComparison.OrdinalIgnoreCase)||expr.Equals("false",StringComparison.OrdinalIgnoreCase))return false;
+            if(PlaybackPreview.Supports(expr))
+            {string sample;bool value;return Project.Editor.Preview.Values.TryGetValue("#preview."+expr,out sample)&&Boolean.TryParse(sample,out value)?(bool?)value:null;}
             if(Regex.IsMatch(expr,@"^#[A-Za-z_][A-Za-z0-9_.]*$"))
             {string value,key="define:"+expr;if(!Operand(expr,defines,out value)||value==expr||!active.Add(key))return null;try{return EvaluateInternal(value,active,defines);}finally{active.Remove(key);}}
             if(expr.StartsWith("facadeview.",StringComparison.OrdinalIgnoreCase)&&CollectionSettings.Modes.Contains(expr.Substring(11).ToLowerInvariant()))return CollectionSettings.EffectiveMode(Project)==expr.Substring(11).ToLowerInvariant();

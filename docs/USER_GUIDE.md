@@ -309,3 +309,7 @@ On a page with a list control, choose **Element > Video folder preview** to use 
 Known static Control.HasText and Control.HasThumb conditions are evaluated from preview data and local media. Missing runtime properties, ambiguous IDs and unsupported image paths remain unresolved. Nested L(...) expressions use loaded language snapshots with fallback and prefix selection. Missing language IDs retain the original expression. These checks do not reproduce MP1 runtime texture caches or font metrics.
 
 Standalone label and fadelabel previews honor XML text anchors, including omitted dimensions for centered labels and right-aligned X positions. Designer selection rectangles can be larger than text. Font metrics, scrolling animation and autosizing remain approximate.
+
+## Playback preview
+
+Element > Playback preview > Stopped sets five explicit player sample flags to false. Unverified removes those overrides. The Video folder preset includes stopped playback. Missing flags stay unknown; the real player is never controlled. Sample Data exposes #preview.player.hasmedia, #preview.player.hasaudio, #preview.player.hasvideo, #preview.player.playing and #preview.player.paused. Set true or false to inspect individual conditions; independent flags can describe inconsistent scenarios. Apply or revert pending property inputs first. Save the editor project to retain the samples; exported XML remains unchanged. Other player conditions remain unsupported.

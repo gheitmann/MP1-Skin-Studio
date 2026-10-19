@@ -12,6 +12,17 @@ namespace MP1SkinStudio
     {
         static void RunPreviewSettingsTests(string root)
         {
+            Test("Player conditions require explicit samples and preserve three-valued logic",()=>
+            {
+                var p=ResetFixture(root,"playback-samples");var state=new PreviewState(p);
+                foreach(string condition in new[]{"player.hasmedia","player.hasaudio","player.hasvideo","player.playing","player.paused"})Check(state.Evaluate(condition,new HashSet<string>())==null,"Unknown playback was guessed.");
+                PlaybackPreview.Stopped(p.Editor.Preview);state=new PreviewState(p);
+                Check(state.Evaluate("Player.HasVideo+unknown.condition()",new HashSet<string>())==false&&state.Evaluate("!player.playing",new HashSet<string>())==true&&state.Evaluate("player.recording",new HashSet<string>())==null,"Stopped playback or unsupported condition failed.");
+                p.Editor.Preview.Values["#preview.player.hasvideo"]="true";p.Editor.Preview.Values["#preview.player.playing"]="true";state=new PreviewState(p);
+                Check(state.Evaluate("PLAYER.HASVIDEO+player.playing",new HashSet<string>())==true,"Explicit player samples were ignored.");
+                p.Editor.Preview.Values["#preview.player.paused"]="yes";Reject(()=>p.Editor.Preview.Validate());
+                p.Editor.Preview.Values["#custom"]="Keep";PlaybackPreview.Unknown(p.Editor.Preview);p.Editor.Preview.Validate();Check(p.Editor.Preview.Values["#custom"]=="Keep"&&new PreviewState(p).Evaluate("player.paused",new HashSet<string>())==null,"Removing playback samples changed unrelated data.");
+            });
             Test("Video folder samples preserve unknown values, XML edits and redo history",()=>
             {
                 string folder=Path.Combine(root,"video-folder");Directory.CreateDirectory(folder);

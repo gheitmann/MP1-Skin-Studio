@@ -21,6 +21,7 @@ namespace MP1SkinStudio
             {
                 if(pair.Key.Length>160||!Regex.IsMatch(pair.Key,@"^#[A-Za-z_][A-Za-z0-9_.]*$"))throw new InvalidDataException("Preview variable names must start with # and use letters, digits, periods or underscores.");
                 if(pair.Value==null||pair.Value.Length>2048)throw new InvalidDataException("Sample values may contain at most 2048 characters.");XmlConvert.VerifyXmlChars(pair.Value);
+                bool playback;if(PlaybackPreview.IsKey(pair.Key)&&!Boolean.TryParse(pair.Value,out playback))throw new InvalidDataException("Playback samples must be true or false: "+pair.Key);
             }
             foreach(string plugin in Plugins){if(String.IsNullOrWhiteSpace(plugin)||plugin!=plugin.Trim()||plugin.Length>160||plugin.Any(Char.IsControl))throw new InvalidDataException("Enter plugin names without leading spaces or control characters and with at most 160 characters.");XmlConvert.VerifyXmlChars(plugin);}
         }

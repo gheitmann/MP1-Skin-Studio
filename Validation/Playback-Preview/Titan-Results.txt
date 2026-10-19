@@ -1,0 +1,21 @@
+Controls: 211; hidden: 158; unresolved: 19
+1 unresolved: [facadeview.list|facadeview.smallicons|facadeview.largeicons]+Control.HasFocus(50) + !string.contains(#Titan.HiddenMenu, false) | include=
+1 unresolved: ![facadeview.filmstrip|facadeview.coverflow]+Control.IsVisible(50)+!control.hasthumb(159357) | include=
+1 unresolved: [facadeview.list|facadeview.playlist]+Control.IsVisible(50)+system.idletime(10) | include=
+1 unresolved: [facadeview.list|facadeview.playlist]+Control.IsVisible(50)+!control.IsVisible(609)+!string.equals(#fanarthandler.movie.animated.selected.thumb,) | include=
+11 unresolved: [facadeview.list|facadeview.playlist] + Control.IsVisible(50) + string.equals(#hideinfo, False) | include=
+3 unresolved: ![facadeview.filmstrip|facadeview.coverflow|facadeview.smallicons|facadeview.largeicons]+!Control.IsVisible(24) | include=
+1 unresolved: string.equals(#VideoFolderChanged,true)|string.equals(#importer.hasuncomplete,true) | include=
+control.hastext(7773) = False
+control.hasthumb(60) = True
+!control.hasthumb(60) = False
+control.hasthumb(159357) = unknown
+Selected item Label: False
+Selected item Label: True
+ClearLogo: 
+Default Cover Art: False
+Cover Art: True
+PASS unchanged XML, undo history and all 17 loaded source hashes
+PASS nested localization against installed German snapshot
+PASS project roundtrip retains list focus and content condition result
+PASS offscreen production renderer completed

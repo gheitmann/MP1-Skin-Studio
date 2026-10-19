@@ -18,6 +18,7 @@ namespace MP1SkinStudio
             preview.Values["#selectedthumb"]="DefaultFolderBig.png";
             preview.Values["#watchedcount"]="0";preview.Values["#watchedpercent"]="0";
             preview.Values["#scrolling.up"]="no";preview.Values["#scrolling.down"]="no";
+            PlaybackPreview.Stopped(preview);
             var collection=new CollectionSettings{Mode="list",Focus=0};
             collection.Items.Clear();collection.Items.Add(new PreviewItem{Title="Videos",Image="DefaultFolderBig.png"});
             // Validate both copies before replacing either active state.

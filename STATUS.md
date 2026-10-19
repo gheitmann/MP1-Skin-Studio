@@ -2,7 +2,11 @@
 
 Date: October 19, 2026. Imported version: 0.9.
 
-## Latest source milestone: Video sample state and text anchors
+## Latest source milestone: explicit stopped playback preview
+
+October 19, 2026: explicit samples now evaluate five common player conditions. The Video folder preset chooses stopped playback; Element > Playback preview can apply or remove that scenario independently. Absent flags stay unknown. 249 core checks and the targeted real Titan probe passed. In this scenario 19 conditions remain unresolved, down from 62. All 17 loaded source hashes remain unchanged. No new interactive client test occurred. See [validation and remaining unknowns](Validation/Playback-Preview/README.md).
+
+## Previous source milestone: Video sample state and text anchors
 
 October 19, 2026: standalone labels now use native-style XML text anchors instead of fabricated designer extents. The Video folder sample explicitly sets unwatched and idle-scroll state. 248 core checks and the targeted Titan probe passed; the production offscreen render was visually inspected. The explicit sample leaves 62 unresolved conditions, down from 87. All 17 loaded source hashes remained unchanged. No new MP1 client test was run. See [validation](Validation/Label-Anchors/README.md).
 
