@@ -331,3 +331,7 @@ unverified; desktop automation and DirectX work remain suspended/deferred.
 ## Windows continuation validation
 
 October 19, 2026: restored GitHub commit `4fbc846` with all 198 tracked file hashes verified. Fresh Windows .NET Framework build, 237 core checks and 25 preview-expression checks passed. The editor launched and its Titan sample was observed through Computer Use. Broader interaction, persistent permission behavior and MP1 runtime checks remain pending; no client was launched and no original skin changed. See [Windows checkpoint](Validation/Resume-Windows-20261019/README.md). DirectX stays deferred.
+
+## Windows test environment access confirmed
+
+October 19, 2026: attended access test launched the editor and installed MP1, opened/closed the editor Sample Data dialog, moved Titan Home focus from TV to Videos and opened the real Videos page. Successive inputs and captures completed without an observed approval loop. This validates current-session access only; no export was installed and original skins were not edited. See [access test](Validation/Windows-Access-20261019/README.md). DirectX remains deferred.
