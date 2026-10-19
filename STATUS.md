@@ -2,19 +2,9 @@
 
 Date: October 19, 2026. Imported version: 0.9.
 
-## Latest source milestone: preview text expressions
+## Latest source milestone: known preview content
 
-A bounded subset of nested MP1 text expressions now evaluates in preview text:
-trim/replace/length, string comparisons, eq/neq and iif. Unknown functions and
-missing runtime values preserve the whole expression. Embedded local define
-chains resolve without changing XML. See
-[expression validation](Validation/Preview-Expressions/README.md).
-
-Fresh Linux validation: all production sources compile with Mono; 25 targeted
-console checks passed. The Windows full suite and real Titan visuals were not
-rerun. Historical Windows counts below are not fresh validation of this change.
-The current session cannot access the Windows desktop. Complex-page visibility
-and remaining runtime expressions still need work. DirectX replacement remains deferred.
+October 19, 2026: static known-content conditions and nested localization now work in previews. Fresh Windows build: 245 core checks, 25 expression checks and eleven real Titan model stages passed. The isolated folder state has 87 unresolved conditions, down from 89. A production offscreen render was visually inspected; no new interactive client validation or export installation occurred. See [content validation](Validation/Preview-Content/README.md). Windows access was confirmed in earlier attended checkpoints; DirectX remains deferred.
 
 ## Current priority: reliable core editing
 
@@ -343,3 +333,7 @@ October 19, 2026: fresh complex-page probe passed all eleven stages on a complet
 ## Video folder preview milestone
 
 October 19, 2026: added Element > Video folder preview and fixed initialization of derived collection values after rebuilding preview state. One Videos folder and explicit empty movie metadata are preview-only; unrelated unknown values stay unresolved. Fresh final Windows validation: 239 core checks, 25 expression checks and eleven real Titan model stages passed. Attended UI confirmed the folder, count 1 and matching selected title; save/reopen retained sample and language state. 89 unresolved conditions and remaining placeholders prevent a claim of visual equivalence. No export was installed. See [folder preview](Validation/Video-Folder-Preview/README.md).
+
+## Known content and localized expressions
+
+Added bounded Control.HasText/HasThumb evaluation for known preview content and L(...) resolution from saved language snapshots. Unknown/ambiguous inputs remain unresolved. Fresh validation: 245 core checks, 25 expression checks, eleven real Titan model stages and the targeted before/after probe passed. Hidden controls increased from 89 to 91, unresolved conditions decreased from 89 to 87; XML and all 17 loaded sources stayed unchanged. See Validation/Preview-Content/README.md. No fresh interactive UI/client test or export installation occurred.

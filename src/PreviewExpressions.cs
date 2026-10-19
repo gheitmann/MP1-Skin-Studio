@@ -23,6 +23,13 @@ namespace MP1SkinStudio
             string name=call.Groups[1].Value;var parts=ExpressionArguments(call.Groups[2].Value);if(parts==null||parts.Count>16)return false;
             var args=new List<object>();foreach(string part in parts){object arg;if(!ExpressionValue(part,defines,depth+1,out arg))return false;args.Add(arg);}
             Func<int,string> str=i=>args[i] as string;
+            if(name=="L"&&args.Count==1)
+            {
+                int id;string localized,origin;
+                if(args[0] is int)id=(int)args[0];else if(!Int32.TryParse(str(0),NumberStyles.Integer,CultureInfo.InvariantCulture,out id))return false;
+                if(id<0||!Project.Editor.Language.TryGet(id,out localized,out origin)||localized.Length>8192)return false;
+                value=localized;return true;
+            }
             if(name=="iif"&&args.Count==3){bool condition;if(args[0] is bool)condition=(bool)args[0];else if(!Boolean.TryParse(str(0),out condition))return false;value=condition?args[1]:args[2];return true;}
             if((name=="eq"||name=="neq")&&args.Count==2)
             {bool equal=args[0] is string&&args[1] is string?CultureInfo.InvariantCulture.CompareInfo.Compare(str(0),str(1),CompareOptions.IgnoreCase)==0:Object.Equals(args[0],args[1]);value=name=="eq"?equal:!equal;return true;}
@@ -42,8 +49,9 @@ namespace MP1SkinStudio
             {char c=text[i];if(c=='\''){quote=!quote;continue;}if(quote)continue;if(c=='(')depth++;if(c==')'&&--depth<0)return null;if(c==','&&depth==0){result.Add(text.Substring(start,i-start));start=i+1;}}
             if(quote||depth!=0)return null;if(text.Trim().Length>0)result.Add(text.Substring(start));return result;
         }
-        string ExpressionText(SkinControl control,string text)
+        string ExpressionText(SkinControl control,string text,out bool known)
         {
+            known=true;
             var result=new StringBuilder();
             for(int i=0;i<text.Length;)
             {
@@ -51,14 +59,15 @@ namespace MP1SkinStudio
                 {
                     int start=i,depth=1,j=i+2;bool quote=false;
                     for(;j<text.Length;j++){char c=text[j];if(c=='\'')quote=!quote;if(quote)continue;if(c=='(')depth++;if(c==')'&&--depth==0)break;}
-                    if(j==text.Length){result.Append(text.Substring(start));break;}
+                    if(j==text.Length){known=false;result.Append(text.Substring(start));break;}
                     object value;string raw=text.Substring(start,j-start+1);
-                    result.Append(ExpressionValue(text.Substring(start+2,j-start-2),control.Defines,0,out value)?Convert.ToString(value,CultureInfo.CurrentCulture):raw);i=j+1;continue;
+                    bool resolved=ExpressionValue(text.Substring(start+2,j-start-2),control.Defines,0,out value);if(!resolved)known=false;
+                    result.Append(resolved?Convert.ToString(value,CultureInfo.CurrentCulture):raw);i=j+1;continue;
                 }
                 if(text[i]=='#')
                 {
                     var token=Regex.Match(text.Substring(i),@"^#[A-Za-z_][A-Za-z0-9_.]*");
-                    if(token.Success){string value;result.Append(Operand(token.Value,control.Defines,out value)?value:token.Value);i+=token.Length;continue;}
+                    if(token.Success){string value;bool resolved=Operand(token.Value,control.Defines,out value);if(!resolved)known=false;result.Append(resolved?value:token.Value);i+=token.Length;continue;}
                 }
                 result.Append(text[i++]);
             }

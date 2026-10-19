@@ -45,7 +45,7 @@ namespace MP1SkinStudio
             if(Regex.IsMatch(expr,@"^#[A-Za-z_][A-Za-z0-9_.]*$"))
             {string value,key="define:"+expr;if(!Operand(expr,defines,out value)||value==expr||!active.Add(key))return null;try{return EvaluateInternal(value,active,defines);}finally{active.Remove(key);}}
             if(expr.StartsWith("facadeview.",StringComparison.OrdinalIgnoreCase)&&CollectionSettings.Modes.Contains(expr.Substring(11).ToLowerInvariant()))return CollectionSettings.EffectiveMode(Project)==expr.Substring(11).ToLowerInvariant();
-            var match=Regex.Match(expr,@"^(window\.isvisible|control\.hasfocus|control\.isvisible|plugin\.isenabled|string\.equals|string\.contains|string\.starts)\((.*)\)$",RegexOptions.IgnoreCase);if(!match.Success)return null;
+            var match=Regex.Match(expr,@"^(window\.isvisible|control\.hasfocus|control\.isvisible|control\.hastext|control\.hasthumb|plugin\.isenabled|string\.equals|string\.contains|string\.starts)\((.*)\)$",RegexOptions.IgnoreCase);if(!match.Success)return null;
             string fun=match.Groups[1].Value.ToLowerInvariant(),arg=match.Groups[2].Value.Trim();int id;
             if(fun=="plugin.isenabled")return Plugins.Contains(arg.Trim('\'', '"'));
             if(fun=="string.equals"||fun=="string.contains"||fun=="string.starts")
@@ -57,8 +57,8 @@ namespace MP1SkinStudio
                 return fun=="string.starts"?left.StartsWith(right,StringComparison.Ordinal):left.IndexOf(right,StringComparison.Ordinal)>=0;
             }
             if(!Int32.TryParse(arg,out id))return null;if(fun=="window.isvisible")return Project.WindowId==id;if(fun=="control.hasfocus")return FocusId==id;
-            string activeKey="visible:"+id;if(!active.Add(activeKey))return null;
-            try{var controls=Project.LogicalControls().Where(c=>SkinProject.ControlId(c)==id).ToArray();if(controls.Length!=1)return null;return VisibleFor(controls[0],active);}finally{active.Remove(activeKey);}
+            string activeKey=(fun=="control.isvisible"?"visible:":fun+":")+id;if(!active.Add(activeKey))return null;
+            try{var controls=Project.LogicalControls().Where(c=>SkinProject.ControlId(c)==id).ToArray();if(controls.Length!=1)return null;if(fun=="control.hastext")return KnownControlText(controls[0]);if(fun=="control.hasthumb")return KnownControlThumb(controls[0]);return VisibleFor(controls[0],active);}finally{active.Remove(activeKey);}
         }
     }
 }

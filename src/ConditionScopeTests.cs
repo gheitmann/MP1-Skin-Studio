@@ -14,6 +14,59 @@ namespace MP1SkinStudio
         }
         static void RunConditionScopeTests(string root)
         {
+            Test("Nested localization expressions use loaded language snapshots and retain missing IDs",()=>
+            {
+                var p=ResetFixture(root,"content-localize");var c=p.Controls[0];string xml=ProjectFile.XmlSignature(p);
+                p.Editor.Language.Primary=LanguagePack.FromBytes(System.Text.Encoding.UTF8.GetBytes("<Language name='Primary'><Section name='unmapped'><String id='3' prefix='My '>Videos</String><String id='299'> Runtime : </String></Section></Language>"),"strings_primary.xml");
+                p.Editor.Language.Fallback=LanguagePack.FromBytes(System.Text.Encoding.UTF8.GetBytes("<Language name='Fallback'><Section name='unmapped'><String id='4'>Fallback</String></Section></Language>"),"strings_fallback.xml");var s=new PreviewState(p);
+                Check(s.Text(c,"#(L(3))")=="My Videos"&&s.Text(c,"#(L('4'))")=="Fallback","Localization lost prefixes or fallback.");
+                Check(s.Text(c,"#(string.rtrim(L(299),' :'))")==" Runtime","Nested native localization did not trim.");
+                p.Editor.Language.Prefixes=false;p.Editor.Preview.Values["#languageId"]="3";s=new PreviewState(p);Check(s.Text(c,"#(L(#languageId))")=="Videos","Sample language ID was not resolved.");
+                foreach(string expression in new[]{"#(L(99999))","#(L('bad'))","#(L(-1))","#(L(3,4))","#(string.trim(L(99999)))"})Check(s.Text(c,expression)==expression,"Unknown localization was guessed.");
+                Check(ProjectFile.XmlSignature(p)==xml&&!p.Dirty&&p.Undo.Count==0,"Localization changed skin XML.");
+            });
+            Test("Localization without a language snapshot or beyond expression bounds stays unresolved",()=>
+            {
+                var p=ResetFixture(root,"content-localize-bounds");var c=p.Controls[0];Check(new PreviewState(p).Text(c,"#(L(3))")=="#(L(3))","Missing language was guessed.");
+                p.Editor.Language.Primary=LanguagePack.FromBytes(System.Text.Encoding.UTF8.GetBytes("<Language><Section name='unmapped'><String id='3'>"+new string('x',8193)+"</String></Section></Language>"),"strings_large.xml");
+                Check(new PreviewState(p).Text(c,"#(L(3))")=="#(L(3))","Localization bypassed expression expansion bound.");
+            });
+            Test("Control.HasText uses known content without recursing through target visibility",()=>
+            {
+                var p=ScopeFixture(root,"content-text","<window><define>#text:#alias</define><define>#alias:#sample</define><controls><control><type>label</type><id>8</id><label>#text</label><visible>control.hastext(8)</visible></control></controls></window>","<window/>");
+                var c=p.Controls.Single();string xml=ProjectFile.XmlSignature(p);var state=new PreviewState(p);
+                Check(state.Visible(c)==null,"Missing text was guessed.");p.Editor.Preview.Values["#sample"]="";state=new PreviewState(p);Check(state.Visible(c)==false,"Known empty self-reference did not resolve.");
+                p.Editor.Preview.Values["#sample"]="Literal #unknown";state=new PreviewState(p);Check(state.Visible(c)==true&&state.Evaluate("control.isvisible(8)",new HashSet<string>())==true,"Known inserted text was evaluated recursively or content was mistaken for a visibility cycle.");
+                p.Edit(c,Set("label","#(string.trim(#sample))"),"Expression");p.Editor.Preview.Values["#sample"]="   ";Check(new PreviewState(p).Visible(p.Controls.Single())==false,"Known empty expression was not recognized.");p.UndoChange();
+                Check(ProjectFile.XmlSignature(p)==xml&&p.Redo.Count==1,"Content evaluation changed XML/history.");
+            });
+            Test("Content conditions keep ambiguous IDs, missing language and unsupported expressions unresolved",()=>
+            {
+                var p=ScopeFixture(root,"content-unknown","<window><controls><control><type>label</type><id>1</id><label>3</label></control><control><type>label</type><id>2</id><label>#(unsupported(#missing))</label></control><control><type>label</type><id>3</id><label>A</label></control><control><type>label</type><id>3</id><label>B</label></control></controls></window>","<window/>");var s=new PreviewState(p);
+                foreach(int id in new[]{1,2,3,999})Check(s.Evaluate("control.hastext("+id+")",new HashSet<string>())==null,"Unknown/ambiguous text was guessed.");
+                p.Editor.Language.Primary=LanguagePack.FromBytes(System.Text.Encoding.UTF8.GetBytes("<Language name='Test'><Section name='unmapped'><String id='3'>Videos</String></Section></Language>"),"strings_test.xml");
+                Check(new PreviewState(p).Evaluate("control.hastext(1)",new HashSet<string>())==true,"Known language text was not used.");
+            });
+            Test("Control.HasThumb follows known local images and invalidates changed file observations",()=>
+            {
+                var p=ScopeFixture(root,"content-thumb","<window><controls><control><type>image</type><id>60</id><texture>#thumb</texture><visible>!control.hasthumb(60)</visible></control></controls></window>","<window/>");
+                Directory.CreateDirectory(Path.Combine(p.Root,"Media"));string file=Path.Combine(p.Root,"Media","folder.png");using(var image=new System.Drawing.Bitmap(2,3))image.Save(file,System.Drawing.Imaging.ImageFormat.Png);
+                var state=new PreviewState(p);Check(state.Visible(p.Controls.Single())==null,"Unknown image binding was guessed.");
+                p.Editor.Preview.Values["#thumb"]="folder.png";state=new PreviewState(p);Check(state.Evaluate("control.hasthumb(60)",new HashSet<string>())==true&&state.Visible(p.Controls.Single())==false,"Known thumbnail/negation failed.");
+                File.WriteAllText(file,"invalid image");File.SetLastWriteTimeUtc(file,DateTime.UtcNow.AddMinutes(1));Check(state.Evaluate("control.hasthumb(60)",new HashSet<string>())==null,"Stale thumbnail result survived file replacement.");
+                File.Delete(file);Check(state.Evaluate("control.hasthumb(60)",new HashSet<string>())==false,"Missing static thumbnail was not recognized.");
+                foreach(string value in new[]{"","-"}){p.Editor.Preview.Values["#thumb"]=value;Check(new PreviewState(p).Evaluate("control.hasthumb(60)",new HashSet<string>())==false,"Empty thumbnail was not recognized.");}
+                foreach(string value in new[]{"../outside.png","C:\\outside.png"}){p.Editor.Preview.Values["#thumb"]=value;Check(new PreviewState(p).Evaluate("control.hasthumb(60)",new HashSet<string>())==null,"Out-of-media lookup was guessed.");}
+                Check(!p.Dirty&&p.Undo.Count==0,"Thumbnail inspection edited the skin.");
+            });
+            Test("Thumbnail conditions use theme media before base media",()=>
+            {
+                var p=ScopeFixture(root,"content-theme","<window><controls><control><type>image</type><id>60</id><texture>folder.png</texture></control></controls></window>","<window/>");
+                Directory.CreateDirectory(Path.Combine(p.Root,"Media"));Directory.CreateDirectory(Path.Combine(p.Root,"Themes","Test","Media"));using(var image=new System.Drawing.Bitmap(2,3))image.Save(Path.Combine(p.Root,"Media","folder.png"),System.Drawing.Imaging.ImageFormat.Png);
+                File.WriteAllText(Path.Combine(p.Root,"Themes","Test","Media","folder.png"),"invalid");p.Theme="Test";
+                Check(new PreviewState(p).Evaluate("control.hasthumb(60)",new HashSet<string>())==null,"Invalid theme media incorrectly used the base thumbnail.");p.Theme="";
+                Check(new PreviewState(p).Evaluate("control.hasthumb(60)",new HashSet<string>())==true,"Base media did not recover after theme change.");
+            });
             Test("Editing group visibility updates descendants and exact undo restores conditions",()=>
             {var p=ScopeFixture(root,"scope-edit-visibility","<window><controls><control><type>group</type><id>1</id><visible allowhiddenfocus='true'>yes</visible><include>part.xml</include></control></controls></window>","<window><controls><control><type>label</type><id>8</id><label>Child</label></control></controls></window>");string before=p.Controls[0].Source.Text;p.Edit(p.Controls[0],Set("visible","no"),"Hide group");var child=p.Controls.Single(c=>c.Get("id")=="8");Check(new PreviewState(p).Visible(child)==false&&p.Controls[0].Node.Child("visible").Element.GetAttribute("allowhiddenfocus")=="true","Visibility edit lost attributes or descendant state.");p.UndoChange();Check(p.Controls[0].Source.Text==before&&new PreviewState(p).Visible(p.Controls.Single(c=>c.Get("id")=="8"))==true,"Visibility undo is not exact.");p.RedoChange();Check(new PreviewState(p).Visible(p.Controls.Single(c=>c.Get("id")=="8"))==false,"Visibility redo did not update descendants.");});
             Test("Unsupported visibility conditions survive project and export without preview guesses",()=>

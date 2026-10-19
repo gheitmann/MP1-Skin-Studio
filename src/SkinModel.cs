@@ -418,9 +418,13 @@ namespace MP1SkinStudio
         }
         public string Text(SkinControl c,string value)
         {
-            string v;if(Project.Editor.Preview.Values.TryGetValue(value,out v))return v;
+            string result;TryText(c,value,out result);return result;
+        }
+        internal bool TryText(SkinControl c,string value,out string result)
+        {
+            string v;if(Project.Editor.Preview.Values.TryGetValue(value,out v)){result=v;return true;}
             var visited=new HashSet<string>();while(c.Defines!=null&&c.Defines.TryGetValue(value,out v)&&visited.Add(value))value=v;
-            return ExpressionText(c,value);
+            bool known;result=ExpressionText(c,value,out known);return known;
         }
         public bool? Visible(SkinControl c) { return VisibleFor(c,new HashSet<string>()); }
         static bool? And(bool? a,bool? b) { if(a==false||b==false)return false;if(a==null||b==null)return null;return true; }

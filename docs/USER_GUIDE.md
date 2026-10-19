@@ -305,3 +305,5 @@ for the current automation restriction and the limits of verified behavior.
 ## Video folder preview
 
 On a page with a list control, choose **Element > Video folder preview** to use one Videos folder, a folder image and explicitly empty movie metadata. The command selects list view and hides unverified conditions. Other unknown properties remain unresolved. Existing unrelated sample values, plugin states and language settings are retained. Skin XML and undo history stay unchanged; save the editor project to keep the sample state. Reapply the command after reopening to restore list focus. The preset uses Titan's DefaultFolderBig.png; use Collection Preview and Sample Data to change the image for other skins.
+
+Known static Control.HasText and Control.HasThumb conditions are evaluated from preview data and local media. Missing runtime properties, ambiguous IDs and unsupported image paths remain unresolved. Nested L(...) expressions use loaded language snapshots with fallback and prefix selection. Missing language IDs retain the original expression. These checks do not reproduce MP1 runtime texture caches or font metrics.
