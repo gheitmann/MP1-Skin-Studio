@@ -327,3 +327,7 @@ real-skin sources remain unchanged. package-review.ps1 produced and verified a
 manual review ZIP (24 files plus notes and SHA256 manifest) without launching it.
 See Validation/Model-Performance/README.md. Recent GUI paths remain manually
 unverified; desktop automation and DirectX work remain suspended/deferred.
+
+## Windows continuation validation
+
+October 19, 2026: restored GitHub commit `4fbc846` with all 198 tracked file hashes verified. Fresh Windows .NET Framework build, 237 core checks and 25 preview-expression checks passed. The editor launched and its Titan sample was observed through Computer Use. Broader interaction, persistent permission behavior and MP1 runtime checks remain pending; no client was launched and no original skin changed. See [Windows checkpoint](Validation/Resume-Windows-20261019/README.md). DirectX stays deferred.
