@@ -339,3 +339,7 @@ October 19, 2026: attended access test launched the editor and installed MP1, op
 ## Attended Titan Video preview comparison
 
 October 19, 2026: fresh complex-page probe passed all eleven stages on a complete isolated Titan copy. Attended UI checks loaded myvideo.xml, selected the concrete list, hid unverified conditions, loaded German language without prefixes and saved a preview-only project. Full SHA256 comparison: 2,050 skin files, zero mismatches. The list selection closes the simulated side menu and localization fixes numeric title IDs, but unknown metadata and six movie sample rows still differ from the client's single Videos folder. No export was installed; runtime comparison remains pending. See [comparison findings](Validation/Titan-Video-Comparison-20261019/README.md).
+
+## Video folder preview milestone
+
+October 19, 2026: added Element > Video folder preview and fixed initialization of derived collection values after rebuilding preview state. One Videos folder and explicit empty movie metadata are preview-only; unrelated unknown values stay unresolved. Fresh final Windows validation: 239 core checks, 25 expression checks and eleven real Titan model stages passed. Attended UI confirmed the folder, count 1 and matching selected title; save/reopen retained sample and language state. 89 unresolved conditions and remaining placeholders prevent a claim of visual equivalence. No export was installed. See [folder preview](Validation/Video-Folder-Preview/README.md).

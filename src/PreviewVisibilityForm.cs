@@ -10,6 +10,7 @@ namespace MP1SkinStudio
         void AddVisibilityCommands(ContextMenuStrip menu)
         {
             menu.Items.Add("Collection Preview …",null,(s,e)=>Attempt(ShowCollectionSettings));
+            menu.Items.Add("Video folder preview",null,(s,e)=>Attempt(ApplyVideoFolderPreview));
             menu.Items.Add(new ToolStripSeparator());var item=(ToolStripMenuItem)menu.Items.Add("Show unverified conditions",null,(s,e)=>SetUnresolvedPreview(!project.Editor.ShowUnresolved));item.Checked=project.Editor.ShowUnresolved;
         }
     }

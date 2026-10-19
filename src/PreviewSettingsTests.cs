@@ -12,6 +12,28 @@ namespace MP1SkinStudio
     {
         static void RunPreviewSettingsTests(string root)
         {
+            Test("Video folder samples preserve unknown values, XML edits and redo history",()=>
+            {
+                string folder=Path.Combine(root,"video-folder");Directory.CreateDirectory(folder);
+                Write(folder,"main.xml",Xml("<label>#plot</label>").Replace("<type>label</type>","<type>listcontrol</type>"));
+                var p=new SkinProject(folder);p.OpenPage("main.xml");
+                p.Edit(p.Controls[0],Set("width","658"),"Width");p.UndoChange();
+                string xml=ProjectFile.XmlSignature(p);int redo=p.Redo.Count;
+                p.Editor.Preview.Values["#custom"]="Keep";p.Editor.Preview.Values["#itemcount"]="99";
+                VideoFolderPreview.Apply(p);var state=new PreviewState(p);
+                Check(state.Values["#itemcount"]=="1"&&state.Values["#selecteditem"]=="Videos"&&state.Text(p.Controls[0],"#plot")=="","Folder state is inconsistent.");
+                Check(state.Text(p.Controls[0],"#unknown.runtime")=="#unknown.runtime"&&state.Values["#custom"]=="Keep","Unknown or custom values were cleared.");
+                Check(ProjectFile.XmlSignature(p)==xml&&p.Redo.Count==redo&&!p.Dirty,"Preview changed XML or redo history.");
+                string file=Path.Combine(root,"video-folder.mp1skinproj");ProjectFile.Save(p,file);var loaded=ProjectFile.Load(file);
+                Check(loaded.Editor.Collection.Signature()==p.Editor.Collection.Signature()&&loaded.Editor.Preview.SignatureText()==p.Editor.Preview.SignatureText(),"Folder state did not round-trip.");
+                p.RedoChange();string edited=p.Controls[0].Source.Text;string export=Path.Combine(root,"video-folder.zip");p.Export(export);
+                using(var zip=ZipFile.OpenRead(export))using(var reader=new StreamReader(zip.GetEntry("main.xml").Open()))Check(reader.ReadToEnd()==edited,"Folder samples leaked into exported XML.");
+            });
+            Test("Video folder preview rejects unsupported pages without changing editor state",()=>
+            {
+                var p=ResetFixture(root,"video-folder-reject");string before=ProjectFile.ContentSignature(p);
+                Reject(()=>VideoFolderPreview.Apply(p));Check(ProjectFile.ContentSignature(p)==before,"Rejected preview changed state.");
+            });
             Test("Oversized project descriptions are rejected while preserving the last saved file",()=>
             {
                 var p=ResetFixture(root,"preview-manifest-limit");string file=Path.Combine(root,"preview-limit.mp1skinproj");ProjectFile.Save(p,file);byte[] original=File.ReadAllBytes(file);

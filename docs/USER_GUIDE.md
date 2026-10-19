@@ -301,3 +301,7 @@ static preview and are preserved in saved projects and exports.
 
 These recent interface paths are awaiting manual validation. Refer to STATUS.md
 for the current automation restriction and the limits of verified behavior.
+
+## Video folder preview
+
+On a page with a list control, choose **Element > Video folder preview** to use one Videos folder, a folder image and explicitly empty movie metadata. The command selects list view and hides unverified conditions. Other unknown properties remain unresolved. Existing unrelated sample values, plugin states and language settings are retained. Skin XML and undo history stay unchanged; save the editor project to keep the sample state. Reapply the command after reopening to restore list focus. The preset uses Titan's DefaultFolderBig.png; use Collection Preview and Sample Data to change the image for other skins.

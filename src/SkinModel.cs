@@ -414,6 +414,7 @@ namespace MP1SkinStudio
             Values=PreviewSettings.BaseValues();p.Editor.Preview.Validate();
             foreach(var pair in p.Editor.Preview.Values)Values[pair.Key]=pair.Value;
             foreach(string plugin in p.Editor.Preview.Plugins)Plugins.Add(plugin);
+            UpdateCollectionValues();
         }
         public string Text(SkinControl c,string value)
         {
