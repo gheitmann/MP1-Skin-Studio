@@ -35,6 +35,12 @@
       <width>470</width>
       <height>130</height>
       <label>Movies</label>
+      <textcolor>ffffffff</textcolor>
+      <textcolorNoFocus>ffffffff</textcolorNoFocus>
+      <textalign>center</textalign>
+      <textvalign>middle</textvalign>
+      <textXOff>0</textXOff>
+      <textYOff>0</textYOff>
       <textureNoFocus>Studio/Button-dark.png</textureNoFocus>
       <textureFocus>Studio/Button-blue.png</textureFocus>
       <font>TitanLight22</font>
@@ -54,6 +60,12 @@
       <width>470</width>
       <height>130</height>
       <label>Series</label>
+      <textcolor>ffffffff</textcolor>
+      <textcolorNoFocus>ffffffff</textcolorNoFocus>
+      <textalign>center</textalign>
+      <textvalign>middle</textvalign>
+      <textXOff>0</textXOff>
+      <textYOff>0</textYOff>
       <textureNoFocus>Studio/Button-dark.png</textureNoFocus>
       <textureFocus>Studio/Button-blue.png</textureFocus>
       <font>TitanLight22</font>
@@ -70,6 +82,12 @@
       <width>470</width>
       <height>130</height>
       <label>Music</label>
+      <textcolor>ffffffff</textcolor>
+      <textcolorNoFocus>ffffffff</textcolorNoFocus>
+      <textalign>center</textalign>
+      <textvalign>middle</textvalign>
+      <textXOff>0</textXOff>
+      <textYOff>0</textYOff>
       <textureNoFocus>Studio/Button-dark.png</textureNoFocus>
       <textureFocus>Studio/Button-blue.png</textureFocus>
       <font>TitanLight22</font>

@@ -26,6 +26,8 @@ Source revision: $Revision
 Extract this complete ZIP to a separate directory. To test manually, run
 MP1SkinStudio.exe from that directory. It opens the included demo skin.
 Requires Windows and .NET Framework 4.x. Packaging does not launch the editor.
+Try demo.filmstrip.xml from PAGE / XML, enable Navigation and use Left/Right.
+Its upper image follows the selected thumbnail; no installed skin is required.
 
 This package contains the editor, repository demo XML/images, license and guide.
 It contains no installed Titan skin, MediaPortal executable, client configuration,
@@ -36,10 +38,11 @@ use Revert Inputs to discard unapplied fields; test Undo/Redo; save an editor
 project, reopen it and export changes as ZIP. Use separate skin copies for real
 editing and retain original files. The preview remains approximate.
 
-Validation covers 322 core checks and six real Titan filmstrip/navigation/
-save/reopen/export/undo workflows, with 17 unchanged original XML hashes.
-Six production canvas renders were generated. Pre-delivery Windows startup was observed;
-new attended PIN menu and protected position-field acceptance is not claimed.
+Fresh acceptance covers attended Windows PIN Unlocked/protected fields/arrow
+navigation/save/reopen, eight bundled demo page loads, and the self-contained
+filmstrip save/export/undo workflow. All 22 bundled source/assets stayed unchanged
+by that workflow. The engine retains its preceding 322-core-check/six-Titan-
+workflow validation; those unchanged suites were not repeated.
 No new installed MediaPortal client run was performed. See the user guide for
 supported preview navigation and remaining rendering limitations.
 "@

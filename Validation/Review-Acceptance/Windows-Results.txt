@@ -1,0 +1,10 @@
+October 20, 2026 — fresh attended Windows filmstrip acceptance
+Build: Filmstrip-State-Delivery, unchanged engine from source checkpoint 4a75bdf.
+PASS Element > Video PIN preview > Unlocked changes the previously locked example to its green unlocked icon, with zero unverified visibility.
+PASS Search and select ClearArt Filmstrip exposes Position X 1550 as a protected XML fallback, read-only in accessibility.
+PASS Replace bindings locally leaves the property-driven Position X read-only.
+PASS Enabling Navigation and pressing Right moves item 3 to item 4, its upper image and the unlocked icon together.
+PASS Ctrl+S clears the unsaved marker. Saved manifest: PIN False, collection focus 3 (item 4), zero modified XML snapshots and zero persisted derived-focus overrides.
+PASS Close/reopen using the executable from a freshly extracted review ZIP restores item 4 and its unlocked icon with zero unverified visibility and a clean caption.
+Scope: native Unlocked menu path, protected position field with binding-replacement checkbox, arrow navigation and save/reopen. Locked was the initial saved scene; Unverified menu input was not repeated because the preceding model matrix already covers all three states.
+No installed MediaPortal client run. No screenshots or saved projects are committed.

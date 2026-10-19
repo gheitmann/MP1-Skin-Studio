@@ -2,7 +2,13 @@
 
 Date: October 20, 2026. Imported version: 0.9.
 
-## Latest source milestone: filmstrip coordinates and image position bindings
+## Latest source milestone: Windows acceptance and self-contained filmstrip demo
+
+October 20, 2026: attended Windows acceptance passed for the Video PIN Unlocked menu, protected position fields even with binding replacement enabled, arrow navigation and save/close/reopen from the extracted review ZIP. The saved scene retains item 4 and unlocked state with no XML snapshots or derived-focus overrides.
+
+Fresh package validation loads all eight full demo pages and passes the new self-contained filmstrip navigation/save/reopen/export/undo workflow; all 22 bundled source/assets stay unchanged by the probe. A new demo.filmstrip.xml makes property-driven positions directly reviewable without an installed skin. The three authored menu buttons now have readable white centered captions. The engine binary is unchanged; the preceding 322 core checks and six Titan workflows were not repeated. No new installed-client run. See [acceptance and limits](Validation/Review-Acceptance/README.md).
+
+## Previous source milestone: filmstrip coordinates and image position bindings
 
 October 20, 2026: supported static filmstrip facades expose selected thumbnail coordinates; overlays with image posX/posY property attributes follow those coordinates. Integer cint/add/sub expressions and explicit Video PIN samples complete the tested Titan filmstrip scene while keeping unknown PIN state unverified. Property-driven position fields remain protected; XML bindings and fallbacks are preserved.
 
@@ -84,7 +90,7 @@ October 19, 2026: static known-content conditions and nested localization now wo
 
 The owner prioritizes practical edit/save/reopen/export workflows and substantial autonomous work blocks. Routine follow-up steps do not require another continuation prompt. Necessary checks run at integrated milestones.
 
-Current validation: 322 core checks and six complete real Titan filmstrip workflows with 17 unchanged original source hashes. Pre-delivery Windows startup was observed; new interactive PIN/position-field acceptance is not claimed. Earlier artwork, page, collection, group and installed-client results remain historical.
+Current acceptance: native Windows PIN Unlocked/protected fields/navigation/save/reopen and fresh review-package/demo workflows passed. The engine is unchanged from the 322-check/six-Titan-workflow checkpoint; those model results remain historical. See Review-Acceptance for exact scope.
 
 Next core work is broader real-page preview fidelity and navigation coverage, particularly unsupported geometric layouts, other facade types and plugin states, while retaining duplicate-ID uncertainty. Existing samples make BasicHome, Settings and Video useful without claiming complete runtime equivalence. Masks, animation, full geometric navigation and plugin-specific values remain approximate or unresolved. Continue real-skin edit/save/reopen/export acceptance around any such changes, preserving original files. Auxiliary global-style and cross-group movement tools remain lower priority.
 

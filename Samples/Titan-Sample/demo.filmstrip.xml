@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Editor-authored example; no installed skin or runtime artwork is required. -->
+<window>
+  <id>9010</id>
+  <defaultcontrol>50</defaultcontrol>
+  <controls>
+    <control>
+      <type>label</type><id>0</id><description>Filmstrip demo heading</description>
+      <posX>100</posX><posY>65</posY><width>1700</width><height>90</height>
+      <font>TitanLight32</font><label>Follow the selected filmstrip item</label><textcolor>ffffffff</textcolor>
+    </control>
+    <control>
+      <type>label</type><id>0</id><description>Filmstrip demo instructions</description>
+      <posX>100</posX><posY>165</posY><width>1700</width><height>65</height>
+      <font>TitanLight16</font><label>Enable Navigation, then use Left and Right. The upper image follows the selected thumbnail.</label><textcolor>ffbdd9ed</textcolor>
+    </control>
+    <control>
+      <type>facadeview</type><id>50</id><description>Demo filmstrip facade</description>
+      <control>
+        <type>filmstrip</type><id>50</id><description>Demo filmstrip items</description>
+        <posX>100</posX><posY>400</posY><width>1700</width><height>400</height>
+        <itemWidth>260</itemWidth><itemHeight>340</itemHeight>
+        <thumbPosX>10</thumbPosX><thumbPosY>5</thumbPosY><thumbWidth>220</thumbWidth><thumbHeight>280</thumbHeight>
+        <textureWidth>240</textureWidth><textureHeight>290</textureHeight><textYOff>8</textYOff>
+        <font>TitanLight16</font><textcolor>ffffffff</textcolor><textalign>center</textalign>
+        <imageFolder>Studio/Button-dark.png</imageFolder><imageFolderFocus>Studio/Button-blue.png</imageFolderFocus>
+        <onleft>50</onleft><onright>50</onright>
+      </control>
+    </control>
+    <control>
+      <type>image</type><id>601</id><description>Following image with protected position</description>
+      <posX property="#facadeview.focus.X">100</posX><posY>275</posY><width>96</width><height>96</height>
+      <texture>Studio/Icon-Movie.png</texture><keepaspectratio>yes</keepaspectratio>
+      <visible>facadeview.filmstrip</visible>
+    </control>
+    <control>
+      <type>label</type><id>0</id><description>Selected filmstrip sample</description>
+      <posX>100</posX><posY>850</posY><width>1700</width><height>70</height>
+      <font>TitanLight22</font><label>#selecteditem</label><textcolor>ffffffff</textcolor>
+    </control>
+    <control>
+      <type>label</type><id>0</id><description>Protected binding instructions</description>
+      <posX>100</posX><posY>950</posY><width>1700</width><height>65</height>
+      <font>TitanLight14</font><label>Select the upper image to inspect its protected position. Save Project retains selection and bindings.</label><textcolor>ffbdd9ed</textcolor>
+    </control>
+  </controls>
+</window>

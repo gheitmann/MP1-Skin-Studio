@@ -1,0 +1,21 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
+using MP1SkinStudio;
+class ReviewAcceptanceProbe
+{
+ static void Check(bool ok,string message){if(!ok)throw new Exception(message);}
+ static int Main(string[] args){try{
+ Directory.CreateDirectory(args[1]);var results=new List<string>();string root=Path.GetFullPath(args[0]);var hashes=Directory.GetFiles(root,"*",SearchOption.AllDirectories).ToDictionary(p=>p,p=>ProjectFile.Digest(File.ReadAllBytes(p)));
+ foreach(string page in new[]{"demo.xml","demo.collections.xml","demo.filmstrip.xml","demo.grid.xml","demo.groups.xml","demo.language.xml","demo.layers.xml","demo.stack.xml"}){var p=new SkinProject(root);PreparedSkinSession.Create(p,page);Check(p.Controls.Count>0&&!p.Dirty,page+": page did not load cleanly");results.Add("PASS bundled page "+page+": "+p.Controls.Count+" expanded controls loaded.");}
+ var demo=new SkinProject(root);PreparedSkinSession.Create(demo,"demo.xml");foreach(int id in new[]{10,11,12}){var button=demo.Controls.Single(c=>SkinProject.ControlId(c)==id);Check(button.Get("textcolorNoFocus")=="ffffffff"&&button.Get("textalign")=="center"&&button.Get("textvalign")=="middle","Demo caption color/alignment regressed");}
+ var film=new SkinProject(root);var session=PreparedSkinSession.Create(film,"demo.filmstrip.xml");var state=session.Preview;var overlay=film.Controls.Single(c=>SkinProject.ControlId(c)==601);string xml=ProjectFile.XmlSignature(film);Check(new StackPreview(film,state).Bounds(overlay).X==110&&overlay.IsBound("posX"),"Bundled property position not active");Check(film.TryMoveCollectionSelection(state,"onright")&&film.TryMoveCollectionSelection(state,"onright")&&new StackPreview(film,state).Bounds(overlay).X==630,"Bundled overlay did not follow sample navigation");Check(PreviewProblems.Run(film,state).Issues.Count==0&&ProjectFile.XmlSignature(film)==xml,"Bundled scene is unverified or navigation changed XML");
+ string clean=Path.Combine(args[1],"Filmstrip.mp1skinproj"),signature=ProjectFile.ContentSignature(film);ProjectFile.Save(film,clean);var loaded=ProjectFile.Load(clean);Check(ProjectFile.ContentSignature(loaded)==signature&&new StackPreview(loaded,new PreviewState(loaded)).Bounds(loaded.Controls.Single(c=>SkinProject.ControlId(c)==601)).X==630,"Bundled selection/position did not reopen");
+ overlay=loaded.Controls.Single(c=>SkinProject.ControlId(c)==601);string before=overlay.Source.Text;loaded.Edit(overlay,new Dictionary<string,string>{{"width","104"}},"Demo overlay width");string after=loaded.Controls.Single(c=>SkinProject.ControlId(c)==601).Source.Text,edited=Path.Combine(args[1],"Filmstrip-Edited.mp1skinproj"),zip=Path.Combine(args[1],"Filmstrip-Export.zip");ProjectFile.Save(loaded,edited);var restored=ProjectFile.Load(edited);restored.Export(zip);
+ using(var archive=ZipFile.OpenRead(zip)){Check(archive.Entries.Count==2,"Unexpected bundled export entries");using(var reader=new StreamReader(archive.GetEntry("demo.filmstrip.xml").Open()))Check(reader.ReadToEnd()==after&&after.Contains("property=\"#facadeview.focus.X\""),"Bundled export lost original binding");}
+ restored.UndoChange();Check(!restored.Dirty&&restored.Controls.Single(c=>SkinProject.ControlId(c)==601).Source.Text==before,"Bundled restored undo failed");restored.RedoChange();Check(restored.Controls.Single(c=>SkinProject.ControlId(c)==601).Source.Text==after,"Bundled restored redo failed");
+ foreach(var pair in hashes)Check(ProjectFile.Digest(File.ReadAllBytes(pair.Key))==pair.Value,"Bundled source asset changed: "+Path.GetFileName(pair.Key));results.Add("PASS authored demo captions: readable white unfocused text and centered alignment.");results.Add("PASS self-contained filmstrip: X 110 -> 630, zero unverified findings, sample navigation/save/reopen/export/restored undo/redo and original property attribute preserved.");results.Add("PASS "+hashes.Count+" bundled source/assets unchanged by review workflows; installed Titan is not required.");File.WriteAllLines(Path.Combine(args[1],"Results.txt"),results);foreach(string line in results)Console.WriteLine(line);return 0;
+ }catch(Exception ex){Console.Error.WriteLine(ex);return 1;}}
+}

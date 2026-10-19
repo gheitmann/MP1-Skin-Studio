@@ -385,3 +385,9 @@ Image posX and posY attributes named property can use these values and the suppo
 The property pane labels these fixed positions as protected XML fallbacks and makes them read-only. Their bindings remain protected during movement, alignment, copying and direct edits; inspect positions by changing preview samples. Other editable properties, such as image width, still retain their ordinary undo/export workflow.
 
 Element > Video PIN preview > Locked / Unlocked chooses an explicit #MyVideos.PinLocked sample. Unverified removes it and keeps missing runtime state unknown. This never changes actual PINs, configuration or media access. Save the editor project to retain the sample. Exported XML preserves original position attributes and contains no PIN sample data.
+
+## Try the self-contained filmstrip demo
+
+Open the bundled demo skin and choose demo.filmstrip.xml from PAGE / XML. Enable Navigation and use Left/Right: the upper movie image follows the selected thumbnail. Select that upper image to inspect its read-only property-driven Position X. Collection changes sample titles and images. Save Project retains the selected sample; changing an ordinary property such as image width can be undone and exported while preserving the position attribute. This example uses bundled Studio images and requires no installed Titan skin, plugins or runtime artwork.
+
+The default menu demo also uses explicit white text for both focused and unfocused buttons, with centered captions. Original Titan reference/theme resources remain unchanged.

@@ -1,0 +1,11 @@
+PASS bundled page demo.xml: 20 expanded controls loaded.
+PASS bundled page demo.collections.xml: 12 expanded controls loaded.
+PASS bundled page demo.filmstrip.xml: 7 expanded controls loaded.
+PASS bundled page demo.grid.xml: 9 expanded controls loaded.
+PASS bundled page demo.groups.xml: 7 expanded controls loaded.
+PASS bundled page demo.language.xml: 4 expanded controls loaded.
+PASS bundled page demo.layers.xml: 5 expanded controls loaded.
+PASS bundled page demo.stack.xml: 13 expanded controls loaded.
+PASS authored demo captions: readable white unfocused text and centered alignment.
+PASS self-contained filmstrip: X 110 -> 630, zero unverified findings, sample navigation/save/reopen/export/restored undo/redo and original property attribute preserved.
+PASS 22 bundled source/assets unchanged by review workflows; installed Titan is not required.
