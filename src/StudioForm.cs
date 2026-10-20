@@ -321,6 +321,10 @@ namespace MP1SkinStudio
             }
             finally{loading=prior;}
             folderName.Text=System.IO.Path.GetFileName(project.Root.TrimEnd('\\'));tips.SetToolTip(folderName,project.Root);RefreshProject(null);
+            // Establish the baseline after initial selection, including the
+            // fallback focus used by pages without an explicit default control.
+            initialEditorSignature=ProjectFile.EditorSignature(project);savedEditorSignature=initialEditorSignature;
+            savedProjectSignature=editorFile==null?null:ProjectFile.ContentSignature(project);UpdateProjectCaption();
         }
         void PopulatePageChoices(string[] pages)
         {

@@ -19,7 +19,7 @@ Visual position, size, text and texture editing; multiple selection and alignmen
 
 ## Validation
 
-Latest checkpoint (October 20): **370 core checks and eight real Titan checkmark workflows passed**, including 172 explicit routes and 12 unchanged loaded original XML hashes. Checkmark textures, selection expressions, sizing and mixed navigation now have a bounded preview; try demo.checkmark.xml. Six synthetic Windows arrow events and checkmark property Apply/save/reopen passed through the form. See [checkmark validation](Validation/Checkmark-Preview/README.md) and STATUS.md. Previous matrices and attended acceptance remain historical; no new installed-client run occurred.
+Latest checkpoint (October 20): **204 automated Windows-form UI checks, twelve packaged demo workflows and twelve clean-session checks passed** using the extracted review build. Initial fallback selection no longer falsely marks a freshly opened skin/project as unsaved. All 29 payload originals stayed unchanged. See [package readiness](Validation/Package-Readiness/README.md) and STATUS.md. The preceding 370 core/model checks and Titan/attended reports remain historical; no new installed-client run occurred.
 
 
 Historical reports under `Validation` record 189 core checks, 185 UI checks, 602 Titan page/theme variants and ten direct checks against original MP1 StackLayout classes. These counts were imported from the saved release package and do not imply that all tests were rerun during import. A fresh build succeeded during import. The English migration also passed 189 core checks and 185 UI checks; fresh reports are in [Validation/English-Migration](Validation/English-Migration).

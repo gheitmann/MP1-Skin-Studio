@@ -1,0 +1,14 @@
+PASS 29 manifest payload hashes before acceptance.
+PASS demo.checkmark.xml: load/preview/width edit/save/reopen/exact export/normal and restored Undo/Redo; 7 expanded controls.
+PASS demo.collections.xml: load/preview/width edit/save/reopen/exact export/normal and restored Undo/Redo; 12 expanded controls.
+PASS demo.filmstrip.xml: load/preview/width edit/save/reopen/exact export/normal and restored Undo/Redo; 7 expanded controls.
+PASS demo.free.xml: load/preview/width edit/save/reopen/exact export/normal and restored Undo/Redo; 10 expanded controls.
+PASS demo.grid.xml: load/preview/width edit/save/reopen/exact export/normal and restored Undo/Redo; 9 expanded controls.
+PASS demo.groups.xml: load/preview/width edit/save/reopen/exact export/normal and restored Undo/Redo; 7 expanded controls.
+PASS demo.images.xml: load/preview/width edit/save/reopen/exact export/normal and restored Undo/Redo; 15 expanded controls.
+PASS demo.language.xml: load/preview/width edit/save/reopen/exact export/normal and restored Undo/Redo; 4 expanded controls.
+PASS demo.layers.xml: load/preview/width edit/save/reopen/exact export/normal and restored Undo/Redo; 5 expanded controls.
+PASS demo.navigation.xml: load/preview/width edit/save/reopen/exact export/normal and restored Undo/Redo; 10 expanded controls.
+PASS demo.stack.xml: load/preview/width edit/save/reopen/exact export/normal and restored Undo/Redo; 13 expanded controls.
+PASS demo.xml: load/preview/width edit/save/reopen/exact export/normal and restored Undo/Redo; 20 expanded controls.
+PASS all 29 payload originals unchanged. No installed skin, language or client required.

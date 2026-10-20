@@ -43,9 +43,9 @@ namespace MP1SkinStudio
             page.SelectedIndex=page.FindStringExact("demo.layers.xml");verify(elementSearch.Text=="id:10"&&tree.Nodes.Count==0,"Page changes apply the current search filter to the new page");
             elementSearch.Clear();canvas.Update();var point=canvas.PointForTest(950,650);var hits=canvas.OverlappingAt(point);
             verify(String.Join(",",hits.Select(c=>c.Name))=="Layer C,Layer B,Layer A","Pointer hits are sorted in visible front-to-back order");
-            project.Editor.Locked.Add(hits[0].Key);string before=ProjectFile.ContentSignature(project);elementSearch.Text="id:201";canvas.ExercisePick(point);var menu=StudioMenus.PeekForTest(this,"overlap");
+            project.Editor.Locked.Add(hits[0].Key);string before=ProjectFile.XmlSignature(project);elementSearch.Text="id:201";canvas.ExercisePick(point);var menu=StudioMenus.PeekForTest(this,"overlap");
             verify(menu.Items.Count==5&&menu.Items[2].Text.Contains("[L]")&&menu.Items[2].Enabled,"Overlap lists include locked elements for inspection");menu.ChooseForTest(2);Application.DoEvents();
-            verify(selected.Name=="Layer C"&&fields.Values.All(b=>b.ReadOnly)&&tree.SelectedNode==null&&ProjectFile.ContentSignature(project)==before,"Real context menus select obscured locked elements despite tree filters without XML edits");
+            verify(selected.Name=="Layer C"&&fields.Values.All(b=>b.ReadOnly)&&tree.SelectedNode==null&&ProjectFile.XmlSignature(project)==before&&state.FocusId==SkinProject.ControlId(selected),"Real context menus select obscured locked elements despite tree filters without XML edits while updating simulated focus");
             canvas.ExercisePick(point);menu=StudioMenus.PeekForTest(this,"overlap");menu.ChooseForTest(3);Application.DoEvents();
             verify(selected.Name=="Layer B"&&project.Undo.Count==0,"Reused overlap lists select middle layers without dragging or undo steps");
             project.Editor.Hidden.Add(selected.Key);hits=canvas.OverlappingAt(point);verify(hits.Length==2&&hits.All(c=>c.Name!="Layer B"),"Editor-hidden elements are excluded from pointer hit lists");

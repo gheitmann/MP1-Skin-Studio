@@ -2,7 +2,13 @@
 
 Date: October 20, 2026. Imported version: 0.9.
 
-## Latest source milestone: checkmark previews and mixed navigation
+## Latest source milestone: clean startup and extracted-package acceptance
+
+October 20, 2026: opening a skin/project now captures its baseline after initial designer selection, including fallback focus on pages without defaultcontrol. This removes a false unsaved marker while retaining later focus/view/XML save detection. A viewport regression assertion covers clean initial focus. The overlap-selection UI assertion now checks unchanged XML plus correct persisted focus, rather than wrongly requiring all editor metadata to stay unchanged when selecting another focusable control.
+
+Fresh acceptance uses the compiled editor from an extracted review ZIP: 204 automated Windows-form UI checks, twelve complete demo load/preview/edit/save/reopen/export/normal and restored Undo/Redo workflows, and twelve clean-open/zoom/Fit/save/reopen checks passed. All 29 payload hashes stayed unchanged before/after matrix and UI workflows. Final package metadata/guide were updated afterward; the accepted executable and samples are unchanged. The preceding 370 core/model checks remain historical and were not repeated for this form initialization fix. No new attended input or installed-client run. See [package acceptance and reproduction](Validation/Package-Readiness/README.md).
+
+## Previous source milestone: checkmark previews and mixed navigation
 
 October 20, 2026: native checkmark controls now render selected/unselected local textures with static mark sizing, label-side placement and focus/unfocused text colors. Known true/false expressions use explicit preview data; unresolved selection stays unknown with Ctrl+F8 diagnostics. Six checkmark-only properties provide normal editing and reset. Dimension aliases preserve existing XML spelling and reject ambiguous edits. Mixed button/checkmark scenes use bounded geometric navigation, including linear stacks, without activation or selection toggling. demo.checkmark.xml supplies selected/unselected/unverified examples.
 
@@ -120,7 +126,7 @@ October 19, 2026: static known-content conditions and nested localization now wo
 
 The owner prioritizes practical edit/save/reopen/export workflows and substantial autonomous work blocks. Routine follow-up steps do not require another continuation prompt. Necessary checks run at integrated milestones.
 
-Current validation: 370 core checks and eight real Titan checkmark workflows passed, with 172 explicit routes and 12 unchanged loaded original XML hashes. The mixed checkmark demo passed six synthetic Windows form arrow events, property-field Apply and save/reopen. Earlier native-math, attended acceptance and other matrices remain historical.
+Current validation: 204 fresh automated UI checks plus twelve packaged demo workflows and twelve clean-session checks passed. All 29 accepted package payload hashes remained unchanged. The preceding 370 core/model checks, Titan matrices and attended/client acceptance are historical; no new client run occurred.
 
 Next core work is broader real-page preview fidelity and navigation coverage, particularly additional focusable control types, other facade types and plugin states, while retaining duplicate-ID uncertainty. Existing samples make BasicHome, Settings and Video useful without claiming complete runtime equivalence. Masks, animation, full geometric navigation and plugin-specific values remain approximate or unresolved. Continue real-skin edit/save/reopen/export acceptance around any such changes, preserving original files. Auxiliary global-style and cross-group movement tools remain lower priority.
 

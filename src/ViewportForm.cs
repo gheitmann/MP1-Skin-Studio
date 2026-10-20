@@ -77,6 +77,7 @@ namespace MP1SkinStudio
         void RunViewportUiSmoke(string directory,Action<bool,string> verify)
         {
             LoadProject(DemoRoot(),"demo.xml");canvas.Update();
+            verify(!SessionNeedsSaving()&&!Text.EndsWith("*"),"Opening a skin keeps initial fallback focus clean");
             var anchor=new Point(canvas.Width/2+57,canvas.Height/2-31);var delta=canvas.ExerciseZoom(anchor,240);
             verify(Math.Abs(delta.X)<.01&&Math.Abs(delta.Y)<.01&&project.Editor.Zoom>1,"Mouse-wheel zoom preserves the logical point under the pointer");
             double oldPan=project.Editor.PanX;canvas.ExercisePan(70,30);
