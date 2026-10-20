@@ -1,0 +1,13 @@
+PASS DefaultWideHD embeds all 449 files in the sidebar with a resize divider and no popup
+PASS Wheel over file list scrolls while property input keeps focus and model selection
+PASS Wheel deltas accumulate and stop safely at list boundaries without selection events
+PASS Wheel outside the list and over another form is not intercepted
+PASS Filename filter is literal and insensitive and preserves active preview and pending drafts
+PASS Empty results explain no matches and wheel remains safe
+PASS Integrated selection loads Video and retains edits through save reopen exact export and Undo Redo
+PASS Pending input blocks list selection without a modal and restores the active row
+PASS Failed page load restores the integrated selector and complete active session
+PASS Skin reload resets the page filter and layout remains usable at minimum window size
+PASS Wheel message routing unregisters when its editor is disposed
+PASS Existing integrated-page and other menu callbacks remain usable
+12 passed, 0 failed; 488 installed XML and 26 demo hashes unchanged. Synthetic wheel/message and selection events; no desktop input.

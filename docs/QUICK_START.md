@@ -28,6 +28,10 @@ Cancel when needed. Canceling Save As or a failed save keeps the session open.
 Apply/Revert pending fields first; the close dialog disables Save while fields
 are pending. Enter/Escape safely cancel the decision.
 
+The PAGES / XML list is integrated into the left sidebar. Use its filename
+filter and mouse wheel to browse; scrolling does not switch the active page.
+Click a file to open it. Drag the divider below the list to resize it.
+
 ## Choose a demo
 
 Use PAGE / XML. Common XML files and demo.menu.xml are includes; choose one of

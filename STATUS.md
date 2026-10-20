@@ -2,7 +2,13 @@
 
 Date: October 20, 2026. Imported version: 0.9.
 
-## Latest source milestone: DefaultWideHD large-selector responsiveness
+## Latest source milestone: integrated pages/XML list with mouse-wheel scrolling
+
+October 20, 2026: replaced the page dropdown with a permanent sidebar list, literal filename filter, count/no-results state and a resizable divider above the element tree. Hover-wheel routing scrolls visible rows without selecting another page or stealing property focus. Partial deltas and boundaries are handled; routing unregisters on disposal and excludes other forms/outside areas. Pending page selections restore the active row with status guidance instead of a modal. Existing failed-load/session preservation remains in force.
+
+Fresh extracted-package acceptance: twelve targeted integrated-page scenarios, twelve current menu assertions, twelve complete demo workflows and twelve clean-session workflows. All 488 installed XML, 26 demo source/asset and 31 package payload hashes stayed unchanged. Default/minimum form renders were inspected. The new packaged editor is open; current Windows state shows the owner already filtering plugin (five of 449 files), with myHome preview retained. No automated input followed the user-input notice, preserving filter/zoom/session; actual desktop wheel input is not newly claimed. See [integrated page validation](Validation/Integrated-Pages/README.md). Prior core/broad/review/transition/startup and large-menu reports remain historical. XML editing, renderer and export logic are unchanged.
+
+## Previous source milestone: DefaultWideHD large-selector responsiveness
 
 October 20, 2026: reproduced DefaultWideHD's 449-file PAGE / XML selector blocking for 9,242 ms initially and 25,479–26,519 ms on reopen. Repeated layout during insertion and old-item removal caused the delay. Batched clearing/population reduces measured opens to 73–82 ms with one layout, retaining all choices, checkmarks, callback and cancellation/ownership behavior. No XML editing, renderer or export logic changed.
 

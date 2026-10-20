@@ -222,7 +222,7 @@ namespace MP1SkinStudio
     {
         readonly Color panel=Color.FromArgb(29,35,46), ink=Color.FromArgb(225,234,244), muted=Color.FromArgb(149,168,189);
         SkinProject project;PreviewState state;SkinControl selected;
-        SkinCanvas canvas=new SkinCanvas();TreeView tree=new TreeView();ChoiceBox page=new ChoiceBox(),theme=new ChoiceBox();
+        SkinCanvas canvas=new SkinCanvas();TreeView tree=new TreeView();PageListBox page=new PageListBox();ChoiceBox theme=new ChoiceBox();
         Label selectionName=new Label(),selectionInfo=new Label(),status=new Label(),folderName=new Label();TextBox diagnostics=new TextBox();
         FlowLayoutPanel properties=new FlowLayoutPanel();CheckBox unlock=new CheckBox();
         Button undo,redo,export;ToolTip tips=new ToolTip();
@@ -242,7 +242,7 @@ namespace MP1SkinStudio
             canvas.CommitBatch+=edits=>Attempt(()=>{string key=selected==null?null:selected.Key;project.EditMany(edits,"Move / resize selection");RefreshProject(key);});canvas.Notice+=ShowNotice;
             canvas.ConnectRequest+=target=>Attempt(()=>ConnectTo(target));canvas.FollowRequest+=direction=>Attempt(()=>FollowNavigation(direction));
             tree.AfterSelect+=(s,e)=>{var c=e.Node.Tag as SkinControl;if(!loading&&c!=null)SelectFromTree(c);};
-            page.SelectedIndexChanged+=(s,e)=>{if(!loading&&project!=null&&page.SelectedItem!=null)Attempt(OpenSelectedPage);};
+            page.SelectedIndexChanged+=(s,e)=>ChooseIntegratedPage();
             theme.SelectedIndexChanged+=(s,e)=>{if(!loading&&project!=null)Attempt(ChangeSelectedTheme);};
             FormClosing+=(s,e)=>{if(!CanLeaveSession("close the editor"))e.Cancel=true;};
             if(Directory.Exists(root))LoadProject(root,"demo.xml");
@@ -271,14 +271,15 @@ namespace MP1SkinStudio
             var main=new TableLayoutPanel{Dock=DockStyle.Fill,ColumnCount=3,RowCount=1,Padding=new Padding(16,0,16,10)};
             main.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute,245));main.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,100));main.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute,298));main.RowStyles.Add(new RowStyle(SizeType.Percent,100));
             var left=new Panel{Dock=DockStyle.Fill,BackColor=panel,Padding=new Padding(12),Margin=new Padding(0,0,10,0)};
-            var leftTop=new Panel{Dock=DockStyle.Top,Height=148};
+            var leftTop=new Panel{Dock=DockStyle.Top,Height=92};
             folderName=LabelFor("No skin loaded",28);folderName.Dock=DockStyle.None;folderName.SetBounds(0,0,208,26);leftTop.Controls.Add(folderName);
             var tl=LabelFor("THEME",20);tl.Dock=DockStyle.None;tl.SetBounds(0,32,208,20);leftTop.Controls.Add(tl);
             theme.BackColor=Color.FromArgb(20,26,35);theme.ForeColor=ink;theme.SetBounds(0,54,208,26);leftTop.Controls.Add(theme);
-            var pl=LabelFor("PAGE / XML",20);pl.Dock=DockStyle.None;pl.SetBounds(0,88,208,20);leftTop.Controls.Add(pl);
-            page.BackColor=Color.FromArgb(20,26,35);page.ForeColor=ink;page.SetBounds(0,110,208,26);leftTop.Controls.Add(page);
             tree.Dock=DockStyle.Fill;tree.BackColor=panel;tree.ForeColor=ink;tree.BorderStyle=BorderStyle.None;tree.HideSelection=false;tree.FullRowSelect=true;tree.ShowLines=false;tree.ItemHeight=25;
-            left.Controls.Add(tree);left.Controls.Add(BuildElementSearch());left.Controls.Add(leftTop);main.Controls.Add(left,0,0);
+            var browserSplit=new SplitContainer{Dock=DockStyle.Fill,Orientation=Orientation.Horizontal,Size=new Size(210,600),SplitterWidth=6,Panel1MinSize=140,Panel2MinSize=160,SplitterDistance=240,BackColor=panel};
+            browserSplit.Panel1.Controls.Add(BuildPageBrowser());
+            browserSplit.Panel2.Controls.Add(tree);browserSplit.Panel2.Controls.Add(BuildElementSearch());
+            left.Controls.Add(browserSplit);left.Controls.Add(leftTop);main.Controls.Add(left,0,0);
             var center=new Panel{Dock=DockStyle.Fill,Margin=new Padding(0,0,10,0)};
             var previewToolbar=new FlowLayoutPanel{Dock=DockStyle.Top,Height=38,WrapContents=false,Padding=new Padding(8,0,0,0)};
             previewToolbar.Controls.Add(Check("Grid",true,v=>canvas.Grid=v));previewToolbar.Controls.Add(Check("Snap to 10 px",true,v=>canvas.Snap=v));
@@ -332,15 +333,9 @@ namespace MP1SkinStudio
             initialEditorSignature=ProjectFile.EditorSignature(project);savedEditorSignature=initialEditorSignature;
             savedProjectSignature=editorFile==null?null:ProjectFile.ContentSignature(project);UpdateProjectCaption();
         }
-        void PopulatePageChoices(string[] pages)
-        {
-            bool prior=loading;loading=true;
-            try{page.Items.Clear();page.Items.AddRange(pages.Cast<object>());page.SelectedIndex=page.FindStringExact(project.Page);}
-            finally{loading=prior;}
-        }
         void RefreshProject(string selectedKey)
         {
-            state.UpdateCollectionValues();
+            state.UpdateCollectionValues();UpdatePageSummary();
             var keep=selectedKey==null?new string[0]:canvas.SelectedKeys.ToArray();
             RebuildElementTree();
             var next=project.Controls.FirstOrDefault(c=>c.Key==selectedKey)??project.Controls.FirstOrDefault(c=>SkinProject.Focusable(c)&&SkinProject.ControlId(c)==state.FocusId)??project.Controls.FirstOrDefault(c=>c.Get("description")=="Movies")??project.Controls.FirstOrDefault(c=>c.Get("description")=="Time")??project.Controls.FirstOrDefault();

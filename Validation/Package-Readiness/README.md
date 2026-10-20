@@ -112,3 +112,9 @@ include the seven large-selector/form workflows and existing menu integration
 before the final preservation gate. It reads installed XML and checks all XML
 hashes afterward; generated projects/exports remain in its fresh output folder.
 This optional fixture requires a DefaultWideHD installation with over 400 pages.
+
+Pass -IntegratedPageSkinDirectory with a complete DefaultWideHD root to run the
+twelve embedded-list/hover-wheel/filter/selection/layout scenarios and twelve
+current menu assertions before the final payload hash gate. The historical
+LargeSelectorSkinDirectory probe expects the old page-menu control and should
+only be used with its matching historical executable.

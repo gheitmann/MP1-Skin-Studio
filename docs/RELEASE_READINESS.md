@@ -32,18 +32,19 @@ Home/Video sample. It is not general release publication or proof of every skin.
 For another intended edit, page, theme or plugin, use the review procedure below
 and obtain the owner's final visual acceptance of that actual result.
 
-The current large-selector correction batches menu clearing/population instead
-of repeatedly recalculating layout for every filename. Fresh extracted-package
-acceptance covers seven targeted selector/form workflows with the installed
-DefaultWideHD file list, existing menu integration, twelve complete demo
-workflows and twelve clean-session workflows. All 31 payload hashes stay
-unchanged. Installed XML preservation is checked. Timing measurements identify
-menu-opening cost separately from model loading and rendering.
+The current page browser is integrated into the sidebar, with literal filename
+filtering, mouse-wheel scrolling and a resizable divider above the element tree.
+Hover-wheel routing preserves property focus, selected page and pending fields.
+Pending page selections restore the active row with status guidance.
+Fresh extracted-package validation covers twelve targeted integrated-page
+scenarios, twelve existing menu assertions, twelve complete demo workflows and
+twelve clean-session workflows. All 31 payload hashes and installed fixture XML
+hashes remain unchanged. The repository record separates synthetic wheel/message
+events from attended Windows checks.
 
-The previous 402 core checks, ten XML-review scenarios, 18 transition cases,
-eight startup scenarios and 204 broad UI checks remain historical. No XML
-editing, rendering or export logic changed for the selector correction. The
-repository record distinguishes synthetic form tests from attended Windows use.
+Previous 402 core, ten XML-review, 18 transition, eight startup, seven large-menu
+and 204 broad UI checks remain historical. XML editing, renderer and export
+logic are unchanged.
 
 Preview masks/animations, plugin-dependent values, playback and some control
 interactions remain approximate or unverified. Slider/spin value interaction is

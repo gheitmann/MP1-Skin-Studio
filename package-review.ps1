@@ -51,14 +51,16 @@ show the first difference; Previous/Next reaches all large-file sections. Exact
 byte hashes and refreshable source checks identify drift, missing or locked XML.
 Pending fields and preview-only state are excluded. Close review to export.
 
-Large PAGE / XML menus now batch removal and population so skins with hundreds
-of XML files do not repeatedly recalculate layout. Every file remains listed;
-selection checks, callbacks and Escape retain their existing behavior.
-Fresh extracted-package checks: seven selector/form workflows with DefaultWideHD,
-existing menu integration, twelve complete demo workflows, twelve clean-session
-workflows and 31 unchanged payload hashes. Previous 402 core, XML-review,
-transition/startup/broad UI checks remain historical. XML editing, renderer and
-export logic are unchanged. See docs/RELEASE_READINESS.md for practical scope.
+PAGES / XML is now a permanent sidebar list, with filename filter, horizontal
+scrolling and a divider above the element tree. Use the mouse wheel over the
+list without selecting another page or leaving a property field. Click a file
+to load it. Pending page selections preserve drafts and explain Apply/Revert
+in the status bar. No page dropdown or separate selection window is used.
+Fresh extracted-package checks: twelve integrated-page scenarios, twelve
+existing menu assertions, twelve complete demo workflows, twelve clean-session
+workflows and 31 unchanged payload hashes. Earlier core/review/transition/startup
+and large-menu suites remain historical. XML editing/render/export logic is
+unchanged. See docs/RELEASE_READINESS.md for practical scope.
 
 The previous attended client checkpoint used source 07e8ef2: a real Titan Video
 width edit persisted, exported exactly and appeared in a complete isolated MP1

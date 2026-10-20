@@ -1,0 +1,4 @@
+PASS launched the corrected extracted-package editor with DefaultWideHD-Inline.mp1skinproj.
+PASS current Windows state shows PAGES / XML as an integrated sidebar list, filename filter and divider above the element tree, without a page popup.
+PASS a fresh state after a user-input notice shows the owner's filter plugin, five matching filenames of 449 and the retained myHome.xml preview. The editor remains open.
+LIMIT no automated desktop wheel or selection action was issued after detecting the owner interacting with this window. The current filter, zoom and session were preserved. Hover-wheel/focus/selection behavior is covered by the 12 synthetic form/message workflows, not claimed as a new attended wheel run.

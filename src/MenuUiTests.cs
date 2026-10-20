@@ -10,10 +10,10 @@ namespace MP1SkinStudio
         void RunMenuUiSmoke(Action<bool,string> verify)
         {
             LoadProject(DemoRoot(),"demo.xml");
-            var pageMenu=page.OpenChoicesForTest();pageMenu.ChooseForTest(page.FindStringExact("common.time.xml"));Application.DoEvents();
-            verify(project.Page=="common.time.xml"&&!pageMenu.IsDisposed,"Page selection through real keyboard menu input closes without disposal errors");
-            var again=page.OpenChoicesForTest();again.ChooseForTest(page.FindStringExact("demo.xml"));Application.DoEvents();
-            verify(Object.ReferenceEquals(pageMenu,again)&&project.Page=="demo.xml","Repeated page selection reuses the same bounded menu instance");
+            page.SelectedIndex=page.FindStringExact("common.time.xml");Application.DoEvents();
+            verify(project.Page=="common.time.xml"&&page.Parent!=null,"Integrated page selection loads XML without a popup menu");
+            page.SelectedIndex=page.FindStringExact("demo.xml");Application.DoEvents();
+            verify(project.Page=="demo.xml"&&page.Items.Count==allPageNames.Length,"Repeated integrated page selection retains the complete file list");
             SelectControl(project.Controls.First(c=>c.Get("description")=="Movies"));
             var picker=fields["font"].Parent.Controls.OfType<Button>().First(b=>b.Tag==null);picker.PerformClick();var fontMenu=StudioMenus.PeekForTest(this,"property-picker");fontMenu.ChooseForTest(0);Application.DoEvents();
             verify(fields["font"].Text==project.FontNames[0]&&!fontMenu.IsDisposed,"Font menus select entries and close normally");
