@@ -6,16 +6,16 @@ namespace MP1SkinStudio
 {
     public sealed partial class StudioForm
     {
-        ComboBox previewMode,mediaTipScene;Label previewModeHint,sceneLabel;bool updatingPreviewMode;
+        ChoiceBox previewMode,mediaTipScene;Label previewModeHint,sceneLabel;bool updatingPreviewMode;
         Control BuildPreviewModeBar()
         {
             var panel=new Panel{Dock=DockStyle.Top,Height=59};
             var row=new FlowLayoutPanel{Dock=DockStyle.Top,Height=34,WrapContents=false,Padding=new Padding(8,2,0,0)};
             row.Controls.Add(new Label{Text="View",ForeColor=muted,Width=38,Height=27,TextAlign=ContentAlignment.MiddleLeft});
-            previewMode=new ComboBox{DropDownStyle=ComboBoxStyle.DropDownList,Width=164,AccessibleName="Preview editing view"};
+            previewMode=new ChoiceBox{Width=164,Height=26,AccessibleName="Preview editing view"};
             previewMode.Items.AddRange(new object[]{"Edit layout","Isolate selection","All layers"});row.Controls.Add(previewMode);
             sceneLabel=new Label{Text="Example",ForeColor=muted,Width=60,Height=27,TextAlign=ContentAlignment.MiddleLeft};row.Controls.Add(sceneLabel);
-            mediaTipScene=new ComboBox{DropDownStyle=ComboBoxStyle.DropDownList,Width=127,AccessibleName="MediaTip example variant"};
+            mediaTipScene=new ChoiceBox{Width=127,Height=26,AccessibleName="MediaTip example variant"};
             mediaTipScene.Items.AddRange(new object[]{"Music","Video","Pictures","Folder","Radio"});row.Controls.Add(mediaTipScene);
             previewModeHint=new Label{Dock=DockStyle.Bottom,Height=23,Padding=new Padding(10,0,4,0),ForeColor=muted,AutoEllipsis=true};
             panel.Controls.Add(row);panel.Controls.Add(previewModeHint);

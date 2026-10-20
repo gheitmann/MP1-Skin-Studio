@@ -90,8 +90,12 @@ Copying runs in the background with Cancel and never replaces existing folders.
 Select different Skin Folder at the bottom of SKIN opens the existing folder
 browser, retaining pending-input and unsaved-session protections.
 
-Fresh focused checks: 25 skin/sidebar/menu/scroll scenarios passed, with all 488
-installed XML hashes unchanged. Earlier acceptance passed 430 core, eleven
+Dropdown backgrounds and selections now match the dark scrollbar palette,
+including SKIN, THEME, View, Example and dialog selectors.
+
+Fresh focused checks: 25 skin/sidebar/menu/scroll and ten readable-preview
+scenarios passed, with all 488 installed XML and 26 demo hashes unchanged.
+Earlier acceptance passed 430 core, eleven
 copy-dialog scenarios, twelve demo and twelve clean-session workflows. A full
 DefaultWideHD copy passed all 3,399 original/copy file hashes. Prior readability,
 integrated-page and broad

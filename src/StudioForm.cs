@@ -26,7 +26,7 @@ namespace MP1SkinStudio
             get{return index;}
             set{index=value>=0&&value<Items.Count?value:-1;Invalidate();if(SelectedIndexChanged!=null)SelectedIndexChanged(this,EventArgs.Empty);}
         }
-        public ChoiceBox(){DoubleBuffered=true;TabStop=true;AccessibleRole=AccessibleRole.ComboBox;Cursor=Cursors.Hand;}
+        public ChoiceBox(){DoubleBuffered=true;TabStop=true;AccessibleRole=AccessibleRole.ComboBox;Cursor=Cursors.Hand;BackColor=Color.FromArgb(20,26,35);ForeColor=Color.FromArgb(225,234,244);}
         public int FindStringExact(string text){return Items.FindIndex(item=>String.Equals(item.ToString(),text,StringComparison.OrdinalIgnoreCase));}
         protected override void OnPaint(PaintEventArgs e)
         {

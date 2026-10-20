@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
@@ -12,9 +13,50 @@ namespace MP1SkinStudio
     // per purpose, owned by the form rather than its short-lived anchor control.
     public sealed class StudioMenu : ContextMenuStrip
     {
+        public StudioMenu()
+        {
+            if(SystemInformation.HighContrast){RenderMode=ToolStripRenderMode.System;return;}
+            BackColor=Color.FromArgb(20,26,35);ForeColor=Color.FromArgb(225,234,244);
+            Renderer=new DarkMenuRenderer();
+        }
         internal bool ChooseForTest(int index)
         {Items[index].Select();return base.ProcessDialogKey(Keys.Enter);}
         internal bool EscapeForTest(){return base.ProcessDialogKey(Keys.Escape);}
+    }
+    sealed class DarkMenuColors : ProfessionalColorTable
+    {
+        static readonly Color background=Color.FromArgb(20,26,35),thumb=Color.FromArgb(63,78,96),hover=Color.FromArgb(92,116,143);
+        public DarkMenuColors(){UseSystemColors=false;}
+        public override Color ToolStripDropDownBackground {get{return background;}}
+        public override Color ImageMarginGradientBegin {get{return background;}}
+        public override Color ImageMarginGradientMiddle {get{return background;}}
+        public override Color ImageMarginGradientEnd {get{return background;}}
+        public override Color MenuBorder {get{return thumb;}}
+        public override Color MenuItemSelected {get{return thumb;}}
+        public override Color MenuItemBorder {get{return hover;}}
+        public override Color MenuItemSelectedGradientBegin {get{return thumb;}}
+        public override Color MenuItemSelectedGradientEnd {get{return thumb;}}
+        public override Color MenuItemPressedGradientBegin {get{return hover;}}
+        public override Color MenuItemPressedGradientMiddle {get{return hover;}}
+        public override Color MenuItemPressedGradientEnd {get{return hover;}}
+        public override Color CheckBackground {get{return thumb;}}
+        public override Color CheckSelectedBackground {get{return hover;}}
+        public override Color CheckPressedBackground {get{return hover;}}
+        public override Color SeparatorDark {get{return thumb;}}
+        public override Color SeparatorLight {get{return thumb;}}
+    }
+    sealed class DarkMenuRenderer : ToolStripProfessionalRenderer
+    {
+        public DarkMenuRenderer():base(new DarkMenuColors()){RoundedEdges=false;}
+        protected override void OnRenderArrow(ToolStripArrowRenderEventArgs e)
+        {e.ArrowColor=e.Item.Enabled?Color.FromArgb(225,234,244):Color.FromArgb(149,168,189);base.OnRenderArrow(e);}
+        protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
+        {e.TextColor=e.Item.Enabled?Color.FromArgb(225,234,244):Color.FromArgb(149,168,189);base.OnRenderItemText(e);}
+        protected override void OnRenderItemCheck(ToolStripItemImageRenderEventArgs e)
+        {
+            var r=e.ImageRectangle;float x=r.X+r.Width/2f,y=r.Y+r.Height/2f;
+            using(var pen=new Pen(Color.FromArgb(225,234,244),1.8f))e.Graphics.DrawLines(pen,new[]{new PointF(x-4,y),new PointF(x-1,y+3),new PointF(x+5,y-4)});
+        }
     }
     public static class StudioMenus
     {

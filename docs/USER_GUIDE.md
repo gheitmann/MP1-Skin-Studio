@@ -17,6 +17,9 @@ scenes and the transition from an editor project to a runtime test copy.
 
 ## Open skins, pages and themes
 
+Dropdown fields and their menus share the dark scrollbar colors, with light
+text and checks. This includes SKIN, THEME, View, Example and dialog selectors.
+
 The last SKIN dropdown command, **Select different Skin Folder …**, opens the
 folder browser at the current skin. Choose a skin outside the discovered list
 there; Cancel retains the current selection. Existing pending-input and unsaved

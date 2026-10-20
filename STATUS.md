@@ -4,6 +4,8 @@ Date: October 20, 2026. Imported version: 0.9.
 
 ## Latest source milestone: choose another skin folder from the dropdown
 
+Dropdown styling in this delivery also matches the scrollbar palette: RGB 20/26/35 backgrounds, 63/78/96 selections, 92/116/143 accents and light text/checks/arrows. All StudioMenus share the renderer; View and MediaTip Example now use the existing ChoiceBox instead of light native combo boxes. Collection mode and sample preset backgrounds match too. Fresh final validation passed 25 selector/sidebar scenarios and ten readable-preview scenarios; installed XML and demo hashes remained unchanged. The live closed View field was inspected; concurrent owner input interrupted the open-menu click, so no live open-menu acceptance is claimed. See [dropdown colors validation](Validation/Dropdown-Colors/README.md).
+
 October 20, 2026: added Select different Skin Folder at the bottom of SKIN, separated from discovered skins. It opens the existing folder picker at the current skin and reuses pending-property and save/discard/cancel guards. The action is not stored or selected as a skin. Theme choices remain unchanged.
 
 Fresh validation: 25 focused skin/sidebar/menu/scroll scenarios passed, including footer placement, rebuilding without duplicates and independent theme choices. All 488 installed XML hashes remained unchanged. Earlier 430 core, copy/dialog, complete-skin and package workflow results remain historical for this localized menu change. See [folder-action validation](Validation/Skin-Folder-Action/README.md).
