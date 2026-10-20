@@ -2,7 +2,13 @@
 
 Date: October 20, 2026. Imported version: 0.9.
 
-## Latest source milestone: nested layout navigation
+## Latest source milestone: ordinary group and standalone button navigation
+
+October 20, 2026: absent/zero button mappings now use bounded geometric navigation in ordinary groups and at page level. Ordinary wrappers retain absolute child positions, can nest other ordinary wrappers, and can contain independently positioned automatic layouts. Ordinary wrappers moved by an automatic ancestor remain guarded. Property-driven empty layout fallbacks are not mistaken for plain groups. Group/ungroup and structural Undo/Redo preserve navigation. demo.free.xml supplies a self-contained four-button scene.
+
+Fresh validation: 361 core checks, ten complete real Titan edit/save/reopen/export/normal and restored Undo/Redo workflows, 124 accepted routes (26 automatic and 98 explicit), 20 guarded routes and ten unchanged original XML hashes. Four synthetic Windows canvas arrow events cross ordinary group branches; saved focus restores. The production demo render was inspected. The real dialogs mainly verify existing explicit mappings; authored fixtures and the bundled demo exercise new automatic plain-group routes. No new attended keyboard or installed-client run. Native math and prior matrices remain historical. See [validation and limits](Validation/Plain-Navigation/README.md).
+
+## Previous source milestone: nested layout navigation
 
 October 20, 2026: automatic geometric navigation now traverses supported nested StackLayout/GridLayout hierarchies and crosses their branches. A top-level stack button can enter or leave a nested layout. All participating measurement subtrees are validated recursively; ordinary/unknown layout wrappers stay unsupported. Hidden/collapsed ancestors exclude descendant targets. Explicit mappings retain precedence and simple linear stack behavior stays separate. demo.navigation.xml supplies a self-contained nested grid/stack scene.
 
@@ -108,9 +114,9 @@ October 19, 2026: static known-content conditions and nested localization now wo
 
 The owner prioritizes practical edit/save/reopen/export workflows and substantial autonomous work blocks. Routine follow-up steps do not require another continuation prompt. Necessary checks run at integrated milestones.
 
-Current validation: 353 core checks and six real Titan regression workflows passed, with 162 accepted automatic routes and 13 unchanged loaded original XML hashes. The nested demo passed four synthetic Windows form arrow events and focus save/reopen. Previous native-math, attended acceptance and image matrices remain historical.
+Current validation: 361 core checks and ten real Titan workflows passed, with 124 accepted routes (26 automatic, 98 explicit) and ten unchanged loaded original XML hashes. The ordinary-group demo passed four synthetic Windows form arrow events and focus save/reopen. Earlier native-math, attended acceptance and other matrices remain historical.
 
-Next core work is broader real-page preview fidelity and navigation coverage, particularly ordinary/free-position group navigation, other facade types and plugin states, while retaining duplicate-ID uncertainty. Existing samples make BasicHome, Settings and Video useful without claiming complete runtime equivalence. Masks, animation, full geometric navigation and plugin-specific values remain approximate or unresolved. Continue real-skin edit/save/reopen/export acceptance around any such changes, preserving original files. Auxiliary global-style and cross-group movement tools remain lower priority.
+Next core work is broader real-page preview fidelity and navigation coverage, particularly additional focusable control types, other facade types and plugin states, while retaining duplicate-ID uncertainty. Existing samples make BasicHome, Settings and Video useful without claiming complete runtime equivalence. Masks, animation, full geometric navigation and plugin-specific values remain approximate or unresolved. Continue real-skin edit/save/reopen/export acceptance around any such changes, preserving original files. Auxiliary global-style and cross-group movement tools remain lower priority.
 
 Historical milestones follow; older suspension notes describe the state at their recorded time. Attended Windows automation was subsequently reauthorized and exercised successfully.
 ## Baseline

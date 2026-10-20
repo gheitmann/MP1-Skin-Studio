@@ -19,7 +19,7 @@ Visual position, size, text and texture editing; multiple selection and alignmen
 
 ## Validation
 
-Latest checkpoint (October 20): **353 core checks and six real Titan regression workflows passed**, including 162 accepted automatic routes and 13 unchanged loaded original XML hashes. Automatic navigation now crosses supported nested stack/grid branches, demonstrated by demo.navigation.xml and four synthetic Windows canvas arrow events through the production form. Saved focus and exact XML export/Undo/Redo are covered. See [nested navigation validation](Validation/Nested-Navigation/README.md) and STATUS.md. Prior native-math and attended acceptance remain historical; no new installed-client run occurred.
+Latest checkpoint (October 20): **361 core checks and ten real Titan workflows passed**, including 124 accepted routes (26 automatic, 98 explicit) and ten unchanged loaded original XML hashes. Bounded geometric navigation now covers ordinary groups and standalone buttons; try demo.free.xml. Four synthetic Windows canvas arrow events passed through the form with saved focus restored. See [plain navigation validation](Validation/Plain-Navigation/README.md) and STATUS.md. Prior native-math and attended acceptance remain historical; no new installed-client run occurred.
 
 
 Historical reports under `Validation` record 189 core checks, 185 UI checks, 602 Titan page/theme variants and ten direct checks against original MP1 StackLayout classes. These counts were imported from the saved release package and do not imply that all tests were rerun during import. A fresh build succeeded during import. The English migration also passed 189 core checks and 185 UI checks; fresh reports are in [Validation/English-Migration](Validation/English-Migration).

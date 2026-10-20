@@ -54,18 +54,27 @@ namespace MP1SkinStudio
         }
         static bool NavigationLayout(SkinControl group)
         {
+            PropertyValue property;if(group.Properties.TryGetValue("layout",out property)&&property.Expression.Length>0)return false;
             StackPreview.Rule stack;StackPreview.GridRule grid;
-            return StackPreview.TryRead(group.Resolved("layout").Trim(),out stack)||StackPreview.TryReadGrid(group.Resolved("layout").Trim(),out grid);
+            string layout=group.Resolved("layout").Trim();
+            if(layout.Length==0&&group.Get("type")=="group")
+            {
+                // Plain groups retain absolute child coordinates. Do not infer
+                // translation when an automatic ancestor repositions the wrapper.
+                for(var ancestor=group.RuntimeParent;ancestor!=null;ancestor=ancestor.RuntimeParent)if(ancestor.Resolved("layout").Trim().Length>0)return false;
+                return true;
+            }
+            return StackPreview.TryRead(layout,out stack)||StackPreview.TryReadGrid(layout,out grid);
         }
         bool GeometricNavigationSource(SkinControl source)
         {
-            var parent=source.RuntimeParent;if(parent==null)return false;
+            var parent=source.RuntimeParent;if(parent==null)return source.Get("type").Contains("button");
             StackPreview.GridRule grid;
-            return parent.RuntimeParent!=null||StackPreview.TryReadGrid(parent.Resolved("layout").Trim(),out grid)||Controls.Any(c=>c.RuntimeParent==parent&&LayoutTools.IsContainer(c));
+            return parent.Resolved("layout").Trim().Length==0||parent.RuntimeParent!=null||StackPreview.TryReadGrid(parent.Resolved("layout").Trim(),out grid)||Controls.Any(c=>c.RuntimeParent==parent&&LayoutTools.IsContainer(c));
         }
         void NavigationGroup(SkinControl group,Dictionary<SkinControl,SkinControl[]> children,int depth)
         {
-            if(depth>16||!NavigationLayout(group))throw new InvalidOperationException("Automatic layout navigation requires supported stack/grid groups within 16 levels.");
+            if(depth>16||!NavigationLayout(group))throw new InvalidOperationException("Automatic navigation requires supported groups within 16 levels; plain groups inside automatic layouts remain unsupported.");
             LayoutTools.RequireNumeric(group,"posX","posY","width","height");
             foreach(string property in new[]{"posX","posY","width","height"})
             {
@@ -79,14 +88,14 @@ namespace MP1SkinStudio
             foreach(var child in list)
             {
                 if(LayoutTools.IsContainer(child))NavigationGroup(child,children,depth+1);
-                else{NavigationGeometry(child);NavigationLayoutProperties(child);}
+                else if(group.Resolved("layout").Trim().Length>0||Focusable(child)){NavigationGeometry(child);NavigationLayoutProperties(child);}
             }
         }
         SkinControl GridNavigationTarget(PreviewState state,SkinControl source,string direction)
         {
             var parent=source.RuntimeParent;
-            if(parent==null||!NavigationLayout(parent)||!source.Get("type").Contains("button")||NativeNavigationExcluded(source))
-                throw new InvalidOperationException("Automatic layout navigation requires a button in a supported stack/grid hierarchy.");
+            if((parent!=null&&!NavigationLayout(parent))||!source.Get("type").Contains("button")||NativeNavigationExcluded(source))
+                throw new InvalidOperationException("Automatic navigation requires a static button in a supported hierarchy.");
             var logical=LogicalControls().ToArray();
             if(logical.Length>2048)throw new InvalidOperationException("This page exceeds the automatic grid navigation limit.");
             var candidates=new List<SkinControl>();var groups=new HashSet<SkinControl>();

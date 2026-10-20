@@ -1,0 +1,363 @@
+PASS  Unchanged UTF-8 file remains byte-identical
+PASS  Position changes affect a single source span
+PASS  Duplicate ID 0: only the second control changes
+PASS  Multiple properties update in one transaction
+PASS  New local property preserves unknown tags
+PASS  Comments inside a property are preserved
+PASS  CDATA remains CDATA and closing sequences are split
+PASS  XML entities and accented characters are saved correctly
+PASS  Self-closing property preserves its attributes
+PASS  IDs and control types are protected
+PASS  DTDs and external entities are rejected
+PASS  Malformed XML is rejected
+PASS  Nested property content is not overwritten
+PASS  UTF-16 LE encoding and BOM are preserved
+PASS  Windows-1252 is preserved and unsupported characters are rejected
+PASS  Reference, style and local value precedence is resolved
+PASS  Defines in includes remain bound and resolvable
+PASS  Undo/redo restores exact source text
+PASS  ZIP exports only the correct include file and preserves the original bytes
+PASS  Paths outside the skin directory are rejected
+PASS  Exporting to skin XML instead of ZIP is rejected
+PASS  Cyclic and missing includes are reported
+PASS  Theme files override base files with fallback for missing files
+PASS  Unknown preview conditions remain unknown
+PASS  Preview Boolean conditions and plugin states are evaluated
+PASS  Real Titan files load and clock edits preserve animation comments
+PASS  Cached control ordinals preserve nested source order after reparsing
+PASS  Compatible batch entries for one control merge without losing properties
+PASS  Conflicting batch entries reject all changes and retain redo history
+PASS  A stale duplicate batch entry cannot bypass selection validation
+PASS  One undo/redo restores changes across multiple files exactly
+PASS  An error in the second element rolls back the entire batch
+PASS  Insertion creates a complete control and undo/redo preserves its identity
+PASS  Text and image templates are inserted as valid XML
+PASS  New IDs account for unopened pages and navigation targets
+PASS  Duplication preserves the original, comments, styles and unknown entries
+PASS  Bound positions are protected when duplicating
+PASS  Alignment respects right-aligned label anchors
+PASS  Equal horizontal spacing preserves outer edges
+PASS  Alignment requires approval before replacing bound positions
+PASS  Navigation connects only the selected direction and supports undo
+PASS  Navigation rejects duplicate IDs and non-focusable targets
+PASS  Preview navigation probes target-focus visibility without committing rejected state
+PASS  Facade navigation uses the active template rather than a stale or empty facade direction
+PASS  Navigation protects dynamic target bindings
+PASS  Automatic stack navigation skips known hidden buttons and preserves explicit directions
+PASS  Automatic stack navigation stops at unknown visibility and supports horizontal stacks
+PASS  Navigation recognizes equal numeric IDs with leading zeros
+PASS  Empty self-closing controls sections support insertion and exact undo
+PASS  Unresolved geometry is not guessed even when binding replacement is allowed
+PASS  Active page changes are saved editor state without XML edits
+PASS  Active theme changes are saved editor state without XML edits
+PASS  Preview focus is retained independently across pages and themes
+PASS  Legacy single-focus projects migrate and duplicate focus slots are rejected
+PASS  A full focus map rejects a new preset before modifying sample values
+PASS  Saved preview focus survives session preparation without changing source XML
+PASS  Session preparation loads requested pages and default fallbacks before publication
+PASS  Failed theme preparation preserves the edited active session
+PASS  Successful theme switching retains base edits and history
+PASS  Failed project replacement preserves the previous archive and cleans temporary files
+PASS  Failed ZIP replacement preserves the previous export and cleans temporary files
+PASS  Failed page loads preserve the current edited page and history
+PASS  Editor projects restore multiple modified XML files and exact comments
+PASS  Restored projects provide one combined undo/redo step
+PASS  Unmodified editor projects save the page and skin directory
+PASS  Projects can move to another skin directory with identical originals
+PASS  External source changes prevent silent project restoration
+PASS  Corrupted edited snapshots are detected
+PASS  Project path traversal is rejected before file access
+PASS  Project format versions and duplicate ZIP entries are validated
+PASS  Project manifests reject DTDs and external entities
+PASS  Editor projects preserve UTF-16 and BOM during restoration
+PASS  Editor projects preserve the selected theme and theme XML
+PASS  Project saving atomically replaces existing projects and protects XML targets
+PASS  Texture catalogs find subdirectories and prefer the selected theme
+PASS  PNG previews report dimensions without retaining source file handles
+PASS  Corrupted images produce errors instead of previews or crashes
+PASS  Saved editor state remains independent of XML and source files
+PASS  Element protection blocks batch edits atomically
+PASS  Group protection and editor hiding apply to child controls
+PASS  Legacy projects without editorState open with a fitted view
+PASS  Source changes for lock-only markers are detected
+PASS  Invalid views and editor paths are rejected on opening
+PASS  Editor markers are absent from exported skin XML
+PASS  Markers for undone inserted controls are not saved incorrectly
+PASS  Page auditing detects numerically identical focus IDs and ambiguous navigation
+PASS  Repeated ID 0 and unloaded pages do not cause focus-ID conflicts
+PASS  Missing targets report the actual include line and property
+PASS  Dynamic and special navigation values remain unverified
+PASS  Existing targets with unknown focus types remain informational
+PASS  Image auditing prefers theme assets and also reports hidden images
+PASS  Resolvable defines are checked and unknown image bindings remain informational
+PASS  Repeated includes are checked in each distinct define context
+PASS  Auditing preserves XML, project, lock and undo state
+PASS  Unloaded includes produce page findings without invented control references
+PASS  Reset removes only the local XML span and its own blank line
+PASS  Removal preserves comments and processing instructions without misreading CDATA
+PASS  Reset previews prefer styles over references without changing the session
+PASS  Multiple sources inherit reference and style values in one exact undo/redo step
+PASS  Reset without an inherited value removes the property instead of writing a substitute
+PASS  Non-local values are a no-op without an undo step
+PASS  Attributes, nested or duplicate properties and identities remain protected
+PASS  Protected bindings block the whole selection until replacement is allowed
+PASS  Locked or structurally protected selections are rejected before partial edits
+PASS  Reset preserves UTF-16 encoding and BOM
+PASS  Projects and ZIP exports preserve targeted resets without changing style or reference files
+PASS  BasicHome samples are explicit, persist and reject other pages without mutation
+PASS  Player conditions require explicit samples and preserve three-valued logic
+PASS  Video folder samples preserve unknown values, XML edits and redo history
+PASS  Video folder preview rejects unsupported pages without changing editor state
+PASS  Oversized project descriptions are rejected while preserving the last saved file
+PASS  Preview data replaces whole variables without prefix errors or recursive replacement
+PASS  Explicit sample values take preview precedence without changing local bindings
+PASS  Plugin and data states toggle supported conditions while unknown conditions remain unknown
+PASS  Invalid preview data is rejected before applying changes
+PASS  Projects preserve empty values, Unicode, whitespace and plugin names in preview state
+PASS  Legacy projects without preview sections load the previous baseline data
+PASS  Duplicate preview variables in projects are rejected
+PASS  Preview data changes the editor signature but not the XML signature or skin export
+PASS  Group duplication remaps nested IDs, navigation and supported visibility references
+PASS  Group duplication is one exact undo step with stable marker identities
+PASS  Duplicated groups survive project restore, export and restored structural undo
+PASS  Locked descendants and external group includes reject copying atomically
+PASS  Ambiguous IDs and dynamic navigation reject group copies without losing redo
+PASS  Group copy protects bound positions and offsets only the approved group frame
+PASS  Group copies override inherited internal references without editing shared styles
+PASS  Unsupported internal XML attribute references reject group copies atomically
+PASS  ID allocation reserves unopened-page default and visibility reference targets
+PASS  Projects with fully cleared sources support opening, undo and redo
+PASS  Replacement controls at the same ordinal position do not inherit original identities or locks
+PASS  Stale control objects cannot edit other controls after structural changes
+PASS  Layer changes preserve raw controls, extensions, IDs and exact undo/redo
+PASS  Locks and hiding follow reordered controls and nested children
+PASS  Markers added later are remapped during undo rather than overwritten
+PASS  Locked children block group changes without partial edits
+PASS  Layer boundaries and include barriers are no-ops without extra undo steps
+PASS  Group removal counts children and restores XML and hidden state
+PASS  Reference checks find navigation and visibility while ignoring jointly removed references
+PASS  Include removal requires approval and remains a cross-file transaction
+PASS  Insertion undo removes markers and redo restores them on the new control
+PASS  Saved layer order preserves identities and markers during restoration undo
+PASS  Saved deletion remaps remaining locks correctly during undo and redo
+PASS  Legacy projects without element mappings load appended controls compatibly
+PASS  Project formats 2 and 3 require complete element mappings
+PASS  Corrupted element mappings are rejected before loading projects
+PASS  Element search combines words across names, sources and properties
+PASS  ID search compares complete numeric IDs rather than substrings
+PASS  Targeted search separates type, text and source file
+PASS  Bindings and image names remain searchable
+PASS  Element search preserves XML, undo and editor state
+PASS  Group contents contain unique leaf controls without group frames
+PASS  Free siblings within a group support atomic alignment
+PASS  Group frames and controls with different nested parents cannot be aligned
+PASS  Automatic layouts protect deeply nested controls
+PASS  Style layouts and include contents inherit automatic-position protection
+PASS  Content selection rejects stale group objects
+PASS  Repeated XML controls retain layout protection in every active use
+PASS  Grouping preserves complete child XML, ordering and exact undo/redo
+PASS  Grouping nested siblings preserves visible bounds, navigation and hiding
+PASS  Group creation survives project save/load and identity restoration
+PASS  Grouping rejects gaps, mixed parents, stale and single selections atomically
+PASS  Locked descendants and automatic layouts block grouping
+PASS  Grouping respects import barriers and shared-source boundaries
+PASS  Group creation rejects inherited behavior and reserves unused IDs
+PASS  Grouping export leaves original XML unchanged
+PASS  Ungroup preserves nested child bytes, comments, order and exact undo/redo
+PASS  Ungrouping newly created wrappers preserves preview geometry and child markers
+PASS  Ungroup survives saved projects with new and original group identities
+PASS  Ungroup rejects behavioral, styled, nonneutral and ambiguous groups atomically
+PASS  Ungroup rejects inherited group behavior and styled wrappers
+PASS  Locked descendants, automatic ancestors and stale groups cannot be ungrouped
+PASS  Ungroup blocks child, external page and unresolved condition references
+PASS  Ungroup preserves original export files and rejects shared sources
+PASS  Large button text offsets retain the remaining label area
+PASS  Button focus textures follow simulated focus independently of designer selection
+PASS  Standalone labels use native center and right anchors without invented extents
+PASS  Included title text survives a later opaque background texture
+PASS  Deferred collection text retains its collection clip
+PASS  Text edits preserve unknown XML and support byte-exact undo
+PASS  Data bindings are replaced only with explicit approval
+PASS  Numeric text remains protected as a possible language-resource ID
+PASS  Inherited text is overridden locally without changing styles or references
+PASS  Text editing rejects locks, groups, images and stale controls
+PASS  Invalid or oversized text preserves source and history
+PASS  Duplicate and nested label entries remain protected
+PASS  Text editing preserves surrounding spaces and line breaks
+PASS  Language text uses the primary language, fallback and configurable prefixes
+PASS  Empty primary translations do not fall back to other text
+PASS  Language files reject DTDs, duplicate IDs and unsupported formats
+PASS  Language previews preserve numeric XML IDs and identify missing IDs
+PASS  Numeric sample data is not mistaken for language IDs
+PASS  Language-file snapshots are immutable and copies are independent
+PASS  Projects restore language snapshots without original language files
+PASS  Corrupted language snapshots and duplicate language states are rejected
+PASS  Language settings change the editor signature without changing skin exports
+PASS  Element search finds translated labels while preserving raw values
+PASS  Missing language IDs are reported only when language previews are loaded
+PASS  UTF-16 language snapshots preserve BOM and file bytes
+PASS  Legacy project format 2 remains readable without language snapshots
+PASS  Equivalent nested source paths retain one edited identity through restore undo and redo
+PASS  Source lookup rejects paths outside the skin without polluting the cache
+PASS  Idle conditions require explicit seconds and follow native positive threshold bounds
+PASS  Idle sample validation rejects malformed values before replacing saved projects
+PASS  Idle samples roundtrip independently from XML edits and exports
+PASS  Deep, oversized and chained conditions remain unknown without leaking evaluation budgets
+PASS  Media folder profiles use explicit matching titles, artwork and neutral browsing data
+PASS  Media folder rejection preserves all state for missing lists and full sample/focus maps
+PASS  Preview problems identify missing samples and unsupported spelling without source mutation
+PASS  Preview explanations skip quoted literal tokens and preserve include contexts
+PASS  Preview explanations expose ambiguous controls, cycles and unsupported artwork caches
+PASS  Preview reports exclude known-hidden content and separate unresolved visible text
+PASS  Preview text problems identify missing loaded language IDs
+PASS  Preview reports explain idle samples and enforce bounded output
+PASS  Explicit artwork samples drive image content and fallback conditions together
+PASS  Artwork samples match exact image expressions without rewriting variables or button textures
+PASS  Artwork samples survive copies and media presets without losing other preview state
+PASS  Invalid artwork paths and capacity failures preserve all samples and saved archives
+PASS  Artwork project persistence remains independent of XML undo redo and export
+PASS  Legacy projects load without artwork and malformed or duplicate artwork is rejected
+PASS  Artwork diagnostics explain visible missing corrupt and runtime images without false empty findings
+PASS  Artwork sample dialogs keep cancel read-only and return changes only on apply
+PASS  Artwork expressions remain stable across other pages and theme assets take precedence
+PASS  Explicit artwork samples do not guess which duplicate control ID is active
+PASS  Canvas renders selected sample artwork and explicit empty suppresses original image
+PASS  Static filmstrip focus coordinates follow the selected rendered thumbnail
+PASS  Filmstrip focus values clear across view focus and page changes without stale coordinates
+PASS  Explicit facade samples override derived values and can be removed to resume derivation
+PASS  Empty hidden ambiguous and property-driven facades avoid invented focus coordinates
+PASS  Integer preview expressions support native cint add sub without guessing unknown inputs
+PASS  Image property positions use samples while fallback XML remains unchanged
+PASS  Inherited position attributes survive scalar overrides until an explicit attribute clears them
+PASS  Invalid and negative image property results retain fallback and explain geometry limits
+PASS  Property-driven positions reject edits alignment and copying atomically
+PASS  PIN scenarios remain explicit preserve unrelated samples and can return to unknown
+PASS  Filmstrip selection PIN and explicit focus overrides survive save without export leakage
+PASS  Aspect fit uses native left top defaults rather than invented centering
+PASS  Image horizontal and vertical alignment cover all static anchors
+PASS  Legacy centered and align rules retain native XML processing order
+PASS  Crop to fill chooses centered source pixels while top crop retains the source top
+PASS  Stretch mode ignores crop flags until proportions are enabled
+PASS  Image presentation definitions resolve without changing missing inputs into known states
+PASS  Image fit plans reject invalid extents and zero-pixel extreme crops
+PASS  Collection frames retain their earlier static fit independently of image alignment rules
+PASS  Production image rendering samples actual cropped pixels and preserves tint
+PASS  Image fitting edits roundtrip and export with exact undo while originals remain unchanged
+PASS  Grid arrows navigate all axes and retain incomplete-row boundaries
+PASS  Grid navigation follows vertical fill and row-count precedence
+PASS  Grid navigation skips known hidden candidates and rejects unknown visibility atomically
+PASS  Explicit grid links take precedence over automatic geometry
+PASS  Grid navigation considers standalone buttons outside its group
+PASS  Ambiguous IDs and unsupported collection candidates block automatic grid navigation
+PASS  Grid navigation rejects bound and nonfinite geometry without guessed targets
+PASS  Native bearing cones and document-order ties retain their exact selection semantics
+PASS  Grid edits preserve focus through save export and restored undo redo
+PASS  Grid navigation preserves native ID-one exclusion and editor-hidden candidates
+PASS  Grid navigation refuses unknown layout inputs and runtime enable rules
+PASS  Grid navigation follows supported nested stack and grid geometry
+PASS  Nested grid and stack branches navigate across all four directions
+PASS  Top-level stack buttons can enter and leave a nested grid
+PASS  Hidden and collapsed outer groups remove all descendant targets
+PASS  Unverified nested visibility blocks routes without leaking prospective focus
+PASS  Unsupported layout wrappers stay outside nested navigation
+PASS  Nested navigation validates geometry on nonfocusable measurement siblings
+PASS  Nested layout depth is bounded without changing accepted shallow routes
+PASS  Explicit mappings inside nested branches retain priority and ambiguity guards
+PASS  Nested layout edits preserve saved focus and exact XML export with undo redo
+PASS  Property-driven empty layout fallbacks are not mistaken for ordinary groups
+PASS  Plain group children retain absolute positions and navigate through nested wrappers
+PASS  Standalone buttons can enter and leave ordinary groups
+PASS  Plain wrappers can contain automatic children with independent absolute origins
+PASS  Plain groups arranged by automatic ancestors remain guarded
+PASS  Plain groups preserve hidden branch and unknown visibility protection
+PASS  Grouping and ungrouping preserve geometric routes through undo and redo
+PASS  Plain button edits roundtrip and export without modifying originals
+PASS  Boolean expression include conditions retain scope and unknown values
+PASS  Visibility of absent static controls is false while ambiguous and cyclic controls stay unknown
+PASS  Nested localization expressions use loaded language snapshots and retain missing IDs
+PASS  Localization without a language snapshot or beyond expression bounds stays unresolved
+PASS  Control.HasText uses known content without recursing through target visibility
+PASS  Content conditions keep ambiguous IDs, missing language and unsupported expressions unresolved
+PASS  Control.HasThumb follows known local images and invalidates changed file observations
+PASS  Thumbnail conditions use theme media before base media
+PASS  Editing group visibility updates descendants and exact undo restores conditions
+PASS  Unsupported visibility conditions survive project and export without preview guesses
+PASS  Define-only includes load values without false missing-controls warnings
+PASS  Group conditions retain their context despite defines in child includes
+PASS  Include and otherwise branches use the condition context captured before loading
+PASS  String equality respects quoted commas and unknown values
+PASS  String searches honor scoped defines and preserve unresolved operands
+PASS  Boolean define chains are resolved and cycles remain unknown
+PASS  Control.IsVisible evaluates targets in their own define context
+PASS  Group locks and hiding also affect included children
+PASS  Locked included children prevent removal of their containing group
+PASS  Window default focus loads independently of label selection
+PASS  Clean preview distinguishes literal samples from unresolved label bindings
+PASS  Parentheses inside quoted comparison values do not change condition structure
+PASS  A dash texture placeholder is not reported as a missing image
+PASS  Layout-dialog changes are atomic and preserve child positions
+PASS  The layout-dialog model protects locks, bindings and unknown rules
+PASS  Vertical stacks replace source positions without modifying XML
+PASS  Horizontal stacks use nonnegative spacing
+PASS  Stacks without parameters use vertical layout
+PASS  Invisible controls collapse only with CollapseHiddenButtons
+PASS  Unknown conditions and editor-hidden controls retain their layout slots
+PASS  Collapsed controls contribute neither measured size nor layout slots
+PASS  Group margins and child alignment are applied
+PASS  Horizontal group alignment matches MP1 including trailing spacing
+PASS  Right-aligned stack labels retain their drawing-anchor convention
+PASS  Unknown and malformed layouts warn without changing positions
+PASS  Layout changes, undo and redo refresh derived positions
+PASS  Repeated includes retain separate layout rectangles
+PASS  Grid dialog edits preserve child XML and undo exactly
+PASS  Grid dialog model protects bindings, locks and other layouts
+PASS  Grid dialog model rejects invalid, nested and duplicate layouts
+PASS  Grid columns wrap row-first without trailing spacing or XML changes
+PASS  Titan grids fill column-first with numeric orientation
+PASS  Positive row count overrides grid column count as in MP1
+PASS  Grid defaults and three-argument XML match the MP1 factory
+PASS  Grid margins, alignment and stretching use maximum cell size
+PASS  Collapsed grid children preserve MP1 row count and skip horizontal advance
+PASS  Runtime-invisible and editor-hidden grid controls retain slots
+PASS  Nested stack and grid layouts measure before parent arrangement
+PASS  Invalid grids warn and keep source positions
+PASS  Large grid dimensions do not enumerate empty cells
+PASS  Grid geometry follows edits and exact undo
+PASS  Collection values are refreshed after preparing a page from an empty session
+PASS  Selected thumbnails and explicit sample overrides follow collection updates
+PASS  List sample navigation updates metadata and persisted selection without editing XML
+PASS  Collection boundaries preserve selection and hand off to explicit control navigation
+PASS  Filmstrip and coverflow arrows move horizontally and preserve focused control
+PASS  Grid sample navigation follows actual small and large column geometry
+PASS  Hidden, unfocused, empty and ambiguous collections reject sample movement without mutation
+PASS  Standalone icon and playlist controls can receive preview focus and navigate samples
+PASS  List geometry includes the last fitting row without a trailing gap
+PASS  Every selected coverflow item remains visible in narrow viewports
+PASS  Filmstrip scrolling keeps successive selections in view without page jumps
+PASS  Collection geometry rejects nonfinite bounds and bounds imported nonfinite offsets
+PASS  Collection selection focus textures follow runtime focus rather than designer selection
+PASS  Clean collection previews suppress missing image placeholders and empty-state text
+PASS  Project format 4 protects collection data while format 3 remains readable
+PASS  Facade navigation uses logical IDs and changes only the active source template
+PASS  Native Hidden and Collapsed visibility remains invisible under preview conditions
+PASS  Facades display exactly one subview and preserve every XML control
+PASS  Collection property fields apply to concrete compatible subviews only
+PASS  Collection property dimensions and spacing reject invalid numeric input
+PASS  Missing facade views fall back to an existing template
+PASS  Facade conditions and selected sample data follow preview state
+PASS  Shared facade IDs form one logical identity while real collisions remain protected
+PASS  List geometry uses textureHeight and spaceBetweenItems
+PASS  List selection scrolls into view without changing XML positions
+PASS  Icon grids use large dimensions independently of small icons
+PASS  Filmstrips and coverflow produce different static geometries
+PASS  Filmstrip labels honor texture dimensions and negative text offsets independently of thumbnails
+PASS  Empty collections and selections beyond the last item are bounded
+PASS  Collection data is deep-copied and unsafe image paths are rejected
+PASS  Projects save collection views and data independently of skin ZIP exports
+PASS  Font sizes include MP1 point conversion after 576-line scaling
+PASS  Font families, styles and aliases load from fonts.xml
+PASS  Text offsets and aspect ratios remain within control bounds
+PASS  Image tinting applies RGB and alpha without changing original images
+PASS  Textbox wrapping draws additional lines within its bounds
+
+361 passed, 0 failed.

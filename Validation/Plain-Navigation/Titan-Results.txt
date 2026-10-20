@@ -1,0 +1,15 @@
+GUARD Default dialogYesNo.xml: No unambiguous navigation target for onleft.
+PASS Default-dialogYesNo: 4 accepted routes, 4 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 10
+PASS Default-dialogRating: 24 accepted routes, 0 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 10
+PASS Default-DialogNotify.generic: 8 accepted routes, 0 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 4
+GUARD Default myHome.exitmenu.xml: Navigation target ID 50 is missing, ambiguous or not focusable.
+PASS Default-myHome.exitmenu: 6 accepted routes, 6 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 14
+PASS Default-settings_movies: 20 accepted routes, 0 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 9996
+GUARD Christmas dialogYesNo.xml: No unambiguous navigation target for onleft.
+PASS Christmas-dialogYesNo: 4 accepted routes, 4 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 10
+PASS Christmas-dialogRating: 24 accepted routes, 0 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 10
+PASS Christmas-DialogNotify.generic: 8 accepted routes, 0 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 4
+GUARD Christmas myHome.exitmenu.xml: Navigation target ID 50 is missing, ambiguous or not focusable.
+PASS Christmas-myHome.exitmenu: 6 accepted routes, 6 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 14
+PASS Christmas-settings_movies: 20 accepted routes, 0 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 9996
+SUMMARY 10 complete real Titan workflows; 124 accepted routes (26 automatic, 98 explicit); 20 guarded routes; 10 distinct loaded original XML hashes unchanged.

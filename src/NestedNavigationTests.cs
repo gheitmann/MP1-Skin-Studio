@@ -39,9 +39,9 @@ namespace MP1SkinStudio
             {
                 var p=NestedNavigation(root,"nested-navigation-unknown");p.Edit(p.Controls.First(c=>c.Get("id")=="92"),Set("visible","unknown.condition()"),"Unknown branch");var s=new PreviewState(p){FocusId=10};string signature=ProjectFile.ContentSignature(p);Reject(()=>p.PreviewNavigationTarget(s,"onright"));Check(s.FocusId==10&&ProjectFile.ContentSignature(p)==signature,"Unknown nested branch mutated state.");
             });
-            Test("Ordinary and unsupported layout wrappers stay outside nested navigation",()=>
+            Test("Unsupported layout wrappers stay outside nested navigation",()=>
             {
-                foreach(string layout in new[]{"","UnsupportedLayout(2)","GridLayout(0,0)"})
+                foreach(string layout in new[]{"UnsupportedLayout(2)","GridLayout(0,0)"})
                 {var p=NestedNavigation(root,"nested-navigation-layout-"+Guid.NewGuid().ToString("N"));p.Edit(p.Controls[0],Set("layout",layout),"Unsupported wrapper");var s=new PreviewState(p){FocusId=10};Reject(()=>p.PreviewNavigationTarget(s,"onright"));Check(s.FocusId==10,"Invalid wrapper leaked focus.");}
             });
             Test("Nested navigation validates geometry on nonfocusable measurement siblings",()=>

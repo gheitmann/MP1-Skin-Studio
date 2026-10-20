@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window>
+  <id>9013</id><defaultcontrol>851</defaultcontrol>
+  <controls>
+    <control><type>label</type><font>TitanLight32</font><posX>120</posX><posY>65</posY><width>1600</width><height>70</height><label>Free-position group navigation</label></control>
+    <control><type>label</type><font>TitanLight20</font><posX>120</posX><posY>150</posY><width>1600</width><height>55</height><label>Ordinary groups retain absolute child positions.</label></control>
+    <control><type>group</type><id>850</id><description>Free-position navigation</description><posX>120</posX><posY>300</posY>
+      <control><type>group</type><id>860</id><description>Media group</description>
+        <control><type>button</type><id>851</id><posX>120</posX><posY>300</posY><description>Movies</description><width>500</width><height>120</height><font>TitanLight22</font><label>Movies</label><textcolorNoFocus>ffffffff</textcolorNoFocus><textureNoFocus>Studio/Button-dark.png</textureNoFocus><textureFocus>Studio/Button-blue.png</textureFocus></control>
+        <control><type>button</type><id>852</id><posX>120</posX><posY>450</posY><description>Music</description><width>500</width><height>120</height><font>TitanLight22</font><label>Music</label><textcolorNoFocus>ffffffff</textcolorNoFocus><textureNoFocus>Studio/Button-dark.png</textureNoFocus><textureFocus>Studio/Button-blue.png</textureFocus></control>
+      </control>
+      <control><type>group</type><id>870</id><description>Action group</description>
+        <control><type>button</type><id>853</id><posX>680</posX><posY>300</posY><description>Pictures</description><width>500</width><height>120</height><font>TitanLight22</font><label>Pictures</label><textcolorNoFocus>ffffffff</textcolorNoFocus><textureNoFocus>Studio/Button-dark.png</textureNoFocus><textureFocus>Studio/Button-blue.png</textureFocus></control>
+        <control><type>button</type><id>854</id><posX>680</posX><posY>450</posY><description>Settings</description><width>500</width><height>120</height><font>TitanLight22</font><label>Settings</label><textcolorNoFocus>ffffffff</textcolorNoFocus><textureNoFocus>Studio/Button-dark.png</textureNoFocus><textureFocus>Studio/Button-blue.png</textureFocus></control>
+      </control>
+    </control>
+    <control><type>label</type><font>TitanLight20</font><posX>120</posX><posY>800</posY><width>1600</width><height>100</height><label>Enable Navigation. Try Right, Down, Left, Up to cross both groups.</label></control>
+  </controls>
+</window>
