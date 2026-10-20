@@ -1,0 +1,12 @@
+PASS demo.checkmark.xml: clean open; zoom marks unsaved; Fit restores exact clean signature; save/reopen remains clean with focus 881.
+PASS demo.collections.xml: clean open; zoom marks unsaved; Fit restores exact clean signature; save/reopen remains clean with focus 50.
+PASS demo.filmstrip.xml: clean open; zoom marks unsaved; Fit restores exact clean signature; save/reopen remains clean with focus 50.
+PASS demo.free.xml: clean open; zoom marks unsaved; Fit restores exact clean signature; save/reopen remains clean with focus 851.
+PASS demo.grid.xml: clean open; zoom marks unsaved; Fit restores exact clean signature; save/reopen remains clean with focus 901.
+PASS demo.groups.xml: clean open; zoom marks unsaved; Fit restores exact clean signature; save/reopen remains clean with focus -1.
+PASS demo.images.xml: clean open; zoom marks unsaved; Fit restores exact clean signature; save/reopen remains clean with focus -1.
+PASS demo.language.xml: clean open; zoom marks unsaved; Fit restores exact clean signature; save/reopen remains clean with focus 501.
+PASS demo.layers.xml: clean open; zoom marks unsaved; Fit restores exact clean signature; save/reopen remains clean with focus -1.
+PASS demo.navigation.xml: clean open; zoom marks unsaved; Fit restores exact clean signature; save/reopen remains clean with focus 801.
+PASS demo.stack.xml: clean open; zoom marks unsaved; Fit restores exact clean signature; save/reopen remains clean with focus 801.
+PASS demo.xml: clean open; zoom marks unsaved; Fit restores exact clean signature; save/reopen remains clean with focus 10.

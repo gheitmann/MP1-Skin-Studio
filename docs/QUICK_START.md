@@ -70,3 +70,16 @@ hashes for each changed XML file. Match Original SHA256 to the target copy
 before applying; match Exported SHA256 afterward. Export stops if a modified
 source changed on disk after loading. Save your editor project for recovery
 and compare the source with your backup; the editor does not merge that conflict.
+
+## Resume after a source conflict
+
+Save your pending work as an editor project, then use **Open Project**. If a
+modified original no longer matches, the editor names the conflicting XML and
+offers a folder chooser. Select a complete matching backup skin root (not its
+Themes folder). The old directory may remain in place. Missing saved roots use
+the same chooser. Cancel keeps your current session; an unsuitable backup is
+rejected without replacing it. After recovery, save the project to remember the
+new root, then export to a separate runtime test copy.
+
+Only originals of modified XML are hash-matched. Unmodified dependencies, images
+and runtime behavior still require a complete appropriate backup and review.

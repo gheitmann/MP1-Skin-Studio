@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -11,6 +11,14 @@ namespace MP1SkinStudio
 {
     public sealed class ProjectLocation
     {public string Root,Page,Theme;}
+
+    public sealed class ProjectSourceConflictException : IOException
+    {
+        public string RelativePath { get; private set; }
+        public ProjectSourceConflictException(string relativePath)
+            : base("The source file has changed or is missing since the project was saved: "+relativePath+". No changes were applied.")
+        {RelativePath=relativePath;}
+    }
 
     // Editor projects are snapshots, not an alternative MediaPortal skin format.
     // Only changed XML and their original bytes are embedded; images stay in the skin.
@@ -95,6 +103,22 @@ namespace MP1SkinStudio
         {using(var archive=ZipFile.OpenRead(path))return Location(Manifest(archive));}
         public static bool LocalRoot(string root)
         {return !String.IsNullOrWhiteSpace(root)&&System.IO.Path.IsPathRooted(root)&&!root.StartsWith("\\",StringComparison.Ordinal)&&!root.StartsWith("//",StringComparison.Ordinal);}
+        // The resolver is called at most once. A rejected/canceled replacement never
+        // publishes a partial project or relaxes snapshot/source validation.
+        public static SkinProject OpenWithRecovery(string path,Func<string,string> chooseRoot)
+        {
+            var location=Inspect(path);string reason=null;
+            if(!LocalRoot(location.Root)||!Directory.Exists(location.Root))
+                reason="The saved skin directory is unavailable. Choose the matching complete backup skin directory, not a theme subfolder.";
+            else
+            {
+                try{return Load(path);}
+                catch(ProjectSourceConflictException ex)
+                {reason=ex.Message+" Choose the matching complete backup skin directory, not a theme subfolder.";}
+            }
+            string replacement=chooseRoot(reason);
+            return String.IsNullOrWhiteSpace(replacement)?null:Load(path,replacement);
+        }
         public static SkinProject Load(string path,string rootOverride=null)
         {
             using(var archive=ZipFile.OpenRead(path))
@@ -113,7 +137,7 @@ namespace MP1SkinStudio
                     if(!relative.EndsWith(".xml",StringComparison.OrdinalIgnoreCase)||!paths.Add(physical))throw new InvalidDataException("Invalid or duplicate XML path in project.");
                     byte[] original=ReadEntry(archive,file.GetAttribute("original")),edited=ReadEntry(archive,file.GetAttribute("edited"));
                     if(Digest(original)!=file.GetAttribute("originalSha256")||Digest(edited)!=file.GetAttribute("editedSha256"))throw new InvalidDataException("Corrupted project snapshot: "+relative);
-                    if(!File.Exists(physical)||new FileInfo(physical).Length!=original.Length||Digest(File.ReadAllBytes(physical))!=file.GetAttribute("originalSha256"))throw new InvalidDataException("The source file has changed or is missing since the project was saved: "+relative+". No changes were applied.");
+                    if(!File.Exists(physical)||new FileInfo(physical).Length!=original.Length||Digest(File.ReadAllBytes(physical))!=file.GetAttribute("originalSha256"))throw new ProjectSourceConflictException(relative);
                     var source=project.Source(physical);
                     // Encoding and BOM of source and edited snapshot must match. Use the
                     // source decoder; no temporary files and no extraction into the skin.

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,10 +9,11 @@ namespace MP1SkinStudio
     public sealed partial class StudioForm
     {
         string currentProjectFile,savedProjectSignature,exportedSignature,initialEditorSignature,savedEditorSignature;
+        bool projectLocationChanged;
         bool SessionNeedsSaving()
         {
             if(project==null)return false;
-            if(PendingProperties())return true;
+            if(PendingProperties()||projectLocationChanged)return true;
             string signature=ProjectFile.ContentSignature(project);
             if(signature==savedProjectSignature)return false;
             bool editorChanged=ProjectFile.EditorSignature(project)!=(currentProjectFile==null?initialEditorSignature:savedEditorSignature);
@@ -23,7 +24,7 @@ namespace MP1SkinStudio
         void SaveSession(string path)
         {
             RequireAppliedProperties();
-            ProjectFile.Save(project,path);currentProjectFile=path;savedProjectSignature=ProjectFile.ContentSignature(project);savedEditorSignature=ProjectFile.EditorSignature(project);UpdateProjectCaption();
+            ProjectFile.Save(project,path);projectLocationChanged=false;currentProjectFile=path;savedProjectSignature=ProjectFile.ContentSignature(project);savedEditorSignature=ProjectFile.EditorSignature(project);UpdateProjectCaption();
             ShowNotice("Editor project saved: "+path+". Source files in the skin directory remain unchanged.");
         }
         void ResumeSession(string path,string rootOverride=null)
@@ -44,14 +45,20 @@ namespace MP1SkinStudio
             using(var dialog=new OpenFileDialog{Filter="MP1 Skin Studio Project|*.mp1skinproj",Title="Open saved editor project"})
             {
                 if(dialog.ShowDialog(this)!=DialogResult.OK||!CanSwitch())return;
-                var location=ProjectFile.Inspect(dialog.FileName);string rootOverride=null;
-                if(!ProjectFile.LocalRoot(location.Root)||!Directory.Exists(location.Root))
+                OpenSessionWithRecovery(dialog.FileName,reason=>
                 {
-                    using(var folder=new FolderBrowserDialog{Description="The original skin directory is missing. Choose the matching complete skin directory.",ShowNewFolderButton=false})
-                    {if(folder.ShowDialog(this)!=DialogResult.OK)return;rootOverride=folder.SelectedPath;}
-                }
-                ResumeSession(dialog.FileName,rootOverride);
+                    using(var folder=new FolderBrowserDialog{Description=reason,ShowNewFolderButton=false})
+                        return folder.ShowDialog(this)==DialogResult.OK?folder.SelectedPath:null;
+                });
             }
+        }
+        internal bool OpenSessionWithRecovery(string path,Func<string,string> chooseRoot)
+        {
+            var next=ProjectFile.OpenWithRecovery(path,chooseRoot);
+            if(next==null)return false;
+            InstallProject(next,next.Page,path);
+            ShowNotice("Project restored from "+next.Root+". Saved changes can be undone together. Save the project to remember this skin location.");
+            return true;
         }
         void RunProjectUiSmoke(string directory,Action<bool,string> verify)
         {

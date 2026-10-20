@@ -489,3 +489,32 @@ Use Windows PowerShell Get-FileHash -LiteralPath <file> -Algorithm SHA256 for
 a byte-level comparison. These hashes identify content; they are neither a
 digital signature nor proof of MP1 compatibility. Retain a full backup and
 verify the result in the installed client.
+
+
+## Recover a saved project using a matching skin backup
+
+Open Project (Ctrl+O) now offers a replacement skin folder if the saved root is
+unavailable or a modified source file has changed/disappeared. The conflict
+message identifies the relative XML path. Select the root of a complete matching
+backup, including its themes/resources, even if the old directory still exists.
+Select the skin root rather than a theme directory. This also lets a recovery
+project saved after an export conflict reopen against the correct originals.
+
+All existing source hashes, archive integrity, path, encoding and control identity
+checks still apply. The editor neither merges external changes nor substitutes
+snapshots for source files. A mismatching backup produces an error, without
+repeated folder requests. Cancel, failed validation and failed session preparation
+leave the running session intact. Successful recovery installs saved XML changes
+with one combined Undo/Redo step. No files are extracted into either skin.
+
+A changed root is marked unsaved in the title, including after Undo or export.
+Save Project remembers it; a failed save leaves the marker and previous saved
+archive intact. The next open uses the saved new root directly. Opening another
+skin starts its normal clean baseline.
+
+The backup must contain matching originals for every modified XML snapshot.
+Hash matching does not certify the rest of a skin: unchanged XML, themes, images,
+fonts and other dependencies are not embedded or exhaustively matched. Keep a
+complete suitable backup and verify the exported changes in an isolated runtime
+copy. Corrupted archives and unrelated opening errors remain errors; they are
+not handled by choosing another folder.

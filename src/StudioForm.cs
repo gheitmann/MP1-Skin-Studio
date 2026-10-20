@@ -310,8 +310,9 @@ namespace MP1SkinStudio
         {InstallProject(new SkinProject(root),requested,null);}
         void InstallProject(SkinProject next,string requested,string editorFile)
         {
+            bool relocated=editorFile!=null&&!String.Equals(ProjectFile.Inspect(editorFile).Root.TrimEnd('\\','/'),next.Root.TrimEnd('\\','/'),StringComparison.OrdinalIgnoreCase);
             var prepared=PreparedSkinSession.Create(next,requested);
-            project=next;currentProjectFile=editorFile;savedProjectSignature=editorFile==null?null:ProjectFile.ContentSignature(project);initialEditorSignature=ProjectFile.EditorSignature(project);savedEditorSignature=initialEditorSignature;exportedSignature=null;state=prepared.Preview;canvas.Project=project;canvas.State=state;canvas.ResetAssets();
+            projectLocationChanged=relocated;project=next;currentProjectFile=editorFile;savedProjectSignature=editorFile==null?null:ProjectFile.ContentSignature(project);initialEditorSignature=ProjectFile.EditorSignature(project);savedEditorSignature=initialEditorSignature;exportedSignature=null;state=prepared.Preview;canvas.Project=project;canvas.State=state;canvas.ResetAssets();
             bool prior=loading;loading=true;
             try
             {

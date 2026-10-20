@@ -2,7 +2,13 @@
 
 Date: October 20, 2026. Imported version: 0.9.
 
-## Latest source milestone: verified exports and source-conflict preservation
+## Latest source milestone: recover saved work against matching skin backups
+
+October 20, 2026: Open Project now offers one matching-backup folder selection when the saved root is unavailable or a modified original has drifted/disappeared, including when the old root still exists. The conflicting relative XML is named; source hash/integrity/path/encoding checks remain mandatory. Cancel and rejected backups preserve the active session. A changed root remains visibly unsaved until a successful project save; export/Undo cannot clear it. Subsequent opening uses the saved replacement root directly.
+
+Fresh validation: 394 core checks; six synthetic Windows-form Titan BasicHome/Video/Settings workflows across Default/Christmas, each recovering three modified XML files with canceled/wrong-backup and pending-field preservation, exact export, Undo/Redo, locked-save preservation, location persistence and clean direct reopen. All 18 exported payload checks passed. All 2,050 files match in the original test baseline and both complete skin copies after the intentionally drifted fixture is restored. The extracted package passed twelve complete demo workflows plus twelve clean-session workflows with 30 unchanged payload hashes. See [project recovery validation](Validation/Project-Recovery/README.md). No new attended native-dialog or installed-client acceptance; those prior reports remain historical. Matching covers modified XML originals, not all backup dependencies.
+
+## Previous source milestone: verified exports and source-conflict preservation
 
 October 20, 2026: XML export now compares every modified source against its original loaded bytes before generation and again before publishing the archive. Missing/externally edited originals stop export while preserving the existing ZIP, pending changes and Undo/Redo. Every generated archive entry is read back and compared byte-for-byte before atomic replacement. The existing instructions entry now records relative paths, original/exported byte counts and SHA-256 hashes, active page/theme and shared-include scope. ZIP contents remain changed XML plus one instructions file.
 

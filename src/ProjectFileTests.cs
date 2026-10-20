@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.IO;
 using System.IO.Compression;
@@ -147,6 +147,40 @@ namespace MP1SkinStudio
                 var p=SessionFixture(root,"project-move-original");p.Edit(p.Controls[1],Set("posX","500"),"verschieben");string path=Path.Combine(root,"moved.mp1skinproj");ProjectFile.Save(p,path);
                 string target=Path.Combine(root,"project-move-new");Directory.CreateDirectory(target);foreach(string xml in Directory.GetFiles(p.Root,"*.xml"))File.Copy(xml,Path.Combine(target,Path.GetFileName(xml)),true);
                 var loaded=ProjectFile.Load(path,target);Check(loaded.Root==target&&loaded.Controls[1].Get("posX")=="500","Project migration failed.");
+            });
+            Test("Recovery uses a matching backup even while the changed original directory exists",()=>
+            {
+                var p=SessionFixture(root,"recover-existing");string backup=Path.Combine(root,"recover-matching");Directory.CreateDirectory(backup);
+                foreach(string xml in Directory.GetFiles(p.Root,"*.xml"))File.Copy(xml,Path.Combine(backup,Path.GetFileName(xml)));
+                p.EditMany(new[]{new ControlEdit(p.Controls[0],Set("posX","60")),new ControlEdit(p.Controls[1],Set("label","Recovered"))},"Recover");
+                string file=Path.Combine(root,"recover.mp1skinproj");ProjectFile.Save(p,file);File.AppendAllText(Path.Combine(p.Root,"main.xml"),"<!--external-->");
+                int prompts=0;var loaded=ProjectFile.OpenWithRecovery(file,reason=>{prompts++;Check(reason.Contains("main.xml")&&reason.Contains("backup"),"Recovery reason lost the source context.");return backup;});
+                Check(prompts==1&&loaded.Root==backup&&loaded.Controls[1].Get("label")=="Recovered"&&loaded.Undo.Count==1,"Recovery lost changes or history.");
+                loaded.UndoChange();Check(!loaded.Dirty,"Recovered Undo failed.");loaded.RedoChange();Check(loaded.Controls[0].Get("posX")=="60","Recovered Redo failed.");
+                string saved=Path.Combine(root,"recovered-location.mp1skinproj");ProjectFile.Save(loaded,saved);Check(ProjectFile.Inspect(saved).Root==backup,"New location was not saved.");
+                Check(ProjectFile.OpenWithRecovery(saved,reason=>{throw new Exception("Repeated recovery prompt");}).Root==backup,"New location did not reopen directly.");
+                Check(File.ReadAllText(Path.Combine(p.Root,"main.xml")).EndsWith("<!--external-->")&&!File.ReadAllText(Path.Combine(backup,"part.xml")).Contains("Recovered"),"Recovery overwrote a skin.");
+            });
+            Test("Recovery cancellation returns no project and preserves the archive",()=>
+            {
+                var p=SessionFixture(root,"recover-cancel");p.Edit(p.Controls[1],Set("label","Saved"),"Edit");string file=Path.Combine(root,"recover-cancel.mp1skinproj");ProjectFile.Save(p,file);byte[] archive=File.ReadAllBytes(file);File.Delete(Path.Combine(p.Root,"part.xml"));
+                int prompts=0;Check(ProjectFile.OpenWithRecovery(file,reason=>{prompts++;return null;})==null&&prompts==1,"Cancel did not stop opening.");Check(File.ReadAllBytes(file).SequenceEqual(archive),"Cancel changed the saved project.");
+            });
+            Test("A mismatching backup is rejected without repeated folder requests",()=>
+            {
+                var p=SessionFixture(root,"recover-wrong");p.Edit(p.Controls[1],Set("label","Saved"),"Edit");string file=Path.Combine(root,"recover-wrong.mp1skinproj");ProjectFile.Save(p,file);File.AppendAllText(Path.Combine(p.Root,"part.xml"),"<!--external-->");int prompts=0;bool typed=false;
+                try{ProjectFile.OpenWithRecovery(file,reason=>{prompts++;return p.Root;});}catch(ProjectSourceConflictException ex){typed=ex.RelativePath=="part.xml";}
+                Check(typed&&prompts==1,"Wrong backup bypassed hashes or repeated the chooser.");
+            });
+            Test("Missing saved roots use the same bounded recovery path",()=>
+            {
+                var p=SessionFixture(root,"recover-missing");p.Edit(p.Controls[0],Set("posX","70"),"Edit");string file=Path.Combine(root,"recover-missing.mp1skinproj");ProjectFile.Save(p,file);string target=p.Root+"-moved";Directory.Move(p.Root,target);int prompts=0;
+                var loaded=ProjectFile.OpenWithRecovery(file,reason=>{prompts++;Check(reason.Contains("unavailable"),"Missing-root reason is incorrect.");return target;});Check(prompts==1&&loaded.Root==target&&loaded.Controls[0].Get("posX")=="70","Missing-root recovery failed.");
+            });
+            Test("Valid projects and corrupted archives never request conflict recovery",()=>
+            {
+                var p=SessionFixture(root,"recover-corrupt");p.Edit(p.Controls[0],Set("posX","70"),"Edit");string file=Path.Combine(root,"recover-corrupt.mp1skinproj");ProjectFile.Save(p,file);int prompts=0;Func<string,string> resolver=reason=>{prompts++;return p.Root;};
+                Check(ProjectFile.OpenWithRecovery(file,resolver)!=null&&prompts==0,"Healthy project requested a folder.");RewriteManifest(file,t=>t.Replace("editedSha256=\"","editedSha256=\"bad"));Reject(()=>ProjectFile.OpenWithRecovery(file,resolver));Check(prompts==0,"Corruption was treated as a source conflict.");
             });
             Test("External source changes prevent silent project restoration",()=>
             {
