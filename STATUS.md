@@ -2,7 +2,13 @@
 
 Date: October 20, 2026. Imported version: 0.9.
 
-## Latest delivery milestone: integrated Windows and runtime acceptance
+## Latest source milestone: saved audit and preview reports
+
+October 20, 2026: Audit and Ctrl+F8 now save their current shown filter as text or self-contained HTML, with page/theme, scope, total/shown counts, source locations and complete details. Shared filtering keeps display and saved output consistent. XML-derived markup is encoded, empty filters remain explicitly bounded, and atomic replacement preserves old reports on failure. No XML, editor state or runtime behavior changes during reporting.
+
+Fresh validation: 383 core checks; 144 saved real-Titan dialog snapshots across three pages, two themes, two report kinds, both formats and filters; 45 unchanged original XML hashes. Final package passed twelve full demo workflows and twelve clean-session workflows with 30 unchanged payload hashes. Attended Windows opened/canceled the new native save dialog and returned to a clean editor; actual writing is covered by automated dialog/core checks. Prior broad UI/client acceptance remains historical. See [report validation](Validation/Finding-Reports/README.md).
+
+## Previous delivery milestone: integrated Windows and runtime acceptance
 
 October 20, 2026: the current packaged editor passed an attended four-arrow nested navigation roundtrip. A fresh two-file Video export from this executable loaded in the installed MP1 client on a complete isolated skin copy: header marker, narrower list and side-menu Left/Right passed. Titan was restored through its UI. All 2,050 original Titan file hashes match the preserved baseline; the runtime copy differs in exactly the two intended XML files.
 

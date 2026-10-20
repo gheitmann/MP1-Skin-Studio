@@ -45,17 +45,15 @@ use Revert Inputs to discard unapplied fields; test Undo/Redo; save an editor
 project, reopen it and export changes as ZIP. Use separate skin copies for real
 editing and retain original files. The preview remains approximate.
 
-Fresh integrated validation: 378 core checks, twelve complete package demo
-workflows and twelve clean-session workflows passed. All 30 accepted payload
-hashes stayed unchanged during the demo matrix. Attended Windows checks passed
-the four-arrow nested navigation roundtrip. A fresh two-file Video export loaded
-in installed MP1 on an isolated complete skin copy: header marker, narrower list
-and side-menu navigation passed. Titan was restored; all 2,050 original Titan
-files match their preserved baseline. This is sampled export/runtime acceptance,
-not complete visual equivalence, playback or plugin coverage.
-The previous 204 broad UI checks and real-page matrices remain historical.
-Slider/spin value interaction is not simulated; unsupported axes explain why
-focus stays unchanged. See the user guide for preview bounds.
+Fresh reporting validation: 383 core checks, 144 real-Titan saved dialog
+snapshots, twelve package demo workflows and twelve clean-session workflows
+passed. All 45 loaded real-skin XML hashes and 30 package payload hashes stayed
+unchanged. Audit and Ctrl+F8 now offer Save shown report for text/HTML output,
+retaining the current filter, source locations and details. Reports are bounded
+snapshots, not full runtime acceptance. The new Windows native save dialog was
+opened and canceled; actual report writing is covered by automated workflows.
+Earlier installed-client and broad UI acceptance remain historical. The preview
+remains approximate; see the user guide for supported behavior and limits.
 "@
 function Add-ReviewText($Archive, $Name, $Text) {
     $reviewEntry = $Archive.CreateEntry($Name)

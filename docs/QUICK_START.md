@@ -54,3 +54,11 @@ sample selection, without running plugins, actions or playback. Checkmarks do
 not toggle on activation. Slider/spin value interaction and rendering remain
 unsupported; guarded arrows explain why focus stays unchanged. Ctrl+F8 lists
 unverified preview details. See USER_GUIDE.md for precise support and bounds.
+
+## Keep a list of findings
+
+Audit checks the open page; Ctrl+F8 explains unverified preview content. Search
+the findings, choose whether to include informational rows and use Save shown
+report to save text or HTML with source locations and details. Rerun the check
+after edits: saved reports are snapshots. Zero filtered findings is not a
+complete runtime acceptance.

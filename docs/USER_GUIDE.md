@@ -446,3 +446,19 @@ The navigation-link editor and audit show XML mappings. Arrow preview additional
 For spincontrol, horizontal orientation (default or 0) makes Left/Right depend on its runtime inner-button/value state; vertical orientation (or 1) makes Up/Down depend on that state. Those axes remain unverified. Unknown or property-driven orientation blocks all arrows. Explicit mappings across the other axis can still work. This is a conservative boundary, not a claim that the native control always consumes an axis in every internal state.
 
 Ctrl+F8 reports visible slider/spin controls as informational PREVIEW_INTERACTION findings because their rendering and runtime value interaction are not implemented. Raw XML mappings, editing, saved projects, Undo/Redo and export remain available. Guarded arrows preserve focus, editor signature and XML. Checkmark selection/layout findings now have a Checkmark-specific heading. Other existing control/layout guards remain in effect.
+
+## Save audit and preview findings
+
+Open Audit or Ctrl+F8, set Search and the informational-findings toggle, then
+choose Save shown report. The save dialog offers UTF-8 text (.txt) and a
+self-contained HTML page (.html). Choose the file type before entering a name;
+the usual extension is added when omitted. The report contains exactly the
+current filter, in displayed order, including page/theme, total/shown counts,
+codes, element names, property, source line and full details.
+
+HTML reports display source expressions as text and need no external assets or
+scripts. Empty filters explain that zero shown findings do not establish MP1
+compatibility. Reports are snapshots; rerun Audit or Ctrl+F8 after edits. A
+report saves neither skin XML nor editor-project state. Existing report files
+are replaced only after the complete output was written; a failed save keeps
+the previous report. Only .txt and .html destinations are accepted.

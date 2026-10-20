@@ -1,0 +1,13 @@
+PASS Default-BasicHome-Audit: audit/preview snapshot, both formats, information/search/empty filters, minimum-size action and unchanged project.
+PASS Default-BasicHome-Preview: audit/preview snapshot, both formats, information/search/empty filters, minimum-size action and unchanged project.
+PASS Default-myvideo-Audit: audit/preview snapshot, both formats, information/search/empty filters, minimum-size action and unchanged project.
+PASS Default-myvideo-Preview: audit/preview snapshot, both formats, information/search/empty filters, minimum-size action and unchanged project.
+PASS Default-SettingsGUI-Audit: audit/preview snapshot, both formats, information/search/empty filters, minimum-size action and unchanged project.
+PASS Default-SettingsGUI-Preview: audit/preview snapshot, both formats, information/search/empty filters, minimum-size action and unchanged project.
+PASS Christmas-BasicHome-Audit: audit/preview snapshot, both formats, information/search/empty filters, minimum-size action and unchanged project.
+PASS Christmas-BasicHome-Preview: audit/preview snapshot, both formats, information/search/empty filters, minimum-size action and unchanged project.
+PASS Christmas-myvideo-Audit: audit/preview snapshot, both formats, information/search/empty filters, minimum-size action and unchanged project.
+PASS Christmas-myvideo-Preview: audit/preview snapshot, both formats, information/search/empty filters, minimum-size action and unchanged project.
+PASS Christmas-SettingsGUI-Audit: audit/preview snapshot, both formats, information/search/empty filters, minimum-size action and unchanged project.
+PASS Christmas-SettingsGUI-Preview: audit/preview snapshot, both formats, information/search/empty filters, minimum-size action and unchanged project.
+PASS 144 saved dialog snapshots; 45 original XML hashes unchanged. Synthetic form workflows; no desktop input or installed-client run.
