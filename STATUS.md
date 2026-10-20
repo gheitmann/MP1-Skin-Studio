@@ -2,7 +2,13 @@
 
 Date: October 20, 2026. Imported version: 0.9.
 
-## Latest source milestone: visible dark scrollbars on the Windows desktop
+## Latest source milestone: aligned collection captions and a dark window caption
+
+October 20, 2026: single-line list/playlist captions now honor the zero-height centered label anchor used by MediaPortal, so text sits inside its focus texture instead of below it. Font height is retained independently of the remaining row height, avoiding clipped glyphs. Collection clipping, XML positions, row texture geometry and focus navigation remain intact. The main native Windows caption, border and text use the header palette through documented DWM attributes, retaining standard caption buttons, moving, sizing and keyboard behavior. High contrast restores system caption colors; unsupported systems retain their native appearance.
+
+Fresh acceptance: 422 core checks (two new rendering regressions), 23 sidebar/scroll scenarios, ten readable-preview scenarios, twelve complete demo workflows and twelve clean-session workflows passed. All 488 installed XML, 26 demo assets and 31 payload hashes were unchanged. Live Windows inspection confirmed the DefaultWideHD myHome focused title centered inside its blue texture, complete glyphs and the matching dark native caption. Maximize/restore input was attempted but subsequent owner window activity prevented a conclusive observation; it is not claimed as attended acceptance. Prior integrated-page/broad/client reports remain historical. See [focus/window validation](Validation/Focus-Window/README.md).
+
+## Previous source milestone: visible dark scrollbars on the Windows desktop
 
 October 20, 2026: corrected DarkScrollHost sibling z-order so its painted bars cover the native content windows. Previously, synthetic DrawToBitmap renders appeared dark while the actual desktop still showed light Windows bars. The content now explicitly sits behind the overlays; native viewport and scrolling behavior are unchanged.
 

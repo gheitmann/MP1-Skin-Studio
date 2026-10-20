@@ -106,6 +106,16 @@ namespace MP1SkinStudio
                 format.Alignment=align=="right"?StringAlignment.Far:align=="center"?StringAlignment.Center:StringAlignment.Near;
                 format.LineAlignment=valign=="bottom"?StringAlignment.Far:valign=="middle"||valign=="center"?StringAlignment.Center:StringAlignment.Near;
                 format.Trimming=multiline?StringTrimming.EllipsisWord:StringTrimming.EllipsisCharacter;if(!multiline)format.FormatFlags=StringFormatFlags.NoWrap;
+                if(!multiline&&(c.Get("type")=="listcontrol"||c.Get("type")=="playlistcontrol"))
+                {
+                    // MP1 list captions use zero-height GUILabelControls. Center
+                    // alignment anchors Y at the text midpoint, not its top.
+                    var extent=g.MeasureString(text,font,new SizeF(100000,10000),format);
+                    bool centered=align=="center"&&extent.Width<rect.Width;
+                    if(centered)rect.Y-=extent.Height/2;
+                    if(extent.Width>=rect.Width)format.Alignment=StringAlignment.Near;
+                    rect.Height=extent.Height+1;format.LineAlignment=StringAlignment.Near;
+                }
                 if((c.Get("type")=="label"||c.Get("type")=="fadelabel")&&alignProperty=="align"&&!multiline)
                 {
                     var extent=g.MeasureString(text,font,new SizeF(100000,10000),format);

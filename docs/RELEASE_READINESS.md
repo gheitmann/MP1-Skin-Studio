@@ -33,6 +33,13 @@ earlier z-order defect; 23 focused scenarios and 420 core checks pass.
 
 ## Caption selection
 
+The main window's native title bar matches the dark header on supported Windows
+versions, retaining normal caption buttons and window behavior. High contrast
+uses system caption colors. Older systems may retain their original title bar.
+List/playlist sample captions use the centered zero-height label anchor from
+MediaPortal and full font height, keeping focused text inside its row texture.
+XML geometry and source files are unchanged by this preview correction.
+
 Single-line label/fadelabel outlines and mouse targets follow visible caption
 ink, rather than synthetic fallback dimensions. Click, overlap menus and double
 click use the same geometry. Dragging changes position; Width/Height are edited

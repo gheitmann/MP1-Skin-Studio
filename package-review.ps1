@@ -79,9 +79,14 @@ Pictures, Folder and Radio instead of stacking all five text blocks. These are
 editing examples, not live plugin values. Isolation is temporary; view/example
 settings persist in the editor project. XML/conditions/export bytes stay intact.
 
-Fresh executable/package checks: 420 core, 22 skin/sidebar/scrolling, 12 integrated-page and ten readable-preview scenarios,
-twelve complete demo workflows, twelve clean-session workflows and 31 unchanged
-payload hashes. All 488 installed fixture XML files are unchanged. Prior broad
+Centered list/playlist sample captions now align vertically with their focus
+texture and retain complete glyphs. The native title bar uses the dark header
+palette on supported Windows, retaining standard window buttons and behavior.
+
+Fresh executable/package checks: 422 core, 23 skin/sidebar/scrolling and ten
+readable-preview scenarios, twelve complete demo workflows, twelve clean-session
+workflows and 31 unchanged payload hashes. All 488 installed fixture XML files
+are unchanged. Prior integrated-page and broad
 UI/browser/review/transition/startup and large-menu reports remain historical.
 See docs/RELEASE_READINESS.md for recognition limits and practical scope.
 

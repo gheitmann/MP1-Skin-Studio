@@ -9,6 +9,37 @@ namespace MP1SkinStudio
     {
         static void RunSurfaceRegressionTests(string root)
         {
+            Test("Centered list and playlist captions align with their focused row and move together",()=>
+            {
+                foreach(string type in new[]{"listcontrol","playlistcontrol"})
+                {
+                    var p=AuditFixture(root,"centered-row-"+type,"<control><type>"+type+"</type><id>50</id><textureHeight>65</textureHeight><spaceBetweenItems>0</spaceBetweenItems><font>row</font><textXOff>0</textXOff><textYOff>30</textYOff><textXOff2>3000</textXOff2><textalign>center</textalign><selectedColor>ff00ff00</selectedColor><textureFocus>-</textureFocus><textureNoFocus>-</textureNoFocus></control>");
+                    p.FontSpecs["row"]=new SkinFontSpec{Family="Segoe UI",Height=17};p.Editor.ShowUnresolved=false;
+                    p.Editor.Collection.Items.Clear();p.Editor.Collection.Items.Add(new PreviewItem{Title="Hg focused"});p.Editor.Collection.Items.Add(new PreviewItem{Title="Hg focused"});
+                    string signature=ProjectFile.XmlSignature(p);var state=new PreviewState(p){FocusId=50};
+                    using(var canvas=new SkinCanvas{Project=p,State=state})using(var image=new Bitmap(400,180))using(var g=Graphics.FromImage(image))
+                    {
+                        for(int index=0;index<2;index++)
+                        {
+                            p.Editor.Collection.Focus=index;g.Clear(Color.Transparent);canvas.BeginTextPassForTest();canvas.ControlSurfaceForTest(g,p.Controls[0],new RectangleF(20,20,350,150));canvas.FlushTextPassForTest(g);
+                            int top=180,bottom=-1;for(int y=0;y<180;y++)for(int x=0;x<400;x++){var pixel=image.GetPixel(x,y);if(pixel.G>100&&pixel.R<30&&pixel.B<30&&pixel.A>100){top=Math.Min(top,y);bottom=Math.Max(bottom,y);}}
+                            Check(bottom-top>20&&Math.Abs((top+bottom)/2f-(50+65*index))<10,"Centered caption fell below its row or lost its lower glyphs.");
+                        }
+                    }
+                    Check(ProjectFile.XmlSignature(p)==signature&&!p.Dirty,"Preview alignment changed skin XML.");
+                }
+            });
+            Test("Left aligned list captions keep full glyph height with a large vertical offset",()=>
+            {
+                var p=AuditFixture(root,"list-offset-full-text","<control><type>listcontrol</type><id>50</id><textureHeight>40</textureHeight><font>row</font><textYOff>30</textYOff><textXOff2>3000</textXOff2><textalign>left</textalign><textureFocus>-</textureFocus><textureNoFocus>-</textureNoFocus></control>");
+                p.FontSpecs["row"]=new SkinFontSpec{Family="Segoe UI",Height=17};p.Editor.ShowUnresolved=false;p.Editor.Collection.Items.Clear();p.Editor.Collection.Items.Add(new PreviewItem{Title="Hg"});
+                using(var canvas=new SkinCanvas{Project=p,State=new PreviewState(p){FocusId=50}})using(var image=new Bitmap(300,130))using(var g=Graphics.FromImage(image))
+                {
+                    canvas.ControlSurfaceForTest(g,p.Controls[0],new RectangleF(0,0,300,130));int top=130,bottom=-1;
+                    for(int y=0;y<130;y++)for(int x=0;x<300;x++)if(image.GetPixel(x,y).A>100){top=Math.Min(top,y);bottom=Math.Max(bottom,y);}
+                    Check(top>=30&&bottom-top>20&&bottom>40,"Remaining row height clipped the caption or shifted a left anchor.");
+                }
+            });
             Test("Large button text offsets retain the remaining label area",()=>
             {
                 var p=AuditFixture(root,"button-large-offset","<control><type>button</type><width>594</width><height>241</height><textYOff>175</textYOff><label>TV</label></control>");
