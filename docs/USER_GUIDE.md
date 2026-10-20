@@ -7,7 +7,7 @@ Version 0.9 · October 20, 2026
 1. Extract the complete review ZIP. For a source checkout, build with `powershell -NoProfile -File .\build.ps1` instead.
 2. Start `MP1SkinStudio.exe`. The bundled demo loads automatically.
 3. Select an element in the preview or element tree.
-4. Drag to move it; use the lower-right handle to resize it.
+4. Drag to move it. Resize non-text controls with the lower-right handle; set label Width/Height in Properties.
 5. Edit properties on the right and choose **Apply Properties**.
 6. Save an editor project to continue later, or choose **Export Changes as ZIP**.
 7. Use **Revert Inputs** to discard unapplied property fields without undoing applied XML changes. Pending fields block save/export and page/theme changes until applied or reverted.
@@ -29,7 +29,7 @@ affect every page using that file when the export is applied.
 
 Click on the canvas or in the tree. Hold CTRL to select multiple elements.
 Drag a selection to move all selected controls in one transaction.
-The resize handle changes the selected control's dimensions.
+The resize handle changes the selected non-text control's dimensions. Single-line labels and fadelabels use a caption outline and matching click/double-click targets, avoiding invented 400-by-64 selection boxes. Their outline follows visible text, including alignment and clipping. Drag the caption to move it; set Width/Height explicitly in Properties. Textboxes and button/collection surfaces retain their full field frames. Blank captions remain accessible through the element tree.
 Grid display and 10-pixel snapping can be toggled independently.
 
 The Align menu aligns edges or centers and distributes equal spacing.

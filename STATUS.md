@@ -2,7 +2,13 @@
 
 Date: October 20, 2026. Imported version: 0.9.
 
-## Latest source milestone: faster XML loading and canvas visibility passes
+## Latest source milestone: caption-sized text selection
+
+October 20, 2026: fixed the reported MediaTip.xml Album Artists outline spanning the next row/value column. Labels without dimensions had inherited the designer's synthetic 400-by-64 frame. Single-line label/fadelabel outlines now follow the actual caption ink with its current font, alignment and clipping; mouse selection, overlap menus and double-click agree with that outline. Caption dragging retains position transactions and snapping. Text field Width/Height remain explicit property edits; the misleading text resize corner is removed. Non-text surfaces and multiline textboxes keep their existing field geometry. Runtime layout and source XML dimensions are unchanged.
+
+The actual MediaTip Album Artists outline measured about 159 by 22 units instead of 400 by 64, with the adjacent Artists row independently selectable. Fresh checks passed 416 core tests, 58 targeted real-MediaTip/designer/search/text UI assertions, ten readability scenarios, twelve complete demo workflows and twelve clean-session workflows. All 488 installed XML and 31 package payload hashes remained unchanged; demo hashes also passed the readable suite. The synthetic form render was inspected. Prior full 205 UI and renderer/load measurements remain historical. See [caption selection validation](Validation/Text-Selection/README.md).
+
+## Previous source milestone: faster XML loading and canvas visibility passes
 
 October 20, 2026: XML source scanning now checks comment/CDATA/PI openers only at the current tag rather than searching the remaining file repeatedly. The normal validated XML reader, mapping, encoding and byte-preserving edits remain intact. Scoped visibility passes reuse completed root results by control occurrence only within one canvas paint or pointer inspection, retaining recursive cycle/work-budget behavior and releasing results before callbacks or subsequent frames.
 

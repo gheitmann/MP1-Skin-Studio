@@ -87,9 +87,10 @@ namespace MP1SkinStudio
         T WithMeasuredLayout<T>(Func<T> inspect)
         {
             var previous=paintingLayout;
+            var previousGraphics=selectionGraphics;
             using(State.BeginVisibilityPass()) {
-            try{if(paintingLayout==null)paintingLayout=new StackPreview(Project,State);return inspect();}
-            finally{paintingLayout=previous;}
+            try{if(paintingLayout==null)paintingLayout=new StackPreview(Project,State);if(selectionGraphics==null)selectionGraphics=CreateGraphics();return inspect();}
+            finally{paintingLayout=previous;if(selectionGraphics!=previousGraphics&&selectionGraphics!=null)selectionGraphics.Dispose();selectionGraphics=previousGraphics;}
             }
         }
         RectangleF EffectiveBounds(SkinControl c) {RectangleF r;return dragging&&dragRects.TryGetValue(c.Key,out r)?r:BoundsOf(c);}
@@ -227,7 +228,7 @@ namespace MP1SkinStudio
         internal void ExerciseDrag(SkinControl c,int dx,int dy,bool resize)
         {
             Selected=c;Invalidate();Update();UpdateTransform();
-            var r=BoundsOf(c);
+            RectangleF r;using(var graphics=CreateGraphics())r=TextSelection(c)&&!resize?SelectionBounds(graphics,c):BoundsOf(c);
             var start=new Point((int)Math.Round(origin.X+(resize?r.Right:r.X+r.Width/2)*scale),(int)Math.Round(origin.Y+(resize?r.Bottom:r.Y+r.Height/2)*scale));
             var end=new Point(start.X+(int)Math.Round(dx*scale),start.Y+(int)Math.Round(dy*scale));
             OnMouseDown(new MouseEventArgs(MouseButtons.Left,1,start.X,start.Y,0));
@@ -385,6 +386,7 @@ namespace MP1SkinStudio
             UpdateSelectionTools();
             if(c==null){selectionName.Text="No controls";selectionInfo.Text="This file contains no supported controls.";properties.ResumeLayout();canvas.Invalidate();return;}
             selectionName.Text=(canvas.SelectedKeys.Count>1?canvas.SelectedKeys.Count+" items · ":"")+DisplayName(c);selectionInfo.Text=c.Get("type")+"  ·  ID "+c.Get("id","—")+" (protected)\n"+c.Source.RelativePath+"\n"+(canvas.SelectedKeys.Count>1?"Changes apply to the entire selection":LayoutTools.IsContainer(c)?"Group: select contents through the Element menu":c.AutomaticLayout?"Position controlled by group layout":c.IncludeCondition.Length>0?"Conditional include":"XML source mapped");
+            if(canvas.SelectedKeys.Count==1&&SkinCanvas.TextSelection(c))selectionInfo.Text=c.Get("type")+" · ID "+c.Get("id","—")+" · "+c.Source.RelativePath+"\nText outline follows the caption.\nSet Width / Height in Properties.";
             tips.SetToolTip(selectionInfo,c.Source.Path+"\n"+c.IncludeCondition);
             for(int i=0;i<editable.Length;i++)
             {

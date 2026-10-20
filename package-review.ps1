@@ -51,6 +51,10 @@ show the first difference; Previous/Next reaches all large-file sections. Exact
 byte hashes and refreshable source checks identify drift, missing or locked XML.
 Pending fields and preview-only state are excluded. Close review to export.
 
+Single-line label/fadelabel frames and mouse targets follow visible captions.
+Drag to move them; use Properties for Width/Height. Textboxes, buttons and other
+surface controls retain full field frames. No XML dimensions are invented.
+
 XML loading uses position-bounded special-block scanning. Canvas visibility
 results are reused only within one frame or pointer inspection, then released.
 Baseline comparisons preserve all 488 XML byte/span/DOM mappings and nine
@@ -69,7 +73,7 @@ Pictures, Folder and Radio instead of stacking all five text blocks. These are
 editing examples, not live plugin values. Isolation is temporary; view/example
 settings persist in the editor project. XML/conditions/export bytes stay intact.
 
-Fresh executable/package checks: 414 core, 205 broad UI, ten readable-preview scenarios,
+Fresh executable/package checks: 416 core, 58 targeted selection UI, ten readable-preview scenarios,
 twelve complete demo workflows, twelve clean-session workflows and 31 unchanged
 payload hashes. All 488 installed fixture XML files are unchanged. Prior broad
 UI/browser/review/transition/startup and large-menu reports remain historical.

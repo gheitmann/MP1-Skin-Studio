@@ -18,6 +18,15 @@ instructions; they are never automatically installed into a client skin.
 The candidate is suitable for reviewing these workflows against isolated copies.
 It is not a complete MediaPortal renderer or an unrestricted compatibility claim.
 
+## Caption selection
+
+Single-line label/fadelabel outlines and mouse targets follow visible caption
+ink, rather than synthetic fallback dimensions. Click, overlap menus and double
+click use the same geometry. Dragging changes position; Width/Height are edited
+in Properties. Textboxes/buttons/images retain their existing field surfaces.
+Fonts remain subject to the documented local fallback. XML dimensions and
+runtime layout are not inferred from the caption outline.
+
 ## XML loading and canvas updates
 
 Source scanning now checks special-block openers at the current position.
@@ -56,14 +65,14 @@ MediaTipOverlay.xml variants show one explicit sample block. Short example
 captions preserve XML bindings and continue reporting unresolved diagnostics.
 View/example state is persisted separately from XML; isolation is temporary.
 
-Fresh executable/package checks: 414 core checks, 205 broad UI assertions,
+Fresh executable/package checks: 416 core checks, 58 targeted selection/designer/search/text UI assertions,
 ten targeted real-DefaultWideHD form scenarios, twelve complete demo workflows
 and twelve clean-session workflows. All 488 installed XML, 26 demo and 31 package
 payload hashes remain unchanged. Application-generated renders cover every
 MediaTip example, diagnostic/solo modes and minimum-size controls. The repository
 record distinguishes synthetic forms from any attended Windows observation.
 
-Prior twelve integrated-page, ten XML-review, 18 transition, eight startup and seven
+Prior 205 broad UI, twelve integrated-page, ten XML-review, 18 transition, eight startup and seven
 large-menu scenarios remain historical. Runtime/client
 acceptance of the newly changed presentation is not claimed.
 

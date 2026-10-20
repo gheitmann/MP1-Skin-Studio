@@ -24,13 +24,13 @@ namespace MP1SkinStudio
             if(Project==null||e.Button!=MouseButtons.Left||panning)return;if(AllowGesture!=null&&!AllowGesture())return;Focus();PointF p=Logical(e.Location);
             if(NavigationMode)
             {
-                var target=WithMeasuredLayout(()=>Project.Controls.LastOrDefault(c=>Drawn(c)&&SkinProject.Focusable(c)&&BoundsOf(c).Contains(p)));
+                var target=WithMeasuredLayout(()=>Project.Controls.LastOrDefault(c=>Drawn(c)&&SkinProject.Focusable(c)&&SelectionContains(c,p)));
                 if(target!=null&&ConnectRequest!=null)ConnectRequest(target);return;
             }
             var hit=WithMeasuredLayout(()=>
             {
-                resizing=SelectedKeys.Count<=1&&Selected!=null&&Drawn(Selected)&&!Project.IsLocked(Selected)&&Math.Abs(p.X-BoundsOf(Selected).Right)<12/scale&&Math.Abs(p.Y-BoundsOf(Selected).Bottom)<12/scale;
-                return resizing?Selected:Project.Controls.LastOrDefault(c=>Drawn(c)&&!Project.IsLocked(c)&&BoundsOf(c).Contains(p));
+                resizing=SelectedKeys.Count<=1&&Selected!=null&&!TextSelection(Selected)&&Drawn(Selected)&&!Project.IsLocked(Selected)&&Math.Abs(p.X-BoundsOf(Selected).Right)<12/scale&&Math.Abs(p.Y-BoundsOf(Selected).Bottom)<12/scale;
+                return resizing?Selected:Project.Controls.LastOrDefault(c=>Drawn(c)&&!Project.IsLocked(c)&&SelectionContains(c,p));
             });
             if(hit==null)return;
             bool toggle=(ModifierKeys&Keys.Control)!=0;
@@ -99,9 +99,9 @@ namespace MP1SkinStudio
             if(Selected==null)return;
             foreach(var c in Project.Controls.Where(c=>SelectedKeys.Contains(c.Key)).GroupBy(c=>c.Key).Select(x=>x.First()))
             {
-                if(Project.IsEditorHidden(c))continue;var rect=EffectiveBounds(c);
+                if(Project.IsEditorHidden(c))continue;var rect=SelectionBounds(g,c);
                 using(var pen=new Pen(Project.IsLocked(c)?Color.FromArgb(244,193,102):c.Key==Selected.Key?Color.FromArgb(85,186,255):Color.FromArgb(83,211,190),2/scale))g.DrawRectangle(pen,rect.X,rect.Y,rect.Width,rect.Height);
-                if(SelectedKeys.Count==1&&!Project.IsLocked(c)&&!c.AutomaticLayout&&!LayoutTools.IsContainer(c)){float size=9/scale;using(var b=new SolidBrush(Color.FromArgb(100,197,255)))g.FillRectangle(b,rect.Right-size/2,rect.Bottom-size/2,size,size);}
+                if(SelectedKeys.Count==1&&!TextSelection(c)&&!Project.IsLocked(c)&&!c.AutomaticLayout&&!LayoutTools.IsContainer(c)){float size=9/scale;using(var b=new SolidBrush(Color.FromArgb(100,197,255)))g.FillRectangle(b,rect.Right-size/2,rect.Bottom-size/2,size,size);}
             }
             if(!NavigationMode||Project.IsEditorHidden(Selected))return;
             string[] directions={"onleft","onright","onup","ondown"},names={"Left","Right","Up","Down"};
@@ -125,6 +125,6 @@ namespace MP1SkinStudio
         }
         internal void ExerciseFollow(Keys key){OnKeyDown(new KeyEventArgs(key));}
         internal void ExerciseConnection(SkinControl target)
-        {UpdateTransform();var r=BoundsOf(target);var p=new Point((int)(origin.X+(r.X+r.Width/2)*scale),(int)(origin.Y+(r.Y+r.Height/2)*scale));OnMouseDown(new MouseEventArgs(MouseButtons.Left,1,p.X,p.Y,0));}
+        {UpdateTransform();RectangleF r;using(var g=CreateGraphics())r=SelectionBounds(g,target);var p=new Point((int)(origin.X+(r.X+r.Width/2)*scale),(int)(origin.Y+(r.Y+r.Height/2)*scale));OnMouseDown(new MouseEventArgs(MouseButtons.Left,1,p.X,p.Y,0));}
     }
 }

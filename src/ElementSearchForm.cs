@@ -94,7 +94,7 @@ namespace MP1SkinStudio
         {
             if(Project==null)return new SkinControl[0];UpdateTransform();var point=Logical(location);
             if(point.X<0||point.Y<0||point.X>=Project.Width||point.Y>=Project.Height)return new SkinControl[0];
-            return WithMeasuredLayout(()=>Project.Controls.Where(c=>Drawn(c)&&BoundsOf(c).Contains(point)).Reverse().GroupBy(c=>c.Key).Select(g=>g.First()).ToArray());
+            return WithMeasuredLayout(()=>Project.Controls.Where(c=>Drawn(c)&&SelectionContains(c,point)).Reverse().GroupBy(c=>c.Key).Select(g=>g.First()).ToArray());
         }
         bool PickMouseDown(MouseEventArgs e)
         {

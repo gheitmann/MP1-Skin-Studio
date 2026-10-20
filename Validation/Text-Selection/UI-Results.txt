@@ -1,0 +1,61 @@
+PASS Real MediaTip caption frame excludes next row and value column
+MEASURE raw={X=632,Y=274,Width=400,Height=64} caption={X=631,2864,Y=282,0364,Width=158,9268,Height=22,05206} next={X=631,2864,Y=310,2838,Width=74,22638,Height=21,80466}
+PASS Clicking Artists selects Artists rather than the overlapping Album Artists fallback box
+PASS Overlap menu uses the same caption target as the blue frame
+PASS Double-click opens the text editor for the visible row and cancellation preserves XML
+PASS Dragging the text caption moves its XML position in one transaction
+PASS Undo restores exact original XML after caption dragging
+PASS Explicit Width remains editable in Properties
+PASS Outline inspection never inserts font-derived XML dimensions
+PASS Multiple selection shows mixed values and enables alignment
+PASS Canvas mouse events move the entire selection in one transaction
+PASS One undo restores the entire multiple selection
+PASS Shared properties apply to every selected control
+PASS Deliberately clearing a mixed text field clears all selected labels
+PASS Alignment corrects mixed positions
+PASS Insertion selects the new control with its own ID
+PASS Duplication preserves extensions and selects the copy
+PASS Navigation mode connects to targets through canvas mouse events
+PASS Arrow keys test the remote-control path to the right
+PASS Arrow keys test the return remote-control path
+PASS A protected binding blocks the entire shared drag
+PASS New designer actions can be fully undone to the original
+PASS Search filters affect only the tree and preserve pending edits and the full preview
+PASS Tree matches preserve pending property edits and the previous selection
+PASS Match selection is blocked while properties remain unapplied
+PASS Enter selects the next match and highlights it in the tree
+PASS Reverse search finds the previous match
+PASS Reverse search wraps from the first to the last match
+PASS Targeted ID searches filter include controls in the real tree
+PASS Empty result lists preserve selection and properties
+PASS Escape clears search filters and restores all tree nodes
+PASS Undo refreshes filtered control objects without stale results
+PASS Page changes apply the current search filter to the new page
+PASS Pointer hits are sorted in visible front-to-back order
+PASS Overlap lists include locked elements for inspection
+PASS Real context menus select obscured locked elements despite tree filters without XML edits while updating simulated focus
+PASS Reused overlap lists select middle layers without dragging or undo steps
+PASS Editor-hidden elements are excluded from pointer hit lists
+PASS Conditionally invisible controls are excluded from overlap lists
+PASS Show-hidden includes conditionally invisible controls while preserving editor hiding
+PASS No controls are offered outside the skin surface
+PASS Project changes reset temporary element searches
+PASS Text dialogs show bound original values with current sample data and allow unchanged closing
+PASS Changed bound text requires its own explicit approval
+PASS Approval enables applying changes and refreshes the preview
+PASS Canvas double-click opens text editing and applies text in one undo step
+PASS Undo after double-click restores XML and unknown data exactly
+PASS Redo after text editing restores the new value
+PASS Small pointer movements while clicking do not change positions even without snapping
+PASS Real element menus open text editing and cancellation preserves XML and history
+PASS Double-click and preceding mouse selection preserve pending property edits
+PASS F2 on file nodes does not accidentally edit the previous control
+PASS F2 on the canvas opens text editing and unchanged application creates no undo step
+PASS Bound text can be explicitly replaced locally through the dialog
+PASS Undo restores the original data binding
+PASS Locked text does not open an editable dialog
+PASS Text remains explicitly editable within automatic group layouts
+PASS Ctrl+Enter applies multiline text without trimming
+PASS Unchanged multiline text fields preserve spaces, line breaks and original values
+58 passed, 0 failed. Synthetic forms/mouse events; no desktop input.
+PASS 488 installed XML hashes unchanged.
