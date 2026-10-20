@@ -2,7 +2,13 @@
 
 Date: October 20, 2026. Imported version: 0.9.
 
-## Latest source milestone: bounded automatic grid navigation
+## Latest source milestone: nested layout navigation
+
+October 20, 2026: automatic geometric navigation now traverses supported nested StackLayout/GridLayout hierarchies and crosses their branches. A top-level stack button can enter or leave a nested layout. All participating measurement subtrees are validated recursively; ordinary/unknown layout wrappers stay unsupported. Hidden/collapsed ancestors exclude descendant targets. Explicit mappings retain precedence and simple linear stack behavior stays separate. demo.navigation.xml supplies a self-contained nested grid/stack scene.
+
+Fresh validation: 353 core checks passed, including nine new nested-navigation checks and the updated nested-grid acceptance check. Four synthetic canvas KeyDown events passed through the Windows form across both branches, with matching focus/selection and saved focus restored. The production render was inspected. Six complete real Titan regression workflows passed again, with 162 accepted routes, 74 guarded routes and 13 unchanged loaded original XML hashes. These Titan pages cover existing non-nested behavior; nested behavior is covered by authored fixtures and the bundled demo. The prior native bearing/distance comparison was not repeated because that math is unchanged. No new attended keyboard or installed-client run. See [validation and limits](Validation/Nested-Navigation/README.md).
+
+## Previous source milestone: bounded automatic grid navigation
 
 October 20, 2026: absent/zero arrow mappings on direct buttons in top-level GridLayouts now use native-style rounded top-left bearings, distances and document-order selection. Explicit mappings retain precedence. Eligible standalone buttons and direct top-level stack/grid peers participate. Unknown visibility, ambiguous IDs, unsupported focusable types and geometry stop the route without mutation. demo.grid.xml now provides visible focus textures on all five buttons and navigation instructions.
 
@@ -102,9 +108,9 @@ October 19, 2026: static known-content conditions and nested localization now wo
 
 The owner prioritizes practical edit/save/reopen/export workflows and substantial autonomous work blocks. Routine follow-up steps do not require another continuation prompt. Necessary checks run at integrated milestones.
 
-Current validation: 344 core checks and six real Titan grid workflows passed, with 162 accepted automatic routes and 13 unchanged loaded original XML hashes. Native navigation math and the automated Windows form arrow-event path passed. Previous attended acceptance and image matrices remain historical.
+Current validation: 353 core checks and six real Titan regression workflows passed, with 162 accepted automatic routes and 13 unchanged loaded original XML hashes. The nested demo passed four synthetic Windows form arrow events and focus save/reopen. Previous native-math, attended acceptance and image matrices remain historical.
 
-Next core work is broader real-page preview fidelity and navigation coverage, particularly nested/free-position geometric navigation, other facade types and plugin states, while retaining duplicate-ID uncertainty. Existing samples make BasicHome, Settings and Video useful without claiming complete runtime equivalence. Masks, animation, full geometric navigation and plugin-specific values remain approximate or unresolved. Continue real-skin edit/save/reopen/export acceptance around any such changes, preserving original files. Auxiliary global-style and cross-group movement tools remain lower priority.
+Next core work is broader real-page preview fidelity and navigation coverage, particularly ordinary/free-position group navigation, other facade types and plugin states, while retaining duplicate-ID uncertainty. Existing samples make BasicHome, Settings and Video useful without claiming complete runtime equivalence. Masks, animation, full geometric navigation and plugin-specific values remain approximate or unresolved. Continue real-skin edit/save/reopen/export acceptance around any such changes, preserving original files. Auxiliary global-style and cross-group movement tools remain lower priority.
 
 Historical milestones follow; older suspension notes describe the state at their recorded time. Attended Windows automation was subsequently reauthorized and exercised successfully.
 ## Baseline

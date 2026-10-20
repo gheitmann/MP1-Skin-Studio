@@ -52,18 +52,50 @@ namespace MP1SkinStudio
                 throw new InvalidOperationException("Grid navigation geometry exceeds the supported range.");
             return new Point((int)bounds.X,(int)bounds.Y);
         }
+        static bool NavigationLayout(SkinControl group)
+        {
+            StackPreview.Rule stack;StackPreview.GridRule grid;
+            return StackPreview.TryRead(group.Resolved("layout").Trim(),out stack)||StackPreview.TryReadGrid(group.Resolved("layout").Trim(),out grid);
+        }
+        bool GeometricNavigationSource(SkinControl source)
+        {
+            var parent=source.RuntimeParent;if(parent==null)return false;
+            StackPreview.GridRule grid;
+            return parent.RuntimeParent!=null||StackPreview.TryReadGrid(parent.Resolved("layout").Trim(),out grid)||Controls.Any(c=>c.RuntimeParent==parent&&LayoutTools.IsContainer(c));
+        }
+        void NavigationGroup(SkinControl group,Dictionary<SkinControl,SkinControl[]> children,int depth)
+        {
+            if(depth>16||!NavigationLayout(group))throw new InvalidOperationException("Automatic layout navigation requires supported stack/grid groups within 16 levels.");
+            LayoutTools.RequireNumeric(group,"posX","posY","width","height");
+            foreach(string property in new[]{"posX","posY","width","height"})
+            {
+                string value=group.Resolved(property);double n;
+                if(value.Length>0&&(!Double.TryParse(value,NumberStyles.Float,CultureInfo.InvariantCulture,out n)||Double.IsNaN(n)||Double.IsInfinity(n)||Math.Abs(n)>1000000))
+                    throw new InvalidOperationException("Automatic layout navigation requires finite group geometry.");
+            }
+            NavigationLayoutProperties(group);
+            if(!new[]{"","left","center","right"}.Contains(group.Resolved("align")))throw new InvalidOperationException("Automatic layout navigation requires known group alignment.");
+            SkinControl[] list;if(!children.TryGetValue(group,out list))return;
+            foreach(var child in list)
+            {
+                if(LayoutTools.IsContainer(child))NavigationGroup(child,children,depth+1);
+                else{NavigationGeometry(child);NavigationLayoutProperties(child);}
+            }
+        }
         SkinControl GridNavigationTarget(PreviewState state,SkinControl source,string direction)
         {
-            StackPreview.GridRule grid;var parent=source.RuntimeParent;
-            if(parent==null||parent.RuntimeParent!=null||!StackPreview.TryReadGrid(parent.Resolved("layout").Trim(),out grid)||!source.Get("type").Contains("button")||NativeNavigationExcluded(source))
-                throw new InvalidOperationException("Automatic grid navigation requires a direct button in a top-level GridLayout.");
+            var parent=source.RuntimeParent;
+            if(parent==null||!NavigationLayout(parent)||!source.Get("type").Contains("button")||NativeNavigationExcluded(source))
+                throw new InvalidOperationException("Automatic layout navigation requires a button in a supported stack/grid hierarchy.");
             var logical=LogicalControls().ToArray();
             if(logical.Length>2048)throw new InvalidOperationException("This page exceeds the automatic grid navigation limit.");
             var candidates=new List<SkinControl>();var groups=new HashSet<SkinControl>();
             foreach(var c in logical.Where(Focusable))
             {
                 if(NativeNavigationExcluded(c)||IsEditorHidden(c))continue;
-                if(c.RuntimeParent!=null&&new[]{"Hidden","Collapsed"}.Contains(c.RuntimeParent.Resolved("Visibility")))continue;
+                bool hiddenAncestor=false;
+                for(var ancestor=c.RuntimeParent;ancestor!=null;ancestor=ancestor.RuntimeParent)if(new[]{"Hidden","Collapsed"}.Contains(ancestor.Resolved("Visibility")))hiddenAncestor=true;
+                if(hiddenAncestor)continue;
                 int before=state.FocusId;bool? visible;
                 try{state.FocusId=ControlId(c)??before;visible=state.Visible(c);}finally{state.FocusId=before;}
                 if(visible==false)continue;
@@ -78,30 +110,19 @@ namespace MP1SkinStudio
                 var group=c.RuntimeParent;
                 if(group!=null)
                 {
-                    StackPreview.Rule stack;StackPreview.GridRule otherGrid;
-                    if(group.RuntimeParent!=null||(!StackPreview.TryRead(group.Resolved("layout").Trim(),out stack)&&!StackPreview.TryReadGrid(group.Resolved("layout").Trim(),out otherGrid)))
-                        throw new InvalidOperationException("Grid navigation supports only top-level static stack/grid groups and standalone buttons.");
+                    int depth=0;
+                    for(var ancestor=group;ancestor!=null;ancestor=ancestor.RuntimeParent)
+                    {
+                        if(++depth>16||!NavigationLayout(ancestor))throw new InvalidOperationException("Automatic layout navigation requires supported stack/grid ancestors within 16 levels.");
+                        group=ancestor;
+                    }
                     groups.Add(group);
                 }
                 candidates.Add(c);
             }
             if(!candidates.Contains(source))throw new InvalidOperationException("The grid source is unavailable in this preview.");
-            foreach(var group in groups)
-            {
-                LayoutTools.RequireNumeric(group,"posX","posY","width","height");
-                foreach(string property in new[]{"posX","posY","width","height"})
-                {
-                    string value=group.Resolved(property);double n;
-                    if(value.Length>0&&(!Double.TryParse(value,NumberStyles.Float,CultureInfo.InvariantCulture,out n)||Double.IsNaN(n)||Double.IsInfinity(n)||Math.Abs(n)>1000000))
-                        throw new InvalidOperationException("Grid navigation requires finite group geometry.");
-                }
-                NavigationLayoutProperties(group);
-                foreach(var child in Controls.Where(c=>c.RuntimeParent==group))
-                {
-                    if(LayoutTools.IsContainer(child))throw new InvalidOperationException("Nested grid navigation layouts are not supported.");
-                    NavigationGeometry(child);NavigationLayoutProperties(child);
-                }
-            }
+            var children=Controls.Where(c=>c.RuntimeParent!=null).GroupBy(c=>c.RuntimeParent).ToDictionary(g=>g.Key,g=>g.ToArray());
+            foreach(var group in groups)NavigationGroup(group,children,1);
             var layout=new StackPreview(this,state);if(layout.Warnings.Count>0)throw new InvalidOperationException("Grid navigation requires supported static layouts.");
             Point origin=NavigationPoint(layout.Bounds(source));double distanceMin=10000,bearingMin=10000;var target=source;
             foreach(var c in candidates)

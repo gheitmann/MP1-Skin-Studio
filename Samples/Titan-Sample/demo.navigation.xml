@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window>
+  <id>9012</id><defaultcontrol>801</defaultcontrol>
+  <controls>
+    <control><type>label</type><font>TitanLight32</font><posX>120</posX><posY>65</posY><width>1600</width><height>70</height><label>Nested layout navigation</label></control>
+    <control><type>label</type><font>TitanLight20</font><posX>120</posX><posY>150</posY><width>1600</width><height>55</height><label>A horizontal stack contains a grid and a vertical stack.</label></control>
+    <control><type>group</type><id>800</id><description>Nested navigation</description><posX>120</posX><posY>300</posY><layout>StackLayout(60,Horizontal)</layout>
+      <control><type>group</type><id>810</id><description>Media grid</description><layout>GridLayout(1,0,0,30)</layout>
+        <control><type>button</type><id>801</id><description>Movies</description><width>500</width><height>120</height><font>TitanLight22</font><label>Movies</label><textcolorNoFocus>ffffffff</textcolorNoFocus><textureNoFocus>Studio/Button-dark.png</textureNoFocus><textureFocus>Studio/Button-blue.png</textureFocus></control>
+        <control><type>button</type><id>802</id><description>Music</description><width>500</width><height>120</height><font>TitanLight22</font><label>Music</label><textcolorNoFocus>ffffffff</textcolorNoFocus><textureNoFocus>Studio/Button-dark.png</textureNoFocus><textureFocus>Studio/Button-blue.png</textureFocus></control>
+      </control>
+      <control><type>group</type><id>820</id><description>Action stack</description><layout>StackLayout(30)</layout>
+        <control><type>button</type><id>803</id><description>Pictures</description><width>500</width><height>120</height><font>TitanLight22</font><label>Pictures</label><textcolorNoFocus>ffffffff</textcolorNoFocus><textureNoFocus>Studio/Button-dark.png</textureNoFocus><textureFocus>Studio/Button-blue.png</textureFocus></control>
+        <control><type>button</type><id>804</id><description>Settings</description><width>500</width><height>120</height><font>TitanLight22</font><label>Settings</label><textcolorNoFocus>ffffffff</textcolorNoFocus><textureNoFocus>Studio/Button-dark.png</textureNoFocus><textureFocus>Studio/Button-blue.png</textureFocus></control>
+      </control>
+    </control>
+    <control><type>label</type><font>TitanLight20</font><posX>120</posX><posY>800</posY><width>1600</width><height>100</height><label>Enable Navigation. Try Right, Down, Left, Up to cross both groups.</label></control>
+  </controls>
+</window>

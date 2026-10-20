@@ -30,6 +30,7 @@ Try demo.filmstrip.xml from PAGE / XML, enable Navigation and use Left/Right.
 Its upper image follows the selected thumbnail; no installed skin is required.
 Try demo.images.xml to compare proportional alignment, center crop and top crop.
 Try demo.grid.xml with Navigation enabled to test automatic grid arrow routes.
+Try demo.navigation.xml: Right, Down, Left, Up cross nested grid/stack branches.
 
 This package contains the editor, repository demo XML/images, license and guide.
 It contains no installed Titan skin, MediaPortal executable, client configuration,
@@ -40,12 +41,12 @@ use Revert Inputs to discard unapplied fields; test Undo/Redo; save an editor
 project, reopen it and export changes as ZIP. Use separate skin copies for real
 editing and retain original files. The preview remains approximate.
 
-Validation covers 344 core checks, six real Titan grid edit/save/reopen/export/
-undo workflows, 162 accepted routes and 74 conservatively guarded routes.
-All 13 loaded original XML hashes stayed unchanged. Native bearing/distance
-math agrees in 6,561 cases. Six synthetic canvas arrow events passed through
-the Windows form handler; this was not a new attended keyboard test.
-Previous attended image/filmstrip acceptance remains historical.
+Validation covers 353 core checks and six real Titan regression workflows with
+162 accepted routes, 74 guarded routes and 13 unchanged original XML hashes.
+Four synthetic canvas arrow events cross the nested demo through the Windows
+form handler; saved focus is restored. The production render was inspected.
+Nested cases use authored fixtures/demo; Titan checks cover existing routes.
+Previous native math and attended image/filmstrip acceptance remain historical.
 No new installed MediaPortal client run was performed. See the user guide for
 supported preview navigation and remaining rendering limitations.
 "@

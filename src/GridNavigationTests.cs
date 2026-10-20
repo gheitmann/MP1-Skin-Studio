@@ -73,9 +73,9 @@ namespace MP1SkinStudio
                 foreach(var change in new[]{Set("Margin","#missing"),Set("HorizontalAlignment","#missing"),Set("Visibility","#missing"),Set("enable","true"),Set("allowhiddenfocus","true")})
                 {var p=NavigationGrid(root,"grid-nav-layout-"+Guid.NewGuid().ToString("N"));p.Edit(p.Controls.First(c=>c.Get("id")=="11"),change,"Unsupported layout");var s=new PreviewState(p){FocusId=10};Reject(()=>p.PreviewNavigationTarget(s,"onright"));Check(s.FocusId==10,"Guard leaked focus.");}
             });
-            Test("Grid navigation rejects nested groups instead of fabricating a geometric route",()=>
+            Test("Grid navigation follows supported nested stack and grid geometry",()=>
             {
-                var p=AuditFixture(root,"grid-nav-nested","<control><type>group</type><layout>StackLayout()</layout><control><type>group</type><layout>GridLayout(2)</layout><control><type>button</type><id>10</id><width>100</width><height>50</height></control><control><type>button</type><id>11</id><width>100</width><height>50</height></control></control></control>");var s=new PreviewState(p){FocusId=10};Reject(()=>p.PreviewNavigationTarget(s,"onright"));Check(!p.Dirty&&s.FocusId==10,"Nested rejection changed state.");
+                var p=AuditFixture(root,"grid-nav-nested","<control><type>group</type><layout>StackLayout()</layout><control><type>group</type><layout>GridLayout(2)</layout><control><type>button</type><id>10</id><width>100</width><height>50</height></control><control><type>button</type><id>11</id><width>100</width><height>50</height></control></control></control>");var s=new PreviewState(p){FocusId=10};GridMove(p,s,"onright",11);GridMove(p,s,"onleft",10);Check(!p.Dirty&&p.Undo.Count==0,"Nested routes wrote XML/history.");
             });
         }
     }
