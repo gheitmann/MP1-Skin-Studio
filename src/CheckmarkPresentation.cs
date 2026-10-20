@@ -27,14 +27,14 @@ namespace MP1SkinStudio
         void DrawCheckmark(Graphics g,SkinControl c,RectangleF bounds,bool focused)
         {
             int width,height;bool valid=CheckmarkPresentation.Layout(c,out width,out height);bool? selected=CheckmarkPresentation.Selected(c,State);
-            string label=State.Label(c,c.Get("label"));float textWidth=0;
+            bool allLayers=Project.Editor.PreviewMode=="all"&&!IsolateSelection;string label=ReadablePreview.Caption(State,c,allLayers);float textWidth=0;
             if(label.Length>8192)return;
             bool hasFont=c.Resolved("font").Length>0&&c.Resolved("font")!="-";
             if(hasFont)using(var font=SurfaceFont(c,"font"))using(var format=(StringFormat)StringFormat.GenericTypographic.Clone())textWidth=g.MeasureString(label,font,Int32.MaxValue,format).Width;
             var mark=CheckmarkPresentation.MarkArea(c,bounds,textWidth,Math.Max(0,width),Math.Max(0,height));
             if(valid&&selected.HasValue&&width>0&&height>0)
             {var image=Texture(c,selected.Value?c.Get("textureCheckmark"):c.Get("textureCheckmarkNoFocus"));if(image!=null)SurfaceImage(g,c,image,mark);}
-            if(valid&&hasFont&&(Project.Editor.ShowUnresolved||State.ResolvedLabel(c,c.Get("label"))))
+            if(valid&&hasFont)
             {
                 var text=bounds;if(!c.Resolved("align","right").Trim().Equals("left",StringComparison.OrdinalIgnoreCase)){text.X+=width+5;text.Width=Math.Max(0,text.Width-width-5);}
                 SurfaceText(g,c,label,text,false,"font",focused?"textcolor":"disabledcolor","checkmarkTextAlignment",false);

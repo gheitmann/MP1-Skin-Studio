@@ -7,7 +7,8 @@ param(
     [switch]$IncludeTransitions,
     [switch]$IncludeChanges,
     [string]$LargeSelectorSkinDirectory,
-    [string]$IntegratedPageSkinDirectory
+    [string]$IntegratedPageSkinDirectory,
+    [string]$ReadablePreviewSkinDirectory
 )
 $ErrorActionPreference='Stop'
 Add-Type -AssemblyName System.IO.Compression.FileSystem
@@ -55,6 +56,9 @@ if($LargeSelectorSkinDirectory){
 if($IntegratedPageSkinDirectory){
     & (Join-Path $PSScriptRoot '../Integrated-Pages/Run-Probe.ps1') -PackageDirectory $reviewBin -OutputDirectory (Join-Path $reviewOutput 'PageProbe') -SkinDirectory $IntegratedPageSkinDirectory
 }
+if($ReadablePreviewSkinDirectory){
+    & (Join-Path $PSScriptRoot '../Readable-Preview/Run-Probe.ps1') -PackageDirectory $reviewBin -OutputDirectory (Join-Path $reviewOutput 'ReadableProbe') -SkinDirectory $ReadablePreviewSkinDirectory
+}
 $reviewVerified=0
 foreach($reviewLine in $reviewManifest){
     if($reviewLine -notmatch '^([a-f0-9]{64})  (.+)$'){throw 'Invalid package manifest record.'}
@@ -68,4 +72,4 @@ Set-Content -LiteralPath (Join-Path $reviewOutput 'Payload-Results.txt') -Value 
 Write-Output $reviewPreservation
 Get-Content -LiteralPath (Join-Path $reviewOutput 'ReadinessProbe/Results.txt')
 if(-not $SkipFullUi){Get-Content -LiteralPath (Join-Path $reviewOutput 'UiHost/ui-test-results.txt') | Select-Object -Last 3}
-Write-Output ('Completed package acceptance. Full UI: '+(-not $SkipFullUi)+'; core: '+[bool]$IncludeCore+'; startup: '+[bool]$IncludeStartup+'; transitions: '+[bool]$IncludeTransitions+'; changes: '+[bool]$IncludeChanges+'; large selectors: '+[bool]$LargeSelectorSkinDirectory+'; integrated pages: '+[bool]$IntegratedPageSkinDirectory)
+Write-Output ('Completed package acceptance. Full UI: '+(-not $SkipFullUi)+'; core: '+[bool]$IncludeCore+'; startup: '+[bool]$IncludeStartup+'; transitions: '+[bool]$IncludeTransitions+'; changes: '+[bool]$IncludeChanges+'; large selectors: '+[bool]$LargeSelectorSkinDirectory+'; integrated pages: '+[bool]$IntegratedPageSkinDirectory+'; readable preview: '+[bool]$ReadablePreviewSkinDirectory)

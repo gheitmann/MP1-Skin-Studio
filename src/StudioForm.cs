@@ -85,10 +85,21 @@ namespace MP1SkinStudio
         RectangleF EffectiveBounds(SkinControl c) {RectangleF r;return dragging&&dragRects.TryGetValue(c.Key,out r)?r:BoundsOf(c);}
         bool Drawn(SkinControl c)
         {
-            if(Project.IsEditorHidden(c))return false;
+            bool all=Project.Editor.PreviewMode=="all"&&!IsolateSelection;
+            if(IsolateSelection){if(!ReadablePreview.InSelection(c,Selected))return false;}
+            else
+            {
+                if(Project.IsEditorHidden(c))return false;
+                if(!all&&!ReadablePreview.InScene(Project,c))return false;
+            }
             if(!CollectionSettings.Active(Project,c))return false;
-            bool? visible=State.Visible(c);if(!ShowHidden&&visible==false)return false;if(!Project.Editor.ShowUnresolved&&visible==null)return false;
-            if(!ShowHidden&&c.Resolved("Visibility")=="Collapsed")return false;
+            bool? visible=State.Visible(c);
+            if(!all&&!IsolateSelection)
+            {
+                if(!ShowHidden&&visible!=true)return false;
+                if(!Project.Editor.ShowUnresolved&&visible==null)return false;
+                if(!ShowHidden&&c.Resolved("Visibility")=="Collapsed")return false;
+            }
             var r=EffectiveBounds(c);
             return r.Width>2&&r.Height>2&&r.Right>0&&r.Bottom>0&&r.X<Project.Width&&r.Y<Project.Height;
         }
@@ -160,11 +171,12 @@ namespace MP1SkinStudio
                     Color fill=type.Contains("button")&&focused?Color.FromArgb(245,31,118,181):Color.FromArgb(150,32,54,77);
                     using(var brush=new SolidBrush(fill))g.FillRectangle(brush,rect);
                     using(var pen=new Pen(Color.FromArgb(110,106,144,177),1/scale)){if(type=="image")pen.DashStyle=DashStyle.Dash;g.DrawRectangle(pen,rect.X,rect.Y,rect.Width,rect.Height);}
-                    if(type=="image"||type=="videowindow")DrawText(g,type=="videowindow"?"VIDEO PREVIEW":System.IO.Path.GetFileName(texture),rect,20,Color.FromArgb(169,190,209),"center");
+                    if(type=="videowindow"||type=="image"&&(Project.Editor.PreviewMode=="all"&&!IsolateSelection||Selected!=null&&Selected.Key==c.Key))DrawText(g,type=="videowindow"?"VIDEO PREVIEW":(Project.Editor.PreviewMode=="all"&&!IsolateSelection?System.IO.Path.GetFileName(texture):"Artwork"),rect,20,Color.FromArgb(169,190,209),"center");
                 }
             }
-            string label=State.Label(c,c.Get("label"));
-            if((Project.Editor.ShowUnresolved||State.ResolvedLabel(c,c.Get("label")))&&(type=="label"||type=="fadelabel"||type=="textbox"||type=="textboxscrollup"||type.Contains("button")))
+            bool allLayers=Project.Editor.PreviewMode=="all"&&!IsolateSelection;
+            string label=ReadablePreview.Caption(State,c,allLayers);
+            if(type=="label"||type=="fadelabel"||type=="textbox"||type=="textboxscrollup"||type.Contains("button"))
             {
                 SurfaceText(g,c,label,SurfaceGeometry.TextArea(c,rect),focused,"font","textcolor","align",type=="textbox"||type=="textboxscrollup");
             }
@@ -178,6 +190,7 @@ namespace MP1SkinStudio
         {
             string resolved;bool known=State.TryText(c,texture,out resolved);
             if(known&&(resolved.Trim()=="-"||(c.Get("type")=="image"&&resolved.Trim().Length==0)))return false;
+            if(Project.Editor.PreviewMode=="all"&&!IsolateSelection)return true;
             if(c.Get("type")=="image"&&!Project.Editor.ShowUnresolved)return false;
             return known||Project.Editor.ShowUnresolved;
         }
@@ -290,7 +303,7 @@ namespace MP1SkinStudio
             var bottom=new Panel{Dock=DockStyle.Bottom,Height=139,Padding=new Padding(10,7,8,5),BackColor=panel};
             bottom.Controls.Add(LabelFor("PREVIEW & INFORMATION",22));
             diagnostics.Dock=DockStyle.Fill;diagnostics.Multiline=true;diagnostics.ReadOnly=true;diagnostics.ScrollBars=ScrollBars.Vertical;diagnostics.BorderStyle=BorderStyle.None;diagnostics.BackColor=panel;diagnostics.ForeColor=muted;diagnostics.Font=new Font("Segoe UI",9);bottom.Controls.Add(diagnostics);diagnostics.BringToFront();
-            center.Controls.Add(canvas);center.Controls.Add(BuildViewBar());center.Controls.Add(previewToolbar);center.Controls.Add(BuildDesignerBar());center.Controls.Add(bottom);main.Controls.Add(center,1,0);
+            center.Controls.Add(canvas);center.Controls.Add(BuildPreviewModeBar());center.Controls.Add(BuildViewBar());center.Controls.Add(previewToolbar);center.Controls.Add(BuildDesignerBar());center.Controls.Add(bottom);main.Controls.Add(center,1,0);
             var right=new Panel{Dock=DockStyle.Fill,BackColor=panel,Padding=new Padding(12),Margin=new Padding(0)};
             var propHeader=new Panel{Dock=DockStyle.Top,Height=130};
             selectionName=new Label{Text="Select an element",ForeColor=ink,Font=new Font("Segoe UI",12,FontStyle.Bold),AutoEllipsis=true};selectionName.SetBounds(0,0,270,27);propHeader.Controls.Add(selectionName);
@@ -318,7 +331,7 @@ namespace MP1SkinStudio
         {
             bool relocated=editorFile!=null&&!String.Equals(ProjectFile.Inspect(editorFile).Root.TrimEnd('\\','/'),next.Root.TrimEnd('\\','/'),StringComparison.OrdinalIgnoreCase);
             var prepared=PreparedSkinSession.Create(next,requested);
-            projectLocationChanged=relocated;project=next;currentProjectFile=editorFile;savedProjectSignature=editorFile==null?null:ProjectFile.ContentSignature(project);initialEditorSignature=ProjectFile.EditorSignature(project);savedEditorSignature=initialEditorSignature;exportedSignature=null;state=prepared.Preview;canvas.Project=project;canvas.State=state;canvas.ResetAssets();
+            canvas.IsolateSelection=false;projectLocationChanged=relocated;project=next;currentProjectFile=editorFile;savedProjectSignature=editorFile==null?null:ProjectFile.ContentSignature(project);initialEditorSignature=ProjectFile.EditorSignature(project);savedEditorSignature=initialEditorSignature;exportedSignature=null;state=prepared.Preview;canvas.Project=project;canvas.State=state;canvas.ResetAssets();
             bool prior=loading;loading=true;
             try
             {
@@ -335,7 +348,7 @@ namespace MP1SkinStudio
         }
         void RefreshProject(string selectedKey)
         {
-            state.UpdateCollectionValues();UpdatePageSummary();
+            state.UpdateCollectionValues();UpdatePageSummary();UpdatePreviewModeTools();
             var keep=selectedKey==null?new string[0]:canvas.SelectedKeys.ToArray();
             RebuildElementTree();
             var next=project.Controls.FirstOrDefault(c=>c.Key==selectedKey)??project.Controls.FirstOrDefault(c=>SkinProject.Focusable(c)&&SkinProject.ControlId(c)==state.FocusId)??project.Controls.FirstOrDefault(c=>c.Get("description")=="Movies")??project.Controls.FirstOrDefault(c=>c.Get("description")=="Time")??project.Controls.FirstOrDefault();
@@ -355,7 +368,7 @@ namespace MP1SkinStudio
             if(toggle&&c!=null&&canvas.SelectedKeys.Contains(c.Key))
             {canvas.SelectedKeys.Remove(c.Key);c=project.Controls.FirstOrDefault(item=>canvas.SelectedKeys.Contains(item.Key));}
             if(c!=null)canvas.SelectedKeys.Add(c.Key);
-            selected=c;canvas.Selected=c;unlock.Checked=preserveUnlock;canvas.UnlockBindings=preserveUnlock;
+            selected=c;canvas.Selected=c;UpdatePreviewModeTools();unlock.Checked=preserveUnlock;canvas.UnlockBindings=preserveUnlock;
             fields.Clear();originals.Clear();touchedFields.Clear();mixedFields.Clear();properties.SuspendLayout();foreach(Control old in properties.Controls.Cast<Control>().ToArray())old.Dispose();properties.Controls.Clear();
             UpdateSelectionTools();
             if(c==null){selectionName.Text="No controls";selectionInfo.Text="This file contains no supported controls.";properties.ResumeLayout();canvas.Invalidate();return;}

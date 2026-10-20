@@ -1,0 +1,7 @@
+PASS opened the corrected extracted-package editor with MediaTip-Readable.mp1skinproj on DefaultWideHD / MediaTipOverlay.xml.
+PASS attended state showed Edit layout / Music and a single readable music block with short sample text, rather than five overlaid blocks.
+PASS the integrated Example selector exposed Music, Video, Pictures, Folder and Radio.
+PASS after a popup click was reported as non-target, fresh focus/state observations showed Video highlighted but not committed; Return committed it. The dropdown closed and the preview showed Video information with its five video lines and taller artwork bounds.
+PASS Ctrl+S saved the editor project and cleared its unsaved title. Independent archive inspection confirms one manifest entry only, previewMode layout and mediaTipScene video. No XML edits were embedded.
+PASS all 31 packaged payload hashes remain unchanged after attended use. The new readable editor stays open; previous owner sessions were not closed.
+LIMIT no new installed-client or other-plugin runtime acceptance. Isolation and all five variants have synthetic form coverage; attended input covered the Music-to-Video example and project saving.

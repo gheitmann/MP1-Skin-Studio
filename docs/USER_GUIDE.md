@@ -318,7 +318,7 @@ for the current automation restriction and the limits of verified behavior.
 
 ## Video folder preview
 
-On a page with a list control, choose **Element > Video folder preview** to use one Videos folder, a folder image and explicitly empty movie metadata. The command selects list view and hides unverified content. It explicitly sets an unwatched sample (count and percentage 0) and idle scrolling; Titan may display its unwatched icon. Other unknown properties remain unresolved. Element > Show unverified content reveals unsupported conditions, unresolved labels and missing-image placeholders for inspection. Empty image textures stay empty. Existing unrelated sample values, plugin states and language settings are retained. Skin XML and undo history stay unchanged; save the editor project to keep the sample state. List focus and clean-preview state are saved in the editor project and restored when reopening. The preset uses Titan's DefaultFolderBig.png; use Collection Preview and Sample Data to change the image for other skins.
+On a page with a list control, choose **Element > Video folder preview** to use one Videos folder, a folder image and explicitly empty movie metadata. The command selects list view and hides unverified content. It explicitly sets an unwatched sample (count and percentage 0) and idle scrolling; Titan may display its unwatched icon. Other unknown properties remain unresolved. Element > Show diagnostic layers reveals unsupported conditions, unresolved labels and missing-image placeholders for inspection. Empty image textures stay empty. Existing unrelated sample values, plugin states and language settings are retained. Skin XML and undo history stay unchanged; save the editor project to keep the sample state. List focus and clean-preview state are saved in the editor project and restored when reopening. The preset uses Titan's DefaultFolderBig.png; use Collection Preview and Sample Data to change the image for other skins.
 
 Known static Control.HasText and Control.HasThumb conditions are evaluated from preview data and local media. Missing runtime properties, ambiguous IDs and unsupported image paths remain unresolved. Nested L(...) expressions use loaded language snapshots with fallback and prefix selection. Missing language IDs retain the original expression. These checks do not reproduce MP1 runtime texture caches or font metrics.
 
@@ -356,7 +356,7 @@ Collection Preview keeps the selected sample visible in narrow coverflow/filmstr
 
 The selected item's image feeds #selectedthumb along with the title/detail/index/count values. Explicit Sample Data values override derived data; clear such an override to follow the selected row. The Video folder preset uses its sample row image. On pages without collections, derived values return to baseline or explicit samples instead of leaking from the preceding page.
 
-Focused row/card textures and selected colors follow simulated focus. Leaving the collection retains its sample selection while removing focused appearance. Clean preview hides missing collection image/frame placeholders and the Empty collection notice. Explicitly empty images always remain empty. Show unverified content restores diagnostic placeholders. Coverflow still approximates a static arrangement; masks, perspective and animation remain unsupported.
+Focused row/card textures and selected colors follow simulated focus. Leaving the collection retains its sample selection while removing focused appearance. Clean preview hides missing collection image/frame placeholders and the Empty collection notice. Explicitly empty images always remain empty. Show diagnostic layers restores diagnostic placeholders. Coverflow still approximates a static arrangement; masks, perspective and animation remain unsupported.
 
 
 ## Explain unverified preview states
@@ -621,3 +621,45 @@ Other choice menus retain batched clearing/population for large entry counts.
 Page model loading and preview complexity remain separate from list scrolling.
 Extract/run the updated package; an already running older executable retains
 its previous interface.
+
+
+## Readable editing and overlapping plugin variants
+
+The integrated View selector above the canvas offers:
+
+- **Edit layout**: known-visible content with short examples for unresolved
+  ordinary label/button/text/checkmark captions. Original bindings remain in
+  the property fields. Unknown conditions are hidden unless Show hidden is
+  explicitly enabled. Simple artwork outlines can remain as geometry guides.
+- **Isolate selection**: show only the selected element or group and its
+  descendants, including loaded include children. This temporarily bypasses
+  preview visibility and editor hiding for that selection. Choose another
+  element in the tree to isolate it. A page/theme/session change clears
+  isolation; it is not persisted as a selected-element reference.
+- **All layers**: diagnostic view with authored runtime visibility variants
+  and raw unresolved bindings. Overlap is expected here. Editor-hidden markers
+  and the active collection subview still apply.
+
+Unresolved short captions are presentation examples, not resolved plugin values.
+Explicit sample data, literal text and empty labels retain their actual preview
+content. Audit/unverified findings keep reporting the original uncertainty.
+Neither examples nor isolation change XML, conditions, export bytes or Undo.
+View/example changes preserve pending property fields; normal Apply/Revert rules
+still apply to XML edits and saving. View and MediaTip example are saved in the
+editor project and mark its state unsaved when changed. Isolation is temporary.
+Older projects without these options retain their former diagnostic/clean intent.
+
+For the recognized **MediaTipOverlay.xml** / window 7979 structure, Example
+provides Music, Video, Pictures, Folder and Radio. Edit layout defaults to Music
+for a new skin. Exactly one authored five-line block and its related artwork
+are presented, using short sample metadata. The selector explains that these
+are examples, not live plugin state. Selecting another variant's element in
+the tree suggests switching Example or using Isolate selection. All original
+controls remain accessible in the tree.
+
+Recognition requires the filename, window ID, unique headline and all five
+canonical five-line ID blocks; headline text can be edited normally. Other
+MediaTip pages, incomplete/ambiguous structures and other plugins are not
+automatically grouped. Use Isolate selection there. This is a bounded editing
+aid, not a complete plugin simulation or proof that text will never overlap in
+the client. No skin text is automatically moved or rewritten.

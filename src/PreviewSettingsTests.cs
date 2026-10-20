@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -15,9 +15,9 @@ namespace MP1SkinStudio
             Test("BasicHome samples are explicit, persist and reject other pages without mutation",()=>
             {
                 var p=ResetFixture(root,"basic-home-preview");string before=ProjectFile.ContentSignature(p);Reject(()=>BasicHomePreview.Apply(p));Check(ProjectFile.ContentSignature(p)==before,"Rejected BasicHome sample changed the project.");
-                Write(p.Root,"BasicHome.xml","<window><id>35</id><defaultcontrol>4</defaultcontrol><controls><control><type>button</type><id>4</id></control></controls></window>");p.OpenPage("BasicHome.xml");string xml=ProjectFile.XmlSignature(p);p.Editor.Preview.Values["#custom"]="Keep";BasicHomePreview.Apply(p);
+                Write(p.Root,"BasicHome.xml","<window><id>35</id><defaultcontrol>4</defaultcontrol><controls><control><type>button</type><id>4</id></control></controls></window>");p.OpenPage("BasicHome.xml");string xml=ProjectFile.XmlSignature(p);p.Editor.Preview.Values["#custom"]="Keep";p.Editor.PreviewMode="all";BasicHomePreview.Apply(p);
                 string file=Path.Combine(root,"basic-home.mp1skinproj");ProjectFile.Save(p,file);var loaded=ProjectFile.Load(file);var prepared=PreparedSkinSession.Create(loaded,loaded.Page);
-                Check(prepared.Preview.FocusId==4&&!loaded.Editor.ShowUnresolved&&loaded.Editor.Preview.Values["#custom"]=="Keep"&&loaded.Editor.Preview.Values["#skin.basichome.background"]=="FanartHandler"&&prepared.Preview.Evaluate("player.playing",new HashSet<string>())==false,"BasicHome state did not roundtrip.");
+                Check(prepared.Preview.FocusId==4&&loaded.Editor.PreviewMode=="layout"&&!loaded.Editor.ShowUnresolved&&loaded.Editor.Preview.Values["#custom"]=="Keep"&&loaded.Editor.Preview.Values["#skin.basichome.background"]=="FanartHandler"&&prepared.Preview.Evaluate("player.playing",new HashSet<string>())==false,"BasicHome state did not roundtrip.");
                 Check(ProjectFile.XmlSignature(p)==xml&&!p.Dirty&&p.Undo.Count==0,"BasicHome samples changed source XML.");
             });
             Test("Player conditions require explicit samples and preserve three-valued logic",()=>

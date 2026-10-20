@@ -39,7 +39,7 @@ namespace MP1SkinStudio
             preview.Validate();collection.Validate();
             if(SkinProject.ControlId(list)>0)project.Editor.ValidateFocus(project.Page,project.Theme,SkinProject.ControlId(list).Value);
             project.Editor.Preview.SetFrom(preview);project.Editor.Collection.SetFrom(collection);
-            if(SkinProject.ControlId(list)>0)project.Editor.RememberFocus(project.Page,project.Theme,SkinProject.ControlId(list).Value);project.Editor.ShowUnresolved=false;
+            if(SkinProject.ControlId(list)>0)project.Editor.RememberFocus(project.Page,project.Theme,SkinProject.ControlId(list).Value);project.Editor.ShowUnresolved=false;project.Editor.PreviewMode="layout";
         }
     }
     public sealed partial class StudioForm

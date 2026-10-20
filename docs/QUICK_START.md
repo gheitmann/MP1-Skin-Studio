@@ -32,6 +32,11 @@ The PAGES / XML list is integrated into the left sidebar. Use its filename
 filter and mouse wheel to browse; scrolling does not switch the active page.
 Click a file to open it. Drag the divider below the list to resize it.
 
+Use View above the canvas: Edit layout gives short example captions; Isolate
+selection helps edit overlapping elements; All layers reveals raw variants.
+On recognized MediaTipOverlay.xml, Example selects Music/Video/Pictures/Folder/
+Radio. These are preview-only examples; property bindings and exports stay intact.
+
 ## Choose a demo
 
 Use PAGE / XML. Common XML files and demo.menu.xml are includes; choose one of

@@ -2,7 +2,13 @@
 
 Date: October 20, 2026. Imported version: 0.9.
 
-## Latest source milestone: integrated pages/XML list with mouse-wheel scrolling
+## Latest source milestone: readable editing views and MediaTip variants
+
+October 20, 2026: integrated View now offers Edit layout, temporary selection/group isolation and diagnostic All layers. New skins open in Edit layout with short unresolved captions and known visibility. Recognized MediaTipOverlay.xml offers Music/Video/Pictures/Folder/Radio examples, displaying one authored block instead of five overlaid sets. Original bindings remain in property fields and exports; runtime conditions and audit uncertainty are not rewritten. View/example state is independently validated and saved in projects; isolation clears on page/theme/session change. Legacy projects retain diagnostic/clean intent. Existing BasicHome/media-folder presets return to Edit layout.
+
+Fresh extracted-package acceptance: 411 core checks (nine new readability tests), ten targeted DefaultWideHD form workflows, twelve complete demo workflows and twelve clean-session workflows. All 488 installed XML, 26 demo assets and 31 payload hashes stayed unchanged. Music/Pictures/minimum renders were inspected. Attended Windows observed Music, confirmed Video through the Example selector and saved the preview-only project; independent archive inspection found layout/video metadata and no XML snapshots. The new MediaTip-Readable editor stays open; prior owner sessions were preserved. See [readable preview validation](Validation/Readable-Preview/README.md). Other pages/plugins use generic isolation; no complete plugin/client fidelity claim. Prior broad/browser/review/transition/startup reports remain historical.
+
+## Previous source milestone: integrated pages/XML list with mouse-wheel scrolling
 
 October 20, 2026: replaced the page dropdown with a permanent sidebar list, literal filename filter, count/no-results state and a resizable divider above the element tree. Hover-wheel routing scrolls visible rows without selecting another page or stealing property focus. Partial deltas and boundaries are handled; routing unregisters on disposal and excludes other forms/outside areas. Pending page selections restore the active row with status guidance instead of a modal. Existing failed-load/session preservation remains in force.
 

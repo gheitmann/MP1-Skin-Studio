@@ -13,7 +13,7 @@ namespace MP1SkinStudio
             preview.Values["#Titan.ShowUpdateInd"]="false";PlaybackPreview.Stopped(preview);preview.Validate();
             bool focus=project.DefaultControlId>0&&project.Controls.Any(c=>SkinProject.Focusable(c)&&SkinProject.ControlId(c)==project.DefaultControlId);
             if(focus)project.Editor.ValidateFocus(project.Page,project.Theme,project.DefaultControlId);
-            project.Editor.Preview.SetFrom(preview);project.Editor.ShowUnresolved=false;
+            project.Editor.Preview.SetFrom(preview);project.Editor.ShowUnresolved=false;project.Editor.PreviewMode="layout";
             if(focus)
             {project.Editor.RememberFocus(project.Page,project.Theme,project.DefaultControlId);}
         }

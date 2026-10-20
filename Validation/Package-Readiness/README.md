@@ -118,3 +118,8 @@ twelve embedded-list/hover-wheel/filter/selection/layout scenarios and twelve
 current menu assertions before the final payload hash gate. The historical
 LargeSelectorSkinDirectory probe expects the old page-menu control and should
 only be used with its matching historical executable.
+
+Pass -ReadablePreviewSkinDirectory with a complete DefaultWideHD root to run ten
+readable/diagnostic/isolated-view, MediaTip example, persistence/export and minimum
+layout scenarios before the final payload gate. Combine with -IncludeCore for
+the 411 core checks and -SkipFullUi to keep unchanged broad UI suites historical.

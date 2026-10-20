@@ -6,7 +6,7 @@ namespace MP1SkinStudio
     public sealed partial class StudioForm
     {
         public void SetUnresolvedPreview(bool show)
-        {project.Editor.ShowUnresolved=show;canvas.Invalidate();UpdateDiagnostics();UpdateProjectCaption();ShowNotice(show?"Unverified conditions and content are shown for inspection.":"Unverified conditions and content are hidden only in the preview; XML remains unchanged.");}
+        {project.Editor.ShowUnresolved=show;project.Editor.PreviewMode=show?"all":"layout";canvas.IsolateSelection=false;UpdatePreviewModeTools();canvas.Invalidate();UpdateDiagnostics();UpdateProjectCaption();ShowNotice(show?"Unverified conditions and content are shown for inspection.":"Unverified conditions and content are hidden only in the preview; XML remains unchanged.");}
         void AddVisibilityCommands(ContextMenuStrip menu)
         {
             menu.Items.Add("Collection Preview …",null,(s,e)=>Attempt(ShowCollectionSettings));
@@ -25,7 +25,7 @@ namespace MP1SkinStudio
             idle.DropDownItems.Add("Unverified",null,(s,e)=>Attempt(()=>ApplyIdlePreview(null)));menu.Items.Add(idle);
             menu.Items.Add("Review XML changes … (Ctrl+Shift+E)",null,(s,e)=>Attempt(ShowChangeReview));
             menu.Items.Add("Inspect unverified preview …",null,(s,e)=>Attempt(ShowPreviewProblems));
-            menu.Items.Add(new ToolStripSeparator());var item=(ToolStripMenuItem)menu.Items.Add("Show unverified content",null,(s,e)=>SetUnresolvedPreview(!project.Editor.ShowUnresolved));item.Checked=project.Editor.ShowUnresolved;
+            menu.Items.Add(new ToolStripSeparator());var item=(ToolStripMenuItem)menu.Items.Add("Show diagnostic layers",null,(s,e)=>SetUnresolvedPreview(project.Editor.PreviewMode!="all"));item.Checked=project.Editor.PreviewMode=="all";
         }
     }
 }

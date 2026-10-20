@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -80,7 +80,7 @@ namespace MP1SkinStudio
         void ApplyPreviewSettings(PreviewSettings settings)
         {
             project.Editor.Preview.SetFrom(settings);int focus=state.FocusId;state=new PreviewState(project){FocusId=focus};canvas.State=state;canvas.ResetAssets();
-            UpdatePreviewTree();canvas.Invalidate();UpdateDiagnostics();UpdateProjectCaption();ShowNotice("Preview state applied: "+settings.Values.Count+" custom sample values, "+settings.Plugins.Count+" active plugin states, "+settings.Artwork.Count+" artwork samples. Save the editor project.");
+            UpdatePreviewModeTools();UpdatePreviewTree();canvas.Invalidate();UpdateDiagnostics();UpdateProjectCaption();ShowNotice("Preview state applied: "+settings.Values.Count+" custom sample values, "+settings.Plugins.Count+" active plugin states, "+settings.Artwork.Count+" artwork samples. Save the editor project.");
         }
         void UpdatePreviewTree()
         {

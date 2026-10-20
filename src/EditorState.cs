@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -12,6 +12,7 @@ namespace MP1SkinStudio
     {
         public double Zoom=1,PanX,PanY;
         public bool ShowUnresolved=true;
+        public string PreviewMode="layout",MediaTipScene="music";
         public int PreviewFocusId=-1;
         public string PreviewFocusPage="";
         public string PreviewFocusTheme="";
@@ -66,11 +67,13 @@ namespace MP1SkinStudio
         static string Number(double value){return value.ToString("R",CultureInfo.InvariantCulture);}
         public static string EditorSignature(SkinProject project)
         {
+            ReadablePreview.Validate(project.Editor);
             var value=new StringBuilder(Number(project.Editor.Zoom)+","+Number(project.Editor.PanX)+","+Number(project.Editor.PanY));
             string page=project.Page??"",theme=project.Theme??"";
             value.Append('\n').Append(page.Length).Append(':').Append(page).Append(theme.Length).Append(':').Append(theme);
             foreach(var key in project.ActiveEditorKeys())value.Append('\n').Append(key).Append(':').Append(project.Editor.Locked.Contains(key)?"L":"").Append(project.Editor.Hidden.Contains(key)?"H":"");
             value.Append('\n').Append(project.Editor.Preview.SignatureText()).Append('\n').Append(project.Editor.Language.Signature()).Append(project.Editor.ShowUnresolved?'U':'-').Append(project.Editor.Collection.Signature());
+            value.Append('\n').Append(project.Editor.PreviewMode).Append(':').Append(project.Editor.MediaTipScene);
             value.Append('\n').Append(project.Editor.PreviewFocusPage).Append(':').Append(project.Editor.PreviewFocusId);
             value.Append(':').Append(project.Editor.PreviewFocusTheme);
             foreach(var entry in project.Editor.FocusEntries.OrderBy(p=>p.Key,StringComparer.OrdinalIgnoreCase))value.Append('\n').Append(entry.Key.Length).Append(':').Append(entry.Key.ToLowerInvariant()).Append(':').Append(entry.Value.Id);
@@ -80,8 +83,10 @@ namespace MP1SkinStudio
         {return Digest(Encoding.UTF8.GetBytes(XmlSignature(project)+EditorSignature(project)));}
         static void SaveEditorState(SkinProject project,XmlDocument doc)
         {
+            ReadablePreview.Validate(project.Editor);
             var state=doc.CreateElement("editorState");doc.DocumentElement.AppendChild(state);
             state.SetAttribute("zoom",Number(project.Editor.Zoom));state.SetAttribute("panX",Number(project.Editor.PanX));state.SetAttribute("panY",Number(project.Editor.PanY));
+            state.SetAttribute("previewMode",project.Editor.PreviewMode);state.SetAttribute("mediaTipScene",project.Editor.MediaTipScene);
             state.SetAttribute("showUnresolved",project.Editor.ShowUnresolved?"true":"false");SavePreviewSettings(project.Editor.Preview,state);
             SaveCollectionSettings(project.Editor.Collection,state);
             if(project.Editor.PreviewFocusId>0){state.SetAttribute("focusPage",project.Editor.PreviewFocusPage);state.SetAttribute("focusTheme",project.Editor.PreviewFocusTheme);state.SetAttribute("focusId",project.Editor.PreviewFocusId.ToString(CultureInfo.InvariantCulture));}
@@ -102,8 +107,11 @@ namespace MP1SkinStudio
         static void LoadEditorState(SkinProject project,XmlDocument doc)
         {
             var state=doc.SelectSingleNode("/skinStudioProject/editorState") as XmlElement;if(state==null)return;
+            project.Editor.PreviewMode=state.HasAttribute("previewMode")?state.GetAttribute("previewMode"):"all";
+            project.Editor.MediaTipScene=state.HasAttribute("mediaTipScene")?state.GetAttribute("mediaTipScene"):"music";ReadablePreview.Validate(project.Editor);
             project.Editor.Zoom=StateNumber(state,"zoom",.25,16);project.Editor.PanX=StateNumber(state,"panX",-1000000,1000000);project.Editor.PanY=StateNumber(state,"panY",-1000000,1000000);
             if(state.HasAttribute("showUnresolved")){bool unresolved;if(!Boolean.TryParse(state.GetAttribute("showUnresolved"),out unresolved))throw new InvalidDataException("Invalid preview option.");project.Editor.ShowUnresolved=unresolved;}
+            if(!state.HasAttribute("previewMode")&&!project.Editor.ShowUnresolved)project.Editor.PreviewMode="layout";
             LoadPreviewSettings(project.Editor.Preview,state);
             LoadCollectionSettings(project.Editor.Collection,state);
             if(state.HasAttribute("focusId")||state.HasAttribute("focusPage"))

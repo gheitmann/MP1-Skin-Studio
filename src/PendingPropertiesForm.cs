@@ -19,7 +19,7 @@ namespace MP1SkinStudio
             try
             {
                 RequireAppliedProperties();project.OpenPage(page.SelectedItem.ToString());
-                state.RestoreFocus();RefreshProject(null);
+                state.RestoreFocus();canvas.IsolateSelection=false;RefreshProject(null);
             }
             catch
             {
@@ -39,7 +39,7 @@ namespace MP1SkinStudio
             try
             {
                 var prepared=project.PrepareTheme(theme.SelectedIndex<=0?"":theme.SelectedItem.ToString());
-                state=prepared.Preview;canvas.State=state;canvas.ResetAssets();PopulatePageChoices(prepared.Pages);RefreshProject(null);
+                canvas.IsolateSelection=false;state=prepared.Preview;canvas.State=state;canvas.ResetAssets();PopulatePageChoices(prepared.Pages);RefreshProject(null);
             }
             catch
             {

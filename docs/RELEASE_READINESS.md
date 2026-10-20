@@ -32,19 +32,22 @@ Home/Video sample. It is not general release publication or proof of every skin.
 For another intended edit, page, theme or plugin, use the review procedure below
 and obtain the owner's final visual acceptance of that actual result.
 
-The current page browser is integrated into the sidebar, with literal filename
-filtering, mouse-wheel scrolling and a resizable divider above the element tree.
-Hover-wheel routing preserves property focus, selected page and pending fields.
-Pending page selections restore the active row with status guidance.
-Fresh extracted-package validation covers twelve targeted integrated-page
-scenarios, twelve existing menu assertions, twelve complete demo workflows and
-twelve clean-session workflows. All 31 payload hashes and installed fixture XML
-hashes remain unchanged. The repository record separates synthetic wheel/message
-events from attended Windows checks.
+The current readable-preview milestone adds Edit layout, temporary selection/
+group isolation and diagnostic All layers above the canvas. Recognized
+MediaTipOverlay.xml variants show one explicit sample block. Short example
+captions preserve XML bindings and continue reporting unresolved diagnostics.
+View/example state is persisted separately from XML; isolation is temporary.
 
-Previous 402 core, ten XML-review, 18 transition, eight startup, seven large-menu
-and 204 broad UI checks remain historical. XML editing, renderer and export
-logic are unchanged.
+Fresh extracted-package checks: 411 core checks (nine new readability tests),
+ten targeted real-DefaultWideHD form scenarios, twelve complete demo workflows
+and twelve clean-session workflows. All 488 installed XML, 26 demo and 31 package
+payload hashes remain unchanged. Application-generated renders cover every
+MediaTip example, diagnostic/solo modes and minimum-size controls. The repository
+record distinguishes synthetic forms from any attended Windows observation.
+
+Prior twelve integrated-page, ten XML-review, 18 transition, eight startup, seven
+large-menu and 204 broad UI scenarios remain historical. Runtime/client
+acceptance of the newly changed presentation is not claimed.
 
 Preview masks/animations, plugin-dependent values, playback and some control
 interactions remain approximate or unverified. Slider/spin value interaction is
