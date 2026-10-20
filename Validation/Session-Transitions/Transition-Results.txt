@@ -1,0 +1,19 @@
+PASS Clean sessions leave without asking or saving
+PASS Save succeeds only after the actual project is clean and persisted
+PASS Canceled Save As preserves active project and unsaved work
+PASS Locked save preserves old archive and blocks leaving
+PASS Discard permits a transition without prematurely modifying active work
+PASS Cancel preserves project history and does not save
+PASS Pending property drafts cannot be silently saved
+PASS An affirmative save result cannot hide remaining unsaved editor state
+PASS Preview-only state is retained by Save before leaving
+PASS Real session switch / Yes
+PASS Real session switch / No
+PASS Real session switch / Cancel
+PASS Real FormClosing / Yes
+PASS Real FormClosing / No
+PASS Real FormClosing / Cancel
+PASS Pending session switching stays blocked without opening a decision dialog
+PASS Pending close dialog disables Save, explains inputs and can keep editing
+PASS Clean FormClosing produces no dialog
+18 passed, 0 failed; 26 bundled source/asset hashes unchanged. Synthetic form events and owned dialog button events; no desktop input.

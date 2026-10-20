@@ -2,7 +2,13 @@
 
 Date: October 20, 2026. Imported version: 0.9.
 
-## Latest delivery milestone: current edit-to-client acceptance
+## Latest source milestone: save before closing or switching sessions
+
+October 20, 2026: closing or switching sessions offers Save project / Discard changes / Cancel for unsaved XML or editor state. Saving continues only after successful persistence and a clean session. Canceled Save As and failed saves preserve work/history; Discard does not clear the active model before a replacement loads. Enter/Escape cancel. Pending inputs remain protected, with Save disabled in the close dialog and session switching blocked until Apply/Revert.
+
+Fresh extracted-package gate passed 18 targeted synthetic form scenarios, twelve complete demo workflows, twelve clean-session workflows and eight startup scenarios. All 31 payload hashes remained unchanged after the combined run. Existing-file saves and actual modal/FormClosing button events were exercised; native Save As cancellation is injected. No attended native picker or new installed-client run is claimed. Broad 204 UI and 394 core checks remain historical; model/render/export logic and demo assets are unchanged. See [transition acceptance](Validation/Session-Transitions/README.md).
+
+## Previous delivery milestone: current edit-to-client acceptance
 
 October 20, 2026: the current executable from source 07e8ef2 passed a fresh attended real-Titan workflow. Its saved Video project opened in Windows, list Width changed to 590 through the form, Apply/Save succeeded and a separate process reopened/exported that exact saved edit. Two XML payloads and instructions, byte/hash identity, restored Undo/Redo and all 17 loaded original source hashes passed. A fresh complete runtime copy displayed the shared header and shorter Video focus band; Left/Right menu navigation passed. Original Titan was restored through the client UI, with all 2,050 original file hashes unchanged.
 

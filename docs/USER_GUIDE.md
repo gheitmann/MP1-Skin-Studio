@@ -535,7 +535,7 @@ session-switch warning now covers unsaved editor state as well as XML changes,
 including a relocated project whose XML has already been exported.
 
 
-## Current attended edit-to-client checkpoint
+## Previous attended edit-to-client checkpoint
 
 The executable from source 07e8ef2 passed a fresh Default-theme Titan Home/Video
 workflow: a real saved project opened through startup, Width was changed to 590
@@ -548,5 +548,23 @@ The complete isolated client skin showed STUDIO REVIEW READY on Home/Video, the
 shorter Video focus band and working Left/Right side-menu navigation. The source
 Titan was restored through its own UI; all 2,050 original files stayed byte-identical.
 This accepts the recorded sample, with no new all-page/theme/plugin/playback claim.
-The previous automated suites remain historical because the executable is unchanged.
+This client checkpoint predates the new close/session-switch dialog. It remains
+historical; the current dialog-only change has its own form/package validation.
 The repository's Validation/Current-Runtime-Review contains reproduction and results.
+
+
+## Save before closing or switching sessions
+
+Unsaved XML or editor state prompts **Save project / Discard changes / Cancel**
+when closing the editor or switching to another skin/project/demo. Save project
+writes the current project, including preview state, before continuing. A new
+project first asks for a file location. Canceling that file dialog or a failed
+save keeps the current session and Undo history open. Discard continues without
+saving; Cancel returns to editing. Enter and Escape both select Cancel.
+
+Apply or Revert Inputs before switching sessions. When closing with pending
+property fields, Save project is disabled with an explanation; Cancel retains
+the fields, while Discard closes without saving them. XML export does not save
+preview settings. If the editor still has unsaved state, exporting alone does
+not suppress this prompt. A failed subsequent load also retains the active
+session, even when Discard was selected.

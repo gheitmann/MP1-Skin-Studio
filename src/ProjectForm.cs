@@ -32,13 +32,14 @@ namespace MP1SkinStudio
             var next=ProjectFile.Load(path,rootOverride);InstallProject(next,next.Page,path);
             ShowNotice("Project restored. Saved changes can be undone together.");
         }
-        void SaveEditorProject(bool saveAs)
+        bool SaveEditorProject(bool saveAs)
         {
-            if(project==null)return;
+            if(project==null)return false;
             RequireAppliedProperties();
-            if(!saveAs&&currentProjectFile!=null){SaveSession(currentProjectFile);return;}
+            if(!saveAs&&currentProjectFile!=null){SaveSession(currentProjectFile);return true;}
             using(var dialog=new SaveFileDialog{Filter="MP1 Skin Studio Project|*.mp1skinproj",DefaultExt="mp1skinproj",AddExtension=true,FileName=currentProjectFile==null?"My-Skin.mp1skinproj":Path.GetFileName(currentProjectFile),Title="Save editor project for continued editing"})
-                if(dialog.ShowDialog(this)==DialogResult.OK)SaveSession(dialog.FileName);
+                if(dialog.ShowDialog(this)==DialogResult.OK){SaveSession(dialog.FileName);return true;}
+            return false;
         }
         void OpenEditorProject()
         {

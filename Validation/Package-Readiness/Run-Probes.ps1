@@ -3,7 +3,8 @@ param(
     [Parameter(Mandatory=$true)][string]$OutputDirectory,
     [switch]$SkipFullUi,
     [switch]$IncludeCore,
-    [switch]$IncludeStartup
+    [switch]$IncludeStartup,
+    [switch]$IncludeTransitions
 )
 $ErrorActionPreference='Stop'
 Add-Type -AssemblyName System.IO.Compression.FileSystem
@@ -39,6 +40,9 @@ if($IncludeCore){
 if($IncludeStartup){
     & (Join-Path $PSScriptRoot '../Startup-Acceptance/Run-Probe.ps1') -PackageDirectory $reviewBin -OutputDirectory (Join-Path $reviewOutput 'StartupProbe')
 }
+if($IncludeTransitions){
+    & (Join-Path $PSScriptRoot '../Session-Transitions/Run-Probe.ps1') -PackageDirectory $reviewBin -OutputDirectory (Join-Path $reviewOutput 'TransitionProbe')
+}
 $reviewVerified=0
 foreach($reviewLine in $reviewManifest){
     if($reviewLine -notmatch '^([a-f0-9]{64})  (.+)$'){throw 'Invalid package manifest record.'}
@@ -52,4 +56,4 @@ Set-Content -LiteralPath (Join-Path $reviewOutput 'Payload-Results.txt') -Value 
 Write-Output $reviewPreservation
 Get-Content -LiteralPath (Join-Path $reviewOutput 'ReadinessProbe/Results.txt')
 if(-not $SkipFullUi){Get-Content -LiteralPath (Join-Path $reviewOutput 'UiHost/ui-test-results.txt') | Select-Object -Last 3}
-Write-Output ('Completed package acceptance. Full UI: '+(-not $SkipFullUi)+'; core: '+[bool]$IncludeCore+'; startup: '+[bool]$IncludeStartup)
+Write-Output ('Completed package acceptance. Full UI: '+(-not $SkipFullUi)+'; core: '+[bool]$IncludeCore+'; startup: '+[bool]$IncludeStartup+'; transitions: '+[bool]$IncludeTransitions)

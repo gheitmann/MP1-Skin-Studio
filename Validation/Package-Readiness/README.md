@@ -97,3 +97,7 @@ captures the extracted manifest before testing and compares every payload hash
 after all selected probes; Payload-Results.txt records the final result. These
 options preserve the existing default broad-UI behavior. The startup-integration
 milestone records its own fresh broad UI, demo/session and native-startup results.
+
+Add -IncludeTransitions to run the 18 targeted close/session-switch scenarios
+from Validation/Session-Transitions before the final payload-preservation gate.
+Combine with -SkipFullUi -IncludeStartup for the focused dialog milestone gate.

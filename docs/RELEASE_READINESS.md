@@ -10,7 +10,9 @@ running. Windows and .NET Framework 4.x are required; no compiler is needed.
 Visual property editing, source preservation, pending-field guards, project
 save/reopen, matching-backup recovery, XML ZIP export, exact-byte export checks,
 Undo/Redo and explicit preview state are available. Project-file startup retains
-a usable demo after cancel or a load error. Exports contain modified XML and
+a usable demo after cancel or a load error. Closing/session switching offers
+Save project, Discard changes and Cancel; canceled/failed saves retain work.
+Pending property inputs remain guarded. Exports contain modified XML and
 instructions; they are never automatically installed into a client skin.
 
 The candidate is suitable for reviewing these workflows against isolated copies.
@@ -18,7 +20,7 @@ It is not a complete MediaPortal renderer or an unrestricted compatibility claim
 
 ## Evidence and remaining boundaries
 
-A fresh attended review now covers the current executable from source 07e8ef2:
+The previous attended review covered the executable from source 07e8ef2:
 open a real saved Video project, change its default list width to 590 in the
 Windows editor, Apply, Save Project, reopen the archive in a separate process
 and export exact XML bytes. A complete isolated runtime copy loaded the new
@@ -30,13 +32,16 @@ Home/Video sample. It is not general release publication or proof of every skin.
 For another intended edit, page, theme or plugin, use the review procedure below
 and obtain the owner's final visual acceptance of that actual result.
 
-The prior integration gate passed 204 synthetic Windows-form checks, twelve
+The current close/session-switch change is validated by 18 targeted synthetic
+form scenarios, including real modal button and FormClosing events, plus twelve
 complete demo workflows, twelve clean-session workflows and eight startup
-scenarios. The prior core milestone passed 394 checks. The matching-backup
-milestone passed six real-Titan form workflows and 18 exact XML payload checks.
-These suites remain historical; they were not repeated for this review because
-the executable and bundled scenes are unchanged. The repository validation record
-separates fresh attended/runtime evidence from previous automated results.
+scenarios against the extracted ZIP. All 31 payload hashes stay unchanged.
+The native Save As cancellation outcome is injected; actual native file-picker
+input and a new installed-client run are not claimed for this dialog-only change.
+
+The prior broad gate passed 204 synthetic form checks; 394 core checks and six
+real-Titan matching-backup workflows remain historical. Renderer/export/model
+code and bundled demo assets were not changed by this milestone.
 
 Preview masks/animations, plugin-dependent values, playback and some control
 interactions remain approximate or unverified. Slider/spin value interaction is

@@ -239,7 +239,7 @@ namespace MP1SkinStudio
             tree.AfterSelect+=(s,e)=>{var c=e.Node.Tag as SkinControl;if(!loading&&c!=null)SelectFromTree(c);};
             page.SelectedIndexChanged+=(s,e)=>{if(!loading&&project!=null&&page.SelectedItem!=null)Attempt(OpenSelectedPage);};
             theme.SelectedIndexChanged+=(s,e)=>{if(!loading&&project!=null)Attempt(ChangeSelectedTheme);};
-            FormClosing+=(s,e)=>{if(SessionNeedsSaving()&&MessageBox.Show("Unapplied property values or other session changes have not been saved.\n\nClose and discard unsaved changes?","Editor changes",MessageBoxButtons.YesNo,MessageBoxIcon.Question)!=DialogResult.Yes)e.Cancel=true;};
+            FormClosing+=(s,e)=>{if(!CanLeaveSession("close the editor"))e.Cancel=true;};
             if(Directory.Exists(root))LoadProject(root,"demo.xml");
         }
         Label LabelFor(string text,int height=23) {return new Label{Text=text,AutoSize=false,Height=height,ForeColor=muted,Dock=DockStyle.Top,TextAlign=ContentAlignment.MiddleLeft};}
@@ -301,7 +301,7 @@ namespace MP1SkinStudio
             tips.SetToolTip(unlock,"Enable only when intentionally replacing an existing #Property or #Define with a local value.");
         }
         public static string DemoRoot(){return System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"Samples","Titan-Sample");}
-        bool CanSwitch(){if(PendingProperties()){ShowNotice("Apply pending property edits or restore their previous values before switching sessions.");return false;}return !SessionNeedsSaving()||MessageBox.Show("This session has unsaved editor state or unexported XML changes.\n\nSwitch sessions anyway?","Switch skin",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes;}
+        bool CanSwitch(){if(PendingProperties()){ShowNotice("Apply pending property edits or restore their previous values before switching sessions.");return false;}return CanLeaveSession("switch sessions");}
         void OpenFolder()
         {using(var d=new FolderBrowserDialog{Description="Choose a skin directory containing references.xml, fonts.xml and Media",ShowNewFolderButton=false})if(d.ShowDialog()==DialogResult.OK&&CanSwitch())LoadProject(d.SelectedPath,null);}
         void OpenXml()

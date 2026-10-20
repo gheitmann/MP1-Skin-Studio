@@ -21,6 +21,11 @@ Pending input blocks save/export and page changes until applied or reverted.
 An asterisk also records unsaved preview/page/focus state; it does not always
 mean that skin XML changed. Export is enabled only for changed XML.
 
+Closing or opening another session offers Save project, Discard changes and
+Cancel when needed. Canceling Save As or a failed save keeps the session open.
+Apply/Revert pending fields first; the close dialog disables Save while fields
+are pending. Enter/Escape safely cancel the decision.
+
 ## Choose a demo
 
 Use PAGE / XML. Common XML files and demo.menu.xml are includes; choose one of
