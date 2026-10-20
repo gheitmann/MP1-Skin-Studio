@@ -27,6 +27,9 @@ The left column grows from 245 to 319 pixels and its controls expand with it.
 Dark scrollbars cover the main page list, tree, properties and information text;
 selection, keyboard behavior and wheel routing remain native. Preview tools wrap
 at minimum width. Separate dialogs retain their existing scrollbar appearance.
+The overlay siblings explicitly sit in front of the native content windows.
+This was checked in the live Windows window after synthetic renders missed an
+earlier z-order defect; 23 focused scenarios and 420 core checks pass.
 
 ## Caption selection
 

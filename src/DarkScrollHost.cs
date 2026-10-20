@@ -27,6 +27,9 @@ namespace MP1SkinStudio
             vertical=new DarkScrollBar(this,true);horizontal=new DarkScrollBar(this,false);
             corner=new Panel{BackColor=Color.FromArgb(20,26,35),Visible=false,TabStop=false};
             Controls.Add(corner);Controls.Add(horizontal);Controls.Add(vertical);
+            // Native child windows must sit behind the overlay siblings on the
+            // desktop; DrawToBitmap alone does not expose an incorrect z-order.
+            content.SendToBack();
             observer=new ScrollObserver(this);
             content.HandleCreated+=(s,e)=>{observer.Attach(content.Handle);ScheduleSync();};
             content.HandleDestroyed+=(s,e)=>observer.Release();

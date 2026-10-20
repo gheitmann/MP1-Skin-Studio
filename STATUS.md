@@ -2,7 +2,13 @@
 
 Date: October 20, 2026. Imported version: 0.9.
 
-## Latest source milestone: automatic skin selection and wider dark sidebar
+## Latest source milestone: visible dark scrollbars on the Windows desktop
+
+October 20, 2026: corrected DarkScrollHost sibling z-order so its painted bars cover the native content windows. Previously, synthetic DrawToBitmap renders appeared dark while the actual desktop still showed light Windows bars. The content now explicitly sits behind the overlays; native viewport and scrolling behavior are unchanged.
+
+Fresh acceptance: 420 core tests and 23 focused skin/sidebar/scrolling scenarios passed, including a new overlay z-order regression assertion. All 488 installed XML hashes remained unchanged. Attended Windows inspection confirmed dark horizontal/vertical bars in the page list and element tree, and dark properties/information bars; a subsequent owner-driven page change retained them. No successful automated desktop scrolling is claimed: an input attempt was interrupted by concurrent owner input and state was refreshed. Previous broad suites remain historical. See [scrollbar correction validation](Validation/Scrollbar-ZOrder/README.md).
+
+## Previous source milestone: automatic skin selection and wider dark sidebar
 
 October 20, 2026: added SKIN above THEME. It discovers immediate skin folders under standard Windows MediaPortal locations, current siblings and the bundled demo; refreshes when opened; deduplicates paths and disambiguates names. Skin changes reuse existing pending-input/save/discard/cancel safeguards, prefer the same page filename when available and restore the selector on cancellation/load failure. The left column expands from 245 to 319 pixels, with wider anchored controls. Main page/tree/properties/information scrollbars now use dark chrome over their native ranges and viewport; arrows, thumbs and wheel preserve selection/focus. Preview tools wrap at minimum width. Native hooks/timers release on disposal; no idle polling or client/configuration writes.
 
