@@ -2,7 +2,13 @@
 
 Date: October 20, 2026. Imported version: 0.9.
 
-## Latest source milestone: caption-sized text selection
+## Latest source milestone: automatic skin selection and wider dark sidebar
+
+October 20, 2026: added SKIN above THEME. It discovers immediate skin folders under standard Windows MediaPortal locations, current siblings and the bundled demo; refreshes when opened; deduplicates paths and disambiguates names. Skin changes reuse existing pending-input/save/discard/cancel safeguards, prefer the same page filename when available and restore the selector on cancellation/load failure. The left column expands from 245 to 319 pixels, with wider anchored controls. Main page/tree/properties/information scrollbars now use dark chrome over their native ranges and viewport; arrows, thumbs and wheel preserve selection/focus. Preview tools wrap at minimum width. Native hooks/timers release on disposal; no idle polling or client/configuration writes.
+
+Fresh acceptance: 420 core checks, 22 skin/sidebar/scrolling scenarios, twelve integrated-page scenarios including menu callbacks, ten readable-preview scenarios, twelve full demo workflows and twelve clean-session workflows passed. All 488 installed XML, 26 demo assets and 31 payload hashes remained unchanged. Default/minimum form renders were inspected. The installed list currently contains DefaultWideHD, PureVisionHD 1080 XMAS 2025, three SkinStudio test copies and Titan, plus the bundled demo. Prior caption/broad/client and performance reports remain historical. See [skin/sidebar validation](Validation/Skin-Selector/README.md).
+
+## Previous source milestone: caption-sized text selection
 
 October 20, 2026: fixed the reported MediaTip.xml Album Artists outline spanning the next row/value column. Labels without dimensions had inherited the designer's synthetic 400-by-64 frame. Single-line label/fadelabel outlines now follow the actual caption ink with its current font, alignment and clipping; mouse selection, overlap menus and double-click agree with that outline. Caption dragging retains position transactions and snapping. Text field Width/Height remain explicit property edits; the misleading text resize corner is removed. Non-text surfaces and multiline textboxes keep their existing field geometry. Runtime layout and source XML dimensions are unchanged.
 

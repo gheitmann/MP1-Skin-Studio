@@ -18,6 +18,7 @@ namespace MP1SkinStudio
         int index=-1;
         readonly string menuKey="choice:"+Guid.NewGuid().ToString("N");
         public event EventHandler SelectedIndexChanged;
+        public event EventHandler Opening;
         public object SelectedItem {get{return index>=0&&index<Items.Count?Items[index]:null;}}
         public int SelectedIndex
         {
@@ -35,7 +36,7 @@ namespace MP1SkinStudio
         }
         StudioMenu OpenChoices()
         {
-            Focus();if(Items.Count==0)return null;var menu=StudioMenus.For(this,menuKey);
+            if(Opening!=null)Opening(this,EventArgs.Empty);Focus();if(Items.Count==0)return null;var menu=StudioMenus.For(this,menuKey);
             menu.SuspendLayout();
             try
             {
@@ -270,6 +271,7 @@ namespace MP1SkinStudio
             tree.AfterSelect+=(s,e)=>{var c=e.Node.Tag as SkinControl;if(!loading&&c!=null)SelectFromTree(c);};
             page.SelectedIndexChanged+=(s,e)=>ChooseIntegratedPage();
             theme.SelectedIndexChanged+=(s,e)=>{if(!loading&&project!=null)Attempt(ChangeSelectedTheme);};
+            skinPicker.Opening+=(s,e)=>RefreshSkinChoices();skinPicker.SelectedIndexChanged+=(s,e)=>{if(!loading)Attempt(ChooseSkin);};
             FormClosing+=(s,e)=>{if(!CanLeaveSession("close the editor"))e.Cancel=true;};
             if(Directory.Exists(root))LoadProject(root,"demo.xml");
         }
@@ -295,19 +297,20 @@ namespace MP1SkinStudio
             var openProject=ButtonFor("Open Project",OpenEditorProject);openProject.Width=115;toolbar.Controls.Add(openProject);
             var saveProject=ButtonFor("Save Project",()=>SaveEditorProject(false),true);saveProject.Width=120;toolbar.Controls.Add(saveProject);
             var main=new TableLayoutPanel{Dock=DockStyle.Fill,ColumnCount=3,RowCount=1,Padding=new Padding(16,0,16,10)};
-            main.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute,245));main.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,100));main.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute,298));main.RowStyles.Add(new RowStyle(SizeType.Percent,100));
+            main.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute,319));main.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,100));main.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute,298));main.RowStyles.Add(new RowStyle(SizeType.Percent,100));
             var left=new Panel{Dock=DockStyle.Fill,BackColor=panel,Padding=new Padding(12),Margin=new Padding(0,0,10,0)};
-            var leftTop=new Panel{Dock=DockStyle.Top,Height=92};
-            folderName=LabelFor("No skin loaded",28);folderName.Dock=DockStyle.None;folderName.SetBounds(0,0,208,26);leftTop.Controls.Add(folderName);
-            var tl=LabelFor("THEME",20);tl.Dock=DockStyle.None;tl.SetBounds(0,32,208,20);leftTop.Controls.Add(tl);
-            theme.BackColor=Color.FromArgb(20,26,35);theme.ForeColor=ink;theme.SetBounds(0,54,208,26);leftTop.Controls.Add(theme);
+            var leftTop=new Panel{Dock=DockStyle.Top,Width=285,Height=118};
+            folderName=LabelFor("SKIN",20);folderName.Dock=DockStyle.None;folderName.SetBounds(0,0,285,20);folderName.Anchor=AnchorStyles.Left|AnchorStyles.Top|AnchorStyles.Right;leftTop.Controls.Add(folderName);
+            skinPicker.BackColor=Color.FromArgb(20,26,35);skinPicker.ForeColor=ink;skinPicker.SetBounds(0,22,285,26);skinPicker.Anchor=AnchorStyles.Left|AnchorStyles.Top|AnchorStyles.Right;skinPicker.AccessibleName="Choose skin";leftTop.Controls.Add(skinPicker);
+            var tl=LabelFor("THEME",20);tl.Dock=DockStyle.None;tl.SetBounds(0,58,285,20);tl.Anchor=AnchorStyles.Left|AnchorStyles.Top|AnchorStyles.Right;leftTop.Controls.Add(tl);
+            theme.BackColor=Color.FromArgb(20,26,35);theme.ForeColor=ink;theme.SetBounds(0,80,285,26);theme.Anchor=AnchorStyles.Left|AnchorStyles.Top|AnchorStyles.Right;leftTop.Controls.Add(theme);
             tree.Dock=DockStyle.Fill;tree.BackColor=panel;tree.ForeColor=ink;tree.BorderStyle=BorderStyle.None;tree.HideSelection=false;tree.FullRowSelect=true;tree.ShowLines=false;tree.ItemHeight=25;
             var browserSplit=new SplitContainer{Dock=DockStyle.Fill,Orientation=Orientation.Horizontal,Size=new Size(210,600),SplitterWidth=6,Panel1MinSize=140,Panel2MinSize=160,SplitterDistance=240,BackColor=panel};
             browserSplit.Panel1.Controls.Add(BuildPageBrowser());
-            browserSplit.Panel2.Controls.Add(tree);browserSplit.Panel2.Controls.Add(BuildElementSearch());
+            browserSplit.Panel2.Controls.Add(new DarkScrollHost(tree));browserSplit.Panel2.Controls.Add(BuildElementSearch());
             left.Controls.Add(browserSplit);left.Controls.Add(leftTop);main.Controls.Add(left,0,0);
             var center=new Panel{Dock=DockStyle.Fill,Margin=new Padding(0,0,10,0)};
-            var previewToolbar=new FlowLayoutPanel{Dock=DockStyle.Top,Height=38,WrapContents=false,Padding=new Padding(8,0,0,0)};
+            var previewToolbar=new FlowLayoutPanel{Dock=DockStyle.Top,Height=38,MinimumSize=new Size(0,38),AutoSize=true,AutoSizeMode=AutoSizeMode.GrowAndShrink,WrapContents=true,Padding=new Padding(8,0,0,0)};
             previewToolbar.Controls.Add(Check("Grid",true,v=>canvas.Grid=v));previewToolbar.Controls.Add(Check("Snap to 10 px",true,v=>canvas.Snap=v));
             previewToolbar.Controls.Add(Check("Focus",true,v=>canvas.FocusPreview=v));previewToolbar.Controls.Add(Check("Show hidden",false,v=>canvas.ShowHidden=v));
             var testData=ButtonFor("Sample Data",ShowPreviewSettings);testData.Width=91;testData.Height=28;testData.Margin=new Padding(0,2,0,0);previewToolbar.Controls.Add(testData);tips.SetToolTip(testData,"Configure sample data and simulated plugin states; presets include long titles, weather and news.");
@@ -315,19 +318,19 @@ namespace MP1SkinStudio
             var collectionButton=ButtonFor("Collection",()=>Attempt(ShowCollectionSettings));collectionButton.Width=95;collectionButton.Height=28;collectionButton.Margin=new Padding(8,2,0,0);previewToolbar.Controls.Add(collectionButton);
             var bottom=new Panel{Dock=DockStyle.Bottom,Height=139,Padding=new Padding(10,7,8,5),BackColor=panel};
             bottom.Controls.Add(LabelFor("PREVIEW & INFORMATION",22));
-            diagnostics.Dock=DockStyle.Fill;diagnostics.Multiline=true;diagnostics.ReadOnly=true;diagnostics.ScrollBars=ScrollBars.Vertical;diagnostics.BorderStyle=BorderStyle.None;diagnostics.BackColor=panel;diagnostics.ForeColor=muted;diagnostics.Font=new Font("Segoe UI",9);bottom.Controls.Add(diagnostics);diagnostics.BringToFront();
+            diagnostics.Dock=DockStyle.Fill;diagnostics.Multiline=true;diagnostics.ReadOnly=true;diagnostics.ScrollBars=ScrollBars.Vertical;diagnostics.BorderStyle=BorderStyle.None;diagnostics.BackColor=panel;diagnostics.ForeColor=muted;diagnostics.Font=new Font("Segoe UI",9);var diagnosticScroll=new DarkScrollHost(diagnostics);bottom.Controls.Add(diagnosticScroll);diagnosticScroll.BringToFront();
             center.Controls.Add(canvas);center.Controls.Add(BuildPreviewModeBar());center.Controls.Add(BuildViewBar());center.Controls.Add(previewToolbar);center.Controls.Add(BuildDesignerBar());center.Controls.Add(bottom);main.Controls.Add(center,1,0);
             var right=new Panel{Dock=DockStyle.Fill,BackColor=panel,Padding=new Padding(12),Margin=new Padding(0)};
             var propHeader=new Panel{Dock=DockStyle.Top,Height=130};
             selectionName=new Label{Text="Select an element",ForeColor=ink,Font=new Font("Segoe UI",12,FontStyle.Bold),AutoEllipsis=true};selectionName.SetBounds(0,0,270,27);propHeader.Controls.Add(selectionName);
             selectionInfo=new Label{Text="Click in the preview or element tree.",ForeColor=muted};selectionInfo.SetBounds(0,31,270,63);propHeader.Controls.Add(selectionInfo);
             unlock=new CheckBox{Text="Replace bindings locally",AutoSize=true,ForeColor=Color.FromArgb(243,191,102)};unlock.SetBounds(0,101,267,25);unlock.CheckedChanged+=(s,e)=>{canvas.UnlockBindings=unlock.Checked;UpdateResetTools();};propHeader.Controls.Add(unlock);
-            properties.Dock=DockStyle.Fill;properties.FlowDirection=FlowDirection.TopDown;properties.WrapContents=false;properties.AutoScroll=true;
+            properties.BackColor=panel;properties.Dock=DockStyle.Fill;properties.FlowDirection=FlowDirection.TopDown;properties.WrapContents=false;properties.AutoScroll=true;
             var propertyActions=new FlowLayoutPanel{Dock=DockStyle.Bottom,Height=38,WrapContents=false,Margin=Padding.Empty};
             var apply=ButtonFor("Apply Properties",Apply,true);apply.Width=150;apply.Height=38;apply.Margin=Padding.Empty;propertyActions.Controls.Add(apply);
             var revert=ButtonFor("Revert Inputs",RevertPropertyInputs);revert.Width=105;revert.Height=38;revert.Margin=new Padding(6,0,0,0);propertyActions.Controls.Add(revert);
             tips.SetToolTip(revert,"Restore the property fields from the current model. Applied XML edits and undo history remain unchanged.");
-            right.Controls.Add(properties);right.Controls.Add(propHeader);right.Controls.Add(propertyActions);main.Controls.Add(right,2,0);
+            right.Controls.Add(new DarkScrollHost(properties));right.Controls.Add(propHeader);right.Controls.Add(propertyActions);main.Controls.Add(right,2,0);
             status=new Label{Dock=DockStyle.Bottom,Height=31,Padding=new Padding(20,5,0,0),BackColor=panel,ForeColor=muted,Text="Ready"};
             Controls.Add(main);Controls.Add(toolbar);Controls.Add(header);Controls.Add(status);
             tips.SetToolTip(unlock,"Enable only when intentionally replacing an existing #Property or #Define with a local value.");
@@ -353,7 +356,7 @@ namespace MP1SkinStudio
                 PopulatePageChoices(prepared.Pages);
             }
             finally{loading=prior;}
-            folderName.Text=System.IO.Path.GetFileName(project.Root.TrimEnd('\\'));tips.SetToolTip(folderName,project.Root);RefreshProject(null);
+            folderName.Text="SKIN";tips.SetToolTip(folderName,project.Root);RefreshSkinChoices();RefreshProject(null);
             // Establish the baseline after initial selection, including the
             // fallback focus used by pages without an explicit default control.
             initialEditorSignature=ProjectFile.EditorSignature(project);savedEditorSignature=initialEditorSignature;

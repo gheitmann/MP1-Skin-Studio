@@ -18,6 +18,16 @@ instructions; they are never automatically installed into a client skin.
 The candidate is suitable for reviewing these workflows against isolated copies.
 It is not a complete MediaPortal renderer or an unrestricted compatibility claim.
 
+## Skin discovery and main-window scrolling
+
+SKIN above THEME discovers standard Windows installation folders, current
+skin siblings and the bundled demo. Its list refreshes when opened; transitions
+retain existing save/discard/cancel, pending-input and failed-load protections.
+The left column grows from 245 to 319 pixels and its controls expand with it.
+Dark scrollbars cover the main page list, tree, properties and information text;
+selection, keyboard behavior and wheel routing remain native. Preview tools wrap
+at minimum width. Separate dialogs retain their existing scrollbar appearance.
+
 ## Caption selection
 
 Single-line label/fadelabel outlines and mouse targets follow visible caption
@@ -65,14 +75,14 @@ MediaTipOverlay.xml variants show one explicit sample block. Short example
 captions preserve XML bindings and continue reporting unresolved diagnostics.
 View/example state is persisted separately from XML; isolation is temporary.
 
-Fresh executable/package checks: 416 core checks, 58 targeted selection/designer/search/text UI assertions,
+Fresh executable/package checks: 420 core checks, 22 skin/sidebar/scrolling scenarios, 12 integrated-page scenarios,
 ten targeted real-DefaultWideHD form scenarios, twelve complete demo workflows
 and twelve clean-session workflows. All 488 installed XML, 26 demo and 31 package
 payload hashes remain unchanged. Application-generated renders cover every
 MediaTip example, diagnostic/solo modes and minimum-size controls. The repository
 record distinguishes synthetic forms from any attended Windows observation.
 
-Prior 205 broad UI, twelve integrated-page, ten XML-review, 18 transition, eight startup and seven
+Prior 58 caption-selection, 205 broad UI, ten XML-review, 18 transition, eight startup and seven
 large-menu scenarios remain historical. Runtime/client
 acceptance of the newly changed presentation is not claimed.
 

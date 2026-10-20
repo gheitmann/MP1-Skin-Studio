@@ -51,6 +51,12 @@ show the first difference; Previous/Next reaches all large-file sections. Exact
 byte hashes and refreshable source checks identify drift, missing or locked XML.
 Pending fields and preview-only state are excluded. Close review to export.
 
+SKIN above THEME discovers installed Windows skin folders, current siblings and
+the bundled demo, refreshing on open. Existing session protections remain.
+The left column is 30% wider, with expanded filters and matching dark scrollbars
+on the main page/tree/properties/information regions. Preview tools wrap at
+minimum width. Other locations remain available through Open skin directory.
+
 Single-line label/fadelabel frames and mouse targets follow visible captions.
 Drag to move them; use Properties for Width/Height. Textboxes, buttons and other
 surface controls retain full field frames. No XML dimensions are invented.
@@ -73,7 +79,7 @@ Pictures, Folder and Radio instead of stacking all five text blocks. These are
 editing examples, not live plugin values. Isolation is temporary; view/example
 settings persist in the editor project. XML/conditions/export bytes stay intact.
 
-Fresh executable/package checks: 416 core, 58 targeted selection UI, ten readable-preview scenarios,
+Fresh executable/package checks: 420 core, 22 skin/sidebar/scrolling, 12 integrated-page and ten readable-preview scenarios,
 twelve complete demo workflows, twelve clean-session workflows and 31 unchanged
 payload hashes. All 488 installed fixture XML files are unchanged. Prior broad
 UI/browser/review/transition/startup and large-menu reports remain historical.

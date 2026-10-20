@@ -28,7 +28,11 @@ Cancel when needed. Canceling Save As or a failed save keeps the session open.
 Apply/Revert pending fields first; the close dialog disables Save while fields
 are pending. Enter/Escape safely cancel the decision.
 
-The PAGES / XML list is integrated into the left sidebar. Use its filename
+Use **SKIN** above THEME to select a detected installed skin or the bundled demo.
+The list refreshes when opened. Open skin directory remains available for another
+location. Skin changes retain pending-input and save/discard/cancel protections.
+
+The wider left sidebar has matching dark scrollbars. The PAGES / XML list is integrated into the left sidebar. Use its filename
 filter and mouse wheel to browse; scrolling does not switch the active page.
 Click a file to open it. Drag the divider below the list to resize it.
 

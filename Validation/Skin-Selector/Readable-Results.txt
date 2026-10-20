@@ -1,0 +1,11 @@
+PASS MediaTip opens in readable Music layout with one five-line block and unchanged source bindings
+PASS Every MediaTip example switches the rendered block and produces short sample text without XML edits
+PASS All layers restores every authored control and raw bindings, then Edit layout restores the sample
+PASS Selecting a different variant explains isolation and solo draws only that control while keeping raw property input
+PASS View and scene changes preserve pending inputs, XML undo history and source identity
+PASS View and example save reopen without snapshots, and temporary isolation does not survive page change
+PASS An actual geometry edit exports the original binding, not sample captions or view settings
+PASS Generic group isolation includes descendants and excludes unrelated sibling text
+PASS Generic unresolved captions shorten in isolated editing while audit still reports uncertainty
+PASS Example controls remain visible and within bounds at the minimum editor size
+10 passed, 0 failed; 488 installed XML and 26 demo hashes unchanged. Synthetic form/selection events; no desktop input.

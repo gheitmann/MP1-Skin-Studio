@@ -17,10 +17,19 @@ scenes and the transition from an editor project to a runtime test copy.
 
 ## Open skins, pages and themes
 
-Choose **Open skin directory** and select the directory containing references.xml,
+Choose a skin from **SKIN** above THEME. Installed MediaPortal skin folders,
+the current skin's siblings and the bundled demo are detected automatically.
+The dropdown refreshes whenever opened; changing skins retains the existing
+save/discard/cancel and pending-input protections. For another location, choose
+**Open skin directory** and select the directory containing references.xml,
 fonts.xml and Media. Use the page selector to choose a page and the theme selector
 to switch themes. Includes and theme overrides are resolved for the selected page.
 The complete Titan skin is not bundled; Samples/Titan-Sample is a small demo.
+
+The left sidebar is 30% wider, including its skin/theme selectors and filters.
+Dark scrollbars on its lists/tree and the main properties/information regions
+support arrows, wheel and thumb dragging without changing the selected XML.
+At narrow window sizes, preview tools wrap to another row.
 
 The element tree records each element's source file. Edits to shared include files
 affect every page using that file when the export is applied.

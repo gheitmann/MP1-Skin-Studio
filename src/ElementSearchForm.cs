@@ -11,11 +11,11 @@ namespace MP1SkinStudio
         Label searchCount;
         Panel BuildElementSearch()
         {
-            var bar=new Panel{Dock=DockStyle.Top,Height=82};
-            bar.Controls.Add(new Label{Text="SEARCH ELEMENTS",ForeColor=muted,Location=new Point(0,0),Size=new Size(208,21)});
-            elementSearch=new TextBox{AccessibleName="Search elements on the open page",BackColor=Color.FromArgb(20,26,35),ForeColor=ink,BorderStyle=BorderStyle.FixedSingle,Location=new Point(0,23),Width=174};bar.Controls.Add(elementSearch);
-            var clear=ButtonFor("×",()=>{elementSearch.Clear();elementSearch.Focus();});clear.SetBounds(180,22,28,25);clear.Margin=Padding.Empty;clear.AccessibleName="Clear element search";bar.Controls.Add(clear);
-            searchCount=new Label{ForeColor=muted,Location=new Point(0,52),Size=new Size(208,26),AutoEllipsis=true};bar.Controls.Add(searchCount);
+            var bar=new Panel{Dock=DockStyle.Top,Width=285,Height=82};
+            bar.Controls.Add(new Label{Text="SEARCH ELEMENTS",ForeColor=muted,Location=new Point(0,0),Size=new Size(285,21),Anchor=AnchorStyles.Top|AnchorStyles.Left|AnchorStyles.Right});
+            elementSearch=new TextBox{AccessibleName="Search elements on the open page",BackColor=Color.FromArgb(20,26,35),ForeColor=ink,BorderStyle=BorderStyle.FixedSingle,Location=new Point(0,23),Width=251,Anchor=AnchorStyles.Top|AnchorStyles.Left|AnchorStyles.Right};bar.Controls.Add(elementSearch);
+            var clear=ButtonFor("×",()=>{elementSearch.Clear();elementSearch.Focus();});clear.SetBounds(257,22,28,25);clear.Anchor=AnchorStyles.Top|AnchorStyles.Right;clear.Margin=Padding.Empty;clear.AccessibleName="Clear element search";bar.Controls.Add(clear);
+            searchCount=new Label{ForeColor=muted,Location=new Point(0,52),Size=new Size(285,26),AutoEllipsis=true,Anchor=AnchorStyles.Top|AnchorStyles.Left|AnchorStyles.Right};bar.Controls.Add(searchCount);
             tips.SetToolTip(elementSearch,"Search names, IDs, types, text, sources or properties. All words must match. Filters: id:10, type:button, source:menu. Enter: next; Shift+Enter: previous; Esc: clear. The full preview remains visible.");
             elementSearch.TextChanged+=(s,e)=>{if(project!=null&&!loading)RebuildElementTree();};
             elementSearch.KeyDown+=(s,e)=>SearchKey(e);

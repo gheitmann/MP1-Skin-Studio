@@ -41,12 +41,12 @@ namespace MP1SkinStudio
         Control BuildPageBrowser()
         {
             var browser=new Panel{Dock=DockStyle.Fill};
-            var header=new Panel{Dock=DockStyle.Top,Height=76};
-            header.Controls.Add(new Label{Text="PAGES / XML",ForeColor=muted,Location=new Point(0,0),Size=new Size(208,20)});
-            pageSearch=new TextBox{AccessibleName="Filter skin pages and XML files",BackColor=Color.FromArgb(20,26,35),ForeColor=ink,BorderStyle=BorderStyle.FixedSingle,Location=new Point(0,22),Width=208};
-            header.Controls.Add(pageSearch);pageCount=new Label{ForeColor=muted,Location=new Point(0,50),Size=new Size(208,23),AutoEllipsis=true};header.Controls.Add(pageCount);
+            var header=new Panel{Dock=DockStyle.Top,Width=285,Height=76};
+            header.Controls.Add(new Label{Text="PAGES / XML",ForeColor=muted,Location=new Point(0,0),Size=new Size(285,20),Anchor=AnchorStyles.Top|AnchorStyles.Left|AnchorStyles.Right});
+            pageSearch=new TextBox{AccessibleName="Filter skin pages and XML files",BackColor=Color.FromArgb(20,26,35),ForeColor=ink,BorderStyle=BorderStyle.FixedSingle,Location=new Point(0,22),Width=285,Anchor=AnchorStyles.Top|AnchorStyles.Left|AnchorStyles.Right};
+            header.Controls.Add(pageSearch);pageCount=new Label{ForeColor=muted,Location=new Point(0,50),Size=new Size(285,23),AutoEllipsis=true,Anchor=AnchorStyles.Top|AnchorStyles.Left|AnchorStyles.Right};header.Controls.Add(pageCount);
             page.BackColor=Color.FromArgb(20,26,35);page.ForeColor=ink;page.Dock=DockStyle.Fill;
-            browser.Controls.Add(page);browser.Controls.Add(header);
+            browser.Controls.Add(new DarkScrollHost(page));browser.Controls.Add(header);
             pageSearch.TextChanged+=(s,e)=>{if(!loading)FilterPageChoices();};
             pageSearch.KeyDown+=(s,e)=>{if(e.KeyCode==Keys.Escape){pageSearch.Clear();e.Handled=true;e.SuppressKeyPress=true;}};
             tips.SetToolTip(pageSearch,"Filter XML filenames. Filtering and scrolling keep the current preview and pending property inputs unchanged. Escape clears the filter.");
