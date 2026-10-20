@@ -1,0 +1,12 @@
+PASS Pending properties block copying without discarding the draft
+PASS The actual Copy skin button creates a complete copy through the asynchronous dialog: Edited sibling
+PASS Applied XML appears in the new skin while the dirty original session remains intact
+PASS An external copy appears in the skin dropdown even when it is not opened
+PASS The actual Copy skin button creates a complete copy through the asynchronous dialog: Keep original open
+PASS Cancelling the existing session guard keeps the original open and retains the completed copy
+PASS The actual Copy skin button creates a complete copy through the asynchronous dialog: Open new base
+PASS A disk-only base opens after the existing discard guard with a clean independent session
+PASS Copy skin fits beside the SKIN heading without narrowing its dropdown
+PASS Invalid destination names leave an editable dialog with a clear error
+PASS Cancel cooperatively stops the worker and removes the unfinished copy
+11 passed, 0 failed. Synthetic forms/menu/dialog events; no desktop input.

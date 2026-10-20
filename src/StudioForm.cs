@@ -299,11 +299,12 @@ namespace MP1SkinStudio
             var main=new TableLayoutPanel{Dock=DockStyle.Fill,ColumnCount=3,RowCount=1,Padding=new Padding(16,0,16,10)};
             main.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute,319));main.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,100));main.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute,298));main.RowStyles.Add(new RowStyle(SizeType.Percent,100));
             var left=new Panel{Dock=DockStyle.Fill,BackColor=panel,Padding=new Padding(12),Margin=new Padding(0,0,10,0)};
-            var leftTop=new Panel{Dock=DockStyle.Top,Width=285,Height=118};
+            var leftTop=new Panel{Dock=DockStyle.Top,Width=285,Height=124};
             folderName=LabelFor("SKIN",20);folderName.Dock=DockStyle.None;folderName.SetBounds(0,0,285,20);folderName.Anchor=AnchorStyles.Left|AnchorStyles.Top|AnchorStyles.Right;leftTop.Controls.Add(folderName);
-            skinPicker.BackColor=Color.FromArgb(20,26,35);skinPicker.ForeColor=ink;skinPicker.SetBounds(0,22,285,26);skinPicker.Anchor=AnchorStyles.Left|AnchorStyles.Top|AnchorStyles.Right;skinPicker.AccessibleName="Choose skin";leftTop.Controls.Add(skinPicker);
-            var tl=LabelFor("THEME",20);tl.Dock=DockStyle.None;tl.SetBounds(0,58,285,20);tl.Anchor=AnchorStyles.Left|AnchorStyles.Top|AnchorStyles.Right;leftTop.Controls.Add(tl);
-            theme.BackColor=Color.FromArgb(20,26,35);theme.ForeColor=ink;theme.SetBounds(0,80,285,26);theme.Anchor=AnchorStyles.Left|AnchorStyles.Top|AnchorStyles.Right;leftTop.Controls.Add(theme);
+            var copySkin=ButtonFor("Copy skin …",ShowSkinCopy);copySkin.SetBounds(185,0,100,26);copySkin.Anchor=AnchorStyles.Right|AnchorStyles.Top;copySkin.Font=new Font(Font.FontFamily,8.5f);leftTop.Controls.Add(copySkin);copySkin.BringToFront();
+            skinPicker.BackColor=Color.FromArgb(20,26,35);skinPicker.ForeColor=ink;skinPicker.SetBounds(0,30,285,26);skinPicker.Anchor=AnchorStyles.Left|AnchorStyles.Top|AnchorStyles.Right;skinPicker.AccessibleName="Choose skin";leftTop.Controls.Add(skinPicker);
+            var tl=LabelFor("THEME",20);tl.Dock=DockStyle.None;tl.SetBounds(0,64,285,20);tl.Anchor=AnchorStyles.Left|AnchorStyles.Top|AnchorStyles.Right;leftTop.Controls.Add(tl);
+            theme.BackColor=Color.FromArgb(20,26,35);theme.ForeColor=ink;theme.SetBounds(0,86,285,26);theme.Anchor=AnchorStyles.Left|AnchorStyles.Top|AnchorStyles.Right;leftTop.Controls.Add(theme);
             tree.Dock=DockStyle.Fill;tree.BackColor=panel;tree.ForeColor=ink;tree.BorderStyle=BorderStyle.None;tree.HideSelection=false;tree.FullRowSelect=true;tree.ShowLines=false;tree.ItemHeight=25;
             var browserSplit=new SplitContainer{Dock=DockStyle.Fill,Orientation=Orientation.Horizontal,Size=new Size(210,600),SplitterWidth=6,Panel1MinSize=140,Panel2MinSize=160,SplitterDistance=240,BackColor=panel};
             browserSplit.Panel1.Controls.Add(BuildPageBrowser());

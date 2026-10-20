@@ -10,6 +10,7 @@ namespace MP1SkinStudio
         {string path=Path.Combine(folder,name);Directory.CreateDirectory(path);Write(path,"references.xml","<window/>");Write(path,"main.xml","<window><controls/></window>");return path;}
         static void RunSkinCatalogTests(string root)
         {
+            RunSkinCopyTests(root);
             Test("Skin discovery finds direct installed children and excludes nested themes and incomplete folders",()=>
             {
                 string folder=Path.Combine(root,"catalog-installed");Directory.CreateDirectory(folder);string alpha=CatalogSkin(folder,"Alpha"),beta=CatalogSkin(folder,"Beta");CatalogSkin(Path.Combine(alpha,"Themes"),"Blue");Directory.CreateDirectory(Path.Combine(folder,"Missing"));string metadata=Path.Combine(folder,"Metadata");Directory.CreateDirectory(metadata);Write(metadata,"references.xml","<window/>");

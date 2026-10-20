@@ -6,6 +6,12 @@ MediaPortal skin are unnecessary for the bundled demo.
 
 ## A complete first workflow
 
+To start a new skin from an installed one, select its SKIN entry and choose
+**Copy skin …** beside the heading. Choose a new name and destination folder,
+then Create copy. Leave Open enabled to continue in the independent copy.
+Applied editor XML can be included; pending fields must first be applied or
+reverted. The source skin stays untouched and existing folders are protected.
+
 1. Keep demo.xml selected. Select Movies in the tree or preview.
 2. Change Text / data binding to My movies and click Apply Properties.
 3. Undo restores Movies; Redo restores My movies.

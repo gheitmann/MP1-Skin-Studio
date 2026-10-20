@@ -83,10 +83,15 @@ Centered list/playlist sample captions now align vertically with their focus
 texture and retain complete glyphs. The native title bar uses the dark header
 palette on supported Windows, retaining standard window buttons and behavior.
 
-Fresh executable/package checks: 422 core, 23 skin/sidebar/scrolling and ten
-readable-preview scenarios, twelve complete demo workflows, twelve clean-session
-workflows and 31 unchanged payload hashes. All 488 installed fixture XML files
-are unchanged. Prior integrated-page and broad
+Copy skin beside SKIN creates a complete independent skin with a new name and
+location, optional applied XML and optional opening. Source files stay unchanged.
+Copying runs in the background with Cancel and never replaces existing folders.
+
+Fresh executable/package checks: 430 core, eleven copy-dialog scenarios,
+twelve complete demo workflows, twelve clean-session workflows and 31 unchanged
+payload hashes. The sidebar suite passed 23 scenarios during this change; a full
+DefaultWideHD copy passed all 3,399 original/copy file hashes. Prior readability,
+integrated-page and broad
 UI/browser/review/transition/startup and large-menu reports remain historical.
 See docs/RELEASE_READINESS.md for recognition limits and practical scope.
 

@@ -17,6 +17,23 @@ scenes and the transition from an editor project to a runtime test copy.
 
 ## Open skins, pages and themes
 
+**Copy skin …** beside SKIN creates an independent skin based on the current
+one. Enter a new folder name and choose its parent directory. Images, fonts,
+themes and all other skin files are copied. Existing folders are never replaced.
+The destination must be outside the source skin. Apply or revert pending property
+inputs before copying. Keep **Include applied editor changes** enabled to write
+the session's modified XML into the new skin; clear it to copy the disk version.
+The original skin and session remain unchanged. Changed source XML must still
+match its loaded original when editor changes are included.
+
+Copying runs in the background; Cancel removes the unfinished copy. Completed
+copies appear in SKIN for the current session, including custom destinations.
+**Open the new skin** opens the copy after the existing save/discard/cancel
+guard; cancelling that guard keeps the current session and the completed copy.
+The current page/theme is retained when available. Preview settings, projects
+and undo history are not transferred into the new session. Save Project retains
+those settings for the original session. Linked folders/files are unsupported.
+
 Choose a skin from **SKIN** above THEME. Installed MediaPortal skin folders,
 the current skin's siblings and the bundled demo are detected automatically.
 The dropdown refreshes whenever opened; changing skins retains the existing

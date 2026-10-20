@@ -1,0 +1,3 @@
+PASS 3399 complete installed-skin files copied byte-for-byte.
+PASS all 3399 original file hashes unchanged.
+PASS copied myHome opens with 262 controls and a clean session; original session intact.

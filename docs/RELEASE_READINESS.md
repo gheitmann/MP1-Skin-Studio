@@ -20,6 +20,13 @@ It is not a complete MediaPortal renderer or an unrestricted compatibility claim
 
 ## Skin discovery and main-window scrolling
 
+Copy skin beside SKIN creates a complete independent folder in the background,
+with optional applied XML changes and optional opening. Failed/cancelled copies
+are removed before publication; existing targets and source files stay intact.
+Copies are registered in the current session selector. Linked paths are rejected.
+Eleven dialog scenarios and eight new core cases cover copying and preservation;
+an installed DefaultWideHD copy passed all 3,399 original/copy file hashes.
+
 SKIN above THEME discovers standard Windows installation folders, current
 skin siblings and the bundled demo. Its list refreshes when opened; transitions
 retain existing save/discard/cancel, pending-input and failed-load protections.

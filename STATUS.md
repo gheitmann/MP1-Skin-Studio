@@ -2,7 +2,13 @@
 
 Date: October 20, 2026. Imported version: 0.9.
 
-## Latest source milestone: aligned collection captions and a dark window caption
+## Latest source milestone: copy a skin as an independent new base
+
+October 20, 2026: Copy skin beside SKIN opens a dark dialog for a new folder name and destination parent. It copies every skin file and empty subfolder, including images, fonts and themes. Applied XML changes can be included (default) or the disk version can be used. Work runs on a background task with a cancellable progress indicator. The source, current editor state and undo history remain unchanged. Existing targets and destinations inside the source are rejected; links are rejected, edited-source conflicts stop the copy, and failed/cancelled staging folders are removed. The completed skin is validated before publication and registered in the session dropdown, including external destinations. Optional opening uses existing pending-input/save/discard/cancel protections and retains the current page/theme; editor-only settings and undo history stay with the original session.
+
+Fresh final acceptance: 430 core checks (eight new copy cases), eleven copy-dialog workflows, twelve complete demo workflows and twelve clean-session workflows passed; payload hashes passed. The skin/sidebar suite also passed 23 scenarios during this change. A complete DefaultWideHD copy validated all 3,399 copied bytes hashes against the source, checked all 3,399 originals unchanged and reopened myHome with 262 controls; the final follow-up changed only sidebar spacing to fit the new button. Live Windows inspection confirmed the final button and readable copy dialog without creating another installed skin. Original owner sessions were preserved. Previous readability/broad/client reports remain historical. See [skin-copy validation](Validation/Skin-Copy/README.md).
+
+## Previous source milestone: aligned collection captions and a dark window caption
 
 October 20, 2026: single-line list/playlist captions now honor the zero-height centered label anchor used by MediaPortal, so text sits inside its focus texture instead of below it. Font height is retained independently of the remaining row height, avoiding clipped glyphs. Collection clipping, XML positions, row texture geometry and focus navigation remain intact. The main native Windows caption, border and text use the header palette through documented DWM attributes, retaining standard caption buttons, moving, sizing and keyboard behavior. High contrast restores system caption colors; unsupported systems retain their native appearance.
 
