@@ -2,6 +2,10 @@
 
 Date: October 20, 2026. Imported version: 0.9.
 
+## First public release preparation: v0.9.0-preview.1
+
+October 20, 2026: the owner requested public repository visibility and the first GitHub release. The release carries the accepted 0.9 prototype executable and bundled demos, with a versioned Windows ZIP, SHA256 checksum and release notes. README and repository audience conventions are updated. Before publication, all 540 tracked files matched the GitHub tree; the targeted credential-pattern scan found no matches. No installed skins or private runtime logs are added to the release package. Latest functional acceptance remains the 25 selector/sidebar and ten readable-preview scenarios; earlier tests retain their recorded scopes. Repository visibility and release publication are verified externally after this documentation checkpoint.
+
 ## Latest source milestone: choose another skin folder from the dropdown
 
 Dropdown styling in this delivery also matches the scrollbar palette: RGB 20/26/35 backgrounds, 63/78/96 selections, 92/116/143 accents and light text/checks/arrows. All StudioMenus share the renderer; View and MediaTip Example now use the existing ChoiceBox instead of light native combo boxes. Collection mode and sample preset backgrounds match too. Fresh final validation passed 25 selector/sidebar scenarios and ten readable-preview scenarios; installed XML and demo hashes remained unchanged. The live closed View field was inspected; concurrent owner input interrupted the open-menu click, so no live open-menu acceptance is claimed. See [dropdown colors validation](Validation/Dropdown-Colors/README.md).

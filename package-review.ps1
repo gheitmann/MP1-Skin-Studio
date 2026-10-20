@@ -10,7 +10,7 @@ $reviewOutput = [System.IO.Path]::GetFullPath($OutputDirectory)
 [System.IO.Directory]::CreateDirectory($reviewOutput) | Out-Null
 $reviewTarget = Join-Path $reviewOutput 'MP1-Skin-Studio-Review.zip'
 $reviewTemp = $reviewTarget + '.' + [Guid]::NewGuid().ToString('N') + '.tmp'
-$reviewFiles = @('MP1SkinStudio.exe', 'LICENSE', 'docs/USER_GUIDE.md', 'docs/QUICK_START.md', 'docs/RELEASE_READINESS.md')
+$reviewFiles = @('MP1SkinStudio.exe', 'LICENSE', 'docs/USER_GUIDE.md', 'docs/QUICK_START.md', 'docs/RELEASE_READINESS.md', 'docs/RELEASE_NOTES.md')
 $reviewSampleRoot = Join-Path $PSScriptRoot 'Samples\Titan-Sample'
 $reviewFiles += @(Get-ChildItem -LiteralPath $reviewSampleRoot -Recurse -File |
     Where-Object { $_.Extension -in @('.xml', '.png', '.jpg', '.jpeg') } |

@@ -6,7 +6,8 @@
 - Communicate with the user in German unless requested otherwise.
 - Preserve intentional multilingual test fixtures and external MediaPortal
   schema identifiers; do not translate test data if that changes the behavior being tested.
-- Keep this repository private unless the user explicitly changes its audience.
+- The owner requested public visibility on October 20, 2026. Keep the repository
+  public; change its audience only at the owner's explicit request.
 - Commit and upload completed development milestones, and keep STATUS.md current.
 - Work in larger coherent blocks with concise progress updates. Do not end the
   turn after every small validated change; pause for a real blocker or a

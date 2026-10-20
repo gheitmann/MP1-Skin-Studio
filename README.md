@@ -1,6 +1,12 @@
 # MP1 Skin Studio
 
-A visual Windows skin editor for MediaPortal 1. This repository starts from the locally saved **0.9 prototype dated October 18, 2026**.
+A visual Windows skin editor for MediaPortal 1, built around visual editing and source-preserving XML changes. The first public preview is **v0.9.0-preview.1**, based on the 0.9 prototype.
+
+## Download
+
+Get the portable Windows ZIP and SHA256 checksum from [Releases](https://github.com/gheitmann/MP1-Skin-Studio/releases). Extract the complete archive and run `MP1SkinStudio.exe`. Windows and .NET Framework 4.x are required. The package includes twelve demo scenes and a quick start guide.
+
+This preview provides a practical visual guide; rendering remains approximate. Start from an independent skin copy using **Copy skin …**. See [release notes](docs/RELEASE_NOTES.md) and [practical scope](docs/RELEASE_READINESS.md).
 
 ## Build and run
 
@@ -19,7 +25,9 @@ Visual position, size, text and texture editing; multiple selection and alignmen
 
 ## Validation
 
-Latest source checkpoint (October 20): **automatic skin selection and wider dark sidebar**. SKIN above THEME lists detected installation folders/current siblings/the demo and refreshes when opened. The left column is 30% wider, with matching dark scrollbars in the main lists, tree, properties and information region. Skin switching preserves existing session protections; preview tools wrap at minimum width. Fresh checks: 420 core, 22 skin/sidebar/scrolling, twelve page, ten readability and 24 demo/session workflows. See [validation](Validation/Skin-Selector/README.md).
+Public-preview source checkpoint (October 20): automatic skin discovery, **Select different Skin Folder …**, complete independent skin copying, caption/focus alignment, a wider sidebar, dark scrollbars/dropdowns and a matching native title bar. Latest focused validation passed 25 selector/sidebar/menu/scroll scenarios and ten readable-preview scenarios with source/demo hashes unchanged. Earlier acceptance passed 430 core checks, eleven copy-dialog scenarios, twelve demo workflows and twelve clean-session workflows. A full DefaultWideHD copy matched all 3,399 files and preserved every original. Reports below retain their own dates and scopes; they do not imply a new full-suite run for publication.
+
+Previous source checkpoint (October 20): **automatic skin selection and wider dark sidebar**. SKIN above THEME lists detected installation folders/current siblings/the demo and refreshes when opened. The left column is 30% wider, with matching dark scrollbars in the main lists, tree, properties and information region. Skin switching preserves existing session protections; preview tools wrap at minimum width. Fresh checks: 420 core, 22 skin/sidebar/scrolling, twelve page, ten readability and 24 demo/session workflows. See [validation](Validation/Skin-Selector/README.md).
 
 Previous source checkpoint (October 20): **caption-sized text selection**. Single-line label/fadelabel frames and click/double-click targets follow the visible caption, avoiding synthetic boxes over adjacent rows. Dragging retains position edits; Width/Height remain in Properties. Fresh checks: 416 core, 58 targeted selection/designer/search/text UI, ten readability and 24 demo/session workflows. See [selection validation](Validation/Text-Selection/README.md).
 
@@ -50,3 +58,4 @@ See [STATUS.md](STATUS.md). This repository preserves the development baseline i
 License: the existing GPLv3 license in [LICENSE](LICENSE).
 
 A manual review ZIP can be prepared with `powershell -NoProfile -File .\package-review.ps1`. It packages the editor and repository demo only, verifies every file hash, and does not launch any application. The latest attended and automated validation scopes are recorded above.
+
