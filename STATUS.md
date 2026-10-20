@@ -2,7 +2,13 @@
 
 Date: October 20, 2026. Imported version: 0.9.
 
-## Latest source milestone: faster selection and pointer inspection
+## Latest source milestone: faster XML loading and canvas visibility passes
+
+October 20, 2026: XML source scanning now checks comment/CDATA/PI openers only at the current tag rather than searching the remaining file repeatedly. The normal validated XML reader, mapping, encoding and byte-preserving edits remain intact. Scoped visibility passes reuse completed root results by control occurrence only within one canvas paint or pointer inspection, retaining recursive cycle/work-budget behavior and releasing results before callbacks or subsequent frames.
+
+DefaultWideHD serial medians: complete BasicHome load 3121 to 1536 ms, warm paint 445 to 295 ms; myHome load 494 to 139 ms, paint 131 to 103 ms; MyMinesweeper load 1322 to 267 ms, paint 85 to 68 ms. All 488 byte/span/DOM mappings match. Nine comparison images match the baseline replay pixel-for-pixel; the first baseline capture differed at five pixels in diagnostic BasicHome, and the same difference occurred when rerunning the unchanged baseline. Three new core tests cover scope/cycle/freshness and special XML scanning. Fresh acceptance passed 414 core checks, 205 broad UI assertions, ten readability scenarios, twelve full demo workflows and twelve clean-session workflows; all 488 installed XML, 26 demo assets and 31 payload hashes stayed unchanged. See [render/load validation](Validation/Render-Load/README.md) for current acceptance and limits. Complex BasicHome still takes about 1.5 seconds to prepare and 0.3 seconds to repaint; remaining tree/condition/image work is explicit.
+
+## Previous source milestone: faster selection and pointer inspection
 
 October 20, 2026: profiling DefaultWideHD identified repeated native element-tree updates as the dominant selection cost. Updates now batch drawing and leave unchanged labels/colors intact. Filtered branches are assembled before native insertion. Diagnostics evaluate visibility once per control. Pointer selection, navigation target picking and overlap lists share one measured layout within an inspection, releasing it before callbacks; focus/sample/XML changes cannot reuse it across events. No persistent visibility cache or source-file changes were introduced.
 

@@ -90,9 +90,9 @@ namespace MP1SkinStudio
             int p = 0, controlOrdinal = 0;
             while ((p = Text.IndexOf('<', p)) >= 0)
             {
-                if (Text.IndexOf("<!--", p, StringComparison.Ordinal) == p) { p = Text.IndexOf("-->", p + 4, StringComparison.Ordinal) + 3; continue; }
-                if (Text.IndexOf("<![CDATA[", p, StringComparison.Ordinal) == p) { p = Text.IndexOf("]]>", p + 9, StringComparison.Ordinal) + 3; continue; }
-                if (Text.IndexOf("<?", p, StringComparison.Ordinal) == p) { p = Text.IndexOf("?>", p + 2, StringComparison.Ordinal) + 2; continue; }
+                if (String.CompareOrdinal(Text,p,"<!--",0,4)==0) { p = Text.IndexOf("-->", p + 4, StringComparison.Ordinal) + 3; continue; }
+                if (String.CompareOrdinal(Text,p,"<![CDATA[",0,9)==0) { p = Text.IndexOf("]]>", p + 9, StringComparison.Ordinal) + 3; continue; }
+                if (String.CompareOrdinal(Text,p,"<?",0,2)==0) { p = Text.IndexOf("?>", p + 2, StringComparison.Ordinal) + 2; continue; }
                 int end = p + 1; char quote = '\0';
                 for (; end < Text.Length; end++)
                 {
@@ -434,7 +434,11 @@ namespace MP1SkinStudio
             var visited=new HashSet<string>();while(c.Defines!=null&&c.Defines.TryGetValue(value,out v)&&visited.Add(value))value=v;
             bool known;result=ExpressionText(c,value,out known);return known;
         }
-        public bool? Visible(SkinControl c) { return VisibleFor(c,new HashSet<string>()); }
+        public bool? Visible(SkinControl c)
+        {
+            bool? result;if(visibilityPass!=null&&visibilityPass.TryGetValue(c,out result))return result;
+            result=VisibleFor(c,new HashSet<string>());if(visibilityPass!=null)visibilityPass[c]=result;return result;
+        }
         static bool? And(bool? a,bool? b) { if(a==false||b==false)return false;if(a==null||b==null)return null;return true; }
         static bool Encloses(string s) {int depth=0;char quote='\0';for(int i=0;i<s.Length;i++){char c=s[i];if(quote!='\0'){if(c==quote)quote='\0';continue;}if(c=='\''||c=='"'){quote=c;continue;}if(c=='['||c=='(')depth++;if(c==']'||c==')')depth--;if(depth==0&&i<s.Length-1)return false;}return depth==0&&quote=='\0';}
         static List<string> Split(string s,char delimiter)

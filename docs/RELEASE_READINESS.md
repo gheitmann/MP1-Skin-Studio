@@ -18,6 +18,16 @@ instructions; they are never automatically installed into a client skin.
 The candidate is suitable for reviewing these workflows against isolated copies.
 It is not a complete MediaPortal renderer or an unrestricted compatibility claim.
 
+## XML loading and canvas updates
+
+Source scanning now checks special-block openers at the current position.
+Scoped canvas passes reuse completed visibility results for one frame/input
+inspection, releasing them before callbacks and state changes. DefaultWideHD
+BasicHome measured about 3.1 to 1.5 seconds for complete form loading and 445
+to 295 ms for warm redraws. Nine comparison renders agree with a baseline
+replay; all 488 XML byte/span/DOM mappings match. Results are local synthetic
+measurements. Complex pages can still take noticeable time to load and redraw.
+
 ## Responsiveness
 
 Native element-tree updates now batch painting and leave unchanged labels and
@@ -46,7 +56,7 @@ MediaTipOverlay.xml variants show one explicit sample block. Short example
 captions preserve XML bindings and continue reporting unresolved diagnostics.
 View/example state is persisted separately from XML; isolation is temporary.
 
-Fresh extracted-package checks: 411 core checks, 205 broad UI assertions,
+Fresh executable/package checks: 414 core checks, 205 broad UI assertions,
 ten targeted real-DefaultWideHD form scenarios, twelve complete demo workflows
 and twelve clean-session workflows. All 488 installed XML, 26 demo and 31 package
 payload hashes remain unchanged. Application-generated renders cover every

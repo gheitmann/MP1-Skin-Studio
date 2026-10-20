@@ -87,8 +87,10 @@ namespace MP1SkinStudio
         T WithMeasuredLayout<T>(Func<T> inspect)
         {
             var previous=paintingLayout;
+            using(State.BeginVisibilityPass()) {
             try{if(paintingLayout==null)paintingLayout=new StackPreview(Project,State);return inspect();}
             finally{paintingLayout=previous;}
+            }
         }
         RectangleF EffectiveBounds(SkinControl c) {RectangleF r;return dragging&&dragRects.TryGetValue(c.Key,out r)?r:BoundsOf(c);}
         bool Drawn(SkinControl c)
@@ -115,6 +117,7 @@ namespace MP1SkinStudio
         {
             base.OnPaint(e);var g=e.Graphics;g.SmoothingMode=SmoothingMode.AntiAlias;
             if(Project==null){TextRenderer.DrawText(g,"Open a skin directory or load the demo",Font,ClientRectangle,Color.Gray,TextFormatFlags.HorizontalCenter|TextFormatFlags.VerticalCenter);return;}
+            using(State.BeginVisibilityPass()) {
             paintingLayout=new StackPreview(Project,State);
             var textPass=new List<PendingSurfaceText>();pendingSurfaceText=textPass;
             try {
@@ -136,6 +139,7 @@ namespace MP1SkinStudio
             string footer=Project.Width+" × "+Project.Height+"  ·  "+Math.Round(scale*100)+" %  ·  Approximate layout";
             TextRenderer.DrawText(g,footer,Font,new Point(12,ClientSize.Height-25),Color.FromArgb(143,162,183));
             } finally {paintingLayout=null;pendingSurfaceText=null;foreach(var text in textPass)text.Clip.Dispose();}
+            }
         }
         Color ParseColor(string text, Color fallback)
         {

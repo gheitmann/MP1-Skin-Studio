@@ -1,0 +1,6 @@
+PASS first serial comparison: 488 exact XML byte/span/DOM fingerprints; eight pixel-identical images.
+OBSERVED BasicHome All layers: five differing pixels, x=597..654/y=94..97, maximum channel difference 45.
+PASS unchanged baseline replay produced the same five-pixel variation relative to its first capture.
+PASS baseline replay versus optimized: all nine renders pixel-identical.
+PASS standalone repeat: all three old and all three optimized diagnostic renders shared SHA256 d16cc014c8fc87b6467cf405bd893bd01c0b8cae6847094d9e6e468a1ac3dcaf.
+No pixel tolerance was applied; complete mapping and replay comparison used Compare.cs.

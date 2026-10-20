@@ -1,0 +1,23 @@
+PAGE myHome.xml
+fresh model median_ms=402.97 max_ms=443.64
+sources=6 controls=262
+cached-source model median_ms=2.84 max_ms=7.42
+fresh form load median_ms=622.51 max_ms=625.06
+warm canvas paint median_ms=108.39 max_ms=113.45
+PASS repeated paint and changed focus/sample visibility results
+PAGE BasicHome.xml
+fresh model median_ms=1785.87 max_ms=1892.71
+sources=18 controls=1237
+cached-source model median_ms=91.10 max_ms=109.91
+fresh form load median_ms=3836.80 max_ms=4054.26
+warm canvas paint median_ms=426.39 max_ms=506.44
+PASS repeated paint and changed focus/sample visibility results
+PAGE MyMinesweeper.xml
+fresh model median_ms=1124.19 max_ms=1226.96
+sources=4 controls=507
+cached-source model median_ms=5.27 max_ms=15.14
+fresh form load median_ms=1257.98 max_ms=1307.25
+warm canvas paint median_ms=72.40 max_ms=75.92
+PASS repeated paint and changed focus/sample visibility results
+PASS mapped 488 XML files for independent baseline comparison
+PASS 488 installed XML hashes unchanged.

@@ -1,0 +1,10 @@
+PASS 488 XML byte/span/DOM mappings identical to baseline.
+PASS pixel-identical myHome.xml.png
+PASS pixel-identical myHome.xml-changed.png
+PASS pixel-identical myHome.xml-all.png
+PASS pixel-identical BasicHome.xml.png
+PASS pixel-identical BasicHome.xml-changed.png
+PASS pixel-identical BasicHome.xml-all.png
+PASS pixel-identical MyMinesweeper.xml.png
+PASS pixel-identical MyMinesweeper.xml-changed.png
+PASS pixel-identical MyMinesweeper.xml-all.png
