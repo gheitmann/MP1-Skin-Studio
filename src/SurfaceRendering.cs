@@ -118,10 +118,10 @@ namespace MP1SkinStudio
         }
         void SurfaceImage(Graphics g,SkinControl c,Bitmap image,RectangleF rect)
         {
-            var target=SurfaceGeometry.Fit(rect,image.Size,new[]{"yes","true"}.Contains(c.Resolved("keepaspectratio").ToLowerInvariant()));
+            var plan=ImagePresentation.Plan(c,rect,image.Size);if(!plan.Valid)return;var target=plan.Target;
             Color tint=ParseColor(State.Text(c,c.Resolved("colordiffuse","ffffffff")),Color.White);
             using(var attributes=new ImageAttributes())
-            {var matrix=new ColorMatrix();matrix.Matrix00=tint.R/255f;matrix.Matrix11=tint.G/255f;matrix.Matrix22=tint.B/255f;matrix.Matrix33=tint.A/255f;attributes.SetColorMatrix(matrix);g.DrawImage(image,new[]{new PointF(target.Left,target.Top),new PointF(target.Right,target.Top),new PointF(target.Left,target.Bottom)},new RectangleF(0,0,image.Width,image.Height),GraphicsUnit.Pixel,attributes);}
+            {var matrix=new ColorMatrix();matrix.Matrix00=tint.R/255f;matrix.Matrix11=tint.G/255f;matrix.Matrix22=tint.B/255f;matrix.Matrix33=tint.A/255f;attributes.SetColorMatrix(matrix);g.DrawImage(image,new[]{new PointF(target.Left,target.Top),new PointF(target.Right,target.Top),new PointF(target.Left,target.Bottom)},plan.Source,GraphicsUnit.Pixel,attributes);}
         }
     }
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Editor-authored image fitting examples using bundled Studio graphics. -->
+<window>
+  <id>9011</id>
+  <controls>
+    <control><type>label</type><id>0</id><posX>100</posX><posY>55</posY><width>1700</width><height>90</height><font>TitanLight32</font><label>Fit, align and crop images</label><textcolor>ffffffff</textcolor></control>
+    <control><type>label</type><id>0</id><posX>100</posX><posY>150</posY><width>1700</width><height>65</height><font>TitanLight16</font><label>Select an image to edit proportions and crop options. All examples use bundled graphics.</label><textcolor>ffbdd9ed</textcolor></control>
+    <control><type>label</type><id>0</id><posX>100</posX><posY>240</posY><width>420</width><height>60</height><font>TitanLight20</font><label>Fit at top</label><textcolor>ffffffff</textcolor></control>
+    <control><type>label</type><id>0</id><posX>700</posX><posY>240</posY><width>420</width><height>60</height><font>TitanLight20</font><label>Fit in middle</label><textcolor>ffffffff</textcolor></control>
+    <control><type>label</type><id>0</id><posX>1300</posX><posY>240</posY><width>420</width><height>60</height><font>TitanLight20</font><label>Fit at bottom</label><textcolor>ffffffff</textcolor></control>
+    <control><type>image</type><id>701</id><description>Top aligned fit</description><posX>100</posX><posY>310</posY><width>420</width><height>180</height><texture>Studio/Button-blue.png</texture><keepaspectratio>yes</keepaspectratio><align>center</align><valign>top</valign></control>
+    <control><type>image</type><id>702</id><description>Middle aligned fit</description><posX>700</posX><posY>310</posY><width>420</width><height>180</height><texture>Studio/Button-blue.png</texture><keepaspectratio>yes</keepaspectratio><align>center</align><valign>middle</valign></control>
+    <control><type>image</type><id>703</id><description>Bottom aligned fit</description><posX>1300</posX><posY>310</posY><width>420</width><height>180</height><texture>Studio/Button-blue.png</texture><keepaspectratio>yes</keepaspectratio><align>center</align><valign>bottom</valign></control>
+    <control><type>label</type><id>0</id><posX>100</posX><posY>610</posY><width>420</width><height>60</height><font>TitanLight20</font><label>Keep whole image</label><textcolor>ffffffff</textcolor></control>
+    <control><type>label</type><id>0</id><posX>700</posX><posY>610</posY><width>420</width><height>60</height><font>TitanLight20</font><label>Crop in middle</label><textcolor>ffffffff</textcolor></control>
+    <control><type>label</type><id>0</id><posX>1300</posX><posY>610</posY><width>420</width><height>60</height><font>TitanLight20</font><label>Crop from top</label><textcolor>ffffffff</textcolor></control>
+    <control><type>image</type><id>704</id><description>Whole image fit</description><posX>100</posX><posY>690</posY><width>420</width><height>180</height><texture>Studio/Icon-Movie.png</texture><keepaspectratio>yes</keepaspectratio><align>center</align><valign>middle</valign></control>
+    <control><type>image</type><id>705</id><description>Centered crop</description><posX>700</posX><posY>690</posY><width>420</width><height>180</height><texture>Studio/Icon-Movie.png</texture><keepaspectratio>yes</keepaspectratio><zoom>yes</zoom></control>
+    <control><type>image</type><id>706</id><description>Top crop</description><posX>1300</posX><posY>690</posY><width>420</width><height>180</height><texture>Studio/Icon-Movie.png</texture><keepaspectratio>yes</keepaspectratio><zoom>yes</zoom><zoomfromtop>yes</zoomfromtop></control>
+    <control><type>label</type><id>0</id><posX>100</posX><posY>970</posY><width>1700</width><height>60</height><font>TitanLight14</font><label>Cropping fills the rectangle and keeps proportions. Crop from top overrides centered cropping.</label><textcolor>ffbdd9ed</textcolor></control>
+  </controls>
+</window>

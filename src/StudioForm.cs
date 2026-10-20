@@ -223,8 +223,8 @@ namespace MP1SkinStudio
         Dictionary<string,TextBox> fields=new Dictionary<string,TextBox>();Dictionary<string,string> originals=new Dictionary<string,string>();
         HashSet<string> touchedFields=new HashSet<string>(),mixedFields=new HashSet<string>();
         bool loading;
-        readonly string[] editable=new[]{"posX","posY","width","height","label","font","textcolor","texture","textureFocus","textureNoFocus","align","onleft","onright","onup","ondown","hyperlink","textXOff","textYOff","textalign","textvalign","valign","colordiffuse","visible"}.Concat(CollectionProperties.Fields.Select(f=>f.Key)).ToArray();
-        readonly string[] labels=new[]{"Position X","Position Y","Width","Height","Text / data binding","Font name","Text color · AARRGGBB","Image / texture","Focused image","Unfocused image","Alignment","Navigate left → ID","Navigate right → ID","Navigate up → ID","Navigate down → ID","Target page → Window ID","Text offset X","Text offset Y","Horizontal inner text alignment","Vertical inner text alignment","Vertical text field alignment","Image tint · AARRGGBB","Visibility condition"}.Concat(CollectionProperties.Fields.Select(f=>f.Label)).ToArray();
+        readonly string[] editable=new[]{"posX","posY","width","height","label","font","textcolor","texture","textureFocus","textureNoFocus","align","onleft","onright","onup","ondown","hyperlink","textXOff","textYOff","textalign","textvalign","valign","colordiffuse","visible","keepaspectratio","zoom","zoomfromtop"}.Concat(CollectionProperties.Fields.Select(f=>f.Key)).ToArray();
+        readonly string[] labels=new[]{"Position X","Position Y","Width","Height","Text / data binding","Font name","Text color · AARRGGBB","Image / texture","Focused image","Unfocused image","Alignment","Navigate left → ID","Navigate right → ID","Navigate up → ID","Navigate down → ID","Target page → Window ID","Text offset X","Text offset Y","Horizontal inner text alignment","Vertical inner text alignment","Vertical text field alignment","Image tint · AARRGGBB","Visibility condition","Keep image proportions","Crop to fill","Crop from top"}.Concat(CollectionProperties.Fields.Select(f=>f.Label)).ToArray();
         public StudioForm(string root)
         {
             Text="MP1 Skin Studio · Prototype 0.9";StartPosition=FormStartPosition.CenterScreen;Size=new Size(1520,960);MinimumSize=new Size(1180,780);
@@ -358,15 +358,17 @@ namespace MP1SkinStudio
             for(int i=0;i<editable.Length;i++)
             {
                 string key=editable[i];var collectionProperty=CollectionProperties.Find(key);
+                if(ImagePresentation.BooleanFields.Contains(key)&&SelectedControls().Any(item=>item.Get("type")!="image"))continue;
                 if(collectionProperty!=null&&SelectedControls().Any(item=>!collectionProperty.AppliesTo(item)))continue;
                 var row=new Panel{Width=251,Height=72,Margin=new Padding(0,0,0,3)};
-                var label=new Label{Text=labels[i],ForeColor=muted,AutoSize=true,Location=new Point(0,0)};row.Controls.Add(label);
+                string propertyLabel=labels[i];if(SelectedControls().All(item=>item.Get("type")=="image")){if(key=="align")propertyLabel="Horizontal image alignment";if(key=="valign")propertyLabel="Vertical image alignment";}
+                var label=new Label{Text=propertyLabel,ForeColor=muted,AutoSize=true,Location=new Point(0,0)};row.Controls.Add(label);
                 bool mixed=SelectedControls().Any(item=>item.Get(key)!=c.Get(key));
                 if(mixed)mixedFields.Add(key);
                 var box=new TextBox{Text=mixed?"":c.Get(key),Width=247,Location=new Point(0,24),BackColor=Color.FromArgb(20,26,35),ForeColor=ink,BorderStyle=BorderStyle.FixedSingle};row.Controls.Add(box);
                 box.TextChanged+=(sender,args)=>{touchedFields.Add(key);UpdateResetTools();if(project!=null&&!loading){UpdateProjectCaption();export.Enabled=project.Dirty||PendingProperties();}};
                 AddPropertyResetButton(row,key);
-                if(new[]{"textcolor","colordiffuse","font","align","textalign","textvalign","valign","texture","textureFocus","textureNoFocus"}.Contains(key))
+                if(new[]{"textcolor","colordiffuse","font","align","textalign","textvalign","valign","texture","textureFocus","textureNoFocus"}.Contains(key)||ImagePresentation.BooleanFields.Contains(key))
                 {
                     box.Width=217;var picker=new Button{Text="…",Width=26,Height=25,Location=new Point(221,23),FlatStyle=FlatStyle.Flat,BackColor=panel,ForeColor=ink};picker.FlatAppearance.BorderColor=Color.FromArgb(63,78,96);row.Controls.Add(picker);
                     string propertyKey=key;TextBox target=box;
@@ -387,13 +389,13 @@ namespace MP1SkinStudio
                         }
                         else
                         {
-                            var menu=StudioMenus.For(this,"property-picker");var options=propertyKey=="font"?project.FontNames.ToArray():propertyKey=="valign"||propertyKey=="textvalign"?new[]{"top","middle","bottom"}:new[]{"left","center","right"};
+                            var menu=StudioMenus.For(this,"property-picker");var options=ImagePresentation.BooleanFields.Contains(propertyKey)?new[]{"yes","no"}:propertyKey=="font"?project.FontNames.ToArray():propertyKey=="valign"||propertyKey=="textvalign"?new[]{"top","middle","bottom"}:new[]{"left","center","right"};
                             foreach(var option in options){string optionLabel=option;menu.Items.Add(optionLabel,null,(s2,e2)=>target.Text=optionLabel);}
                             if(menu.Items.Count==0)menu.Items.Add("No fonts.xml loaded").Enabled=false;
                             menu.Show(picker,new Point(0,picker.Height));
                         }
                     };
-                    tips.SetToolTip(picker,key.StartsWith("texture",StringComparison.Ordinal)?"Select an image from the skin Media directory with a preview.":key=="textcolor"?"Choose a color; existing transparency is preserved.":key=="font"?"Select a font from fonts.xml.":"Select alignment.");
+                    tips.SetToolTip(picker,ImagePresentation.BooleanFields.Contains(key)?"Choose yes or no. Cropping applies only with Keep image proportions enabled; Crop from top takes precedence.":key.StartsWith("texture",StringComparison.Ordinal)?"Select an image from the skin Media directory with a preview.":key=="textcolor"?"Choose a color; existing transparency is preserved.":key=="font"?"Select a font from fonts.xml.":"Select alignment.");
                 }
                 PropertyValue value;string origin=c.Properties.TryGetValue(key,out value)?(value.Local?"Local":value.Origin):"Not set · preview uses a fallback value";
                 if(value!=null&&value.Expression.Length>0&&(key=="posX"||key=="posY"))origin="Property-driven · protected XML fallback";

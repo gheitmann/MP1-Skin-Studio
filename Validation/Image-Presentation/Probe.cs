@@ -1,0 +1,26 @@
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
+using MP1SkinStudio;
+class ImagePresentationProbe
+{
+ static void Check(bool ok,string message){if(!ok)throw new Exception(message);}
+ [STAThread] static int Main(string[] args){try{
+ Directory.CreateDirectory(args[1]);var results=new List<string>();var originals=new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);int count=0,plans=0;
+ foreach(string theme in new[]{"","Christmas"})foreach(string page in new[]{"BasicHome.xml","myvideo.xml","mymusicsongs.xml","mypics.xml"})foreach(string mode in page=="BasicHome.xml"?new[]{"auto"}:new[]{"list","filmstrip"}){
+ string name=(theme.Length==0?"Default":theme)+"-"+Path.GetFileNameWithoutExtension(page)+"-"+mode;var p=new SkinProject(args[0]);p.Theme=theme;PreparedSkinSession.Create(p,page);p.Editor.Language.Primary=LanguagePack.Load(args[2]);p.Editor.Language.Prefixes=false;if(page=="BasicHome.xml")BasicHomePreview.Apply(p);else MediaFolderPreview.Apply(p,page=="myvideo.xml"?"video":page=="mymusicsongs.xml"?"music":"pictures");p.Editor.Collection.Mode=mode;var state=new PreviewState(p);var layout=new StackPreview(p,state);var known=p.Controls.Where(c=>c.Get("type")=="image"&&state.Visible(c)==true&&state.ArtworkAvailable(c)==true).ToArray();Check(known.Length>0,name+": no local image candidates");int unsupported=0;
+ foreach(var image in known){string texture=state.Text(image,state.ImageTexture(image));using(var bitmap=Image.FromFile(p.Resolve("Media/"+texture))){var bounds=layout.Bounds(image);var plan=ImagePresentation.Plan(image,bounds,bitmap.Size);Check(plan.Valid,name+": invalid fitted local image "+image.Name);if(!plan.Supported){unsupported++;continue;}Check(plan.Source.X>=0&&plan.Source.Y>=0&&plan.Source.Right<=bitmap.Width&&plan.Source.Bottom<=bitmap.Height&&plan.Target.Left>=bounds.Left-.1f&&plan.Target.Top>=bounds.Top-.1f&&plan.Target.Right<=bounds.Right+.1f&&plan.Target.Bottom<=bounds.Bottom+.1f,name+": image escaped its source or target bounds");plans++;}}
+ string xml=ProjectFile.XmlSignature(p);var report=PreviewProblems.Run(p,state);Check(report.Issues.Count(i=>i.Code=="PREVIEW_IMAGE_LAYOUT")==unsupported&&ProjectFile.XmlSignature(p)==xml&&!p.Dirty,name+": layout diagnostics mismatch or mutation");var target=known.First();string key=target.Key,relative=target.Source.RelativePath,before=target.Source.Text;
+ foreach(string setting in new[]{"fit","center","top"}){target=p.Controls.First(c=>c.Key==key);p.Edit(target,new Dictionary<string,string>{{"keepaspectratio","yes"},{"zoom",setting=="fit"?"no":"yes"},{"zoomfromtop",setting=="top"?"yes":"no"}},"Image "+setting);target=p.Controls.First(c=>c.Key==key);Check(ImagePresentation.Supported(target),name+": static fit/crop edit unsupported");}
+ string after=p.Controls.First(c=>c.Key==key).Source.Text,file=Path.Combine(args[1],name+".mp1skinproj"),zip=Path.Combine(args[1],name+".zip"),signature=ProjectFile.ContentSignature(p);ProjectFile.Save(p,file);var loaded=ProjectFile.Load(file);Check(ProjectFile.ContentSignature(loaded)==signature&&loaded.Controls.First(c=>c.Key==key).Get("zoomfromtop")=="yes",name+": image settings lost after reopen");loaded.Export(zip);using(var archive=ZipFile.OpenRead(zip)){Check(archive.Entries.Count==2,name+": extra exported sample assets");using(var reader=new StreamReader(archive.GetEntry(relative).Open()))Check(reader.ReadToEnd()==after,name+": XML export differs");}
+ loaded.UndoChange();Check(!loaded.Dirty&&loaded.Source(Path.Combine(loaded.Root,relative)).Text==before,name+": restored undo failed");loaded.RedoChange();Check(loaded.Source(Path.Combine(loaded.Root,relative)).Text==after,name+": restored redo failed");p.UndoChange();Check(p.Controls.First(c=>c.Key==key).Get("zoomfromtop")=="no",name+": ordinary undo lost preceding mode");p.RedoChange();Check(p.Controls.First(c=>c.Key==key).Source.Text==after,name+": ordinary redo failed");
+ foreach(var source in p.Sources.Values.Concat(loaded.Sources.Values)){string hash=ProjectFile.Digest(source.Preamble.Concat(source.Encoding.GetBytes(source.Original)).ToArray());Check(ProjectFile.Digest(File.ReadAllBytes(source.Path))==hash,name+": original changed");originals[source.Path]=hash;}
+ results.Add("PASS "+name+": "+known.Length+" visible local images, "+unsupported+" unsupported presentation settings; fit/center crop/top crop/edit/save/reopen/exact export/undo/redo.");Console.WriteLine(results.Last());count++;
+ }
+ var demo=new SkinProject(args[3]);PreparedSkinSession.Create(demo,"demo.images.xml");Check(demo.Controls.Count(c=>c.Get("type")=="image")==6&&PreviewProblems.Run(demo,new PreviewState(demo)).Issues.Count==0,"Bundled image scene is unverified");ProjectFile.Save(demo,Path.Combine(args[1],"Image-Demo.mp1skinproj"));
+ foreach(var pair in originals)Check(ProjectFile.Digest(File.ReadAllBytes(pair.Key))==pair.Value,"Final original hash mismatch");results.Add("PASS "+count+" real Titan workflows; "+plans+" bounded image plans; "+originals.Count+" distinct loaded original source hashes unchanged. Bundled six-case image demo has zero unverified findings.");File.WriteAllLines(Path.Combine(args[1],"Results.txt"),results);Console.WriteLine(results.Last());return 0;
+ }catch(Exception ex){Console.Error.WriteLine(ex);return 1;}}
+}

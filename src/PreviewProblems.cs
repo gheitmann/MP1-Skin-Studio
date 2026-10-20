@@ -68,7 +68,7 @@ namespace MP1SkinStudio
             string details=String.Join("\r\n",notes.OrderBy(n=>n,StringComparer.OrdinalIgnoreCase));
             if(details.Length==0)details="This dependency is cyclic, exceeds preview limits, or uses syntax/content not supported by the bounded preview. No runtime value was guessed.";
             return new SkinIssue{Code=code,ControlKey=control.Key,ControlName=control.Name,Property=property,Source=control.Source.RelativePath,Line=line,Information=true,
-                Message=code=="PREVIEW_CONDITION"?"Visibility is unverified in the current sample state.":code=="PREVIEW_GEOMETRY"?"Image position uses an unverified property binding; the XML fallback is shown.":code=="PREVIEW_ARTWORK"?"Artwork is unavailable or unverified in the current sample state.":"Text is unverified in the current sample state.",
+                Message=code=="PREVIEW_CONDITION"?"Visibility is unverified in the current sample state.":code=="PREVIEW_IMAGE_LAYOUT"?"Image fitting or alignment is unverified; an approximate fit is shown.":code=="PREVIEW_GEOMETRY"?"Image position uses an unverified property binding; the XML fallback is shown.":code=="PREVIEW_ARTWORK"?"Artwork is unavailable or unverified in the current sample state.":"Text is unverified in the current sample state.",
                 Detail="Expression / text:\r\n"+Short(value)+"\r\n\r\nInputs and dependencies to inspect:\r\n"+details+"\r\n\r\nElement source: "+control.Source.RelativePath+":"+line+". Inherited expressions are listed above; their include locations may differ. Original XML is unchanged. An unverified preview is not proof of a MediaPortal error."};
         }
         public static SkinAuditReport Run(SkinProject project,PreviewState state)
@@ -109,6 +109,13 @@ namespace MP1SkinStudio
                 if(report.Issues.Count>=1024){report.Issues.Add(new SkinIssue{Code="PREVIEW_LIMIT",Information=true,Message="The preview report is limited to 1024 element findings.",Detail="Inspect a smaller page or resolve explicit samples before checking again."});break;}
             }
             if(report.Issues.Any(i=>i.Code=="PREVIEW_LIMIT"))return report;
+            foreach(var control in project.Controls.Where(c=>c.Get("type")=="image"&&state.Visible(c)==true&&!ImagePresentation.Supported(c)))
+            {
+                var notes=new[]{"Only static image proportions, crop flags and alignment are supported. Unknown values use an approximate fit; original XML remains unchanged.","Use yes/no for keepaspectratio, zoom and zoomfromtop; left/center/right for align and top/middle/bottom for valign. Inherited centered behavior follows source order."};
+                string raw=String.Join("; ",new[]{"keepaspectratio","zoom","zoomfromtop"}.Select(k=>k+"="+control.Get(k)).Concat(control.ImageAlignmentRules.Select(p=>p.Key+"="+p.Value)));
+                report.Issues.Add(Issue(control,"Image presentation","PREVIEW_IMAGE_LAYOUT",raw,notes,lineCache));
+                if(report.Issues.Count>=1024){report.Issues.Add(new SkinIssue{Code="PREVIEW_LIMIT",Information=true,Message="The preview report is limited to 1024 element findings.",Detail="Inspect a smaller page or resolve explicit samples before checking again."});return report;}
+            }
             foreach(var control in project.Controls.Where(c=>c.Get("type")=="image"&&state.Visible(c)==true))foreach(string key in new[]{"posX","posY"})
             {
                 PropertyValue property;float position;if(!control.Properties.TryGetValue(key,out property)||property.Expression.Length==0||state.TryImagePosition(control,key,out position))continue;

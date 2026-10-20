@@ -230,6 +230,7 @@ namespace MP1SkinStudio
         public SkinControl RuntimeParent;public VisibilityTerm[] VisibilityTerms;
         public Dictionary<string, PropertyValue> Properties = new Dictionary<string, PropertyValue>(StringComparer.Ordinal);
         public Dictionary<string, string> Defines;
+        public readonly List<KeyValuePair<string,string>> ImageAlignmentRules=new List<KeyValuePair<string,string>>();
         public string Get(string key, string fallback = "") { PropertyValue p; return Properties.TryGetValue(key, out p) ? p.Value : fallback; }
         public string Resolved(string key, string fallback = "")
         {
@@ -379,6 +380,7 @@ namespace MP1SkinStudio
         {
             foreach(var p in n.Children.Where(e=>e.Name!="control"))
             {
+                if(p.Name=="align"||p.Name=="valign"||p.Name=="centered")c.ImageAlignmentRules.Add(new KeyValuePair<string,string>(p.Name,p.Element.InnerText));
                 PropertyValue inherited;c.Properties.TryGetValue(p.Name,out inherited);bool attribute=p.Element.HasAttribute("property");
                 c.Properties[p.Name]=new PropertyValue(p.Element.InnerText,origin,local){Expression=attribute?p.Element.GetAttribute("property"):inherited==null?"":inherited.Expression,ExpressionOrigin=attribute?origin:inherited==null?"":inherited.ExpressionOrigin};
             }

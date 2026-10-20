@@ -19,7 +19,7 @@ Visual position, size, text and texture editing; multiple selection and alignmen
 
 ## Validation
 
-Latest checkpoint (October 20): **attended Windows PIN/protected-field/navigation/save/reopen acceptance passed**, along with eight bundled demo page loads and a self-contained filmstrip save/export/undo workflow. Try demo.filmstrip.xml from PAGE / XML. Menu demo captions are now readable when unfocused. The engine is unchanged from the preceding 322-core-check/six-Titan-workflow checkpoint; those suites were not repeated. See [review acceptance](Validation/Review-Acceptance/README.md) and STATUS.md.
+Latest checkpoint (October 20): **332 core checks and 14 real Titan image workflows passed**, plus attended Windows image editing/Apply/save/Undo/Redo. Aligned proportional fit, centered crop and top crop now follow image XML settings. Try demo.images.xml for six bundled comparisons. All 55 loaded original XML hashes stayed unchanged; 98 image plans were bounded. See [image presentation validation](Validation/Image-Presentation/README.md) and STATUS.md.
 
 
 Historical reports under `Validation` record 189 core checks, 185 UI checks, 602 Titan page/theme variants and ten direct checks against original MP1 StackLayout classes. These counts were imported from the saved release package and do not imply that all tests were rerun during import. A fresh build succeeded during import. The English migration also passed 189 core checks and 185 UI checks; fresh reports are in [Validation/English-Migration](Validation/English-Migration).

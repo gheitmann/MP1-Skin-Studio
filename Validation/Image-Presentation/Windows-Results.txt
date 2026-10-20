@@ -1,0 +1,9 @@
+October 20, 2026 — fresh attended Windows image presentation acceptance
+PASS Opens the six-case demo.images.xml editor project with no unverified conditions.
+PASS Selecting Top crop and scrolling the property pane exposes Keep image proportions, Crop to fill and Crop from top, all initially yes.
+PASS Set Crop from top to no, then Apply Properties: the right-hand image changes visibly from top crop to center crop and one source is marked modified.
+PASS Ctrl+S saves the project and clears the unsaved caption marker.
+PASS Ctrl+Z restores the top crop and zero modified XML; Ctrl+Y restores center crop and the saved clean caption.
+PASS Saved archive has one edited XML snapshot with zoomfromtop=no for control 706. The source demo XML on disk still matches the repository source.
+The final image-specific horizontal/vertical alignment label wording was compiled after these checks; model/render behavior is unchanged and the successful suites were not repeated for that wording.
+The yes/no picker menu, fresh native close/reopen and MP1 client rendering were not newly repeated. Project reopen/export/restored undo/redo are covered by the fresh model probe.

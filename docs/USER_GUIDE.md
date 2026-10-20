@@ -391,3 +391,11 @@ Element > Video PIN preview > Locked / Unlocked chooses an explicit #MyVideos.Pi
 Open the bundled demo skin and choose demo.filmstrip.xml from PAGE / XML. Enable Navigation and use Left/Right: the upper movie image follows the selected thumbnail. Select that upper image to inspect its read-only property-driven Position X. Collection changes sample titles and images. Save Project retains the selected sample; changing an ordinary property such as image width can be undone and exported while preserving the position attribute. This example uses bundled Studio images and requires no installed Titan skin, plugins or runtime artwork.
 
 The default menu demo also uses explicit white text for both focused and unfocused buttons, with centered captions. Original Titan reference/theme resources remain unchanged.
+
+## Fit, align and crop images
+
+Choose demo.images.xml from PAGE / XML for six bundled comparisons. Select an image, then scroll the properties pane to Keep image proportions, Crop to fill and Crop from top. Use yes/no values or the picker, then Apply Properties. Save Project retains the edit; Undo/Redo and XML export use the normal editing workflow. The fields are available for image-only selections.
+
+With proportions enabled, the whole image fits inside its rectangle using Horizontal image alignment and Vertical image alignment. Defaults are left/top unless inherited settings change them. Crop to fill keeps proportions while cutting off excess source content centrally. Crop from top keeps the top of the source and overrides centered cropping. With proportions disabled the image stretches and crop flags have no effect. These settings apply to image controls; collection thumbnails/frames keep their existing static fitting.
+
+Legacy centered settings are applied in source order across references, styles and local values; later alignment tags can override individual axes. Unknown flags, definitions or alignment values appear as informational image-layout findings under Ctrl+F8. Native pixel-aspect corrections, image initialization from zero dimensions, masks, borders, fixed-height behavior and animation remain approximate or unsupported. The preview assumes square pixels.

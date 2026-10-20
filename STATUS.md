@@ -2,7 +2,13 @@
 
 Date: October 20, 2026. Imported version: 0.9.
 
-## Latest source milestone: Windows acceptance and self-contained filmstrip demo
+## Latest source milestone: aligned and cropped image previews
+
+October 20, 2026: image previews honor align/valign and ordered legacy centered settings, plus proportional fit, centered crop and crop from top. Image-only property fields expose the three fit/crop flags. Unknown settings receive informational diagnostics. demo.images.xml supplies six bundled comparisons without external assets. Collection fitting behavior remains separate.
+
+Fresh validation: 332 core checks, 14 real Titan workflows, 98 bounded image plans and 55 unchanged loaded original XML hashes. Attended Windows flag editing/Apply/save/Undo/Redo and saved-archive inspection passed. Final image-specific alignment label wording was compiled afterward without repeating unchanged suites. No new installed-client run. See [validation and limits](Validation/Image-Presentation/README.md).
+
+## Previous source milestone: Windows acceptance and self-contained filmstrip demo
 
 October 20, 2026: attended Windows acceptance passed for the Video PIN Unlocked menu, protected position fields even with binding replacement enabled, arrow navigation and save/close/reopen from the extracted review ZIP. The saved scene retains item 4 and unlocked state with no XML snapshots or derived-focus overrides.
 
@@ -90,7 +96,7 @@ October 19, 2026: static known-content conditions and nested localization now wo
 
 The owner prioritizes practical edit/save/reopen/export workflows and substantial autonomous work blocks. Routine follow-up steps do not require another continuation prompt. Necessary checks run at integrated milestones.
 
-Current acceptance: native Windows PIN Unlocked/protected fields/navigation/save/reopen and fresh review-package/demo workflows passed. The engine is unchanged from the 322-check/six-Titan-workflow checkpoint; those model results remain historical. See Review-Acceptance for exact scope.
+Current validation: 332 core checks and 14 real Titan image workflows passed, with 98 bounded image plans and 55 unchanged loaded original XML hashes. Fresh native image property editing/Apply/save/Undo/Redo passed. Earlier acceptance remains historical.
 
 Next core work is broader real-page preview fidelity and navigation coverage, particularly unsupported geometric layouts, other facade types and plugin states, while retaining duplicate-ID uncertainty. Existing samples make BasicHome, Settings and Video useful without claiming complete runtime equivalence. Masks, animation, full geometric navigation and plugin-specific values remain approximate or unresolved. Continue real-skin edit/save/reopen/export acceptance around any such changes, preserving original files. Auxiliary global-style and cross-group movement tools remain lower priority.
 

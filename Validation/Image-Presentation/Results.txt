@@ -1,0 +1,15 @@
+PASS Default-BasicHome-auto: 12 visible local images, 0 unsupported presentation settings; fit/center crop/top crop/edit/save/reopen/exact export/undo/redo.
+PASS Default-myvideo-list: 9 visible local images, 0 unsupported presentation settings; fit/center crop/top crop/edit/save/reopen/exact export/undo/redo.
+PASS Default-myvideo-filmstrip: 5 visible local images, 0 unsupported presentation settings; fit/center crop/top crop/edit/save/reopen/exact export/undo/redo.
+PASS Default-mymusicsongs-list: 7 visible local images, 0 unsupported presentation settings; fit/center crop/top crop/edit/save/reopen/exact export/undo/redo.
+PASS Default-mymusicsongs-filmstrip: 5 visible local images, 0 unsupported presentation settings; fit/center crop/top crop/edit/save/reopen/exact export/undo/redo.
+PASS Default-mypics-list: 6 visible local images, 0 unsupported presentation settings; fit/center crop/top crop/edit/save/reopen/exact export/undo/redo.
+PASS Default-mypics-filmstrip: 5 visible local images, 0 unsupported presentation settings; fit/center crop/top crop/edit/save/reopen/exact export/undo/redo.
+PASS Christmas-BasicHome-auto: 12 visible local images, 0 unsupported presentation settings; fit/center crop/top crop/edit/save/reopen/exact export/undo/redo.
+PASS Christmas-myvideo-list: 9 visible local images, 0 unsupported presentation settings; fit/center crop/top crop/edit/save/reopen/exact export/undo/redo.
+PASS Christmas-myvideo-filmstrip: 5 visible local images, 0 unsupported presentation settings; fit/center crop/top crop/edit/save/reopen/exact export/undo/redo.
+PASS Christmas-mymusicsongs-list: 7 visible local images, 0 unsupported presentation settings; fit/center crop/top crop/edit/save/reopen/exact export/undo/redo.
+PASS Christmas-mymusicsongs-filmstrip: 5 visible local images, 0 unsupported presentation settings; fit/center crop/top crop/edit/save/reopen/exact export/undo/redo.
+PASS Christmas-mypics-list: 6 visible local images, 0 unsupported presentation settings; fit/center crop/top crop/edit/save/reopen/exact export/undo/redo.
+PASS Christmas-mypics-filmstrip: 5 visible local images, 0 unsupported presentation settings; fit/center crop/top crop/edit/save/reopen/exact export/undo/redo.
+PASS 14 real Titan workflows; 98 bounded image plans; 55 distinct loaded original source hashes unchanged. Bundled six-case image demo has zero unverified findings.
