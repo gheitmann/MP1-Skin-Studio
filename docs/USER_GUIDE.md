@@ -568,3 +568,29 @@ the fields, while Discard closes without saving them. XML export does not save
 preview settings. If the editor still has unsaved state, exporting alone does
 not suppress this prompt. A failed subsequent load also retains the active
 session, even when Discard was selected.
+
+
+## Review XML changes before export
+
+Choose **Element > Review XML changes** or press **Ctrl+Shift+E**. The read-only
+review lists every modified XML file retained in the session, including shared
+includes, theme overrides and earlier pages. Filter by relative filename and
+select a file to compare the loaded original with edited XML. Both panes start
+at the first differing character; First difference returns there. Large files
+use sections of up to 60,000 characters; Previous/Next reaches every section.
+These are text sections, not a semantic or minimal line diff. Copying text is
+possible; changing source XML from this dialog is not.
+
+Details identify the original encoding/BOM, exact original/edited byte counts
+and SHA-256 hashes. Source checks compare the current file on disk with the
+loaded original, reporting drift, missing or inaccessible files. Refresh source
+checks rebuilds the snapshot. A matching check covers modified XML only and can
+become stale; export independently repeats its existing source checks. It does
+not certify a complete backup or runtime compatibility.
+
+Pending property fields are explicitly excluded and stay untouched. Apply or
+Revert them before export. Preview-only settings produce no XML entries; save
+the editor project to retain them. Inspect shared-file changes for effects on
+other pages. The review never marks work saved/exported and retains Undo/Redo,
+selection and editor state. Close the review and use the existing Export Changes
+as ZIP command after inspection.

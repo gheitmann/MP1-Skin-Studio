@@ -23,6 +23,7 @@ namespace MP1SkinStudio
             idle.DropDownItems.Add("Active input (0 seconds)",null,(s,e)=>Attempt(()=>ApplyIdlePreview("0")));
             idle.DropDownItems.Add("Idle (60 seconds)",null,(s,e)=>Attempt(()=>ApplyIdlePreview("60")));
             idle.DropDownItems.Add("Unverified",null,(s,e)=>Attempt(()=>ApplyIdlePreview(null)));menu.Items.Add(idle);
+            menu.Items.Add("Review XML changes … (Ctrl+Shift+E)",null,(s,e)=>Attempt(ShowChangeReview));
             menu.Items.Add("Inspect unverified preview …",null,(s,e)=>Attempt(ShowPreviewProblems));
             menu.Items.Add(new ToolStripSeparator());var item=(ToolStripMenuItem)menu.Items.Add("Show unverified content",null,(s,e)=>SetUnresolvedPreview(!project.Editor.ShowUnresolved));item.Checked=project.Editor.ShowUnresolved;
         }

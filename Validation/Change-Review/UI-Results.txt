@@ -1,0 +1,11 @@
+PASS File list, metadata, source checks and read-only panes show all session changes
+PASS File filter handles no matches and restores complete list
+PASS Source refresh reports drift and restoration without changing saved work
+PASS Undo then refresh removes unchanged files and clears obsolete details
+PASS Large XML panes preserve every character through bounded sections
+PASS Exact section boundaries and empty XML do not create missing or extra pages
+PASS First difference action returns both panes to the selected file change
+PASS Owned production review preserves pending fields, history, selection and save marker
+PASS Ctrl Shift E routes through the production editor to its owned modal review
+PASS Element menu exposes review and dispatches its real dialog callback
+10 passed, 0 failed; 26 demo hashes unchanged. Synthetic form/menu/key events; no desktop input.

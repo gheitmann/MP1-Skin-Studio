@@ -101,3 +101,8 @@ milestone records its own fresh broad UI, demo/session and native-startup result
 Add -IncludeTransitions to run the 18 targeted close/session-switch scenarios
 from Validation/Session-Transitions before the final payload-preservation gate.
 Combine with -SkipFullUi -IncludeStartup for the focused dialog milestone gate.
+
+Add -IncludeChanges for the ten synthetic XML-review dialog/menu/shortcut and
+large-section scenarios from Validation/Change-Review. This runs before the
+final payload-preservation gate. The review milestone uses -SkipFullUi
+-IncludeCore -IncludeChanges, leaving unchanged startup/transition suites historical.

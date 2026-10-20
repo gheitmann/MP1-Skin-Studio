@@ -32,16 +32,17 @@ Home/Video sample. It is not general release publication or proof of every skin.
 For another intended edit, page, theme or plugin, use the review procedure below
 and obtain the owner's final visual acceptance of that actual result.
 
-The current close/session-switch change is validated by 18 targeted synthetic
-form scenarios, including real modal button and FormClosing events, plus twelve
-complete demo workflows, twelve clean-session workflows and eight startup
-scenarios against the extracted ZIP. All 31 payload hashes stay unchanged.
-The native Save As cancellation outcome is injected; actual native file-picker
-input and a new installed-client run are not claimed for this dialog-only change.
+The current XML-review milestone adds a read-only session-wide file list,
+original/edited text sections, exact byte hashes and refreshable source checks.
+Fresh extracted-package acceptance covers 402 core checks (eight new review
+regressions), ten targeted synthetic review-form scenarios, twelve complete demo
+workflows and twelve clean-session workflows. All 31 payload hashes stay
+unchanged after the run. Form/menu/shortcut events are synthetic, with no new
+attended desktop input or installed-client claim.
 
-The prior broad gate passed 204 synthetic form checks; 394 core checks and six
-real-Titan matching-backup workflows remain historical. Renderer/export/model
-code and bundled demo assets were not changed by this milestone.
+Previous 204 broad UI, 18 close/session-switch and eight startup scenarios remain
+historical. The matching-backup milestone's six real-Titan workflows also remain
+historical. XML review does not change renderer/export/model editing behavior.
 
 Preview masks/animations, plugin-dependent values, playback and some control
 interactions remain approximate or unverified. Slider/spin value interaction is
@@ -52,7 +53,7 @@ modified XML originals; retain complete matching resources for a recovery skin.
 
 1. Follow QUICK_START.md with the bundled demo and a new project file.
 2. Review the intended real skin only on a complete separate copy.
-3. Save the project, reopen it, inspect findings and export XML.
+3. Save the project, reopen it, inspect findings and Review XML changes, then export XML.
 4. Compare the instructions' original SHA-256 values to the runtime copy before
    applying; compare exported values afterward. Shared includes affect pages.
 5. Check the intended page, theme, focus and navigation in the client, then restore

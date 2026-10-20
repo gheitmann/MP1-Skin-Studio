@@ -19,9 +19,9 @@ Visual position, size, text and texture editing; multiple selection and alignmen
 
 ## Validation
 
-Latest source checkpoint (October 20): **Save project / Discard changes / Cancel before closing or switching sessions**. Canceled/failed saves retain the active session, preview-only state is included and pending property inputs remain protected. Fresh extracted-package validation: 18 targeted form scenarios, twelve complete demo workflows, twelve clean-session workflows, eight startup scenarios and 31 unchanged payload hashes. See [session transition acceptance](Validation/Session-Transitions/README.md).
+Latest source checkpoint (October 20): **Review XML changes** lists all modified session files with original/edited text, first difference, exact byte hashes and refreshable source checks. Shared includes, theme files and earlier pages remain visible; pending fields and preview-only settings are excluded. Use Element > Review XML changes or Ctrl+Shift+E. Fresh package validation: 402 core checks, ten review-form scenarios, twelve demo workflows, twelve clean-session workflows and 31 unchanged payload hashes. See [change review acceptance](Validation/Change-Review/README.md). Previous 18 transition and eight startup scenarios remain historical.
 
-The previous attended real-Titan edit/save/reopen/export/client checkpoint remains historical: source 07e8ef2 displayed the changed Home/Video header and narrower list on an isolated skin, with Left/Right navigation and all 2,050 original hashes preserved. See [runtime review](Validation/Current-Runtime-Review/README.md) and [readiness scope](docs/RELEASE_READINESS.md). The broad 204 UI and 394 core checks were not repeated for this dialog-only change.
+The previous attended real-Titan edit/save/reopen/export/client checkpoint remains historical: source 07e8ef2 displayed the changed Home/Video header and narrower list on an isolated skin, with Left/Right navigation and all 2,050 original hashes preserved. See [runtime review](Validation/Current-Runtime-Review/README.md) and [readiness scope](docs/RELEASE_READINESS.md). The broad 204 UI suite remains historical; the current review milestone passed 402 core checks.
 
 
 Historical reports under `Validation` record 189 core checks, 185 UI checks, 602 Titan page/theme variants and ten direct checks against original MP1 StackLayout classes. These counts were imported from the saved release package and do not imply that all tests were rerun during import. A fresh build succeeded during import. The English migration also passed 189 core checks and 185 UI checks; fresh reports are in [Validation/English-Migration](Validation/English-Migration).
@@ -33,7 +33,7 @@ $probe = Start-Process .\MP1SkinStudio.exe -ArgumentList '--selftest', "$env:TEM
 if ($probe.ExitCode -ne 0) { throw 'Core checks failed' }
 ```
 
-Sampled Settings and Video exports passed installed-client display/navigation checks, including a fresh Video run against the current executable. Full matched-state visual equivalence and broader runtime coverage remain pending. `Runtime-Comparison` contains the prepared test export. Preview rendering is approximate.
+Sampled Settings and Video exports passed installed-client display/navigation checks, including the recorded Video run against source 07e8ef2. Full matched-state visual equivalence and broader runtime coverage remain pending. `Runtime-Comparison` contains the prepared test export. Preview rendering is approximate.
 
 ## Continuing development
 

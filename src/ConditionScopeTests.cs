@@ -23,7 +23,7 @@ namespace MP1SkinStudio
             RunPlainNavigationTests(root);
             RunCheckmarkTests(root);
             RunControlActionTests(root);
-            RunFindingReportTests(root);
+            RunFindingReportTests(root);RunChangeReviewTests(root);
             RunSkinExportTests(root);
             Test("Boolean expression include conditions retain scope and unknown values",()=>
             {

@@ -2,7 +2,13 @@
 
 Date: October 20, 2026. Imported version: 0.9.
 
-## Latest source milestone: save before closing or switching sessions
+## Latest source milestone: session-wide XML change review
+
+October 20, 2026: Element > Review XML changes / Ctrl+Shift+E now opens a read-only snapshot of all modified session XML, including shared includes, theme sources and earlier pages. File filtering, original/edited panes, first difference and complete large-file sections support review before export. Exact original/edited byte hashes and encoding/BOM details accompany refreshable on-disk source checks. Pending fields and preview-only state remain excluded; XML, selection, drafts, history and save/export markers are preserved.
+
+Fresh extracted-package acceptance: 402 core checks (eight new review regressions), ten targeted synthetic review-form/menu/shortcut workflows, twelve complete demo workflows and twelve clean-session workflows. All 31 payload hashes and 26 demo source/asset hashes stayed unchanged. The synthetic dialog render was visually inspected. No new attended desktop/native picker or installed-client run; previous 204 broad UI, 18 transition and eight startup scenarios remain historical. Renderer, XML editing and export behavior are unchanged. See [change review validation](Validation/Change-Review/README.md).
+
+## Previous source milestone: save before closing or switching sessions
 
 October 20, 2026: closing or switching sessions offers Save project / Discard changes / Cancel for unsaved XML or editor state. Saving continues only after successful persistence and a clean session. Canceled Save As and failed saves preserve work/history; Discard does not clear the active model before a replacement loads. Enter/Escape cancel. Pending inputs remain protected, with Save disabled in the close dialog and session switching blocked until Apply/Revert.
 

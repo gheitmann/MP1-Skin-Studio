@@ -45,12 +45,16 @@ use Revert Inputs to discard unapplied fields; test Undo/Redo; save an editor
 project, reopen it and export changes as ZIP. Use separate skin copies for real
 editing and retain original files. The preview remains approximate.
 
-Closing or switching sessions now offers Save project, Discard changes and Cancel.
-Canceled/failed saves retain active work. Pending property fields remain guarded.
-Fresh extracted-package checks: 18 targeted form scenarios, twelve complete demo
-workflows, twelve clean-session workflows, eight startup cases and 31 unchanged
-payload hashes. Native Save As cancellation is simulated; no new native picker
-or installed-client acceptance is claimed for this dialog-only change.
+Review XML changes (Element menu / Ctrl+Shift+E) compares all modified session
+files, including shared/theme/earlier-page XML. Read-only original/edited panes
+show the first difference; Previous/Next reaches all large-file sections. Exact
+byte hashes and refreshable source checks identify drift, missing or locked XML.
+Pending fields and preview-only state are excluded. Close review to export.
+
+Fresh extracted-package checks: 402 core checks, ten synthetic review-form
+scenarios, twelve complete demo workflows, twelve clean-session workflows and
+31 unchanged payload hashes. Previous transition/startup/broad UI checks remain
+historical. No new attended desktop or installed-client run is claimed.
 
 The previous attended client checkpoint used source 07e8ef2: a real Titan Video
 width edit persisted, exported exactly and appeared in a complete isolated MP1

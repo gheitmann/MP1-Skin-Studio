@@ -462,6 +462,7 @@ namespace MP1SkinStudio
             if(keyData==(Keys.Control|Keys.S)){Attempt(()=>SaveEditorProject(false));return true;}
             if(keyData==(Keys.Control|Keys.Shift|Keys.S)){Attempt(()=>SaveEditorProject(true));return true;}
             if(keyData==(Keys.Control|Keys.O)){Attempt(OpenEditorProject);return true;}
+            if(keyData==(Keys.Control|Keys.Shift|Keys.E)){Attempt(ShowChangeReview);return true;}
             if(keyData==(Keys.Control|Keys.E)){export.PerformClick();return true;}
             if(keyData==(Keys.Control|Keys.F)){elementSearch.Focus();elementSearch.SelectAll();return true;}
             if(keyData==Keys.F2&&(canvas.Focused||(tree.Focused&&tree.SelectedNode!=null&&tree.SelectedNode.Tag is SkinControl))&&SelectedControls().Length==1){Attempt(()=>EditElementText(selected));return true;}

@@ -11,7 +11,9 @@ MediaPortal skin are unnecessary for the bundled demo.
 3. Undo restores Movies; Redo restores My movies.
 4. Save Project to a new .mp1skinproj file. Open Project restores the edit,
    selected page, preview samples and undo history.
-5. Export Changes as ZIP creates changed XML and application instructions.
+5. Use Ctrl+Shift+E (Element > Review XML changes) to compare original/edited
+   files and check for source conflicts, including shared includes. Close the
+   review, then Export Changes as ZIP creates changed XML and application instructions.
    Saving a project or exporting does not overwrite the source skin.
 6. Open the export and review every changed file before applying it to a
    separate complete skin copy. A shared include can affect several pages.
