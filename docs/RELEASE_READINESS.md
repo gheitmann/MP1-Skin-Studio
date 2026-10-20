@@ -18,21 +18,25 @@ It is not a complete MediaPortal renderer or an unrestricted compatibility claim
 
 ## Evidence and remaining boundaries
 
-The current integration gate exercises the broad synthetic Windows-form suite,
-all twelve demo edit/save/reopen/export workflows, twelve clean-session workflows
-and eight project-startup success/failure/recovery scenarios. The validation
-record in the repository distinguishes newly executed checks from earlier core,
-real-Titan, attended Windows and installed-client results.
+A fresh attended review now covers the current executable from source 07e8ef2:
+open a real saved Video project, change its default list width to 590 in the
+Windows editor, Apply, Save Project, reopen the archive in a separate process
+and export exact XML bytes. A complete isolated runtime copy loaded the new
+header and narrower list in MP1. Left/Right menu navigation passed. Titan was
+restored, and all 2,050 installed original hashes stayed unchanged.
 
-The prior core milestone passed 394 checks. The prior matching-backup milestone
-passed six complete real-Titan form workflows and 18 exact XML payload checks;
-all 2,050 files in its baseline and each test copy matched after fixture cleanup.
-Those results remain historical rather than being counted again as fresh tests.
+This accepts the bounded first-use workflow for the tested Default-theme
+Home/Video sample. It is not general release publication or proof of every skin.
+For another intended edit, page, theme or plugin, use the review procedure below
+and obtain the owner's final visual acceptance of that actual result.
 
-Remaining acceptance before a general release: perform the owner's final visual
-review on the intended skin/pages and confirm client behavior for that actual
-export. The earlier isolated-client Video comparison covers its recorded sample
-and source revision. It does not prove every current edit, theme or plugin.
+The prior integration gate passed 204 synthetic Windows-form checks, twelve
+complete demo workflows, twelve clean-session workflows and eight startup
+scenarios. The prior core milestone passed 394 checks. The matching-backup
+milestone passed six real-Titan form workflows and 18 exact XML payload checks.
+These suites remain historical; they were not repeated for this review because
+the executable and bundled scenes are unchanged. The repository validation record
+separates fresh attended/runtime evidence from previous automated results.
 
 Preview masks/animations, plugin-dependent values, playback and some control
 interactions remain approximate or unverified. Slider/spin value interaction is

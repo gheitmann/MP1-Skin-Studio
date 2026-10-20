@@ -1,0 +1,1 @@
+PASS fresh saved project: width=578; header STUDIO REVIEW READY; exact two XML payloads and original/export SHA256; restored Undo/Redo; 17 loaded original XML hashes unchanged.

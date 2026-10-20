@@ -2,7 +2,13 @@
 
 Date: October 20, 2026. Imported version: 0.9.
 
-## Latest source milestone: resilient project startup and integrated package acceptance
+## Latest delivery milestone: current edit-to-client acceptance
+
+October 20, 2026: the current executable from source 07e8ef2 passed a fresh attended real-Titan workflow. Its saved Video project opened in Windows, list Width changed to 590 through the form, Apply/Save succeeded and a separate process reopened/exported that exact saved edit. Two XML payloads and instructions, byte/hash identity, restored Undo/Redo and all 17 loaded original source hashes passed. A fresh complete runtime copy displayed the shared header and shorter Video focus band; Left/Right menu navigation passed. Original Titan was restored through the client UI, with all 2,050 original file hashes unchanged.
+
+This accepts the bounded first-use Default Home/Video sample on the actual current executable. Documentation now reflects the fresh client result and preserves the boundary for other intended pages/themes/plugins. No editor code changed; previous 204 UI, eight startup, twelve demo/twelve session and 394 core checks remain historical instead of being rerun. Final packaging compares all unchanged runtime payload with the accepted ZIP. See [current runtime review](Validation/Current-Runtime-Review/README.md).
+
+## Previous source milestone: resilient project startup and integrated package acceptance
 
 October 20, 2026: starting with a saved project now waits for a visible editor and uses the same matching-backup recovery as Open Project. Cancel, corrupt/missing project and unsuitable backup leave a usable demo with retry guidance instead of ending startup. Showing the editor again does not repeat the action. Healthy opens no longer request a redundant location save; the switch warning covers all unsaved editor state. A new packaged readiness guide defines accepted scope and remaining final visual/client review.
 
@@ -164,7 +170,7 @@ The owner prioritizes practical edit/save/reopen/export workflows and substantia
 
 Current integration validation is recorded at the top of this file. The packaged quick start and readiness guide describe a practically usable bounded review candidate. Preserve the distinction between fresh integration checks and older core/Titan/client reports; completion counts are evidence for their named workflows, not a measured product-completion percentage.
 
-The remaining release gate is final visual review on the intended real skin/pages and client acceptance of that actual export. Preview fidelity remains bounded: additional focusable/control/facade types, plugin states, masks and animation may need future work. Keep these feature gaps explicit rather than silently expanding a first usable version into full renderer parity. Auxiliary global-style and cross-group movement tools remain lower priority.
+The fresh sampled Default Home/Video client gate is accepted for the current executable. Other intended edits still need their own final visual review and client acceptance before general release. Preview fidelity remains bounded: additional focusable/control/facade types, plugin states, masks and animation may need future work. Keep these feature gaps explicit rather than silently expanding a first usable version into full renderer parity. Auxiliary global-style and cross-group movement tools remain lower priority.
 
 Historical milestones follow; older suspension notes describe the state at their recorded time. Attended Windows automation was subsequently reauthorized and exercised successfully.
 ## Baseline

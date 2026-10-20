@@ -533,3 +533,20 @@ After a healthy project open, the status no longer asks to save an unchanged
 location. Recovered locations retain the unsaved marker and save reminder. The
 session-switch warning now covers unsaved editor state as well as XML changes,
 including a relocated project whose XML has already been exported.
+
+
+## Current attended edit-to-client checkpoint
+
+The executable from source 07e8ef2 passed a fresh Default-theme Titan Home/Video
+workflow: a real saved project opened through startup, Width was changed to 590
+through the Windows form, Apply/Save succeeded and a separate process reopened
+the saved project and exported two exact XML files plus instructions. The probe
+verified original/export hashes and restored Undo/Redo. Native Save As export
+was not newly exercised in this checkpoint.
+
+The complete isolated client skin showed STUDIO REVIEW READY on Home/Video, the
+shorter Video focus band and working Left/Right side-menu navigation. The source
+Titan was restored through its own UI; all 2,050 original files stayed byte-identical.
+This accepts the recorded sample, with no new all-page/theme/plugin/playback claim.
+The previous automated suites remain historical because the executable is unchanged.
+The repository's Validation/Current-Runtime-Review contains reproduction and results.

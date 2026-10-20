@@ -96,3 +96,13 @@ The editor first opens its demo, then loads the requested project. Missing sourc
 folders and modified-source conflicts use the same matching-backup chooser as
 Open Project. Cancel or a load error leaves the demo available for another try.
 No Windows file association is installed by the review ZIP.
+
+## Current practical review
+
+The current executable passed a fresh edit/save/reopen/export/client comparison
+on Titan's Default Home/Video: list width 590, a shared header marker and working
+Left/Right menu navigation. The original Titan skin was restored and all 2,050
+original file hashes stayed unchanged. This is a sample acceptance; inspect your
+own actual exported pages/themes in the client. See RELEASE_READINESS.md for scope.
+In Titan, H switches BasicHome/standard Home; standard Home exposes Settings.
+Settings > GUI > Skin selects the test copy and restores Titan afterward.

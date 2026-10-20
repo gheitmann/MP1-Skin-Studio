@@ -1,0 +1,5 @@
+PASS all 2050 installed original Titan file hashes unchanged after runtime skin restoration.
+PASS complete isolated skin differs in exactly these exported XML files:
+common.facade.video.default.xml
+common.time.xml
+PASS final cleanup: all 2050 original Titan hashes unchanged after the client/editor sessions ended.

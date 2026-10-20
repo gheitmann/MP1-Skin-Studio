@@ -1,0 +1,3 @@
+PASS all 28 non-documentation payload files match the preceding accepted package.
+PASS editor SHA256 edb59ea32a5109edf5dd853e2855a2b30fad7cb4e1431f5f88622d012876a31e.
+PASS only the three guides and review revision/notes require refreshed package identities; no executable/sample rebuild or broad suite repetition.

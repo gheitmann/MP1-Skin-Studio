@@ -1,0 +1,9 @@
+PASS actual packaged editor opened Current-Video.mp1skinproj on myvideo.xml with German samples, the test header and list width 578, without an unsaved title marker.
+PASS attended property edit changed list width to 590; Apply and Save Project succeeded; the title returned to clean.
+PASS a separate process reopened that saved project, exported exactly two XML files with matching byte/hash records and verified restored Undo/Redo; 17 loaded originals were unchanged.
+PASS complete isolated skin SkinStudio-Current-Review selected in the installed client through Settings / GUI / Skin.
+PASS STUDIO REVIEW READY header visible on BasicHome and Video; narrower Video focus band visible; one Videos folder and count 1 retained.
+PASS Left opened Video side menu; Right returned to the list without activation or playback.
+PASS original Titan restored through the client UI; normal Home and Videos headings and wider Video focus band returned.
+LIMIT sampled Default-theme Home/Video acceptance only; other pages, themes, plugins and playback were not newly tested.
+PASS current test editor and restored client closed; the pre-existing older editor was left untouched.

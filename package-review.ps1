@@ -45,14 +45,17 @@ use Revert Inputs to discard unapplied fields; test Undo/Redo; save an editor
 project, reopen it and export changes as ZIP. Use separate skin copies for real
 editing and retain original files. The preview remains approximate.
 
-Current integration validation covers the broad Windows-form suite, twelve
-complete demo workflows, twelve clean-session workflows and eight project-startup
-scenarios. Startup now waits for a visible editor and retains a usable demo after
-cancel/load failure. Native recovery uses the same hash checks as Open Project.
-See docs/RELEASE_READINESS.md for accepted scope and remaining final review.
-The prior 394 core checks, six Titan backup-recovery workflows and installed-client
-comparison remain historical; this package does not claim complete runtime fidelity.
-Instructions in XML exports retain original/exported SHA-256 records.
+Fresh attended runtime acceptance used this unchanged current executable: a real
+Titan Video project opened in Windows, list width changed to 590 through the
+form and saved, then reopened/exported in a separate process. Exactly two XML
+payloads and instructions passed byte/hash and restored Undo/Redo checks.
+A complete isolated MP1 skin showed the new Home/Video header, narrower list
+and working Left/Right menu navigation. Titan was restored; all 2,050 original
+file hashes are unchanged. This accepts the recorded Default-theme sample.
+Previous 204 UI, eight startup, twelve demo/twelve clean-session and 394 core
+checks remain historical; unchanged suites were not rerun. Executable and demo
+assets match the accepted preceding package. See docs/RELEASE_READINESS.md for
+scope and reviewing other actual exports. No installed skin resources are bundled.
 "@
 function Add-ReviewText($Archive, $Name, $Text) {
     $reviewEntry = $Archive.CreateEntry($Name)
