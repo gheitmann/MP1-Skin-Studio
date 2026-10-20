@@ -83,3 +83,16 @@ new root, then export to a separate runtime test copy.
 
 Only originals of modified XML are hash-matched. Unmodified dependencies, images
 and runtime behavior still require a complete appropriate backup and review.
+
+## Start directly with a saved project
+
+Pass the saved file as the editor's argument, including quotes for spaces:
+
+```powershell
+.\MP1SkinStudio.exe "C:\Skin Work\My-Skin.mp1skinproj"
+```
+
+The editor first opens its demo, then loads the requested project. Missing source
+folders and modified-source conflicts use the same matching-backup chooser as
+Open Project. Cancel or a load error leaves the demo available for another try.
+No Windows file association is installed by the review ZIP.

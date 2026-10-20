@@ -1,0 +1,9 @@
+PASS healthy Unicode path: deferred owner visibility; bounded chooser/errors; preserved fallback or restored edits/export/Undo/Redo/save; no repeated startup; source/backup bytes unchanged.
+PASS conflict cancel: deferred owner visibility; bounded chooser/errors; preserved fallback or restored edits/export/Undo/Redo/save; no repeated startup; source/backup bytes unchanged.
+PASS conflict matching backup: deferred owner visibility; bounded chooser/errors; preserved fallback or restored edits/export/Undo/Redo/save; no repeated startup; source/backup bytes unchanged.
+PASS conflict wrong backup: deferred owner visibility; bounded chooser/errors; preserved fallback or restored edits/export/Undo/Redo/save; no repeated startup; source/backup bytes unchanged.
+PASS missing root backup: deferred owner visibility; bounded chooser/errors; preserved fallback or restored edits/export/Undo/Redo/save; no repeated startup; source/backup bytes unchanged.
+PASS missing root cancel: deferred owner visibility; bounded chooser/errors; preserved fallback or restored edits/export/Undo/Redo/save; no repeated startup; source/backup bytes unchanged.
+PASS corrupt snapshot: deferred owner visibility; bounded chooser/errors; preserved fallback or restored edits/export/Undo/Redo/save; no repeated startup; source/backup bytes unchanged.
+PASS missing project: deferred owner visibility; bounded chooser/errors; preserved fallback or restored edits/export/Undo/Redo/save; no repeated startup; source/backup bytes unchanged.
+PASS 8 synthetic Windows startup workflows; 26 demo source/assets unchanged. Native dialog outcomes are injected; no desktop input or installed-client run.

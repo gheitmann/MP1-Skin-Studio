@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -24,7 +24,7 @@ namespace MP1SkinStudio
                 bool projectArgument=args.Length>0&&args[0].EndsWith(".mp1skinproj",StringComparison.OrdinalIgnoreCase);string root=args.Length>0&&!args[0].StartsWith("--")&&!projectArgument?args[0]:StudioForm.DemoRoot();
                 using(var form=new StudioForm(root))
                 {
-                    if(projectArgument)form.ResumeProjectFile(args[0]);
+                    if(projectArgument)form.OpenProjectOnStartup(args[0]);
                     if(args.Length>1&&args[0]=="--render-collections"){form.PrepareCollectionPreview(args.Length>2?args[2]:"list");form.RenderTo(args[1]);return 0;}
                     if(args.Length>1&&args[0]=="--render-collection-dialog"){form.RenderCollectionDialogTo(args[1]);return 0;}
                     if(args.Length>1&&args[0]=="--render"){form.RenderTo(args[1]);return 0;}

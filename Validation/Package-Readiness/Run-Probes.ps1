@@ -2,7 +2,8 @@ param(
     [Parameter(Mandatory=$true)][string]$PackageZip,
     [Parameter(Mandatory=$true)][string]$OutputDirectory,
     [switch]$SkipFullUi,
-    [switch]$IncludeCore
+    [switch]$IncludeCore,
+    [switch]$IncludeStartup
 )
 $ErrorActionPreference='Stop'
 Add-Type -AssemblyName System.IO.Compression.FileSystem
@@ -12,6 +13,7 @@ $reviewBin=Join-Path $reviewOutput 'package'
 if(Test-Path -LiteralPath $reviewBin){throw 'Choose a fresh output directory; the extracted package is preserved.'}
 [IO.Directory]::CreateDirectory($reviewOutput) | Out-Null
 [IO.Compression.ZipFile]::ExtractToDirectory($reviewPackage,$reviewBin)
+$reviewManifest=@(Get-Content -LiteralPath (Join-Path $reviewBin 'MANIFEST.sha256'))
 $reviewCompiler=Join-Path $env:WINDIR 'Microsoft.NET/Framework64/v4.0.30319/csc.exe'
 $reviewHosts=@('MatrixProbe','ReadinessProbe')
 if(-not $SkipFullUi){$reviewHosts+='UiHost'}
@@ -34,6 +36,20 @@ if($IncludeCore){
     $reviewCoreProcess=Start-Process -FilePath (Join-Path $reviewBin 'MP1SkinStudio.exe') -ArgumentList @('--selftest',('"'+$reviewCore+'"')) -WorkingDirectory $reviewBin -WindowStyle Hidden -Wait -PassThru
     if($reviewCoreProcess.ExitCode -ne 0){throw ('Core checks failed; inspect '+$reviewCore)}
 }
+if($IncludeStartup){
+    & (Join-Path $PSScriptRoot '../Startup-Acceptance/Run-Probe.ps1') -PackageDirectory $reviewBin -OutputDirectory (Join-Path $reviewOutput 'StartupProbe')
+}
+$reviewVerified=0
+foreach($reviewLine in $reviewManifest){
+    if($reviewLine -notmatch '^([a-f0-9]{64})  (.+)$'){throw 'Invalid package manifest record.'}
+    $reviewExpected=$Matches[1];$reviewRelative=$Matches[2]
+    $reviewActual=(Get-FileHash -LiteralPath (Join-Path $reviewBin $reviewRelative) -Algorithm SHA256).Hash.ToLowerInvariant()
+    if($reviewActual -cne $reviewExpected){throw ('Package payload changed during acceptance: '+$reviewRelative)}
+    $reviewVerified++
+}
+$reviewPreservation='PASS all '+$reviewVerified+' manifest payload hashes unchanged after the complete acceptance run.'
+Set-Content -LiteralPath (Join-Path $reviewOutput 'Payload-Results.txt') -Value $reviewPreservation -Encoding utf8
+Write-Output $reviewPreservation
 Get-Content -LiteralPath (Join-Path $reviewOutput 'ReadinessProbe/Results.txt')
 if(-not $SkipFullUi){Get-Content -LiteralPath (Join-Path $reviewOutput 'UiHost/ui-test-results.txt') | Select-Object -Last 3}
-Write-Output ('Completed package acceptance. Full UI: '+(-not $SkipFullUi)+'; core: '+[bool]$IncludeCore)
+Write-Output ('Completed package acceptance. Full UI: '+(-not $SkipFullUi)+'; core: '+[bool]$IncludeCore+'; startup: '+[bool]$IncludeStartup)

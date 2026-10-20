@@ -518,3 +518,18 @@ fonts and other dependencies are not embedded or exhaustively matched. Keep a
 complete suitable backup and verify the exported changes in an isolated runtime
 copy. Corrupted archives and unrelated opening errors remain errors; they are
 not handled by choosing another folder.
+
+
+## Project file startup
+
+Launching MP1SkinStudio.exe with a .mp1skinproj file now waits until the editor is
+visible before opening a recovery chooser or error message. It uses the same
+matching-backup validation as Open Project. Cancel or a failed load retains the
+initial demo and explains that Open Project can retry; the editor stays open.
+This does not install a file association. Quote a path containing spaces when
+passing it on the command line. Startup processing runs once per launch.
+
+After a healthy project open, the status no longer asks to save an unchanged
+location. Recovered locations retain the unsaved marker and save reminder. The
+session-switch warning now covers unsaved editor state as well as XML changes,
+including a relocated project whose XML has already been exported.

@@ -86,3 +86,14 @@ core result is required. Existing calls retain their full-UI behavior. The
 October 20 combined -SkipFullUi -IncludeCore run passed with the current
 executable; see Validation/Release-Acceptance for its reports and attended
 client comparison. Use a fresh output directory for each run.
+
+
+## Startup and final preservation gate
+
+Add -IncludeStartup to include the eight synthetic startup/recovery scenarios
+from Validation/Startup-Acceptance in the same run. Keep -SkipFullUi for routine
+changes whose relevant broad UI checks are already accepted. The helper now also
+captures the extracted manifest before testing and compares every payload hash
+after all selected probes; Payload-Results.txt records the final result. These
+options preserve the existing default broad-UI behavior. The startup-integration
+milestone records its own fresh broad UI, demo/session and native-startup results.

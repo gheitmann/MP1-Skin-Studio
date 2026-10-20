@@ -10,7 +10,7 @@ $reviewOutput = [System.IO.Path]::GetFullPath($OutputDirectory)
 [System.IO.Directory]::CreateDirectory($reviewOutput) | Out-Null
 $reviewTarget = Join-Path $reviewOutput 'MP1-Skin-Studio-Review.zip'
 $reviewTemp = $reviewTarget + '.' + [Guid]::NewGuid().ToString('N') + '.tmp'
-$reviewFiles = @('MP1SkinStudio.exe', 'LICENSE', 'docs/USER_GUIDE.md', 'docs/QUICK_START.md')
+$reviewFiles = @('MP1SkinStudio.exe', 'LICENSE', 'docs/USER_GUIDE.md', 'docs/QUICK_START.md', 'docs/RELEASE_READINESS.md')
 $reviewSampleRoot = Join-Path $PSScriptRoot 'Samples\Titan-Sample'
 $reviewFiles += @(Get-ChildItem -LiteralPath $reviewSampleRoot -Recurse -File |
     Where-Object { $_.Extension -in @('.xml', '.png', '.jpg', '.jpeg') } |
@@ -45,15 +45,14 @@ use Revert Inputs to discard unapplied fields; test Undo/Redo; save an editor
 project, reopen it and export changes as ZIP. Use separate skin copies for real
 editing and retain original files. The preview remains approximate.
 
-Fresh recovery validation: 394 core checks and six synthetic Windows-form
-Default/Christmas Titan recovery workflows passed, including canceled/wrong
-backup handling, pending-field preservation, location save markers, exact XML
-exports and Undo/Redo. Complete original and backup skin hashes stayed unchanged.
-Open Project can now select matching originals even if the old root still exists.
-A recovered location stays unsaved until a project save succeeds. Source hashes
-are never bypassed. Changed XML exports remain byte-verified with SHA-256 records.
-Earlier attended Windows and installed-client reports remain historical. See the
-guide for backup limits, source conflicts and separate runtime verification.
+Current integration validation covers the broad Windows-form suite, twelve
+complete demo workflows, twelve clean-session workflows and eight project-startup
+scenarios. Startup now waits for a visible editor and retains a usable demo after
+cancel/load failure. Native recovery uses the same hash checks as Open Project.
+See docs/RELEASE_READINESS.md for accepted scope and remaining final review.
+The prior 394 core checks, six Titan backup-recovery workflows and installed-client
+comparison remain historical; this package does not claim complete runtime fidelity.
+Instructions in XML exports retain original/exported SHA-256 records.
 "@
 function Add-ReviewText($Archive, $Name, $Text) {
     $reviewEntry = $Archive.CreateEntry($Name)

@@ -45,19 +45,52 @@ namespace MP1SkinStudio
             using(var dialog=new OpenFileDialog{Filter="MP1 Skin Studio Project|*.mp1skinproj",Title="Open saved editor project"})
             {
                 if(dialog.ShowDialog(this)!=DialogResult.OK||!CanSwitch())return;
-                OpenSessionWithRecovery(dialog.FileName,reason=>
-                {
-                    using(var folder=new FolderBrowserDialog{Description=reason,ShowNewFolderButton=false})
-                        return folder.ShowDialog(this)==DialogResult.OK?folder.SelectedPath:null;
-                });
+                OpenSessionWithRecovery(dialog.FileName,ChooseProjectRoot);
             }
+        }
+        string ChooseProjectRoot(string reason)
+        {
+            using(var folder=new FolderBrowserDialog{Description=reason,ShowNewFolderButton=false})
+                return folder.ShowDialog(this)==DialogResult.OK?folder.SelectedPath:null;
+        }
+        public void ResumeProjectFile(string path)
+        {OpenSessionWithRecovery(path,ChooseProjectRoot);}
+        public void OpenProjectOnStartup(string path)
+        {
+            QueueStartupProject(path,ChooseProjectRoot,error=>
+                MessageBox.Show(this,error.Message,"Open editor project",MessageBoxButtons.OK,MessageBoxIcon.Warning));
+        }
+        internal void QueueStartupProject(string path,Func<string,string> chooseRoot,Action<Exception> reportError)
+        {
+            // Wait for an owned, visible editor before opening native dialogs.
+            EventHandler shown=null;
+            shown=(sender,args)=>
+            {
+                Shown-=shown;
+                BeginInvoke(new Action(()=>TryOpenStartupProject(path,chooseRoot,reportError)));
+            };
+            Shown+=shown;
+        }
+        internal bool TryOpenStartupProject(string path,Func<string,string> chooseRoot,Action<Exception> reportError)
+        {
+            try
+            {
+                if(OpenSessionWithRecovery(path,chooseRoot))return true;
+                ShowNotice("Project opening canceled. The current skin is still available; use Open Project to try again.");
+            }
+            catch(Exception error)
+            {
+                ShowNotice("Project was not opened. The current skin is still available; use Open Project to try again.");
+                reportError(error);
+            }
+            return false;
         }
         internal bool OpenSessionWithRecovery(string path,Func<string,string> chooseRoot)
         {
             var next=ProjectFile.OpenWithRecovery(path,chooseRoot);
             if(next==null)return false;
             InstallProject(next,next.Page,path);
-            ShowNotice("Project restored from "+next.Root+". Saved changes can be undone together. Save the project to remember this skin location.");
+            ShowNotice("Project restored from "+next.Root+". Saved changes can be undone together."+(projectLocationChanged?" Save the project to remember this skin location.":""));
             return true;
         }
         void RunProjectUiSmoke(string directory,Action<bool,string> verify)

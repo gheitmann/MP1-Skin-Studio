@@ -2,7 +2,13 @@
 
 Date: October 20, 2026. Imported version: 0.9.
 
-## Latest source milestone: recover saved work against matching skin backups
+## Latest source milestone: resilient project startup and integrated package acceptance
+
+October 20, 2026: starting with a saved project now waits for a visible editor and uses the same matching-backup recovery as Open Project. Cancel, corrupt/missing project and unsuitable backup leave a usable demo with retry guidance instead of ending startup. Showing the editor again does not repeat the action. Healthy opens no longer request a redundant location save; the switch warning covers all unsaved editor state. A new packaged readiness guide defines accepted scope and remaining final visual/client review.
+
+Fresh validation: eight extracted-package startup scenarios, twelve complete demo workflows, twelve clean-session workflows and 204 broad synthetic Windows-form checks. All 31 manifest payload hashes are checked after the full integration run. Attended Windows verified the actual missing-project launch, owned warning, retained demo and working Titan Demo reload. The previous 394 core checks and six full Titan recovery workflows remain historical; no new client run or native folder selection is claimed. See [startup and integration acceptance](Validation/Startup-Acceptance/README.md). The combined helper now supports optional startup checks and a final manifest-preservation gate.
+
+## Previous source milestone: recover saved work against matching skin backups
 
 October 20, 2026: Open Project now offers one matching-backup folder selection when the saved root is unavailable or a modified original has drifted/disappeared, including when the old root still exists. The conflicting relative XML is named; source hash/integrity/path/encoding checks remain mandatory. Cancel and rejected backups preserve the active session. A changed root remains visibly unsaved until a successful project save; export/Undo cannot clear it. Subsequent opening uses the saved replacement root directly.
 
@@ -156,9 +162,9 @@ October 19, 2026: static known-content conditions and nested localization now wo
 
 The owner prioritizes practical edit/save/reopen/export workflows and substantial autonomous work blocks. Routine follow-up steps do not require another continuation prompt. Necessary checks run at integrated milestones.
 
-Current validation: 378 fresh core checks, ten Titan control-action workflows, sixteen targeted Windows form arrow events and twelve extracted-package demo workflows passed. The real matrix accepted 28 cross-axis explicit routes and guarded 92 routes; twelve original XML hashes stayed unchanged. Prior broad UI/clean-session, native-math and attended/client reports remain historical.
+Current integration validation is recorded at the top of this file. The packaged quick start and readiness guide describe a practically usable bounded review candidate. Preserve the distinction between fresh integration checks and older core/Titan/client reports; completion counts are evidence for their named workflows, not a measured product-completion percentage.
 
-Next core work is broader real-page preview fidelity and navigation coverage, particularly additional focusable control types, other facade types and plugin states, while retaining duplicate-ID uncertainty. Existing samples make BasicHome, Settings and Video useful without claiming complete runtime equivalence. Masks, animation, full geometric navigation and plugin-specific values remain approximate or unresolved. Continue real-skin edit/save/reopen/export acceptance around any such changes, preserving original files. Auxiliary global-style and cross-group movement tools remain lower priority.
+The remaining release gate is final visual review on the intended real skin/pages and client acceptance of that actual export. Preview fidelity remains bounded: additional focusable/control/facade types, plugin states, masks and animation may need future work. Keep these feature gaps explicit rather than silently expanding a first usable version into full renderer parity. Auxiliary global-style and cross-group movement tools remain lower priority.
 
 Historical milestones follow; older suspension notes describe the state at their recorded time. Attended Windows automation was subsequently reauthorized and exercised successfully.
 ## Baseline

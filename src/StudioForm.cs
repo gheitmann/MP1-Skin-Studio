@@ -301,7 +301,7 @@ namespace MP1SkinStudio
             tips.SetToolTip(unlock,"Enable only when intentionally replacing an existing #Property or #Define with a local value.");
         }
         public static string DemoRoot(){return System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"Samples","Titan-Sample");}
-        bool CanSwitch(){if(PendingProperties()){ShowNotice("Apply pending property edits or restore their previous values before switching sessions.");return false;}return !SessionNeedsSaving()||MessageBox.Show("The latest changes have not been saved as an editor project or exported as ZIP.\n\nSwitch sessions anyway?","Switch skin",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes;}
+        bool CanSwitch(){if(PendingProperties()){ShowNotice("Apply pending property edits or restore their previous values before switching sessions.");return false;}return !SessionNeedsSaving()||MessageBox.Show("This session has unsaved editor state or unexported XML changes.\n\nSwitch sessions anyway?","Switch skin",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes;}
         void OpenFolder()
         {using(var d=new FolderBrowserDialog{Description="Choose a skin directory containing references.xml, fonts.xml and Media",ShowNewFolderButton=false})if(d.ShowDialog()==DialogResult.OK&&CanSwitch())LoadProject(d.SelectedPath,null);}
         void OpenXml()

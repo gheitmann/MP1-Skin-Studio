@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -59,6 +59,5 @@ namespace MP1SkinStudio
         string DisplayName(SkinControl control){if(!LanguagePreview.UseLabelName(control))return control.Name;return state.Label(control,control.Get("label")).Replace("\r"," ").Replace("\n"," ");}
         public void RenderLanguageTo(string path){using(var dialog=new LanguageDialog(project.Editor.Language))dialog.RenderTo(path);}
         public void LoadPreviewLanguages(string primary,string fallback){ApplyLanguage(new LanguagePreview{Primary=LanguagePack.Load(primary),Fallback=String.IsNullOrEmpty(fallback)?null:LanguagePack.Load(fallback)});}
-        public void ResumeProjectFile(string path){ResumeSession(path);}
     }
 }
