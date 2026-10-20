@@ -123,6 +123,13 @@ namespace MP1SkinStudio
                 report.Issues.Add(Issue(control,key,"PREVIEW_GEOMETRY",property.Expression,notes,lineCache));
                 if(report.Issues.Count>=1024){report.Issues.Add(new SkinIssue{Code="PREVIEW_LIMIT",Information=true,Message="The preview report is limited to 1024 element findings.",Detail="Inspect a smaller page or resolve explicit samples before checking again."});return report;}
             }
+            foreach(var control in project.Controls.Where(c=>c.Get("type")=="checkmark"&&state.Visible(c)==true))
+            {
+                int width,height;if(CheckmarkPresentation.Layout(control,out width,out height)&&CheckmarkPresentation.Selected(control,state).HasValue&&state.Label(control,control.Get("label")).Length<=8192)continue;
+                var notes=new[]{"Checkmark selection requires a known true/false result; unknown selection does not display a guessed mark. Configure Sample Data for runtime expressions.","markWidth/markHeight require static integers from 0 to 8192; align supports left/right. Activation, runtime toggles and click actions are not executed."};
+                report.Issues.Add(Issue(control,"selected","PREVIEW_CHECKMARK",String.Join("; ",new[]{"selected","markWidth","markHeight","align"}.Select(k=>k+"="+control.Get(k))),notes,lineCache));
+                if(report.Issues.Count>=1024){report.Issues.Add(new SkinIssue{Code="PREVIEW_LIMIT",Information=true,Message="The preview report is limited to 1024 element findings.",Detail="Inspect a smaller page before checking again."});return report;}
+            }
             return report;
         }
     }

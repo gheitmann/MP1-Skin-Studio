@@ -2,7 +2,13 @@
 
 Date: October 20, 2026. Imported version: 0.9.
 
-## Latest source milestone: ordinary group and standalone button navigation
+## Latest source milestone: checkmark previews and mixed navigation
+
+October 20, 2026: native checkmark controls now render selected/unselected local textures with static mark sizing, label-side placement and focus/unfocused text colors. Known true/false expressions use explicit preview data; unresolved selection stays unknown with Ctrl+F8 diagnostics. Six checkmark-only properties provide normal editing and reset. Dimension aliases preserve existing XML spelling and reject ambiguous edits. Mixed button/checkmark scenes use bounded geometric navigation, including linear stacks, without activation or selection toggling. demo.checkmark.xml supplies selected/unselected/unverified examples.
+
+Fresh validation: 370 core checks, eight complete real Titan workflows, 172 accepted explicit routes, 28 guarded routes and 12 unchanged loaded original XML hashes. Six synthetic Windows canvas arrow events exercise the mixed demo; all six property fields, selected-expression Apply and save/reopen passed. Production state and edited form renders were inspected. Real pages verify explicit mapping/editing regression; authored fixtures and the demo cover new automatic mixed navigation. No new attended input or installed-client run. See [validation and bounds](Validation/Checkmark-Preview/README.md).
+
+## Previous source milestone: ordinary group and standalone button navigation
 
 October 20, 2026: absent/zero button mappings now use bounded geometric navigation in ordinary groups and at page level. Ordinary wrappers retain absolute child positions, can nest other ordinary wrappers, and can contain independently positioned automatic layouts. Ordinary wrappers moved by an automatic ancestor remain guarded. Property-driven empty layout fallbacks are not mistaken for plain groups. Group/ungroup and structural Undo/Redo preserve navigation. demo.free.xml supplies a self-contained four-button scene.
 
@@ -114,7 +120,7 @@ October 19, 2026: static known-content conditions and nested localization now wo
 
 The owner prioritizes practical edit/save/reopen/export workflows and substantial autonomous work blocks. Routine follow-up steps do not require another continuation prompt. Necessary checks run at integrated milestones.
 
-Current validation: 361 core checks and ten real Titan workflows passed, with 124 accepted routes (26 automatic, 98 explicit) and ten unchanged loaded original XML hashes. The ordinary-group demo passed four synthetic Windows form arrow events and focus save/reopen. Earlier native-math, attended acceptance and other matrices remain historical.
+Current validation: 370 core checks and eight real Titan checkmark workflows passed, with 172 explicit routes and 12 unchanged loaded original XML hashes. The mixed checkmark demo passed six synthetic Windows form arrow events, property-field Apply and save/reopen. Earlier native-math, attended acceptance and other matrices remain historical.
 
 Next core work is broader real-page preview fidelity and navigation coverage, particularly additional focusable control types, other facade types and plugin states, while retaining duplicate-ID uncertainty. Existing samples make BasicHome, Settings and Video useful without claiming complete runtime equivalence. Masks, animation, full geometric navigation and plugin-specific values remain approximate or unresolved. Continue real-skin edit/save/reopen/export acceptance around any such changes, preserving original files. Auxiliary global-style and cross-group movement tools remain lower priority.
 

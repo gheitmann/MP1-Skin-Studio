@@ -97,7 +97,8 @@ namespace MP1SkinStudio
             }
             bool button=c.Get("type").Contains("button");
             string align=c.Resolved(button?"textalign":alignProperty,"left").ToLowerInvariant();string valign=c.Resolved(button?"textvalign":"valign","top").ToLowerInvariant();
-            Color color=ParseColor(c.Resolved(colorProperty,"ffffffff"),Color.White);
+            if(c.Get("type")=="checkmark")valign="top";
+            Color color=ParseColor(c.Resolved(colorProperty,colorProperty=="disabledcolor"?"ff606060":"ffffffff"),Color.White);
             if(focus)color=ParseColor(c.Resolved(button?"textcolor":"selectedColor",c.Resolved("textcolorfocus",c.Resolved(colorProperty,"ffffffff"))),color);
             else if(button)color=ParseColor(c.Resolved("textcolorNoFocus",c.Resolved(colorProperty,"ffffffff")),color);
             using(var font=SurfaceFont(c,fontProperty))using(var format=new StringFormat(StringFormat.GenericTypographic))

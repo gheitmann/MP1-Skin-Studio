@@ -22,7 +22,7 @@ namespace MP1SkinStudio
         public ElementSpan Parent;
         public List<ElementSpan> Children = new List<ElementSpan>();
         public XmlElement Element;
-        public ElementSpan Child(string name) { return Children.LastOrDefault(n => n.Name == name); }
+        public ElementSpan Child(string name) { return Children.LastOrDefault(n => CheckmarkPresentation.Key(n.Name) == CheckmarkPresentation.Key(name)); }
         public string Value(string name) { var c = Child(name); return c == null ? null : c.Element.InnerText; }
     }
 
@@ -151,6 +151,7 @@ namespace MP1SkinStudio
             {
                 if (!Regex.IsMatch(kv.Key, "^[a-zA-Z][a-zA-Z0-9]*$") || (kv.Key == "id"&&!allowIdentity) || kv.Key == "type")
                     throw new InvalidOperationException("This property cannot be changed: " + kv.Key);
+                if((CheckmarkPresentation.Key(kv.Key)=="markWidth"||CheckmarkPresentation.Key(kv.Key)=="markHeight")&&control.Children.Count(n=>CheckmarkPresentation.Key(n.Name)==CheckmarkPresentation.Key(kv.Key))>1)throw new InvalidOperationException("Ambiguous checkmark dimension: "+kv.Key);
                 var node = control.Child(kv.Key);
                 if (node == null)
                 {
@@ -231,7 +232,7 @@ namespace MP1SkinStudio
         public Dictionary<string, PropertyValue> Properties = new Dictionary<string, PropertyValue>(StringComparer.Ordinal);
         public Dictionary<string, string> Defines;
         public readonly List<KeyValuePair<string,string>> ImageAlignmentRules=new List<KeyValuePair<string,string>>();
-        public string Get(string key, string fallback = "") { PropertyValue p; return Properties.TryGetValue(key, out p) ? p.Value : fallback; }
+        public string Get(string key, string fallback = "") { PropertyValue p; return Properties.TryGetValue(CheckmarkPresentation.Key(key), out p) ? p.Value : fallback; }
         public string Resolved(string key, string fallback = "")
         {
             string value = Get(key, fallback), result;
@@ -381,8 +382,8 @@ namespace MP1SkinStudio
             foreach(var p in n.Children.Where(e=>e.Name!="control"))
             {
                 if(p.Name=="align"||p.Name=="valign"||p.Name=="centered")c.ImageAlignmentRules.Add(new KeyValuePair<string,string>(p.Name,p.Element.InnerText));
-                PropertyValue inherited;c.Properties.TryGetValue(p.Name,out inherited);bool attribute=p.Element.HasAttribute("property");
-                c.Properties[p.Name]=new PropertyValue(p.Element.InnerText,origin,local){Expression=attribute?p.Element.GetAttribute("property"):inherited==null?"":inherited.Expression,ExpressionOrigin=attribute?origin:inherited==null?"":inherited.ExpressionOrigin};
+                string propertyKey=CheckmarkPresentation.Key(p.Name);PropertyValue inherited;c.Properties.TryGetValue(propertyKey,out inherited);bool attribute=p.Element.HasAttribute("property");
+                c.Properties[propertyKey]=new PropertyValue(p.Element.InnerText,origin,local){Expression=attribute?p.Element.GetAttribute("property"):inherited==null?"":inherited.Expression,ExpressionOrigin=attribute?origin:inherited==null?"":inherited.ExpressionOrigin};
             }
         }
         public void Edit(SkinControl control, IDictionary<string,string> values, string description)

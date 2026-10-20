@@ -68,10 +68,12 @@ namespace MP1SkinStudio
         }
         bool GeometricNavigationSource(SkinControl source)
         {
-            var parent=source.RuntimeParent;if(parent==null)return source.Get("type").Contains("button");
+            var parent=source.RuntimeParent;if(parent==null)return AutomaticNavigationControl(source);
+            if(source.Get("type")=="checkmark"||Controls.Any(c=>c.RuntimeParent==parent&&c.Get("type")=="checkmark"))return true;
             StackPreview.GridRule grid;
             return parent.Resolved("layout").Trim().Length==0||parent.RuntimeParent!=null||StackPreview.TryReadGrid(parent.Resolved("layout").Trim(),out grid)||Controls.Any(c=>c.RuntimeParent==parent&&LayoutTools.IsContainer(c));
         }
+        static bool AutomaticNavigationControl(SkinControl c){return c.Get("type").Contains("button")||c.Get("type")=="checkmark";}
         void NavigationGroup(SkinControl group,Dictionary<SkinControl,SkinControl[]> children,int depth)
         {
             if(depth>16||!NavigationLayout(group))throw new InvalidOperationException("Automatic navigation requires supported groups within 16 levels; plain groups inside automatic layouts remain unsupported.");
@@ -94,7 +96,7 @@ namespace MP1SkinStudio
         SkinControl GridNavigationTarget(PreviewState state,SkinControl source,string direction)
         {
             var parent=source.RuntimeParent;
-            if((parent!=null&&!NavigationLayout(parent))||!source.Get("type").Contains("button")||NativeNavigationExcluded(source))
+            if((parent!=null&&!NavigationLayout(parent))||!AutomaticNavigationControl(source)||NativeNavigationExcluded(source))
                 throw new InvalidOperationException("Automatic navigation requires a static button in a supported hierarchy.");
             var logical=LogicalControls().ToArray();
             if(logical.Length>2048)throw new InvalidOperationException("This page exceeds the automatic grid navigation limit.");
@@ -110,7 +112,7 @@ namespace MP1SkinStudio
                 if(visible==false)continue;
                 if(visible==null)throw new InvalidOperationException("Grid navigation encounters unverified visibility. Apply suitable sample data first.");
                 int? id=ControlId(c);
-                if(!id.HasValue||id<=0||logical.Count(x=>ControlId(x)==id)!=1||!c.Get("type").Contains("button"))
+                if(!id.HasValue||id<=0||logical.Count(x=>ControlId(x)==id)!=1||!AutomaticNavigationControl(c))
                     throw new InvalidOperationException("Grid navigation encounters an unsupported or ambiguous focusable control.");
                 // Runtime enable/hidden-focus rules are not inferred from appearance.
                 if(c.Get("enable").Length>0||c.Get("allowhiddenfocus").Length>0)

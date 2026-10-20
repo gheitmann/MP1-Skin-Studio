@@ -32,6 +32,7 @@ Try demo.images.xml to compare proportional alignment, center crop and top crop.
 Try demo.grid.xml with Navigation enabled to test automatic grid arrow routes.
 Try demo.navigation.xml: Right, Down, Left, Up cross nested grid/stack branches.
 Try demo.free.xml to navigate ordinary groups with absolute child positions.
+Try demo.checkmark.xml with Up/Down and its selected/unselected property fields.
 
 This package contains the editor, repository demo XML/images, license and guide.
 It contains no installed Titan skin, MediaPortal executable, client configuration,
@@ -42,13 +43,13 @@ use Revert Inputs to discard unapplied fields; test Undo/Redo; save an editor
 project, reopen it and export changes as ZIP. Use separate skin copies for real
 editing and retain original files. The preview remains approximate.
 
-Validation covers 361 core checks and ten real Titan workflows with
-124 accepted routes (26 automatic, 98 explicit), 20 guarded routes and
-ten unchanged original XML hashes. Four synthetic Windows canvas arrow
-events cross ordinary demo groups; saved focus restores. The production
-render was inspected. Authored fixtures/demo cover new automatic plain routes;
-real dialogs also preserve explicit mappings. Previous native math and
-attended image/filmstrip acceptance remain historical.
+Validation covers 370 core checks and eight real Titan checkmark workflows
+with 172 accepted explicit routes, 28 guarded routes and 12 unchanged
+original XML hashes. Six synthetic Windows canvas arrow events cross mixed
+button/checkmark controls. Six property fields, Apply and save/reopen passed.
+Production renders were inspected. Authored fixtures/demo cover automatic
+mixed navigation; real Titan pages cover explicit routes. Previous native
+math and attended acceptance remain historical.
 No new installed MediaPortal client run was performed. See the user guide for
 supported preview navigation and remaining rendering limitations.
 "@

@@ -1,0 +1,15 @@
+GUARD Default SettingsSlideShow.xml: Navigation target ID 10005 is missing, ambiguous or not focusable.
+PASS Default-SettingsSlideShow: 15 accepted routes, 5 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 9995
+GUARD Default settingsSkipSteps.xml: Navigation target ID 10002 is missing, ambiguous or not focusable.
+PASS Default-settingsSkipSteps: 60 accepted routes, 4 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 6
+PASS Default-SettingsMyMusic: 8 accepted routes, 0 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 9998
+GUARD Default settings_recording.xml: Navigation target ID 10008 is missing, ambiguous or not focusable.
+PASS Default-settings_recording: 3 accepted routes, 5 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 30
+GUARD Christmas SettingsSlideShow.xml: Navigation target ID 10005 is missing, ambiguous or not focusable.
+PASS Christmas-SettingsSlideShow: 15 accepted routes, 5 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 9995
+GUARD Christmas settingsSkipSteps.xml: Navigation target ID 10002 is missing, ambiguous or not focusable.
+PASS Christmas-settingsSkipSteps: 60 accepted routes, 4 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 6
+PASS Christmas-SettingsMyMusic: 8 accepted routes, 0 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 9998
+GUARD Christmas settings_recording.xml: Navigation target ID 10008 is missing, ambiguous or not focusable.
+PASS Christmas-settings_recording: 3 accepted routes, 5 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 30
+SUMMARY 8 complete real Titan workflows; 172 accepted routes (0 automatic, 172 explicit); 28 guarded routes; 12 distinct loaded original XML hashes unchanged.

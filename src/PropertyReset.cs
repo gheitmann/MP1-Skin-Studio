@@ -21,7 +21,7 @@ namespace MP1SkinStudio
             if(key==null||!Regex.IsMatch(key,"^[a-zA-Z][a-zA-Z0-9]*$")||key=="id"||key=="type")throw new InvalidOperationException("This property cannot be reset: "+key);
             var controls=Elements.Where(n=>n.Name=="control").ToArray();
             if(ordinal<0||ordinal>=controls.Length)throw new InvalidOperationException("Control no longer exists.");
-            var matches=controls[ordinal].Children.Where(n=>n.Name==key).ToArray();
+            var matches=controls[ordinal].Children.Where(n=>CheckmarkPresentation.Key(n.Name)==CheckmarkPresentation.Key(key)).ToArray();
             if(matches.Length>1)throw new InvalidOperationException("The property "+key+" occurs locally more than once. Resolve the XML mapping first.");
             if(matches.Length==0)return null;
             var node=matches[0];
@@ -60,7 +60,7 @@ namespace MP1SkinStudio
             if(style.Length>0&&styles.TryGetValue(style,out definition))
             {var node=definition.Child(key);if(node!=null)result.Inherited=new PropertyValue(node.Element.InnerText,"Style "+style,false);}
             var current=control.Source.Elements.Where(n=>n.Name=="control").ElementAtOrDefault(control.Ordinal);
-            result.HasLocal=current!=null&&current.Children.Any(n=>n.Name==key);
+            result.HasLocal=current!=null&&current.Children.Any(n=>CheckmarkPresentation.Key(n.Name)==CheckmarkPresentation.Key(key));
             result.LocalValue=current==null?"":current.Value(key)??"";
             try{control.Source.ResetNode(control.Ordinal,key);result.Allowed=result.HasLocal;result.Reason=result.HasLocal?"Remove local override":"No local override exists.";}
             catch(InvalidOperationException ex){result.Allowed=false;result.Reason=ex.Message;}
