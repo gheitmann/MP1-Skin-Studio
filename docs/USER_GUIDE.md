@@ -1,16 +1,19 @@
 # MP1 Skin Studio user guide
 
-Version 0.9 · October 19, 2026
+Version 0.9 · October 20, 2026
 
 ## Getting started
 
-1. Build the application with `powershell -NoProfile -File .\build.ps1`.
+1. Extract the complete review ZIP. For a source checkout, build with `powershell -NoProfile -File .\build.ps1` instead.
 2. Start `MP1SkinStudio.exe`. The bundled demo loads automatically.
 3. Select an element in the preview or element tree.
 4. Drag to move it; use the lower-right handle to resize it.
 5. Edit properties on the right and choose **Apply Properties**.
 6. Save an editor project to continue later, or choose **Export Changes as ZIP**.
 7. Use **Revert Inputs** to discard unapplied property fields without undoing applied XML changes. Pending fields block save/export and page/theme changes until applied or reverted.
+
+See [Quick start](QUICK_START.md) for a complete first workflow, all twelve demo
+scenes and the transition from an editor project to a runtime test copy.
 
 ## Open skins, pages and themes
 

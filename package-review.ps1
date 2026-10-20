@@ -10,7 +10,7 @@ $reviewOutput = [System.IO.Path]::GetFullPath($OutputDirectory)
 [System.IO.Directory]::CreateDirectory($reviewOutput) | Out-Null
 $reviewTarget = Join-Path $reviewOutput 'MP1-Skin-Studio-Review.zip'
 $reviewTemp = $reviewTarget + '.' + [Guid]::NewGuid().ToString('N') + '.tmp'
-$reviewFiles = @('MP1SkinStudio.exe', 'LICENSE', 'docs/USER_GUIDE.md')
+$reviewFiles = @('MP1SkinStudio.exe', 'LICENSE', 'docs/USER_GUIDE.md', 'docs/QUICK_START.md')
 $reviewSampleRoot = Join-Path $PSScriptRoot 'Samples\Titan-Sample'
 $reviewFiles += @(Get-ChildItem -LiteralPath $reviewSampleRoot -Recurse -File |
     Where-Object { $_.Extension -in @('.xml', '.png', '.jpg', '.jpeg') } |
@@ -26,6 +26,8 @@ Source revision: $Revision
 Extract this complete ZIP to a separate directory. To test manually, run
 MP1SkinStudio.exe from that directory. It opens the included demo skin.
 Requires Windows and .NET Framework 4.x. Packaging does not launch the editor.
+Start with docs/QUICK_START.md for a complete edit/save/reopen/export workflow
+and a table of all twelve demos. No build step is needed for this ZIP.
 Try demo.filmstrip.xml from PAGE / XML, enable Navigation and use Left/Right.
 Its upper image follows the selected thumbnail; no installed skin is required.
 Try demo.images.xml to compare proportional alignment, center crop and top crop.
@@ -43,15 +45,17 @@ use Revert Inputs to discard unapplied fields; test Undo/Redo; save an editor
 project, reopen it and export changes as ZIP. Use separate skin copies for real
 editing and retain original files. The preview remains approximate.
 
-Fresh validation covers 378 core checks, ten real Titan control-action workflows,
-sixteen targeted synthetic Windows arrow events and twelve package demo workflows.
-The Titan matrix accepted 28 cross-axis explicit routes and guarded 92 routes;
-12 original XML hashes stayed unchanged. All 29 accepted payload hashes stayed
-unchanged during package workflows. Slider/spin value interaction is not simulated;
-unsupported axes now explain why focus stays unchanged. The previous broad 204 UI
-and twelve clean-session checks are historical, as is attended/client acceptance.
-No new installed MediaPortal client run was performed. See the user guide for
-supported preview navigation and remaining rendering limitations.
+Fresh integrated validation: 378 core checks, twelve complete package demo
+workflows and twelve clean-session workflows passed. All 30 accepted payload
+hashes stayed unchanged during the demo matrix. Attended Windows checks passed
+the four-arrow nested navigation roundtrip. A fresh two-file Video export loaded
+in installed MP1 on an isolated complete skin copy: header marker, narrower list
+and side-menu navigation passed. Titan was restored; all 2,050 original Titan
+files match their preserved baseline. This is sampled export/runtime acceptance,
+not complete visual equivalence, playback or plugin coverage.
+The previous 204 broad UI checks and real-page matrices remain historical.
+Slider/spin value interaction is not simulated; unsupported axes explain why
+focus stays unchanged. See the user guide for preview bounds.
 "@
 function Add-ReviewText($Archive, $Name, $Text) {
     $reviewEntry = $Archive.CreateEntry($Name)

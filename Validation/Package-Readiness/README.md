@@ -77,3 +77,12 @@ keyboard/mouse input. Allow the complete suite to finish before using its report
 Matrix-Results.txt, Readiness-Results.txt and UI-Results.txt contain the fresh
 successful reports. UiHost.cs invokes the production in-process UI regression
 suite; MatrixProbe.cs and ReadinessProbe.cs add independent package-level checks.
+
+## Proportionate follow-up gate
+
+Add -SkipFullUi to run the twelve demo workflows and clean-session checks
+without repeating the broad synthetic UI suite. Add -IncludeCore when a fresh
+core result is required. Existing calls retain their full-UI behavior. The
+October 20 combined -SkipFullUi -IncludeCore run passed with the current
+executable; see Validation/Release-Acceptance for its reports and attended
+client comparison. Use a fresh output directory for each run.

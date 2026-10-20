@@ -2,7 +2,13 @@
 
 Date: October 20, 2026. Imported version: 0.9.
 
-## Latest source milestone: honest slider and spin arrow limits
+## Latest delivery milestone: integrated Windows and runtime acceptance
+
+October 20, 2026: the current packaged editor passed an attended four-arrow nested navigation roundtrip. A fresh two-file Video export from this executable loaded in the installed MP1 client on a complete isolated skin copy: header marker, narrower list and side-menu Left/Right passed. Titan was restored through its UI. All 2,050 original Titan file hashes match the preserved baseline; the runtime copy differs in exactly the two intended XML files.
+
+Fresh package gate: 378 core checks, twelve complete demo workflows and twelve clean-session workflows passed; 30 payload hashes stayed unchanged. The broad 204 UI checks remain historical. A new Quick start covers all twelve demos and the complete edit/project/export/runtime-copy workflow. Package checks can now skip the broad UI suite and optionally include core checks to avoid unnecessary repetitions. No engine feature changed. See [integrated acceptance](Validation/Release-Acceptance/README.md). Preview fidelity and plugin/playback coverage remain bounded.
+
+## Previous source milestone: honest slider and spin arrow limits
 
 October 20, 2026: preview arrows no longer treat every slider/spin XML link as a reachable runtime navigation edge. Slider Left/Right remains reserved for unsimulated value adjustment; spin arrows on its orientation axis remain unverified without inner-button/value state. Unknown/dynamic spin orientation blocks all arrows. Explicit cross-axis routes retain existing target checks; raw navigation editing/audit and exports remain intact. Ctrl+F8 now explains missing slider/spin rendering and interaction. Checkmark findings now have a specific message rather than the generic text label.
 
