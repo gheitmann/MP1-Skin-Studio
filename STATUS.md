@@ -2,7 +2,13 @@
 
 Date: October 20, 2026. Imported version: 0.9.
 
-## Latest source milestone: session-wide XML change review
+## Latest source milestone: DefaultWideHD large-selector responsiveness
+
+October 20, 2026: reproduced DefaultWideHD's 449-file PAGE / XML selector blocking for 9,242 ms initially and 25,479–26,519 ms on reopen. Repeated layout during insertion and old-item removal caused the delay. Batched clearing/population reduces measured opens to 73–82 ms with one layout, retaining all choices, checkmarks, callback and cancellation/ownership behavior. No XML editing, renderer or export logic changed.
+
+Fresh acceptance: seven targeted selector/form workflows, 12 existing menu assertions, twelve complete demo workflows and twelve clean-session workflows. DefaultWideHD Home/Video/Settings changes, save/reopen/export/restored Undo/Redo passed; all 488 installed XML and 26 demo hashes stayed unchanged. A final preservation gate verified all 31 package payload hashes. The selector host completed separately after correcting its DemoRoot fixture setup; the same executable was used throughout. Attended Windows verified list opening/selection, reopen/Escape and XML-tree collapse/expand in a separate corrected editor. The owner editor remained open. See [selector validation](Validation/Large-Selectors/README.md). Prior 402 core, ten XML-review, 18 transition, eight startup and broad 204 UI suites remain historical.
+
+## Previous source milestone: session-wide XML change review
 
 October 20, 2026: Element > Review XML changes / Ctrl+Shift+E now opens a read-only snapshot of all modified session XML, including shared includes, theme sources and earlier pages. File filtering, original/edited panes, first difference and complete large-file sections support review before export. Exact original/edited byte hashes and encoding/BOM details accompany refreshable on-disk source checks. Pending fields and preview-only state remain excluded; XML, selection, drafts, history and save/export markers are preserved.
 

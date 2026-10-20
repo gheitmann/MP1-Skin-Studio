@@ -594,3 +594,15 @@ the editor project to retain them. Inspect shared-file changes for effects on
 other pages. The review never marks work saved/exported and retains Undo/Redo,
 selection and editor state. Close the review and use the existing Export Changes
 as ZIP command after inspection.
+
+
+## Large skin page selectors
+
+PAGE / XML and other choice menus now add and remove their entries in a single
+layout batch. This prevents repeated recalculation of hundreds of items when
+opening a large skin such as DefaultWideHD. All filenames remain available,
+including shared includes; checked selection, keyboard navigation and Escape
+retain their existing behavior. Source loading and preview complexity are
+separate from the selector; this change does not promise every page renders
+instantly. Extract and run the updated package to use the correction; an already
+running older editor continues using its previously loaded executable.

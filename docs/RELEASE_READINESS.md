@@ -32,17 +32,18 @@ Home/Video sample. It is not general release publication or proof of every skin.
 For another intended edit, page, theme or plugin, use the review procedure below
 and obtain the owner's final visual acceptance of that actual result.
 
-The current XML-review milestone adds a read-only session-wide file list,
-original/edited text sections, exact byte hashes and refreshable source checks.
-Fresh extracted-package acceptance covers 402 core checks (eight new review
-regressions), ten targeted synthetic review-form scenarios, twelve complete demo
+The current large-selector correction batches menu clearing/population instead
+of repeatedly recalculating layout for every filename. Fresh extracted-package
+acceptance covers seven targeted selector/form workflows with the installed
+DefaultWideHD file list, existing menu integration, twelve complete demo
 workflows and twelve clean-session workflows. All 31 payload hashes stay
-unchanged after the run. Form/menu/shortcut events are synthetic, with no new
-attended desktop input or installed-client claim.
+unchanged. Installed XML preservation is checked. Timing measurements identify
+menu-opening cost separately from model loading and rendering.
 
-Previous 204 broad UI, 18 close/session-switch and eight startup scenarios remain
-historical. The matching-backup milestone's six real-Titan workflows also remain
-historical. XML review does not change renderer/export/model editing behavior.
+The previous 402 core checks, ten XML-review scenarios, 18 transition cases,
+eight startup scenarios and 204 broad UI checks remain historical. No XML
+editing, rendering or export logic changed for the selector correction. The
+repository record distinguishes synthetic form tests from attended Windows use.
 
 Preview masks/animations, plugin-dependent values, playback and some control
 interactions remain approximate or unverified. Slider/spin value interaction is

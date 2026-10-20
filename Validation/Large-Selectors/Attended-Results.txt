@@ -1,0 +1,6 @@
+PASS observed the owner's pre-existing older editor on DefaultWideHD / ARGUS_UpcomingTv.xml. Its first page-menu observation remained delayed before the long list appeared. The session was not closed or replaced.
+PASS launched the corrected extracted-package executable separately with DefaultWideHD-Review.mp1skinproj and a clean myHome.xml session.
+PASS the full PAGE / XML dropdown appeared promptly in the corrected editor. A menu selection changed the active page to common.facade.music.xml and displayed eight controls.
+PASS reopening the dropdown and Escape worked. The XML file node was selected, collapsed with Left and expanded with Right; child groups/controls returned.
+PASS corrected editor remains open separately; the pre-existing owner editor was preserved. No source XML edit, export installation or client activation occurred through attended input.
+LIMIT the attempted accessibility menu target became stale; after reobservation a coordinate selection loaded common.facade.music.xml, not the initially intended ARGUS page. No attended ARGUS-page acceptance is claimed. Synthetic tests cover Home, Video and Settings selection, persistence and export.

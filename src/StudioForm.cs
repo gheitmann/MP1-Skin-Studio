@@ -36,7 +36,12 @@ namespace MP1SkinStudio
         StudioMenu OpenChoices()
         {
             Focus();if(Items.Count==0)return null;var menu=StudioMenus.For(this,menuKey);
-            for(int i=0;i<Items.Count;i++){int chosen=i;var item=(ToolStripMenuItem)menu.Items.Add(Items[i].ToString().Replace("&","&&"),null,(s,e)=>SelectedIndex=chosen);item.Checked=i==index;}
+            menu.SuspendLayout();
+            try
+            {
+                for(int i=0;i<Items.Count;i++){int chosen=i;var item=(ToolStripMenuItem)menu.Items.Add(Items[i].ToString().Replace("&","&&"),null,(s,e)=>SelectedIndex=chosen);item.Checked=i==index;}
+            }
+            finally{menu.ResumeLayout(true);}
             menu.Show(this,new Point(0,Height));return menu;
         }
         internal StudioMenu OpenChoicesForTest(){return OpenChoices();}

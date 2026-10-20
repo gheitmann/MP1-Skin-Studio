@@ -27,8 +27,16 @@ namespace MP1SkinStudio
             {
                 StudioMenu menu;if(!menus.TryGetValue(purpose,out menu)||menu.IsDisposed){menu=new StudioMenu();menus[purpose]=menu;}
                 if(menu.Visible)menu.Close();
-                foreach(var item in menu.Items.Cast<ToolStripItem>().ToArray())item.Dispose();
-                menu.Items.Clear();menu.ShowCheckMargin=true;menu.ShowImageMargin=false;return menu;
+                // Clearing a large page selector otherwise lays out every
+                // remaining item after each removal on the UI thread.
+                menu.SuspendLayout();
+                try
+                {
+                    foreach(var item in menu.Items.Cast<ToolStripItem>().ToArray())item.Dispose();
+                    menu.Items.Clear();menu.ShowCheckMargin=true;menu.ShowImageMargin=false;
+                }
+                finally{menu.ResumeLayout(false);}
+                return menu;
             }
         }
         static readonly ConditionalWeakTable<Form,OwnerMenus> owners=new ConditionalWeakTable<Form,OwnerMenus>();

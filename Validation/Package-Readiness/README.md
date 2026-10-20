@@ -106,3 +106,9 @@ Add -IncludeChanges for the ten synthetic XML-review dialog/menu/shortcut and
 large-section scenarios from Validation/Change-Review. This runs before the
 final payload-preservation gate. The review milestone uses -SkipFullUi
 -IncludeCore -IncludeChanges, leaving unchanged startup/transition suites historical.
+
+Pass -LargeSelectorSkinDirectory with a complete local DefaultWideHD root to
+include the seven large-selector/form workflows and existing menu integration
+before the final preservation gate. It reads installed XML and checks all XML
+hashes afterward; generated projects/exports remain in its fresh output folder.
+This optional fixture requires a DefaultWideHD installation with over 400 pages.

@@ -1,0 +1,1 @@
+PASS all 31 manifest payload hashes unchanged after demo/session, separate final selector/menu probe and attended Windows use.

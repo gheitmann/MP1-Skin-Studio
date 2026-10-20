@@ -1,0 +1,7 @@
+Open 1: 74 ms; 1 layouts; 449 items
+Open 2: 73 ms; 1 layouts; 449 items
+Open 3: 82 ms; 1 layouts; 449 items
+Page myvideo.xml: 705 ms including menu, load, refresh and paint
+Page settings.xml: 658 ms including menu, load, refresh and paint
+Page myHome.xml: 1611 ms including menu, load, refresh and paint
+Existing menu integration: 12 assertions passed

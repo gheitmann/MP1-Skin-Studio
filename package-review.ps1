@@ -51,10 +51,14 @@ show the first difference; Previous/Next reaches all large-file sections. Exact
 byte hashes and refreshable source checks identify drift, missing or locked XML.
 Pending fields and preview-only state are excluded. Close review to export.
 
-Fresh extracted-package checks: 402 core checks, ten synthetic review-form
-scenarios, twelve complete demo workflows, twelve clean-session workflows and
-31 unchanged payload hashes. Previous transition/startup/broad UI checks remain
-historical. No new attended desktop or installed-client run is claimed.
+Large PAGE / XML menus now batch removal and population so skins with hundreds
+of XML files do not repeatedly recalculate layout. Every file remains listed;
+selection checks, callbacks and Escape retain their existing behavior.
+Fresh extracted-package checks: seven selector/form workflows with DefaultWideHD,
+existing menu integration, twelve complete demo workflows, twelve clean-session
+workflows and 31 unchanged payload hashes. Previous 402 core, XML-review,
+transition/startup/broad UI checks remain historical. XML editing, renderer and
+export logic are unchanged. See docs/RELEASE_READINESS.md for practical scope.
 
 The previous attended client checkpoint used source 07e8ef2: a real Titan Video
 width edit persisted, exported exactly and appeared in a complete isolated MP1

@@ -1,0 +1,8 @@
+PASS 449-file selector builds and reopens with bounded layout work and one active check
+PASS Large selector dispatches first middle and last choices exactly once
+PASS Escape cancels large choices without changing selection or dispatching callbacks
+PASS Reused selector drops old callbacks and safely escapes ampersands
+PASS DefaultWideHD real form page choices load Home Video Settings and retain edits through save reopen export
+PASS Pending fields still block the production page-change method and restore the selector
+PASS Existing menu integration survives bulk clearing and anchor rebuilds
+7 passed, 0 failed; 488 installed XML and 26 demo hashes unchanged. Synthetic form/menu events; no desktop input.
