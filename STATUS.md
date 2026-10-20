@@ -2,7 +2,9 @@
 
 Date: October 20, 2026. Imported version: 0.9.
 
-## First public release preparation: v0.9.0-preview.1
+## First public release published: v0.9.0-preview.1
+
+Publication verified on October 20, 2026: the repository is public and [v0.9.0-preview.1](https://github.com/gheitmann/MP1-Skin-Studio/releases/tag/v0.9.0-preview.1) is published as a pre-release. Its tag points to source 633170cbab3aff5ce18c5398cf59c3d4f6c0618b. Both the versioned Windows ZIP and SHA256SUMS.txt are uploaded; GitHub asset digests match the local files. An anonymous repository read and anonymous ZIP download succeeded, and the downloaded ZIP matched SHA256 be50eb6a5cc11f4dab5b469f2d900c48b97f113c3aa6b15f94ac23d70c699706. This post-publication documentation update does not change the release tag or assets. See [publication verification](Validation/First-Public-Release/README.md).
 
 October 20, 2026: the owner requested public repository visibility and the first GitHub release. The release carries the accepted 0.9 prototype executable and bundled demos, with a versioned Windows ZIP, SHA256 checksum and release notes. README and repository audience conventions are updated. Before publication, all 540 tracked files matched the GitHub tree; the targeted credential-pattern scan found no matches. No installed skins or private runtime logs are added to the release package. Latest functional acceptance remains the 25 selector/sidebar and ten readable-preview scenarios; earlier tests retain their recorded scopes. Repository visibility and release publication are verified externally after this documentation checkpoint.
 

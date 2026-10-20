@@ -4,7 +4,7 @@ A visual Windows skin editor for MediaPortal 1, built around visual editing and 
 
 ## Download
 
-Get the portable Windows ZIP and SHA256 checksum from [Releases](https://github.com/gheitmann/MP1-Skin-Studio/releases). Extract the complete archive and run `MP1SkinStudio.exe`. Windows and .NET Framework 4.x are required. The package includes twelve demo scenes and a quick start guide.
+Get the portable Windows ZIP and SHA256 checksum from [v0.9.0-preview.1](https://github.com/gheitmann/MP1-Skin-Studio/releases/tag/v0.9.0-preview.1). Extract the complete archive and run `MP1SkinStudio.exe`. Windows and .NET Framework 4.x are required. The package includes twelve demo scenes and a quick start guide.
 
 This preview provides a practical visual guide; rendering remains approximate. Start from an independent skin copy using **Copy skin …**. See [release notes](docs/RELEASE_NOTES.md) and [practical scope](docs/RELEASE_READINESS.md).
 
