@@ -176,6 +176,7 @@ namespace MP1SkinStudio
             if(sources.Length!=1)throw new InvalidOperationException("The simulated focus is missing or ambiguous.");
             var mappedSource=sources[0];
             if(mappedSource.Get("type")=="facadeview"){var view=CollectionSettings.Template(this,mappedSource,Editor.Collection.Mode);if(view!=null&&ControlId(view)==ControlId(mappedSource))mappedSource=view;}
+            PreviewControlActions.RequireNavigation(mappedSource,direction);
             string mapping=mappedSource.Resolved(direction).Trim();
             bool gridSource=GeometricNavigationSource(sources[0]);
             var target=mapping.Length==0||mapping=="0"?(gridSource?GridNavigationTarget(state,sources[0],direction):StackNavigationTarget(state,sources[0],direction)):NavigationTarget(sources[0],direction);int before=state.FocusId;

@@ -2,7 +2,13 @@
 
 Date: October 20, 2026. Imported version: 0.9.
 
-## Latest source milestone: clean startup and extracted-package acceptance
+## Latest source milestone: honest slider and spin arrow limits
+
+October 20, 2026: preview arrows no longer treat every slider/spin XML link as a reachable runtime navigation edge. Slider Left/Right remains reserved for unsimulated value adjustment; spin arrows on its orientation axis remain unverified without inner-button/value state. Unknown/dynamic spin orientation blocks all arrows. Explicit cross-axis routes retain existing target checks; raw navigation editing/audit and exports remain intact. Ctrl+F8 now explains missing slider/spin rendering and interaction. Checkmark findings now have a specific message rather than the generic text label.
+
+Fresh validation: 378 core checks, ten complete real Titan edit/save/reopen/export/normal and restored Undo/Redo workflows, 28 accepted explicit routes, 92 guarded routes and 12 unchanged original XML hashes. Sixteen synthetic Windows canvas arrow events verify unchanged focus/signature/status on guards, working cross-axis links, informational diagnostics and saved focus. All twelve extracted-package demo workflows passed again, with 29 unchanged payload hashes. The preceding 204 UI and twelve clean-session checks remain historical; unchanged broad UI suites were not repeated. No new attended input or installed-client run. See [control-action validation](Validation/Control-Actions/README.md).
+
+## Previous source milestone: clean startup and extracted-package acceptance
 
 October 20, 2026: opening a skin/project now captures its baseline after initial designer selection, including fallback focus on pages without defaultcontrol. This removes a false unsaved marker while retaining later focus/view/XML save detection. A viewport regression assertion covers clean initial focus. The overlap-selection UI assertion now checks unchanged XML plus correct persisted focus, rather than wrongly requiring all editor metadata to stay unchanged when selecting another focusable control.
 
@@ -126,7 +132,7 @@ October 19, 2026: static known-content conditions and nested localization now wo
 
 The owner prioritizes practical edit/save/reopen/export workflows and substantial autonomous work blocks. Routine follow-up steps do not require another continuation prompt. Necessary checks run at integrated milestones.
 
-Current validation: 204 fresh automated UI checks plus twelve packaged demo workflows and twelve clean-session checks passed. All 29 accepted package payload hashes remained unchanged. The preceding 370 core/model checks, Titan matrices and attended/client acceptance are historical; no new client run occurred.
+Current validation: 378 fresh core checks, ten Titan control-action workflows, sixteen targeted Windows form arrow events and twelve extracted-package demo workflows passed. The real matrix accepted 28 cross-axis explicit routes and guarded 92 routes; twelve original XML hashes stayed unchanged. Prior broad UI/clean-session, native-math and attended/client reports remain historical.
 
 Next core work is broader real-page preview fidelity and navigation coverage, particularly additional focusable control types, other facade types and plugin states, while retaining duplicate-ID uncertainty. Existing samples make BasicHome, Settings and Video useful without claiming complete runtime equivalence. Masks, animation, full geometric navigation and plugin-specific values remain approximate or unresolved. Continue real-skin edit/save/reopen/export acceptance around any such changes, preserving original files. Auxiliary global-style and cross-group movement tools remain lower priority.
 

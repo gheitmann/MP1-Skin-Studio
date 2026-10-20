@@ -19,7 +19,7 @@ Visual position, size, text and texture editing; multiple selection and alignmen
 
 ## Validation
 
-Latest checkpoint (October 20): **204 automated Windows-form UI checks, twelve packaged demo workflows and twelve clean-session checks passed** using the extracted review build. Initial fallback selection no longer falsely marks a freshly opened skin/project as unsaved. All 29 payload originals stayed unchanged. See [package readiness](Validation/Package-Readiness/README.md) and STATUS.md. The preceding 370 core/model checks and Titan/attended reports remain historical; no new installed-client run occurred.
+Latest checkpoint (October 20): **378 core checks, ten Titan control-action workflows, sixteen targeted Windows form arrow events and twelve extracted-package demo workflows passed**. Unsupported slider/spin value axes no longer follow misleading XML links; cross-axis explicit routes retain normal validation. Original files remain unchanged. See [control-action validation](Validation/Control-Actions/README.md) and STATUS.md. Earlier broad UI/clean-session and attended/client reports remain historical; no new installed-client run occurred.
 
 
 Historical reports under `Validation` record 189 core checks, 185 UI checks, 602 Titan page/theme variants and ten direct checks against original MP1 StackLayout classes. These counts were imported from the saved release package and do not imply that all tests were rerun during import. A fresh build succeeded during import. The English migration also passed 189 core checks and 185 UI checks; fresh reports are in [Validation/English-Migration](Validation/English-Migration).

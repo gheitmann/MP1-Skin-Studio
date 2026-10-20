@@ -68,7 +68,7 @@ namespace MP1SkinStudio
             string details=String.Join("\r\n",notes.OrderBy(n=>n,StringComparer.OrdinalIgnoreCase));
             if(details.Length==0)details="This dependency is cyclic, exceeds preview limits, or uses syntax/content not supported by the bounded preview. No runtime value was guessed.";
             return new SkinIssue{Code=code,ControlKey=control.Key,ControlName=control.Name,Property=property,Source=control.Source.RelativePath,Line=line,Information=true,
-                Message=code=="PREVIEW_CONDITION"?"Visibility is unverified in the current sample state.":code=="PREVIEW_IMAGE_LAYOUT"?"Image fitting or alignment is unverified; an approximate fit is shown.":code=="PREVIEW_GEOMETRY"?"Image position uses an unverified property binding; the XML fallback is shown.":code=="PREVIEW_ARTWORK"?"Artwork is unavailable or unverified in the current sample state.":"Text is unverified in the current sample state.",
+                Message=code=="PREVIEW_INTERACTION"?"Control value interaction and rendering are not simulated.":code=="PREVIEW_CHECKMARK"?"Checkmark selection or layout is unverified.":code=="PREVIEW_CONDITION"?"Visibility is unverified in the current sample state.":code=="PREVIEW_IMAGE_LAYOUT"?"Image fitting or alignment is unverified; an approximate fit is shown.":code=="PREVIEW_GEOMETRY"?"Image position uses an unverified property binding; the XML fallback is shown.":code=="PREVIEW_ARTWORK"?"Artwork is unavailable or unverified in the current sample state.":"Text is unverified in the current sample state.",
                 Detail="Expression / text:\r\n"+Short(value)+"\r\n\r\nInputs and dependencies to inspect:\r\n"+details+"\r\n\r\nElement source: "+control.Source.RelativePath+":"+line+". Inherited expressions are listed above; their include locations may differ. Original XML is unchanged. An unverified preview is not proof of a MediaPortal error."};
         }
         public static SkinAuditReport Run(SkinProject project,PreviewState state)
@@ -128,6 +128,12 @@ namespace MP1SkinStudio
                 int width,height;if(CheckmarkPresentation.Layout(control,out width,out height)&&CheckmarkPresentation.Selected(control,state).HasValue&&state.Label(control,control.Get("label")).Length<=8192)continue;
                 var notes=new[]{"Checkmark selection requires a known true/false result; unknown selection does not display a guessed mark. Configure Sample Data for runtime expressions.","markWidth/markHeight require static integers from 0 to 8192; align supports left/right. Activation, runtime toggles and click actions are not executed."};
                 report.Issues.Add(Issue(control,"selected","PREVIEW_CHECKMARK",String.Join("; ",new[]{"selected","markWidth","markHeight","align"}.Select(k=>k+"="+control.Get(k))),notes,lineCache));
+                if(report.Issues.Count>=1024){report.Issues.Add(new SkinIssue{Code="PREVIEW_LIMIT",Information=true,Message="The preview report is limited to 1024 element findings.",Detail="Inspect a smaller page before checking again."});return report;}
+            }
+            foreach(var control in project.Controls.Where(c=>PreviewControlActions.Limited(c)&&state.Visible(c)==true&&!project.IsEditorHidden(c)))
+            {
+                var notes=new[]{"Slider/spin rendering and runtime value interaction are not simulated. No control values or click callbacks are executed.","Slider Left/Right is reserved for runtime value changes. Spin arrows on the configured orientation axis depend on inner-button/value state and remain unverified; an unknown orientation blocks all arrows.","Explicit mappings across the other axis still use normal target visibility and ID checks. The XML navigation editor/audit continues to expose raw links; a raw link is not a promise that the runtime action reaches it."};
+                report.Issues.Add(Issue(control,control.Get("type")=="spincontrol"?"orientation":"spintype","PREVIEW_INTERACTION",control.Get("type")+"; orientation="+control.Get("orientation"),notes,lineCache));
                 if(report.Issues.Count>=1024){report.Issues.Add(new SkinIssue{Code="PREVIEW_LIMIT",Information=true,Message="The preview report is limited to 1024 element findings.",Detail="Inspect a smaller page before checking again."});return report;}
             }
             return report;

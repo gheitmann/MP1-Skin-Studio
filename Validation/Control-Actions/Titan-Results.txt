@@ -1,0 +1,21 @@
+GUARD Default SettingsGUI.xml: Spin-control arrows on this axis depend on its runtime inner-button and value state. That interaction is not simulated; focus and XML remain unchanged.
+PASS Default-SettingsGUI: 4 accepted routes, 8 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 2
+GUARD Default SettingsOSD.xml: Spin-control arrows on this axis depend on its runtime inner-button and value state. That interaction is not simulated; focus and XML remain unchanged.
+PASS Default-SettingsOSD: 1 accepted routes, 3 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 2
+GUARD Default SettingsSlideShow.xml: Spin-control arrows on this axis depend on its runtime inner-button and value state. That interaction is not simulated; focus and XML remain unchanged.
+PASS Default-SettingsSlideShow: 6 accepted routes, 6 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 2
+GUARD Default TVOSD.xml: Slider Left/Right adjusts a runtime value. Value interaction is not simulated; focus and XML remain unchanged.
+PASS Default-TVOSD: 3 accepted routes, 25 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 800
+GUARD Default videoOSD.AudioMenu.xml: Slider Left/Right adjusts a runtime value. Value interaction is not simulated; focus and XML remain unchanged.
+PASS Default-videoOSD.AudioMenu: 0 accepted routes, 4 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 500
+GUARD Christmas SettingsGUI.xml: Spin-control arrows on this axis depend on its runtime inner-button and value state. That interaction is not simulated; focus and XML remain unchanged.
+PASS Christmas-SettingsGUI: 4 accepted routes, 8 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 2
+GUARD Christmas SettingsOSD.xml: Spin-control arrows on this axis depend on its runtime inner-button and value state. That interaction is not simulated; focus and XML remain unchanged.
+PASS Christmas-SettingsOSD: 1 accepted routes, 3 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 2
+GUARD Christmas SettingsSlideShow.xml: Spin-control arrows on this axis depend on its runtime inner-button and value state. That interaction is not simulated; focus and XML remain unchanged.
+PASS Christmas-SettingsSlideShow: 6 accepted routes, 6 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 2
+GUARD Christmas TVOSD.xml: Slider Left/Right adjusts a runtime value. Value interaction is not simulated; focus and XML remain unchanged.
+PASS Christmas-TVOSD: 3 accepted routes, 25 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 800
+GUARD Christmas videoOSD.AudioMenu.xml: Slider Left/Right adjusts a runtime value. Value interaction is not simulated; focus and XML remain unchanged.
+PASS Christmas-videoOSD.AudioMenu: 0 accepted routes, 4 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 500
+SUMMARY 10 complete real Titan workflows; 28 accepted routes (0 automatic, 28 explicit); 92 guarded routes; 12 distinct loaded original XML hashes unchanged.

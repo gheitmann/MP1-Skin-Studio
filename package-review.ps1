@@ -43,12 +43,13 @@ use Revert Inputs to discard unapplied fields; test Undo/Redo; save an editor
 project, reopen it and export changes as ZIP. Use separate skin copies for real
 editing and retain original files. The preview remains approximate.
 
-Fresh extracted-package acceptance covers 204 automated Windows-form UI checks,
-twelve complete demo edit/save/reopen/export/undo workflows and twelve clean
-open/zoom/Fit/save/reopen checks. All 29 accepted payload hashes stayed unchanged.
-A false initial unsaved marker was fixed. Final metadata/guide updates leave the
-accepted executable and samples unchanged. The preceding 370 core/model checks
-and real Titan matrices are historical, along with attended/client acceptance.
+Fresh validation covers 378 core checks, ten real Titan control-action workflows,
+sixteen targeted synthetic Windows arrow events and twelve package demo workflows.
+The Titan matrix accepted 28 cross-axis explicit routes and guarded 92 routes;
+12 original XML hashes stayed unchanged. All 29 accepted payload hashes stayed
+unchanged during package workflows. Slider/spin value interaction is not simulated;
+unsupported axes now explain why focus stays unchanged. The previous broad 204 UI
+and twelve clean-session checks are historical, as is attended/client acceptance.
 No new installed MediaPortal client run was performed. See the user guide for
 supported preview navigation and remaining rendering limitations.
 "@

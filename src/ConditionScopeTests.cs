@@ -22,6 +22,7 @@ namespace MP1SkinStudio
             RunNestedNavigationTests(root);
             RunPlainNavigationTests(root);
             RunCheckmarkTests(root);
+            RunControlActionTests(root);
             Test("Boolean expression include conditions retain scope and unknown values",()=>
             {
                 var p=ScopeFixture(root,"expression-condition","<window><define>#mode:Home</define><controls><include condition=\"#(eq(#mode,'Home'))\" otherwise='alternate.xml'>part.xml</include></controls></window>","<window><define>#mode:Other</define><controls><control><type>label</type><id>8</id><visible>#(not(eq(#mode,'Home')))</visible></control></controls></window>","<window><controls><control><type>label</type><id>9</id></control></controls></window>");
