@@ -82,6 +82,14 @@ namespace MP1SkinStudio
             return (paintingLayout??new StackPreview(Project,State)).Bounds(c);
         }
         StackPreview paintingLayout;
+        // Reuse derived geometry only while inspecting one coherent input state.
+        // Callbacks that may change focus or XML run after this scope has ended.
+        T WithMeasuredLayout<T>(Func<T> inspect)
+        {
+            var previous=paintingLayout;
+            try{if(paintingLayout==null)paintingLayout=new StackPreview(Project,State);return inspect();}
+            finally{paintingLayout=previous;}
+        }
         RectangleF EffectiveBounds(SkinControl c) {RectangleF r;return dragging&&dragRects.TryGetValue(c.Key,out r)?r:BoundsOf(c);}
         bool Drawn(SkinControl c)
         {
@@ -457,7 +465,8 @@ namespace MP1SkinStudio
             if(project==null)return;
             var lines=new List<string>{"Static GDI+ preview: font families and 576-line scaling from fonts.xml; unavailable families are substituted. Animations and masks remain unverified."};
             if(project.Controls.Any(CollectionSettings.IsCollection))lines.Add("Collection: "+CollectionSettings.EffectiveMode(project)+", "+project.Editor.Collection.Items.Count+" sample items. Coverflow is a static approximation without a 3D engine.");
-            int unknown=project.Controls.Count(c=>state.Visible(c)==null),hidden=project.Controls.Count(c=>state.Visible(c)==false);
+            int unknown=0,hidden=0;
+            foreach(var control in project.Controls){bool? visible=state.Visible(control);if(visible==null)unknown++;else if(visible==false)hidden++;}
             lines.Add("Conditions: "+hidden+" hidden, "+unknown+" unresolved. Unknown conditions remain unchanged in XML.");
             lines.Add("Sample data: "+project.Editor.Preview.Values.Count+" custom sample values; "+state.Plugins.Count+" plugin states active; "+project.Editor.Preview.Artwork.Count+" artwork samples. Adjust through Sample Data or Sample Artwork. Images come from Media; missing images appear only with Show unverified content.");
             if(selected!=null&&!String.IsNullOrEmpty(selected.Get("visible")))lines.Add("Selection · visible: "+selected.Get("visible"));

@@ -1,0 +1,29 @@
+myHome.xml controls=262
+layout median_ms=2,29 max_ms=3,42
+overlap median_ms=13,83 max_ms=18,02
+visibility x2 median_ms=10,44 max_ms=11,62
+diagnostics median_ms=5,50 max_ms=5,94
+tree median_ms=72,20 max_ms=76,13
+select median_ms=31,44 max_ms=39,06
+UpdateResetTools median_ms=1,50 max_ms=1,73
+UpdateSelectionTools median_ms=1,56 max_ms=1,82
+UpdatePreviewTree median_ms=19,29 max_ms=19,83
+SyncElementTreeSelection median_ms=0,06 max_ms=0,17
+caption median_ms=0,06 max_ms=0,47
+paint median_ms=105,45 max_ms=218,80
+PASS hit equivalence and scope cleanup: initial, focus, sample, geometry edit, Undo
+MediaTipOverlay.xml controls=42
+layout median_ms=0,06 max_ms=0,10
+overlap median_ms=1,09 max_ms=3,63
+visibility x2 median_ms=0,04 max_ms=0,07
+diagnostics median_ms=0,06 max_ms=0,43
+tree median_ms=9,15 max_ms=10,38
+select median_ms=5,58 max_ms=5,69
+UpdateResetTools median_ms=0,46 max_ms=7,89
+UpdateSelectionTools median_ms=0,48 max_ms=0,53
+UpdatePreviewTree median_ms=0,22 max_ms=0,37
+SyncElementTreeSelection median_ms=0,03 max_ms=0,04
+caption median_ms=0,06 max_ms=0,25
+paint median_ms=16,91 max_ms=28,91
+PASS hit equivalence and scope cleanup: initial, focus, sample, geometry edit, Undo
+PASS 488 installed XML hashes unchanged.

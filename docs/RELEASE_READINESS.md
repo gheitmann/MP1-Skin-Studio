@@ -18,6 +18,14 @@ instructions; they are never automatically installed into a client skin.
 The candidate is suitable for reviewing these workflows against isolated copies.
 It is not a complete MediaPortal renderer or an unrestricted compatibility claim.
 
+## Responsiveness
+
+Native element-tree updates now batch painting and leave unchanged labels and
+colors intact. Pointer inspections share derived layout within one operation;
+the measurement ends before callbacks can change focus or XML. No persistent
+condition cache is introduced. See the repository responsiveness report for
+local baseline measurements, current acceptance and remaining painting costs.
+
 ## Evidence and remaining boundaries
 
 The previous attended review covered the executable from source 07e8ef2:
@@ -32,21 +40,21 @@ Home/Video sample. It is not general release publication or proof of every skin.
 For another intended edit, page, theme or plugin, use the review procedure below
 and obtain the owner's final visual acceptance of that actual result.
 
-The current readable-preview milestone adds Edit layout, temporary selection/
+The included readable-preview milestone adds Edit layout, temporary selection/
 group isolation and diagnostic All layers above the canvas. Recognized
 MediaTipOverlay.xml variants show one explicit sample block. Short example
 captions preserve XML bindings and continue reporting unresolved diagnostics.
 View/example state is persisted separately from XML; isolation is temporary.
 
-Fresh extracted-package checks: 411 core checks (nine new readability tests),
+Fresh extracted-package checks: 411 core checks, 205 broad UI assertions,
 ten targeted real-DefaultWideHD form scenarios, twelve complete demo workflows
 and twelve clean-session workflows. All 488 installed XML, 26 demo and 31 package
 payload hashes remain unchanged. Application-generated renders cover every
 MediaTip example, diagnostic/solo modes and minimum-size controls. The repository
 record distinguishes synthetic forms from any attended Windows observation.
 
-Prior twelve integrated-page, ten XML-review, 18 transition, eight startup, seven
-large-menu and 204 broad UI scenarios remain historical. Runtime/client
+Prior twelve integrated-page, ten XML-review, 18 transition, eight startup and seven
+large-menu scenarios remain historical. Runtime/client
 acceptance of the newly changed presentation is not claimed.
 
 Preview masks/animations, plugin-dependent values, playback and some control

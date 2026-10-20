@@ -51,6 +51,11 @@ show the first difference; Previous/Next reaches all large-file sections. Exact
 byte hashes and refreshable source checks identify drift, missing or locked XML.
 Pending fields and preview-only state are excluded. Close review to export.
 
+Element selection now batches tree updates and skips unchanged labels/colors.
+Pointer picking reuses one measured layout per inspection and releases it before
+callbacks; focus and XML changes remain current. Diagnostics evaluate visibility
+in one pass. Canvas painting remains an area for further profiling.
+
 PAGES / XML is a permanent sidebar list with filename filter and hover-wheel
 scrolling. View above the canvas now offers Edit layout, Isolate selection and
 All layers. Edit layout uses short example captions while retaining bindings.
@@ -59,7 +64,7 @@ Pictures, Folder and Radio instead of stacking all five text blocks. These are
 editing examples, not live plugin values. Isolation is temporary; view/example
 settings persist in the editor project. XML/conditions/export bytes stay intact.
 
-Fresh extracted-package checks: 411 core checks, ten readable-preview scenarios,
+Fresh extracted-package checks: 411 core, 205 broad UI, ten readable-preview scenarios,
 twelve complete demo workflows, twelve clean-session workflows and 31 unchanged
 payload hashes. All 488 installed fixture XML files are unchanged. Prior broad
 UI/browser/review/transition/startup and large-menu reports remain historical.
@@ -68,7 +73,7 @@ See docs/RELEASE_READINESS.md for recognition limits and practical scope.
 The previous attended client checkpoint used source 07e8ef2: a real Titan Video
 width edit persisted, exported exactly and appeared in a complete isolated MP1
 skin with its shared header and Left/Right menu navigation. Titan was restored;
-all 2,050 original hashes stayed unchanged. Previous broad 204 UI checks remain historical. See docs/RELEASE_READINESS.md for scope and reviewing
+all 2,050 original hashes stayed unchanged. See docs/RELEASE_READINESS.md for scope and reviewing
 actual exports. No installed skin resources are bundled.
 "@
 function Add-ReviewText($Archive, $Name, $Text) {

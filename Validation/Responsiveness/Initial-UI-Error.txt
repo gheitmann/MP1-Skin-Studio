@@ -1,0 +1,5 @@
+System.InvalidOperationException: UI test: Unverified conditions remain visible with dotted markers by default
+   bei MP1SkinStudio.StudioForm.<>c__DisplayClass264.<RunUiSmoke>b__25b(Boolean ok, String name)
+   bei MP1SkinStudio.StudioForm.RunLanguageUiSmoke(String directory, Action`2 verify)
+   bei MP1SkinStudio.StudioForm.RunUiSmoke(String directory)
+   bei PackageAcceptanceHost.Main(String[] args)

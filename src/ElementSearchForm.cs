@@ -32,7 +32,7 @@ namespace MP1SkinStudio
                 foreach(var group in matches.GroupBy(c=>c.Source.RelativePath))
                 {
                     var node=new TreeNode(group.Key+(group.First().Source.Changed?"  *":"")){ForeColor=Color.FromArgb(141,177,211)};
-                    tree.Nodes.Add(node);AddTreeGroup(node,project.Controls.Where(c=>c.Source==group.First().Source).GroupBy(c=>c.Key).Select(g=>g.First()).ToArray(),group.ToArray());
+                    AddTreeGroup(node,project.Controls.Where(c=>c.Source==group.First().Source).GroupBy(c=>c.Key).Select(g=>g.First()).ToArray(),group.ToArray());tree.Nodes.Add(node);
                 }
                 int total=project.Controls.Select(c=>c.Key).Distinct().Count();searchCount.Text=matches.Length+" of "+total+" elements";tree.ShowNodeToolTips=true;SyncElementTreeSelection();
             }
@@ -94,7 +94,7 @@ namespace MP1SkinStudio
         {
             if(Project==null)return new SkinControl[0];UpdateTransform();var point=Logical(location);
             if(point.X<0||point.Y<0||point.X>=Project.Width||point.Y>=Project.Height)return new SkinControl[0];
-            return Project.Controls.Where(c=>Drawn(c)&&BoundsOf(c).Contains(point)).Reverse().GroupBy(c=>c.Key).Select(g=>g.First()).ToArray();
+            return WithMeasuredLayout(()=>Project.Controls.Where(c=>Drawn(c)&&BoundsOf(c).Contains(point)).Reverse().GroupBy(c=>c.Key).Select(g=>g.First()).ToArray());
         }
         bool PickMouseDown(MouseEventArgs e)
         {

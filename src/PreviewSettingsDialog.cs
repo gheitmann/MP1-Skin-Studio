@@ -84,8 +84,16 @@ namespace MP1SkinStudio
         }
         void UpdatePreviewTree()
         {
+            tree.BeginUpdate();
+            try {
             foreach(TreeNode leaf in TreeControlNodes())
-            {var control=leaf.Tag as SkinControl;if(control==null)continue;bool? visible=state.Visible(control);leaf.Text=EditorMark(control)+(visible==false?"○ ":visible==null?"? ":"")+(LayoutTools.IsContainer(control)?"[Group] ":"")+DisplayName(control);leaf.ForeColor=leaf.Name=="search-context"?Color.FromArgb(141,177,211):visible==false?Color.FromArgb(108,125,145):ink;}
+            {
+                var control=leaf.Tag as SkinControl;if(control==null)continue;bool? visible=state.Visible(control);
+                string text=EditorMark(control)+(visible==false?"○ ":visible==null?"? ":"")+(LayoutTools.IsContainer(control)?"[Group] ":"")+DisplayName(control);
+                Color color=leaf.Name=="search-context"?Color.FromArgb(141,177,211):visible==false?Color.FromArgb(108,125,145):ink;
+                if(leaf.Text!=text)leaf.Text=text;if(leaf.ForeColor!=color)leaf.ForeColor=color;
+            }
+            } finally {tree.EndUpdate();}
         }
         public void RenderPreviewSettingsTo(string path){using(var dialog=new PreviewSettingsDialog(project))dialog.RenderTo(path);}
     }

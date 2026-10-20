@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -56,7 +56,7 @@ namespace MP1SkinStudio
             using(var dialog=new TextEditDialog(project.InspectTextEdit(selected),state))
             {dialog.Show(this);Application.DoEvents();bool picked=false;using(var timer=new Timer{Interval=30}){timer.Tick+=(s,e)=>{var picker=Application.OpenForms.OfType<LanguageDialog>().FirstOrDefault();if(picker!=null){timer.Stop();picker.SearchForTest("Settings");picker.AcceptForTest();picked=true;if(picker.DialogResult==DialogResult.None){picker.DialogResult=DialogResult.Cancel;picker.Close();}}};timer.Start();dialog.PickLanguageForTest();timer.Stop();}verify(picked&&!dialog.CanAccept&&dialog.PreviewForTest=="Settings","Language pickers set IDs while preserving replacement protection");dialog.Close();}
             string path=Path.Combine(directory,"Language.mp1skinproj");SaveSession(path);ApplyLanguage(new LanguagePreview());ResumeSession(path);verify(project.Editor.Language.Primary!=null&&selectionName.Text=="Meine Filme"&&!SessionNeedsSaving(),"Saved projects restore preview languages and translated selection");
-            LoadProject(DemoRoot(),"demo.xml");var c=project.Controls.First(x=>x.Name=="Movies");project.Edit(c,new Dictionary<string,string>{{"visible","unknown.condition()"}},"Unknown condition");RefreshProject(c.Key);c=selected;verify(canvas.ExerciseDrawn(c),"Unverified conditions remain visible with dotted markers by default");SetUnresolvedPreview(false);verify(!canvas.ExerciseDrawn(c)&&project.Undo.Count==1,"Unverified states can be hidden from the preview without changing conditions");undo.PerformClick();verify(!project.Dirty&&!project.Editor.ShowUnresolved,"XML undo preserves independently selected preview options");
+            LoadProject(DemoRoot(),"demo.xml");var c=project.Controls.First(x=>x.Name=="Movies");project.Edit(c,new Dictionary<string,string>{{"visible","unknown.condition()"}},"Unknown condition");RefreshProject(c.Key);c=selected;verify(!canvas.ExerciseDrawn(c),"Edit layout hides unverified conditions by default");SetUnresolvedPreview(true);verify(canvas.ExerciseDrawn(c)&&project.Undo.Count==1,"Diagnostic layers reveal unverified conditions without editing XML");SetUnresolvedPreview(false);verify(!canvas.ExerciseDrawn(c)&&project.Undo.Count==1,"Unverified states can be hidden from the preview without changing conditions");undo.PerformClick();verify(!project.Dirty&&!project.Editor.ShowUnresolved,"XML undo preserves independently selected preview options");
             LoadProject(DemoRoot(),"demo.xml");
         }
         public void PrepareLanguagePreview(){LoadProject(DemoRoot(),"demo.language.xml");ApplyLanguage(SelfTests.DemoLanguage());}

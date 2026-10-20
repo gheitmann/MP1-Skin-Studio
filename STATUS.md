@@ -2,7 +2,15 @@
 
 Date: October 20, 2026. Imported version: 0.9.
 
-## Latest source milestone: readable editing views and MediaTip variants
+## Latest source milestone: faster selection and pointer inspection
+
+October 20, 2026: profiling DefaultWideHD identified repeated native element-tree updates as the dominant selection cost. Updates now batch drawing and leave unchanged labels/colors intact. Filtered branches are assembled before native insertion. Diagnostics evaluate visibility once per control. Pointer selection, navigation target picking and overlap lists share one measured layout within an inspection, releasing it before callbacks; focus/sample/XML changes cannot reuse it across events. No persistent visibility cache or source-file changes were introduced.
+
+Fresh extracted-package acceptance: 411 core checks, 205 broad UI assertions, ten DefaultWideHD readability scenarios, twelve complete demo workflows and twelve clean-session workflows passed. All 488 installed XML, 26 demo assets and 31 package payload hashes remained unchanged. The broad UI test now explicitly verifies the clean default and diagnostic layers instead of assuming the pre-readability default.
+
+See [responsiveness validation](Validation/Responsiveness/README.md) for baseline comparisons, current package checks and remaining canvas-painting costs. The readable preview with explicit MediaTip variants remains included. Earlier attended client evidence remains historical.
+
+## Previous source milestone: readable editing views and MediaTip variants
 
 October 20, 2026: integrated View now offers Edit layout, temporary selection/group isolation and diagnostic All layers. New skins open in Edit layout with short unresolved captions and known visibility. Recognized MediaTipOverlay.xml offers Music/Video/Pictures/Folder/Radio examples, displaying one authored block instead of five overlaid sets. Original bindings remain in property fields and exports; runtime conditions and audit uncertainty are not rewritten. View/example state is independently validated and saved in projects; isolation clears on page/theme/session change. Legacy projects retain diagnostic/clean intent. Existing BasicHome/media-folder presets return to Edit layout.
 

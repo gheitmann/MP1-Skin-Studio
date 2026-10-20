@@ -24,11 +24,14 @@ namespace MP1SkinStudio
             if(Project==null||e.Button!=MouseButtons.Left||panning)return;if(AllowGesture!=null&&!AllowGesture())return;Focus();PointF p=Logical(e.Location);
             if(NavigationMode)
             {
-                var target=Project.Controls.LastOrDefault(c=>Drawn(c)&&SkinProject.Focusable(c)&&BoundsOf(c).Contains(p));
+                var target=WithMeasuredLayout(()=>Project.Controls.LastOrDefault(c=>Drawn(c)&&SkinProject.Focusable(c)&&BoundsOf(c).Contains(p)));
                 if(target!=null&&ConnectRequest!=null)ConnectRequest(target);return;
             }
-            resizing=SelectedKeys.Count<=1&&Selected!=null&&Drawn(Selected)&&!Project.IsLocked(Selected)&&Math.Abs(p.X-BoundsOf(Selected).Right)<12/scale&&Math.Abs(p.Y-BoundsOf(Selected).Bottom)<12/scale;
-            var hit=resizing?Selected:Project.Controls.LastOrDefault(c=>Drawn(c)&&!Project.IsLocked(c)&&BoundsOf(c).Contains(p));
+            var hit=WithMeasuredLayout(()=>
+            {
+                resizing=SelectedKeys.Count<=1&&Selected!=null&&Drawn(Selected)&&!Project.IsLocked(Selected)&&Math.Abs(p.X-BoundsOf(Selected).Right)<12/scale&&Math.Abs(p.Y-BoundsOf(Selected).Bottom)<12/scale;
+                return resizing?Selected:Project.Controls.LastOrDefault(c=>Drawn(c)&&!Project.IsLocked(c)&&BoundsOf(c).Contains(p));
+            });
             if(hit==null)return;
             bool toggle=(ModifierKeys&Keys.Control)!=0;
             if(toggle||Selected==null||Selected.Key!=hit.Key)
