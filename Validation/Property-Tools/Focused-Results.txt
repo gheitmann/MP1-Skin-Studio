@@ -1,0 +1,16 @@
+PASS Applicable properties are organized under named groups
+PASS Collapsing a group preserves its unapplied inputs and pending guard
+PASS A draft retained through collapsing applies as one undo step
+PASS Collapsed groups remain collapsed when selecting another element
+PASS Keyboard focus exposes plain-language property help
+PASS Cancelling the font picker leaves fields and XML unchanged
+PASS Choosing a font creates a property draft without mutating XML
+PASS Font changes use the existing apply and byte-preserving undo workflow
+PASS Font preview reports unavailable families, substitute name and actual pixel size
+PASS An empty font filter clears selection without retaining an old preview
+PASS Clearing the filter restores available skin font choices
+PASS A skin without font choices opens safely with no selection
+PASS Invalid font heights use bounded fallback settings without failing
+PASS Installed DefaultWideHD fonts load and report their preview size
+PASS Browsing installed fonts leaves loaded XML unchanged
+PASS 488 installed XML hashes unchanged.

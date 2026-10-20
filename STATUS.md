@@ -2,6 +2,30 @@
 
 Date: October 20, 2026. Imported version: 0.9.
 
+## Latest source milestone: grouped properties and visual font choice
+
+October 20, 2026: started the legacy SkinEditor feature recommendations with
+beginner-oriented property groups and font preview. Applicable fields now appear
+under six collapsible categories, retaining drafts and their apply/reset/binding
+protections when hidden. Group expansion persists during the editor session.
+Keyboard focus and label hover show plain-language help below the properties.
+The font picker filters skin font names/aliases, previews editable sample text
+using canvas font sizing, and reports actual family/style/pixel size and missing
+family substitution. Cancel leaves inputs intact; Use font fills a draft and
+Apply/Undo retains the source-preserving editing path. Shared resources are not
+rewritten. Drag/drop insertion and configurable snapping/separate move/resize
+locks remain subsequent recommendations.
+
+Fresh development acceptance: 430 core checks, 216 broad UI checks (eleven new),
+twelve complete demo workflows and twelve clean-session workflows passed.
+After the final filter label/sample-length/invalid-height polish, fifteen
+targeted property/font cases and 25 selector/scroll/menu cases passed, with all
+488 installed DefaultWideHD XML hashes unchanged. The broad suite precedes that
+small final polish; it was not repeated. Synthetic form renders were inspected;
+no attended desktop interaction or runtime comparison is claimed. The published
+v0.9.0-preview.1 assets/tag remain unchanged. See
+[property tools validation](Validation/Property-Tools/README.md).
+
 ## First public release published: v0.9.0-preview.1
 
 Publication verified on October 20, 2026: the repository is public and [v0.9.0-preview.1](https://github.com/gheitmann/MP1-Skin-Studio/releases/tag/v0.9.0-preview.1) is published as a pre-release. Its tag points to source 633170cbab3aff5ce18c5398cf59c3d4f6c0618b. Both the versioned Windows ZIP and SHA256SUMS.txt are uploaded; GitHub asset digests match the local files. An anonymous repository read and anonymous ZIP download succeeded, and the downloaded ZIP matched SHA256 be50eb6a5cc11f4dab5b469f2d900c48b97f113c3aa6b15f94ac23d70c699706. This post-publication documentation update does not change the release tag or assets. See [publication verification](Validation/First-Public-Release/README.md).

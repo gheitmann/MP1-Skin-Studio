@@ -21,6 +21,11 @@ Demo assets are included under `Samples`. See [User Guide](docs/USER_GUIDE.md) f
 
 ## Features
 
+Current source adds **collapsible property groups with contextual help** and a
+**searchable font picker with sample text, size and substitute-font information**.
+These additions are available in development builds, after the published
+v0.9.0-preview.1. See [property tools validation](Validation/Property-Tools/README.md).
+
 Visual position, size, text and texture editing; multiple selection and alignment; layer ordering and deletion; nested groups, creation from consecutive selections and neutral-group removal; StackLayout and GridLayout previews; undo/redo; project persistence; and XML export. Preview tools include language resources with fallback, simulated states and sample data, plus approximate list, grid, filmstrip and static coverflow rendering.
 
 ## Validation

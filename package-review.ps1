@@ -45,6 +45,12 @@ use Revert Inputs to discard unapplied fields; test Undo/Redo; save an editor
 project, reopen it and export changes as ZIP. Use separate skin copies for real
 editing and retain original files. The preview remains approximate.
 
+Properties are grouped under collapsible headings; hidden inputs retain their
+draft values. Focus a field or hover its label for help beneath the panel.
+Font name / ... opens a searchable sample-text preview with actual font family,
+pixel size and substitution details. Use font creates a draft; Apply commits it.
+These development additions are newer than the published v0.9.0-preview.1.
+
 Review XML changes (Element menu / Ctrl+Shift+E) compares all modified session
 files, including shared/theme/earlier-page XML. Read-only original/edited panes
 show the first difference; Previous/Next reaches all large-file sections. Exact

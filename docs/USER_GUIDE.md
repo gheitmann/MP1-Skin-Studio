@@ -15,6 +15,30 @@ Version 0.9 · October 20, 2026
 See [Quick start](QUICK_START.md) for a complete first workflow, all twelve demo
 scenes and the transition from an editor project to a runtime test copy.
 
+## Grouped properties and font preview
+
+The right-hand properties panel groups fields into Position and size, Text,
+Images and colors, Collection layout, Visibility and state, and Navigation.
+Only applicable fields and groups appear. Click a group heading to collapse or
+expand it; this keeps its unapplied inputs intact. Group choices remain in effect
+while selecting elements in this editor session. Apply Properties and Revert
+Inputs also include fields in collapsed groups.
+
+Focus a field or point at its label to read a short explanation beneath the
+properties. The existing local/inherited source labels and Reset controls remain
+available. Data bindings and locked elements keep their existing protections.
+
+The **…** button beside Font name opens a searchable font picker. It lists skin
+font names and aliases from fonts.xml, previews editable sample text, and shows
+the declared skin height, effective pixel size, font family and style. Sizes use
+the same skin-height conversion as the canvas at 100% scale. If the declared
+font is unavailable to Windows, the dialog names its substitute. Rendering is
+approximate; skin font files are not installed by the picker.
+
+Choose **Use font** to fill the property input, then **Apply Properties** to
+commit it. Cancel leaves the input unchanged. This changes the selected
+element's font reference; shared font definitions are not edited.
+
 ## Open skins, pages and themes
 
 Dropdown fields and their menus share the dark scrollbar colors, with light

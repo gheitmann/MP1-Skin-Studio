@@ -334,7 +334,8 @@ namespace MP1SkinStudio
             var apply=ButtonFor("Apply Properties",Apply,true);apply.Width=150;apply.Height=38;apply.Margin=Padding.Empty;propertyActions.Controls.Add(apply);
             var revert=ButtonFor("Revert Inputs",RevertPropertyInputs);revert.Width=105;revert.Height=38;revert.Margin=new Padding(6,0,0,0);propertyActions.Controls.Add(revert);
             tips.SetToolTip(revert,"Restore the property fields from the current model. Applied XML edits and undo history remain unchanged.");
-            right.Controls.Add(new DarkScrollHost(properties));right.Controls.Add(propHeader);right.Controls.Add(propertyActions);main.Controls.Add(right,2,0);
+            propertyHelp.Dock=DockStyle.Bottom;propertyHelp.Height=88;propertyHelp.ForeColor=muted;propertyHelp.Padding=new Padding(0,6,0,0);propertyHelp.Text="Select a property for help. Collapse groups to keep the panel compact.";
+            right.Controls.Add(new DarkScrollHost(properties));right.Controls.Add(propHeader);right.Controls.Add(propertyHelp);right.Controls.Add(propertyActions);main.Controls.Add(right,2,0);
             status=new Label{Dock=DockStyle.Bottom,Height=31,Padding=new Padding(20,5,0,0),BackColor=panel,ForeColor=muted,Text="Ready"};
             Controls.Add(main);Controls.Add(toolbar);Controls.Add(header);Controls.Add(status);
             tips.SetToolTip(unlock,"Enable only when intentionally replacing an existing #Property or #Define with a local value.");
@@ -389,24 +390,28 @@ namespace MP1SkinStudio
             {canvas.SelectedKeys.Remove(c.Key);c=project.Controls.FirstOrDefault(item=>canvas.SelectedKeys.Contains(item.Key));}
             if(c!=null)canvas.SelectedKeys.Add(c.Key);
             selected=c;canvas.Selected=c;UpdatePreviewModeTools();unlock.Checked=preserveUnlock;canvas.UnlockBindings=preserveUnlock;
+            propertyHelp.Text="Select a property for help. Collapse groups to keep the panel compact.";
             fields.Clear();originals.Clear();touchedFields.Clear();mixedFields.Clear();properties.SuspendLayout();foreach(Control old in properties.Controls.Cast<Control>().ToArray())old.Dispose();properties.Controls.Clear();
             UpdateSelectionTools();
             if(c==null){selectionName.Text="No controls";selectionInfo.Text="This file contains no supported controls.";properties.ResumeLayout();canvas.Invalidate();return;}
             selectionName.Text=(canvas.SelectedKeys.Count>1?canvas.SelectedKeys.Count+" items · ":"")+DisplayName(c);selectionInfo.Text=c.Get("type")+"  ·  ID "+c.Get("id","—")+" (protected)\n"+c.Source.RelativePath+"\n"+(canvas.SelectedKeys.Count>1?"Changes apply to the entire selection":LayoutTools.IsContainer(c)?"Group: select contents through the Element menu":c.AutomaticLayout?"Position controlled by group layout":c.IncludeCondition.Length>0?"Conditional include":"XML source mapped");
             if(canvas.SelectedKeys.Count==1&&SkinCanvas.TextSelection(c))selectionInfo.Text=c.Get("type")+" · ID "+c.Get("id","—")+" · "+c.Source.RelativePath+"\nText outline follows the caption.\nSet Width / Height in Properties.";
             tips.SetToolTip(selectionInfo,c.Source.Path+"\n"+c.IncludeCondition);
-            for(int i=0;i<editable.Length;i++)
+            string lastGroup=null;
+            foreach(int i in Enumerable.Range(0,editable.Length).OrderBy(index=>Array.IndexOf(PropertyPresentation.Groups,PropertyPresentation.Group(editable[index]))))
             {
                 string key=editable[i];var collectionProperty=CollectionProperties.Find(key);
                 if(ImagePresentation.BooleanFields.Contains(key)&&SelectedControls().Any(item=>item.Get("type")!="image"))continue;
                 if(CheckmarkPresentation.Fields.Contains(key)&&SelectedControls().Any(item=>item.Get("type")!="checkmark"))continue;
                 if(collectionProperty!=null&&SelectedControls().Any(item=>!collectionProperty.AppliesTo(item)))continue;
-                var row=new Panel{Width=251,Height=72,Margin=new Padding(0,0,0,3)};
+                string group=PropertyPresentation.Group(key);if(group!=lastGroup){AddPropertyGroup(group);lastGroup=group;}
+                var row=new Panel{Width=251,Height=72,Margin=new Padding(0,0,0,3),Tag="property-group:"+group,Visible=!collapsedPropertyGroups.Contains(group)};
                 string propertyLabel=labels[i];if(SelectedControls().All(item=>item.Get("type")=="image")){if(key=="align")propertyLabel="Horizontal image alignment";if(key=="valign")propertyLabel="Vertical image alignment";}
                 var label=new Label{Text=propertyLabel,ForeColor=muted,AutoSize=true,Location=new Point(0,0)};row.Controls.Add(label);
                 bool mixed=SelectedControls().Any(item=>item.Get(key)!=c.Get(key));
                 if(mixed)mixedFields.Add(key);
                 var box=new TextBox{Text=mixed?"":c.Get(key),Width=247,Location=new Point(0,24),BackColor=Color.FromArgb(20,26,35),ForeColor=ink,BorderStyle=BorderStyle.FixedSingle};row.Controls.Add(box);
+                box.AccessibleName=propertyLabel;box.Enter+=(s,e)=>propertyHelp.Text=PropertyPresentation.Help(key);label.MouseEnter+=(s,e)=>propertyHelp.Text=PropertyPresentation.Help(key);tips.SetToolTip(label,PropertyPresentation.Help(key));
                 box.TextChanged+=(sender,args)=>{touchedFields.Add(key);UpdateResetTools();if(project!=null&&!loading){UpdateProjectCaption();export.Enabled=project.Dirty||PendingProperties();}};
                 AddPropertyResetButton(row,key);
                 if(new[]{"textcolor","colordiffuse","font","align","textalign","textvalign","valign","texture","textureFocus","textureNoFocus","textureCheckmark","textureCheckmarkNoFocus","disabledcolor"}.Contains(key)||ImagePresentation.BooleanFields.Contains(key)||key=="selected")
@@ -418,6 +423,10 @@ namespace MP1SkinStudio
                         if(propertyKey.StartsWith("texture",StringComparison.Ordinal))
                         {
                             Attempt(()=>{using(var browser=new TextureBrowser(project,target.Text))if(browser.ShowDialog(this)==DialogResult.OK)target.Text=browser.SelectedPath;});
+                        }
+                        else if(propertyKey=="font")
+                        {
+                            Attempt(()=>{using(var dialog=new FontPickerDialog(project,target.Text,ReadablePreview.Caption(state,selected,false)))if(dialog.ShowDialog(this)==DialogResult.OK)target.Text=dialog.SelectedFontName;});
                         }
                         else if(propertyKey=="textcolor"||propertyKey=="colordiffuse"||propertyKey=="disabledcolor")
                         {
@@ -443,7 +452,7 @@ namespace MP1SkinStudio
                 if(mixed)origin="Mixed values · set for all";
                 var source=new Label{Text=origin,ForeColor=value!=null&&value.Local?Color.FromArgb(110,176,205):Color.FromArgb(124,141,160),AutoEllipsis=true,Width=247,Height=17,Location=new Point(0,50),Font=new Font("Segoe UI",8)};row.Controls.Add(source);
                 fields[key]=box;originals[key]=box.Text;properties.Controls.Add(row);
-                tips.SetToolTip(box,key+"\n"+origin+(value!=null&&value.Expression.Length>0?"\nProperty expression: "+value.Expression+"\nAdjust Sample Data to inspect this protected binding.":"")+(key=="visible"?"\nAn empty condition adds no restriction; parent and include conditions still apply. Unsupported runtime expressions remain unresolved in the preview and are preserved in XML.":"")+(c.IsBound(key)&&!(value!=null&&value.Expression.Length>0)?"\n#Bindings are replaced only with explicit approval.":""));
+                tips.SetToolTip(box,PropertyPresentation.Help(key)+"\n"+key+" · "+origin+(value!=null&&value.Expression.Length>0?"\nProperty expression: "+value.Expression+"\nAdjust Sample Data to inspect this protected binding.":"")+(c.IsBound(key)&&!(value!=null&&value.Expression.Length>0)?"\n#Bindings are replaced only with explicit approval.":""));
             }
             properties.ResumeLayout();UpdateProtectionTools();int id;if(SkinProject.Focusable(c)&&Int32.TryParse(c.Get("id"),out id)&&id>0)state.SetFocus(id);
             UpdatePreviewTree();SyncElementTreeSelection();

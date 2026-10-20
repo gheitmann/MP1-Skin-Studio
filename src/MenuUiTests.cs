@@ -15,8 +15,9 @@ namespace MP1SkinStudio
             page.SelectedIndex=page.FindStringExact("demo.xml");Application.DoEvents();
             verify(project.Page=="demo.xml"&&page.Items.Count==allPageNames.Length,"Repeated integrated page selection retains the complete file list");
             SelectControl(project.Controls.First(c=>c.Get("description")=="Movies"));
-            var picker=fields["font"].Parent.Controls.OfType<Button>().First(b=>b.Tag==null);picker.PerformClick();var fontMenu=StudioMenus.PeekForTest(this,"property-picker");fontMenu.ChooseForTest(0);Application.DoEvents();
-            verify(fields["font"].Text==project.FontNames[0]&&!fontMenu.IsDisposed,"Font menus select entries and close normally");
+            RunPropertyToolsUiSmoke(verify);
+            var picker=fields["textalign"].Parent.Controls.OfType<Button>().First(b=>b.Tag==null);picker.PerformClick();var alignmentMenu=StudioMenus.PeekForTest(this,"property-picker");alignmentMenu.ChooseForTest(0);Application.DoEvents();
+            verify(fields["textalign"].Text=="left"&&!alignmentMenu.IsDisposed,"Alignment menus select entries and close normally");
             SelectControl(selected);var resetAnchor=fields["width"].Parent.Controls.OfType<Button>().First(b=>Convert.ToString(b.Tag)=="reset:width");resetAnchor.PerformClick();var resetMenu=StudioMenus.PeekForTest(this,"property-reset");resetMenu.ChooseForTest(resetMenu.Items.Count-1);Application.DoEvents();
             verify(selected.Node.Child("width")==null&&resetAnchor.IsDisposed&&!resetMenu.IsDisposed,"Reset menus survive rebuilding their own anchor button");undo.PerformClick();
             int before=project.Controls.Count;ShowInsertMenu(canvas);var insertMenu=StudioMenus.PeekForTest(this,"insert");insertMenu.ChooseForTest(1);Application.DoEvents();
