@@ -2,7 +2,13 @@
 
 Date: October 20, 2026. Imported version: 0.9.
 
-## Latest source milestone: copy a skin as an independent new base
+## Latest source milestone: choose another skin folder from the dropdown
+
+October 20, 2026: added Select different Skin Folder at the bottom of SKIN, separated from discovered skins. It opens the existing folder picker at the current skin and reuses pending-property and save/discard/cancel guards. The action is not stored or selected as a skin. Theme choices remain unchanged.
+
+Fresh validation: 25 focused skin/sidebar/menu/scroll scenarios passed, including footer placement, rebuilding without duplicates and independent theme choices. All 488 installed XML hashes remained unchanged. Earlier 430 core, copy/dialog, complete-skin and package workflow results remain historical for this localized menu change. See [folder-action validation](Validation/Skin-Folder-Action/README.md).
+
+## Previous source milestone: copy a skin as an independent new base
 
 October 20, 2026: Copy skin beside SKIN opens a dark dialog for a new folder name and destination parent. It copies every skin file and empty subfolder, including images, fonts and themes. Applied XML changes can be included (default) or the disk version can be used. Work runs on a background task with a cancellable progress indicator. The source, current editor state and undo history remain unchanged. Existing targets and destinations inside the source are rejected; links are rejected, edited-source conflicts stop the copy, and failed/cancelled staging folders are removed. The completed skin is validated before publication and registered in the session dropdown, including external destinations. Optional opening uses existing pending-input/save/discard/cancel protections and retains the current page/theme; editor-only settings and undo history stay with the original session.
 

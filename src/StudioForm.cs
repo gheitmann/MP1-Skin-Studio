@@ -19,6 +19,7 @@ namespace MP1SkinStudio
         readonly string menuKey="choice:"+Guid.NewGuid().ToString("N");
         public event EventHandler SelectedIndexChanged;
         public event EventHandler Opening;
+        public event Action<ContextMenuStrip> PopulateActions;
         public object SelectedItem {get{return index>=0&&index<Items.Count?Items[index]:null;}}
         public int SelectedIndex
         {
@@ -41,6 +42,7 @@ namespace MP1SkinStudio
             try
             {
                 for(int i=0;i<Items.Count;i++){int chosen=i;var item=(ToolStripMenuItem)menu.Items.Add(Items[i].ToString().Replace("&","&&"),null,(s,e)=>SelectedIndex=chosen);item.Checked=i==index;}
+                if(PopulateActions!=null)PopulateActions(menu);
             }
             finally{menu.ResumeLayout(true);}
             menu.Show(this,new Point(0,Height));return menu;
@@ -272,6 +274,7 @@ namespace MP1SkinStudio
             page.SelectedIndexChanged+=(s,e)=>ChooseIntegratedPage();
             theme.SelectedIndexChanged+=(s,e)=>{if(!loading&&project!=null)Attempt(ChangeSelectedTheme);};
             skinPicker.Opening+=(s,e)=>RefreshSkinChoices();skinPicker.SelectedIndexChanged+=(s,e)=>{if(!loading)Attempt(ChooseSkin);};
+            skinPicker.PopulateActions+=menu=>{menu.Items.Add(new ToolStripSeparator());menu.Items.Add("Select different Skin Folder …",null,(s,e)=>Attempt(OpenFolder));};
             FormClosing+=(s,e)=>{if(!CanLeaveSession("close the editor"))e.Cancel=true;};
             if(Directory.Exists(root))LoadProject(root,"demo.xml");
         }
@@ -339,7 +342,7 @@ namespace MP1SkinStudio
         public static string DemoRoot(){return System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"Samples","Titan-Sample");}
         bool CanSwitch(){if(PendingProperties()){ShowNotice("Apply pending property edits or restore their previous values before switching sessions.");return false;}return CanLeaveSession("switch sessions");}
         void OpenFolder()
-        {using(var d=new FolderBrowserDialog{Description="Choose a skin directory containing references.xml, fonts.xml and Media",ShowNewFolderButton=false})if(d.ShowDialog()==DialogResult.OK&&CanSwitch())LoadProject(d.SelectedPath,null);}
+        {using(var d=new FolderBrowserDialog{Description="Choose a skin directory containing references.xml, fonts.xml and Media",SelectedPath=project==null?"":project.Root,ShowNewFolderButton=false})if(d.ShowDialog(this)==DialogResult.OK&&CanSwitch())LoadProject(d.SelectedPath,null);}
         void OpenXml()
         {using(var d=new OpenFileDialog{Filter="MediaPortal Skin-XML|*.xml",Title="Choose an XML file within the skin directory"})if(d.ShowDialog()==DialogResult.OK&&CanSwitch())LoadProject(System.IO.Path.GetDirectoryName(d.FileName),System.IO.Path.GetFileName(d.FileName));}
         public void LoadProject(string root,string requested)

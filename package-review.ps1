@@ -87,9 +87,12 @@ Copy skin beside SKIN creates a complete independent skin with a new name and
 location, optional applied XML and optional opening. Source files stay unchanged.
 Copying runs in the background with Cancel and never replaces existing folders.
 
-Fresh executable/package checks: 430 core, eleven copy-dialog scenarios,
-twelve complete demo workflows, twelve clean-session workflows and 31 unchanged
-payload hashes. The sidebar suite passed 23 scenarios during this change; a full
+Select different Skin Folder at the bottom of SKIN opens the existing folder
+browser, retaining pending-input and unsaved-session protections.
+
+Fresh focused checks: 25 skin/sidebar/menu/scroll scenarios passed, with all 488
+installed XML hashes unchanged. Earlier acceptance passed 430 core, eleven
+copy-dialog scenarios, twelve demo and twelve clean-session workflows. A full
 DefaultWideHD copy passed all 3,399 original/copy file hashes. Prior readability,
 integrated-page and broad
 UI/browser/review/transition/startup and large-menu reports remain historical.
