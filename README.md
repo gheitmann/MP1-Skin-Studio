@@ -19,7 +19,7 @@ Visual position, size, text and texture editing; multiple selection and alignmen
 
 ## Validation
 
-Latest source checkpoint (October 20): **383 core checks, 144 saved real-Titan finding snapshots, twelve package demo workflows and twelve clean-session workflows passed**. Audit and preview findings now save their displayed filter as text/HTML without changing XML or project state; 45 loaded original XML hashes stayed unchanged. Attended Windows verified opening/canceling the native save dialog. See [finding report validation](Validation/Finding-Reports/README.md). Earlier installed-client and broad UI acceptance remain historical.
+Latest source checkpoint (October 20): **389 core checks and six complete real-Titan export workflows passed**. Exports reject missing/externally edited modified sources, verify generated ZIP bytes before replacement and record original/exported SHA-256 identities in the instructions. All 45 loaded original XML hashes stayed unchanged. See [verified export validation](Validation/Verified-Export/README.md). Earlier Windows, reporting and installed-client acceptance remain historical.
 
 
 Historical reports under `Validation` record 189 core checks, 185 UI checks, 602 Titan page/theme variants and ten direct checks against original MP1 StackLayout classes. These counts were imported from the saved release package and do not imply that all tests were rerun during import. A fresh build succeeded during import. The English migration also passed 189 core checks and 185 UI checks; fresh reports are in [Validation/English-Migration](Validation/English-Migration).

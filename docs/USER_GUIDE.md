@@ -462,3 +462,30 @@ compatibility. Reports are snapshots; rerun Audit or Ctrl+F8 after edits. A
 report saves neither skin XML nor editor-project state. Existing report files
 are replaced only after the complete output was written; a failed save keeps
 the previous report. Only .txt and .html destinations are accepted.
+
+## Verified XML exports and source conflicts
+
+Export Changes as ZIP checks every modified source against the exact original
+bytes loaded by the editor. If that source was externally changed or removed,
+export stops before replacing the destination ZIP. Pending edits and Undo/Redo
+remain available. Save an editor project for recovery, compare with your backup,
+and restore matching original source bytes before exporting that session.
+Saving a project does not merge external edits or make a mismatching source
+compatible; keep both versions for a deliberate comparison.
+
+The export still contains only changed XML plus _SkinStudio-Instructions.txt.
+The instructions now identify the active page/theme, changed-file count and
+each relative path, original/exported byte counts and SHA-256 hashes. Hashes
+cover encoding and BOM. A shared include can affect several pages. No absolute
+working-directory path or preview sample state is added to the instructions.
+
+Before publishing the ZIP, the editor reads every generated entry back and
+compares its exact bytes with the prepared export, then rechecks modified
+source hashes. An existing ZIP is replaced only after those checks succeed.
+Unmodified dependencies are outside this conflict check; external files can
+change afterward. On your separate runtime skin copy, compare the destination
+file with Original SHA256 before applying it and Exported SHA256 afterward.
+Use Windows PowerShell Get-FileHash -LiteralPath <file> -Algorithm SHA256 for
+a byte-level comparison. These hashes identify content; they are neither a
+digital signature nor proof of MP1 compatibility. Retain a full backup and
+verify the result in the installed client.

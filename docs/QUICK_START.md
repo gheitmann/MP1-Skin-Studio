@@ -62,3 +62,11 @@ the findings, choose whether to include informational rows and use Save shown
 report to save text or HTML with source locations and details. Rerun the check
 after edits: saved reports are snapshots. Zero filtered findings is not a
 complete runtime acceptance.
+
+## Match an export to the runtime copy
+
+_SkinStudio-Instructions.txt in an export lists original and exported SHA-256
+hashes for each changed XML file. Match Original SHA256 to the target copy
+before applying; match Exported SHA256 afterward. Export stops if a modified
+source changed on disk after loading. Save your editor project for recovery
+and compare the source with your backup; the editor does not merge that conflict.

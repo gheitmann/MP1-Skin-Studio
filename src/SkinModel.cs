@@ -393,31 +393,8 @@ namespace MP1SkinStudio
         public void UndoChange() { LastKeyTranslation.Clear();if(Undo.Count==0)return;var c=Undo.Pop();foreach(var f in c.Files){f.Source.Text=f.Before;f.Source.Parse();}if(c.Remap!=null){c.Remap.Apply(this,false);LastKeyTranslation=c.Remap.Translation(false);}Redo.Push(c);OpenPage(Page); }
         public void RedoChange() { LastKeyTranslation.Clear();if(Redo.Count==0)return;var c=Redo.Pop();foreach(var f in c.Files){f.Source.Text=f.After;f.Source.Parse();}if(c.Remap!=null){c.Remap.Apply(this,true);LastKeyTranslation=c.Remap.Translation(true);}Undo.Push(c);OpenPage(Page); }
         public void Export(string target)
-        {
-            if(!target.EndsWith(".zip",StringComparison.OrdinalIgnoreCase)) throw new InvalidOperationException("Export as a ZIP file. Skin XML files are not overwritten directly.");
-            var changed=Sources.Values.Where(s=>s.Changed).OrderBy(s=>s.RelativePath).ToArray();
-            if(changed.Length==0) throw new InvalidOperationException("No changes yet.");
-            // Validate every file before creating an archive; source directories are never written.
-            foreach(var s in changed) { s.Parse(); s.Bytes(); }
-            string temp=target+"."+Guid.NewGuid().ToString("N")+".tmp";
-            try
-            {
-                using(var zip=ZipFile.Open(temp,ZipArchiveMode.Create))
-                {
-                    foreach(var s in changed)
-                    {
-                        var entry=zip.CreateEntry(s.RelativePath,CompressionLevel.Optimal);
-                        using(var output=entry.Open()) { var bytes=s.Bytes(); output.Write(bytes,0,bytes.Length); }
-                    }
-                    var info=zip.CreateEntry("_SkinStudio-Instructions.txt");
-                    using(var writer=new StreamWriter(info.Open(),new UTF8Encoding(false)))
-                        writer.Write("MP1 Skin Studio — Prototype\r\n\r\nOnly modified XML files, relative to the selected skin directory.\r\nBack up or copy the complete skin directory first, then apply these files to the copy.\r\nUnmodified images and XML files remain in the existing skin directory.\r\nThe preview is approximate and is not an MP1 engine test. Validate in MP1.\r\n\r\n"+String.Join("\r\n",changed.Select(s=>s.RelativePath)));
-                }
-                if(File.Exists(target)) File.Replace(temp,target,null);
-                else File.Move(temp,target);
-            }
-            finally { if(File.Exists(temp)) File.Delete(temp); }
-        }
+        {SkinExport.Write(this,target);}
+
     }
 
     // Small, deliberately three-valued preview interpreter, never used for export.

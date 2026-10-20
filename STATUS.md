@@ -2,7 +2,13 @@
 
 Date: October 20, 2026. Imported version: 0.9.
 
-## Latest source milestone: saved audit and preview reports
+## Latest source milestone: verified exports and source-conflict preservation
+
+October 20, 2026: XML export now compares every modified source against its original loaded bytes before generation and again before publishing the archive. Missing/externally edited originals stop export while preserving the existing ZIP, pending changes and Undo/Redo. Every generated archive entry is read back and compared byte-for-byte before atomic replacement. The existing instructions entry now records relative paths, original/exported byte counts and SHA-256 hashes, active page/theme and shared-include scope. ZIP contents remain changed XML plus one instructions file.
+
+Fresh validation: 389 core checks; six complete Default/Christmas Titan BasicHome, Video and Settings workflows with three changed source files each, exact-byte/hash validation, project save/reopen and normal/restored Undo/Redo; 45 loaded original XML hashes unchanged. The extracted package also passed twelve full demo workflows and twelve clean-session workflows with 30 unchanged payload hashes. Details are recorded in [verified export validation](Validation/Verified-Export/README.md). Prior attended Windows, reporting and installed-client reports remain historical; no new runtime rendering claim is made. Checks cover modified source files, not all dependencies or subsequent external changes.
+
+## Previous source milestone: saved audit and preview reports
 
 October 20, 2026: Audit and Ctrl+F8 now save their current shown filter as text or self-contained HTML, with page/theme, scope, total/shown counts, source locations and complete details. Shared filtering keeps display and saved output consistent. XML-derived markup is encoded, empty filters remain explicitly bounded, and atomic replacement preserves old reports on failure. No XML, editor state or runtime behavior changes during reporting.
 

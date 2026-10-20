@@ -1,0 +1,7 @@
+PASS Default-BasicHome: 3 changed XML files; project/save/reopen/verified exact-byte export/hash records/normal and restored Undo/Redo.
+PASS Default-myvideo: 3 changed XML files; project/save/reopen/verified exact-byte export/hash records/normal and restored Undo/Redo.
+PASS Default-SettingsGUI: 3 changed XML files; project/save/reopen/verified exact-byte export/hash records/normal and restored Undo/Redo.
+PASS Christmas-BasicHome: 3 changed XML files; project/save/reopen/verified exact-byte export/hash records/normal and restored Undo/Redo.
+PASS Christmas-myvideo: 3 changed XML files; project/save/reopen/verified exact-byte export/hash records/normal and restored Undo/Redo.
+PASS Christmas-SettingsGUI: 3 changed XML files; project/save/reopen/verified exact-byte export/hash records/normal and restored Undo/Redo.
+PASS 6 complete workflows; 18 exported XML payload checks; 45 loaded original XML hashes unchanged. No installed-client run.
