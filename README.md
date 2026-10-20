@@ -19,7 +19,7 @@ Visual position, size, text and texture editing; multiple selection and alignmen
 
 ## Validation
 
-Latest checkpoint (October 20): **332 core checks and 14 real Titan image workflows passed**, plus attended Windows image editing/Apply/save/Undo/Redo. Aligned proportional fit, centered crop and top crop now follow image XML settings. Try demo.images.xml for six bundled comparisons. All 55 loaded original XML hashes stayed unchanged; 98 image plans were bounded. See [image presentation validation](Validation/Image-Presentation/README.md) and STATUS.md.
+Latest checkpoint (October 20): **344 core checks and six real Titan grid workflows passed**, including 162 accepted automatic routes and 13 unchanged loaded original XML hashes. Native bearing/distance math agrees in 6,561 cases, and six synthetic Windows canvas arrow events passed through the production form handler. Try demo.grid.xml with Navigation enabled. See [grid navigation validation](Validation/Grid-Navigation/README.md) and STATUS.md. Earlier attended/image reports remain historical; no new installed-client run occurred.
 
 
 Historical reports under `Validation` record 189 core checks, 185 UI checks, 602 Titan page/theme variants and ten direct checks against original MP1 StackLayout classes. These counts were imported from the saved release package and do not imply that all tests were rerun during import. A fresh build succeeded during import. The English migration also passed 189 core checks and 185 UI checks; fresh reports are in [Validation/English-Migration](Validation/English-Migration).

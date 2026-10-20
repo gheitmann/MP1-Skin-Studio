@@ -1,0 +1,17 @@
+PASS Default-settings_movies: 13 accepted automatic routes, 0 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 29
+GUARD Default settings_tv.xml: The grid source is unavailable in this preview.
+PASS Default-settings_tv: 37 accepted automatic routes, 9 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 29
+PASS Default-settings_Display_Equalizer: 31 accepted automatic routes, 0 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 9991
+GUARD Default settings_Display_Keypad.xml: Grid navigation requires known finite geometry: NO KEYPAD OPTIONS · height.
+BOUNDED Default settings_Display_Keypad.xml: 0 accepted, 12 guarded routes; no editable auto route
+GUARD Default settings_Display_Remote.xml: Grid navigation requires known finite geometry: NO REMOTE OPTIONS · height.
+BOUNDED Default settings_Display_Remote.xml: 0 accepted, 16 guarded routes; no editable auto route
+PASS Christmas-settings_movies: 13 accepted automatic routes, 0 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 29
+GUARD Christmas settings_tv.xml: The grid source is unavailable in this preview.
+PASS Christmas-settings_tv: 37 accepted automatic routes, 9 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 29
+PASS Christmas-settings_Display_Equalizer: 31 accepted automatic routes, 0 guarded; width edit/save/reopen/exact export/normal and restored Undo/Redo; focus 9991
+GUARD Christmas settings_Display_Keypad.xml: Grid navigation requires known finite geometry: NO KEYPAD OPTIONS · height.
+BOUNDED Christmas settings_Display_Keypad.xml: 0 accepted, 12 guarded routes; no editable auto route
+GUARD Christmas settings_Display_Remote.xml: Grid navigation requires known finite geometry: NO REMOTE OPTIONS · height.
+BOUNDED Christmas settings_Display_Remote.xml: 0 accepted, 16 guarded routes; no editable auto route
+SUMMARY 6 complete real Titan workflows; 162 accepted automatic routes; 74 guarded routes; 13 distinct loaded original XML hashes unchanged.

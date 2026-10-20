@@ -2,7 +2,13 @@
 
 Date: October 20, 2026. Imported version: 0.9.
 
-## Latest source milestone: aligned and cropped image previews
+## Latest source milestone: bounded automatic grid navigation
+
+October 20, 2026: absent/zero arrow mappings on direct buttons in top-level GridLayouts now use native-style rounded top-left bearings, distances and document-order selection. Explicit mappings retain precedence. Eligible standalone buttons and direct top-level stack/grid peers participate. Unknown visibility, ambiguous IDs, unsupported focusable types and geometry stop the route without mutation. demo.grid.xml now provides visible focus textures on all five buttons and navigation instructions.
+
+Fresh validation: 344 core checks, six complete real Titan edit/save/reopen/export/normal and restored Undo/Redo workflows, 162 accepted automatic routes, 74 conservatively guarded routes and 13 unchanged loaded original XML hashes. All 6,561 bearing/distance comparisons agree with the original installed Core.dll. Six synthetic canvas KeyDown events passed through the production Windows form handler; the bundled demo render was inspected. This was automated form testing, with no new attended keyboard or installed-client run. See [validation and bounds](Validation/Grid-Navigation/README.md).
+
+## Previous source milestone: aligned and cropped image previews
 
 October 20, 2026: image previews honor align/valign and ordered legacy centered settings, plus proportional fit, centered crop and crop from top. Image-only property fields expose the three fit/crop flags. Unknown settings receive informational diagnostics. demo.images.xml supplies six bundled comparisons without external assets. Collection fitting behavior remains separate.
 
@@ -96,9 +102,9 @@ October 19, 2026: static known-content conditions and nested localization now wo
 
 The owner prioritizes practical edit/save/reopen/export workflows and substantial autonomous work blocks. Routine follow-up steps do not require another continuation prompt. Necessary checks run at integrated milestones.
 
-Current validation: 332 core checks and 14 real Titan image workflows passed, with 98 bounded image plans and 55 unchanged loaded original XML hashes. Fresh native image property editing/Apply/save/Undo/Redo passed. Earlier acceptance remains historical.
+Current validation: 344 core checks and six real Titan grid workflows passed, with 162 accepted automatic routes and 13 unchanged loaded original XML hashes. Native navigation math and the automated Windows form arrow-event path passed. Previous attended acceptance and image matrices remain historical.
 
-Next core work is broader real-page preview fidelity and navigation coverage, particularly unsupported geometric layouts, other facade types and plugin states, while retaining duplicate-ID uncertainty. Existing samples make BasicHome, Settings and Video useful without claiming complete runtime equivalence. Masks, animation, full geometric navigation and plugin-specific values remain approximate or unresolved. Continue real-skin edit/save/reopen/export acceptance around any such changes, preserving original files. Auxiliary global-style and cross-group movement tools remain lower priority.
+Next core work is broader real-page preview fidelity and navigation coverage, particularly nested/free-position geometric navigation, other facade types and plugin states, while retaining duplicate-ID uncertainty. Existing samples make BasicHome, Settings and Video useful without claiming complete runtime equivalence. Masks, animation, full geometric navigation and plugin-specific values remain approximate or unresolved. Continue real-skin edit/save/reopen/export acceptance around any such changes, preserving original files. Auxiliary global-style and cross-group movement tools remain lower priority.
 
 Historical milestones follow; older suspension notes describe the state at their recorded time. Attended Windows automation was subsequently reauthorized and exercised successfully.
 ## Baseline

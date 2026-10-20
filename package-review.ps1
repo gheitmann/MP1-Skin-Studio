@@ -29,6 +29,7 @@ Requires Windows and .NET Framework 4.x. Packaging does not launch the editor.
 Try demo.filmstrip.xml from PAGE / XML, enable Navigation and use Left/Right.
 Its upper image follows the selected thumbnail; no installed skin is required.
 Try demo.images.xml to compare proportional alignment, center crop and top crop.
+Try demo.grid.xml with Navigation enabled to test automatic grid arrow routes.
 
 This package contains the editor, repository demo XML/images, license and guide.
 It contains no installed Titan skin, MediaPortal executable, client configuration,
@@ -39,10 +40,12 @@ use Revert Inputs to discard unapplied fields; test Undo/Redo; save an editor
 project, reopen it and export changes as ZIP. Use separate skin copies for real
 editing and retain original files. The preview remains approximate.
 
-Validation covers 332 core checks, 14 real Titan image/edit/save/reopen/export/
-undo workflows and attended Windows image-field editing/Apply/save/Undo/Redo.
-All 55 loaded original XML hashes stayed unchanged; 98 image plans were bounded.
-Final image-specific label wording was compiled after those checks.
+Validation covers 344 core checks, six real Titan grid edit/save/reopen/export/
+undo workflows, 162 accepted routes and 74 conservatively guarded routes.
+All 13 loaded original XML hashes stayed unchanged. Native bearing/distance
+math agrees in 6,561 cases. Six synthetic canvas arrow events passed through
+the Windows form handler; this was not a new attended keyboard test.
+Previous attended image/filmstrip acceptance remains historical.
 No new installed MediaPortal client run was performed. See the user guide for
 supported preview navigation and remaining rendering limitations.
 "@

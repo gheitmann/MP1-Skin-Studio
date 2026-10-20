@@ -177,7 +177,9 @@ namespace MP1SkinStudio
             var mappedSource=sources[0];
             if(mappedSource.Get("type")=="facadeview"){var view=CollectionSettings.Template(this,mappedSource,Editor.Collection.Mode);if(view!=null&&ControlId(view)==ControlId(mappedSource))mappedSource=view;}
             string mapping=mappedSource.Resolved(direction).Trim();
-            var target=mapping.Length==0||mapping=="0"?StackNavigationTarget(state,sources[0],direction):NavigationTarget(sources[0],direction);int before=state.FocusId;
+            StackPreview.GridRule grid;
+            bool gridSource=sources[0].RuntimeParent!=null&&StackPreview.TryReadGrid(sources[0].RuntimeParent.Resolved("layout").Trim(),out grid);
+            var target=mapping.Length==0||mapping=="0"?(gridSource?GridNavigationTarget(state,sources[0],direction):StackNavigationTarget(state,sources[0],direction)):NavigationTarget(sources[0],direction);int before=state.FocusId;
             try
             {
                 state.FocusId=ControlId(target).Value;bool? visible=state.Visible(target);

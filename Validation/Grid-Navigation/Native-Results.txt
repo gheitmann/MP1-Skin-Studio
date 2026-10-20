@@ -1,0 +1,1 @@
+PASS 6561 native bearing and rounded-distance comparisons against installed original Core.dll 1.39.0.0. Reflection invoked only static math; no window, client process or runtime settings were created.
