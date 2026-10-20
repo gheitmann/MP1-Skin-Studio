@@ -32,6 +32,13 @@ Visual position, size, text and texture editing; multiple selection and alignmen
 
 ## Validation
 
+Preview.2 acceptance passed 438 core checks, 229 broad UI checks and 24 complete
+demo/session workflows on the integrated development build. Final OLE and
+responsive-layout polish passed 17 targeted workflows and 25 selector/scroll/menu
+cases; 488 installed XML hashes stayed unchanged. Exact build scopes are recorded
+in [workflow validation](Validation/Workflow-Tools/README.md). The release ZIP
+was also downloaded anonymously and its SHA256 matched the published asset.
+
 Public-preview source checkpoint (October 20): automatic skin discovery, **Select different Skin Folder …**, complete independent skin copying, caption/focus alignment, a wider sidebar, dark scrollbars/dropdowns and a matching native title bar. Latest focused validation passed 25 selector/sidebar/menu/scroll scenarios and ten readable-preview scenarios with source/demo hashes unchanged. Earlier acceptance passed 430 core checks, eleven copy-dialog scenarios, twelve demo workflows and twelve clean-session workflows. A full DefaultWideHD copy matched all 3,399 files and preserved every original. Reports below retain their own dates and scopes; they do not imply a new full-suite run for publication.
 
 Previous source checkpoint (October 20): **automatic skin selection and wider dark sidebar**. SKIN above THEME lists detected installation folders/current siblings/the demo and refreshes when opened. The left column is 30% wider, with matching dark scrollbars in the main lists, tree, properties and information region. Skin switching preserves existing session protections; preview tools wrap at minimum width. Fresh checks: 420 core, 22 skin/sidebar/scrolling, twelve page, ten readability and 24 demo/session workflows. See [validation](Validation/Skin-Selector/README.md).

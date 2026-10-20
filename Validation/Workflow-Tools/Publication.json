@@ -1,0 +1,27 @@
+{
+  "Status": "Complete",
+  "ReleaseId": 418924945,
+  "Tag": "v0.9.0-preview.2",
+  "Source": "4c07ae9a400da2145dcef1627fe842a4b43d8d92",
+  "PublishedUtc": "2026-10-20T22:07:00Z",
+  "Url": "https://github.com/gheitmann/MP1-Skin-Studio/releases/tag/v0.9.0-preview.2",
+  "Prerelease": true,
+  "Draft": false,
+  "Assets": [
+    {
+      "id": 660622633,
+      "name": "MP1-Skin-Studio-v0.9.0-preview.2-win.zip",
+      "size": 445036,
+      "digest": "sha256:6b327e594ee346eb5263dc98836b54a615d4f059d10ebef685f2d051f5897661",
+      "browser_download_url": "https://github.com/gheitmann/MP1-Skin-Studio/releases/download/v0.9.0-preview.2/MP1-Skin-Studio-v0.9.0-preview.2-win.zip"
+    },
+    {
+      "id": 660622684,
+      "name": "SHA256SUMS.txt",
+      "size": 108,
+      "digest": "sha256:577beb9ded914615e9ca250bf5835bdbbca21401da369fabef0da09a7ca09713",
+      "browser_download_url": "https://github.com/gheitmann/MP1-Skin-Studio/releases/download/v0.9.0-preview.2/SHA256SUMS.txt"
+    }
+  ],
+  "AnonymousDownloadSha256": "6b327e594ee346eb5263dc98836b54a615d4f059d10ebef685f2d051f5897661"
+}

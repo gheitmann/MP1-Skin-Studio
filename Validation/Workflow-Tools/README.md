@@ -61,3 +61,15 @@ not controlled and no installed skin was changed.
 The isolated probe invokes canvas drag events, modal/session paths, minimum-size
 layout and installed Media discovery. It preserves before/after installed XML
 hashes and saves synthetic screenshots outside the tracked report folder.
+
+## Publication
+
+[v0.9.0-preview.2](https://github.com/gheitmann/MP1-Skin-Studio/releases/tag/v0.9.0-preview.2)
+was published on October 21 at 00:07 Berlin time (October 20, 22:07 UTC), with
+tag/source 4c07ae9a400da2145dcef1627fe842a4b43d8d92. Both release assets are
+uploaded. GitHub reports the expected ZIP and checksum-file digests; an anonymous
+ZIP download matches SHA256
+6b327e594ee346eb5263dc98836b54a615d4f059d10ebef685f2d051f5897661.
+Machine-readable release/tag/asset proof is in [Publication.json](Publication.json).
+Documentation-only follow-up commits do not move the release tag or change the
+published assets. The preceding preview.1 remains available unchanged.

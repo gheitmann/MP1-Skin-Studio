@@ -29,11 +29,16 @@ installed DefaultWideHD XML hashes remained unchanged. No broad rerun after
 that UI polish, attended drag/drop or MP1 runtime comparison is claimed.
 See [workflow tools validation](Validation/Workflow-Tools/README.md).
 
-v0.9.0-preview.2 is prepared as the next Windows pre-release. Publication and
-anonymous asset verification are recorded after the GitHub operation completes.
-v0.9.0-preview.1 and its assets/tag remain unchanged.
+v0.9.0-preview.2 was published as a Windows pre-release at 00:07 Berlin time on
+October 21 (2026-10-20T22:07:00Z). Its tag points to source
+4c07ae9a400da2145dcef1627fe842a4b43d8d92. Windows ZIP and SHA256SUMS.txt are
+uploaded; both GitHub digests match the local files. An anonymous ZIP download
+matched SHA256 6b327e594ee346eb5263dc98836b54a615d4f059d10ebef685f2d051f5897661.
+See [publication proof](Validation/Workflow-Tools/Publication.json).
+This post-publication documentation update does not move the published tag or
+rebuild its assets. v0.9.0-preview.1 and its assets/tag remain unchanged.
 
-## Latest source milestone: grouped properties and visual font choice
+## Previous source milestone: grouped properties and visual font choice
 
 October 20, 2026: started the legacy SkinEditor feature recommendations with
 beginner-oriented property groups and font preview. Applicable fields now appear
