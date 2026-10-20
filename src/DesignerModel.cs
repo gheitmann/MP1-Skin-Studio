@@ -56,6 +56,7 @@ namespace MP1SkinStudio
         void Transaction(IEnumerable<SkinSource> files,Action mutate,string description,ControlKeyRemap remap=null)
         {
             LastKeyTranslation.Clear();var change=new Change{Description=description,Remap=remap};var oldLocked=Editor.Locked.ToArray();var oldHidden=Editor.Hidden.ToArray();
+            var oldPosition=Editor.PositionLocked.ToArray();var oldSize=Editor.SizeLocked.ToArray();
             foreach(var source in files.Distinct())change.Files.Add(new FileChange{Source=source,Before=source.Text});
             var oldOrders=change.Files.ToDictionary(f=>f.Source,f=>f.Source.OriginalOrdinals.ToArray());
             try
@@ -70,6 +71,7 @@ namespace MP1SkinStudio
                 foreach(var file in change.Files){file.Source.Text=file.Before;file.Source.Parse();}
                 foreach(var pair in oldOrders)pair.Key.OriginalOrdinals=pair.Value.ToList();
                 Editor.Locked.Clear();foreach(string key in oldLocked)Editor.Locked.Add(key);Editor.Hidden.Clear();foreach(string key in oldHidden)Editor.Hidden.Add(key);LastKeyTranslation.Clear();
+                Editor.PositionLocked.Clear();foreach(string key in oldPosition)Editor.PositionLocked.Add(key);Editor.SizeLocked.Clear();foreach(string key in oldSize)Editor.SizeLocked.Add(key);
                 OpenPage(Page);throw;
             }
         }
@@ -92,6 +94,7 @@ namespace MP1SkinStudio
             }).ToArray();
             if(edits.Length==0)return;
             if(edits.Any(e=>IsLocked(e.Control)))throw new InvalidOperationException("The selection contains a locked element. Unlock it in the element tree first.");
+            if(edits.Any(e=>e.Values.Keys.Any(key=>IsPropertyLocked(e.Control,key))))throw new InvalidOperationException("Position or size is locked in the selection. Unlock that geometry through Element first.");
             Transaction(edits.Select(e=>e.Control.Source),()=>
             {
                 foreach(var edit in edits)edit.Control.Source.SetControlProperties(edit.Control.Ordinal,edit.Values);
@@ -123,6 +126,15 @@ namespace MP1SkinStudio
             return result.ToArray();
         }
         public string InsertControl(string sourceRelative,string kind)
+        {return InsertTemplate(sourceRelative,kind,null);}
+        public string InsertControlAt(string sourceRelative,string kind,int x,int y,string texture,int width,int height)
+        {
+            if(x<0||y<0||x>=Width||y>=Height||width<1||height<1||width>8192||height>8192)throw new InvalidOperationException("Drop position or size is outside the supported skin geometry.");
+            var values=new Dictionary<string,string>{{"posX",x.ToString(System.Globalization.CultureInfo.InvariantCulture)},{"posY",y.ToString(System.Globalization.CultureInfo.InvariantCulture)},{"width",width.ToString(System.Globalization.CultureInfo.InvariantCulture)},{"height",height.ToString(System.Globalization.CultureInfo.InvariantCulture)}};
+            if(kind=="image"){texture=texture??"";if(texture.Length>0){if(System.IO.Path.IsPathRooted(texture)||texture.Replace('\\','/').Split('/').Any(part=>part==".."))throw new InvalidOperationException("Use a relative skin Media image path.");SafePath("Media/"+texture);}values["texture"]=texture;values["keepaspectratio"]="yes";}
+            return InsertTemplate(sourceRelative,kind,values);
+        }
+        string InsertTemplate(string sourceRelative,string kind,IDictionary<string,string> initial)
         {
             if(!new[]{"label","button","image"}.Contains(kind))throw new InvalidOperationException("Unknown element template.");
             var source=Source(SafePath(sourceRelative));int identity=NextControlId(),ordinal=-1;
@@ -134,6 +146,7 @@ namespace MP1SkinStudio
                 new KeyValuePair<string,string>("width",kind=="image"?"300":"420"),new KeyValuePair<string,string>("height",kind=="image"?"300":kind=="button"?"110":"70")};
             if(kind=="image")fields.Add(new KeyValuePair<string,string>("texture",""));
             else{fields.Add(new KeyValuePair<string,string>("font",font));fields.Add(new KeyValuePair<string,string>("textcolor","ffffffff"));fields.Add(new KeyValuePair<string,string>("label",kind=="button"?"New button":"Your text"));fields.Add(new KeyValuePair<string,string>("align",kind=="button"?"center":"left"));}
+            if(initial!=null)foreach(var pair in initial){int index=fields.FindIndex(field=>field.Key==pair.Key);if(index>=0)fields[index]=pair;else fields.Add(pair);}
             string raw="<control>\n"+String.Join("\n",fields.Select(k=>"  <"+k.Key+">"+SecurityElement.Escape(k.Value)+"</"+k.Key+">"))+"\n</control>";
             var remap=new ControlKeyRemap();remap.Add(source,Enumerable.Range(0,source.OriginalOrdinals.Count).Concat(new[]{-1}).ToArray());
             Transaction(new[]{source},()=>ordinal=source.AppendControl(raw),"Insert element",remap);

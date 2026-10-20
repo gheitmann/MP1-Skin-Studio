@@ -55,6 +55,7 @@ namespace MP1SkinStudio
             RunDesignerTests(root);
             RunProjectFileTests(root);
             RunEditorStateTests(root);
+            RunWorkflowToolsTests(root);
             RunSkinAuditTests(root);
             RunPropertyResetTests(root);
             RunPreviewSettingsTests(root);

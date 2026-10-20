@@ -15,6 +15,42 @@ Version 0.9 · October 20, 2026
 See [Quick start](QUICK_START.md) for a complete first workflow, all twelve demo
 scenes and the transition from an editor project to a runtime test copy.
 
+## Toolbox, grid and geometry protection
+
+Click **Toolbox** above the preview to show an integrated side panel. Drag
+**Text +**, **Button +** or **Image +** onto the skin, or click a tool to insert
+at its default position. Filter the Media thumbnails and drag one onto the
+preview to insert an image using its natural dimensions and proportions.
+You can also drag one PNG/JPG/JPEG/BMP/GIF from the current skin's active Media
+directory in Windows Explorer. Put external images in Media first; the editor
+does not import or copy arbitrary files. Theme overrides use the active theme
+image. Multiple files and overridden base-image paths are rejected.
+
+Drops create a top-level element in the **current page XML**, regardless of
+which included control was selected. They use preview zoom/pan and the current
+snap distance. Each insertion is one undo step; Cancel/Escape during dragging
+does not insert. Pending property inputs and Navigation mode block insertion.
+Close the side panel to reclaim the full preview width.
+
+Beside **Snap**, choose a distance from 1 to 200 skin pixels using the available
+presets. Grid and Snap can be enabled independently. At small zoom levels, the
+visible grid uses a readable multiple of the chosen distance while snapping
+still uses the exact distance. Grid choices are stored in the editor project.
+
+Under **Element** or in the element-tree context menu, **Lock position only**
+protects X/Y while leaving size and text editable. **Lock size only** protects
+Width/Height while allowing movement. **Lock selection** retains its existing
+complete protection. Group locks also protect their children. Tree markers
+are **[P]** for position, **[S]** for size and **[L]** for complete protection.
+Remove inherited protection on its owning group. **Unlock all elements** clears
+all three kinds. Protection applies to canvas gestures, property changes,
+alignment and local geometry resets; protected batches are rejected atomically.
+
+Newly saved projects use format 5 to retain these settings and independent
+locks. Existing formats 1–4 remain readable; older editor builds cannot read
+format-5 projects. XML skin exports keep their existing format and exclude
+editor-only grid and protection settings.
+
 ## Grouped properties and font preview
 
 The right-hand properties panel groups fields into Position and size, Text,

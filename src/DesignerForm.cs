@@ -18,7 +18,7 @@ namespace MP1SkinStudio
         Panel BuildDesignerBar()
         {
             var host=new Panel{Dock=DockStyle.Top,Height=40};
-            var commands=new FlowLayoutPanel{Dock=DockStyle.Top,Height=38,WrapContents=false,Padding=new Padding(8,1,0,0)};
+            var commands=new FlowLayoutPanel{Dock=DockStyle.Top,Height=38,AutoSize=true,AutoSizeMode=AutoSizeMode.GrowAndShrink,MinimumSize=new Size(0,38),WrapContents=true,Padding=new Padding(8,1,0,0)};
             Button insert=null;insert=ButtonFor("Insert ▾",()=>ShowInsertMenu(insert),true);insert.Width=102;commands.Controls.Add(insert);
             duplicateButton=ButtonFor("Duplicate",DuplicateElement);duplicateButton.Width=102;commands.Controls.Add(duplicateButton);
             alignButton=ButtonFor("Align ▾",()=>ShowAlignMenu(alignButton));alignButton.Width=108;commands.Controls.Add(alignButton);
@@ -26,16 +26,18 @@ namespace MP1SkinStudio
             navigation=Check("Navigation",false,value=>
             {
                 if(PendingProperties()){navigation.Checked=canvas.NavigationMode;ShowNotice("Apply pending property edits before changing navigation mode.");return;}
-                canvas.NavigationMode=value;host.Height=value?80:40;row.Visible=value;
+                canvas.NavigationMode=value;host.Height=Math.Max(40,commands.Height)+(value?40:0);row.Visible=value;
                 if(value&&selected!=null)SelectControl(selected);
                 canvas.Focus();canvas.Invalidate();
                 if(value)ShowNotice("The selection is the source. Choose a direction and click a target; use arrow keys to test connections.");
             });commands.Controls.Add(navigation);
+            var toolbox=ButtonFor("Toolbox",ToggleDropPalette);toolbox.Width=78;commands.Controls.Add(toolbox);tips.SetToolTip(toolbox,"Show the integrated drag-and-drop tools and skin images.");
             row.Controls.Add(new Label{Text="Direction",ForeColor=muted,Width=64,Height=27,TextAlign=ContentAlignment.MiddleLeft});
             navDirection.Width=100;navDirection.Height=27;navDirection.BackColor=Color.FromArgb(20,26,35);navDirection.ForeColor=ink;
             navDirection.Items.AddRange(new object[]{"Left","Right","Up","Down"});navDirection.SelectedIndex=1;row.Controls.Add(navDirection);
             row.Controls.Add(new Label{Text="Click target · Test with arrows",ForeColor=muted,Width=230,Height=27,TextAlign=ContentAlignment.MiddleLeft});
             host.Controls.Add(row);host.Controls.Add(commands);
+            commands.SizeChanged+=(s,e)=>host.Height=Math.Max(40,commands.Height)+(navigation.Checked?40:0);
             tips.SetToolTip(alignButton,"Use CTRL to select multiple elements; the entire action is one undo step.");
             tips.SetToolTip(duplicateButton,"Copy one top-level element or self-contained group with new IDs and an offset position.");
             return host;

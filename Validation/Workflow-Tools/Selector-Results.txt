@@ -1,0 +1,29 @@
+PASS Dropdown discovers every installed skin and the bundled demo
+DISCOVERED DefaultWideHD | DefaultWideHD - Copy | PureVisionHD 1080 XMAS 2025 | SkinStudio-Acceptance-20261020 | SkinStudio-Current-Review | SkinStudio-Video-Test-20261019 | Titan | Titan-Sample
+PASS Choosing DefaultWideHD opens it and keeps the selector synchronized
+PASS The full left column grows from 245 to 319 pixels and its filters expand with it
+PASS A pending property edit blocks skin switching and restores the dropdown without losing the draft
+ARROW before=20 after=21 page=myHome.xml focus=True draft=321
+PASS Dark page scrollbar arrows scroll without selecting XML or stealing the property draft/focus
+PASS The mouse wheel over dark scrollbar chrome scrolls the same page list without changing selection
+PASS Dragging the dark page thumb reaches later files while preserving active XML and draft
+PASS The horizontal page scrollbar reaches long filenames without choosing another XML
+PASS The element-tree vertical thumb changes its viewport while retaining selection
+PASS The element-tree horizontal scrollbar reaches long names without selecting another element
+PASS The dark property thumb scrolls fields and preserves their values and focus
+PASS The dark information scrollbar scrolls the native text content
+PASS All four main content regions retain matching dark scrollbar chrome with the added toolbox
+PASS Scrollbar overlays stay in front of native content windows in every host
+PASS Scrollbar input and wider layout never edit XML or change selected controls
+PASS Skin and filename selectors remain inside the wider sidebar at minimum size
+PASS Preview tools wrap at minimum width instead of being clipped by the wider sidebar
+PASS Cancelling the existing unsaved-session dialog preserves the current skin and metadata
+PASS Discard confirmation switches skins through the existing protected session transition
+PASS Skin dropdown lists discovered skins then a separated folder-selection action
+PASS Choosing an actual dropdown menu item loads its skin
+PASS Reopening adds one folder action without turning it into a selected skin
+PASS Theme choices keep their existing entries without the skin-folder action
+PASS Opening the dropdown refreshes newly added sibling skins automatically
+PASS An invalid discovered skin leaves the previous project intact and restores the selector
+25 passed, 0 failed. Synthetic forms/menu/mouse events; no desktop input.
+PASS 488 installed XML hashes unchanged.

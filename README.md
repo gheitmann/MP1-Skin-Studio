@@ -1,10 +1,10 @@
 # MP1 Skin Studio
 
-A visual Windows skin editor for MediaPortal 1, built around visual editing and source-preserving XML changes. The first public preview is **v0.9.0-preview.1**, based on the 0.9 prototype.
+A visual Windows skin editor for MediaPortal 1, built around visual editing and source-preserving XML changes. The current preview is **v0.9.0-preview.2**, based on the 0.9 prototype.
 
 ## Download
 
-Get the portable Windows ZIP and SHA256 checksum from [v0.9.0-preview.1](https://github.com/gheitmann/MP1-Skin-Studio/releases/tag/v0.9.0-preview.1). Extract the complete archive and run `MP1SkinStudio.exe`. Windows and .NET Framework 4.x are required. The package includes twelve demo scenes and a quick start guide.
+Get the portable Windows ZIP and SHA256 checksum from [v0.9.0-preview.2](https://github.com/gheitmann/MP1-Skin-Studio/releases/tag/v0.9.0-preview.2). Extract the complete archive and run `MP1SkinStudio.exe`. Windows and .NET Framework 4.x are required. The package includes twelve demo scenes and a quick start guide.
 
 This preview provides a practical visual guide; rendering remains approximate. Start from an independent skin copy using **Copy skin …**. See [release notes](docs/RELEASE_NOTES.md) and [practical scope](docs/RELEASE_READINESS.md).
 
@@ -21,10 +21,12 @@ Demo assets are included under `Samples`. See [User Guide](docs/USER_GUIDE.md) f
 
 ## Features
 
-Current source adds **collapsible property groups with contextual help** and a
-**searchable font picker with sample text, size and substitute-font information**.
-These additions are available in development builds, after the published
-v0.9.0-preview.1. See [property tools validation](Validation/Property-Tools/README.md).
+Preview.2 adds **collapsible property groups with contextual help**, a
+**searchable font picker**, an integrated **drag-and-drop Toolbox**, configurable
+grid/snapping and separate position/size protection. Project format 5 retains
+the new settings while reading existing formats 1–4. See
+[workflow tools validation](Validation/Workflow-Tools/README.md) and
+[property tools validation](Validation/Property-Tools/README.md).
 
 Visual position, size, text and texture editing; multiple selection and alignment; layer ordering and deletion; nested groups, creation from consecutive selections and neutral-group removal; StackLayout and GridLayout previews; undo/redo; project persistence; and XML export. Preview tools include language resources with fallback, simulated states and sample data, plus approximate list, grid, filmstrip and static coverflow rendering.
 

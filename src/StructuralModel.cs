@@ -18,6 +18,7 @@ namespace MP1SkinStudio
         public readonly Dictionary<string,string> Forward=new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase);
         internal readonly Dictionary<SkinSource,int[][]> IdentityOrders=new Dictionary<SkinSource,int[][]>();
         readonly HashSet<string> removedLocked=new HashSet<string>(StringComparer.OrdinalIgnoreCase),removedHidden=new HashSet<string>(StringComparer.OrdinalIgnoreCase),addedLocked=new HashSet<string>(StringComparer.OrdinalIgnoreCase),addedHidden=new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        readonly HashSet<string> removedPosition=new HashSet<string>(StringComparer.OrdinalIgnoreCase),addedPosition=new HashSet<string>(StringComparer.OrdinalIgnoreCase),removedSize=new HashSet<string>(StringComparer.OrdinalIgnoreCase),addedSize=new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         public void Add(SkinSource source,int[] afterOldOrdinals)
         {
             int count=source.Elements.Count(n=>n.Name=="control");Sources.Add(source.RelativePath);
@@ -49,7 +50,7 @@ namespace MP1SkinStudio
             foreach(string key in next)flags.Add(key);foreach(string key in restore)flags.Add(key);
         }
         public void Apply(SkinProject project,bool forward)
-        {Flags(project.Editor.Locked,forward,removedLocked,addedLocked);Flags(project.Editor.Hidden,forward,removedHidden,addedHidden);foreach(var pair in IdentityOrders)pair.Key.OriginalOrdinals=pair.Value[forward?1:0].ToList();}
+        {Flags(project.Editor.Locked,forward,removedLocked,addedLocked);Flags(project.Editor.PositionLocked,forward,removedPosition,addedPosition);Flags(project.Editor.SizeLocked,forward,removedSize,addedSize);Flags(project.Editor.Hidden,forward,removedHidden,addedHidden);foreach(var pair in IdentityOrders)pair.Key.OriginalOrdinals=pair.Value[forward?1:0].ToList();}
     }
     public sealed partial class SkinProject
     {

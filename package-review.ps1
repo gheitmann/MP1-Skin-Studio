@@ -49,7 +49,11 @@ Properties are grouped under collapsible headings; hidden inputs retain their
 draft values. Focus a field or hover its label for help beneath the panel.
 Font name / ... opens a searchable sample-text preview with actual font family,
 pixel size and substitution details. Use font creates a draft; Apply commits it.
-These development additions are newer than the published v0.9.0-preview.1.
+Toolbox opens a side panel for dragging text, buttons and skin Media images onto
+the preview. Drops target the current page XML and undo in one step. External
+images must first be placed in Media. Snap spacing is selectable; Element offers
+separate position/size protection. Project format 5 retains these settings and
+reads formats 1-4; older editors cannot open newly saved format-5 projects.
 
 Review XML changes (Element menu / Ctrl+Shift+E) compares all modified session
 files, including shared/theme/earlier-page XML. Read-only original/edited panes

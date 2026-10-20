@@ -43,7 +43,7 @@ namespace MP1SkinStudio
             var changed=project.Sources.Values.Where(s=>s.Changed).OrderBy(s=>s.RelativePath,StringComparer.OrdinalIgnoreCase).ToArray();
             if(changed.Length>256)throw new InvalidOperationException("The project contains more than 256 modified XML files.");
             var doc=new XmlDocument{XmlResolver=null};var root=doc.CreateElement("skinStudioProject");doc.AppendChild(root);
-            root.SetAttribute("version","4");root.SetAttribute("root",project.Root);root.SetAttribute("page",project.Page??"");root.SetAttribute("theme",project.Theme??"");
+            root.SetAttribute("version","5");root.SetAttribute("root",project.Root);root.SetAttribute("page",project.Page??"");root.SetAttribute("theme",project.Theme??"");
             var files=doc.CreateElement("files");root.AppendChild(files);
             var entries=new Dictionary<string,byte[]>();long total=0;
             for(int i=0;i<changed.Length;i++)
@@ -94,7 +94,7 @@ namespace MP1SkinStudio
             CheckArchive(archive);var bytes=ReadEntry(archive,"project.xml");
             var settings=new XmlReaderSettings{DtdProcessing=DtdProcessing.Prohibit,XmlResolver=null,MaxCharactersInDocument=1024*1024};
             var doc=new XmlDocument{XmlResolver=null};using(var stream=new MemoryStream(bytes))using(var reader=XmlReader.Create(stream,settings))doc.Load(reader);
-            if(doc.DocumentElement==null||doc.DocumentElement.Name!="skinStudioProject"||(doc.DocumentElement.GetAttribute("version")!="1"&&doc.DocumentElement.GetAttribute("version")!="2"&&doc.DocumentElement.GetAttribute("version")!="3"&&doc.DocumentElement.GetAttribute("version")!="4"))throw new InvalidDataException("Unknown editor-project format.");
+            if(doc.DocumentElement==null||doc.DocumentElement.Name!="skinStudioProject"||(doc.DocumentElement.GetAttribute("version")!="1"&&doc.DocumentElement.GetAttribute("version")!="2"&&doc.DocumentElement.GetAttribute("version")!="3"&&doc.DocumentElement.GetAttribute("version")!="4"&&doc.DocumentElement.GetAttribute("version")!="5"))throw new InvalidDataException("Unknown editor-project format.");
             return doc;
         }
         static ProjectLocation Location(XmlDocument doc)

@@ -61,7 +61,9 @@ namespace MP1SkinStudio
         public SkinProject Project;
         public PreviewState State;
         public SkinControl Selected;
-        public bool ShowHidden, FocusPreview = true, Grid = true, Snap = true, UnlockBindings;
+        public bool ShowHidden, FocusPreview = true, UnlockBindings;
+        public bool Grid {get{return Project==null||Project.Editor.GridVisible;}set{if(Project!=null)Project.Editor.GridVisible=value;Invalidate();}}
+        public bool Snap {get{return Project==null||Project.Editor.SnapEnabled;}set{if(Project!=null)Project.Editor.SnapEnabled=value;}}
         public event Action<SkinControl> Selection;
         public event Action<SkinControl, Dictionary<string,string>> Commit;
         public event Action<string> Notice;
@@ -131,7 +133,7 @@ namespace MP1SkinStudio
             g.SetClip(new RectangleF(0,0,Project.Width,Project.Height));
             using(var bg=new LinearGradientBrush(new Rectangle(0,0,Project.Width,Project.Height),Color.FromArgb(22,44,68),Color.FromArgb(8,15,25),60f))g.FillRectangle(bg,0,0,Project.Width,Project.Height);
             if(Grid)using(var pen=new Pen(Color.FromArgb(30,120,150,180),1/scale))
-            {for(int x=0;x<Project.Width;x+=100)g.DrawLine(pen,x,0,x,Project.Height);for(int y=0;y<Project.Height;y+=100)g.DrawLine(pen,0,y,Project.Width,y);}
+            {int step=Math.Max(1,Project.Editor.SnapSpacing);while(step*scale<8)step*=2;for(int x=0;x<Project.Width;x+=step)g.DrawLine(pen,x,0,x,Project.Height);for(int y=0;y<Project.Height;y+=step)g.DrawLine(pen,0,y,Project.Width,y);}
             foreach(var c in Project.Controls)
             {
                 if(!Drawn(c))continue;
@@ -227,7 +229,7 @@ namespace MP1SkinStudio
         {
             base.OnMouseMove(e);if(!ViewMouseMove(e))DesignerMouseMove(e);
         }
-        float Round(float n){return Snap?(float)Math.Round(n/10)*10:(float)Math.Round(n);}
+        float Round(float n){int step=Project==null?10:Math.Max(1,Project.Editor.SnapSpacing);return Snap?(float)Math.Round(n/step)*step:(float)Math.Round(n);}
         internal void ExerciseDrag(SkinControl c,int dx,int dy,bool resize)
         {
             Selected=c;Invalidate();Update();UpdateTransform();
@@ -315,7 +317,7 @@ namespace MP1SkinStudio
             left.Controls.Add(browserSplit);left.Controls.Add(leftTop);main.Controls.Add(left,0,0);
             var center=new Panel{Dock=DockStyle.Fill,Margin=new Padding(0,0,10,0)};
             var previewToolbar=new FlowLayoutPanel{Dock=DockStyle.Top,Height=38,MinimumSize=new Size(0,38),AutoSize=true,AutoSizeMode=AutoSizeMode.GrowAndShrink,WrapContents=true,Padding=new Padding(8,0,0,0)};
-            previewToolbar.Controls.Add(Check("Grid",true,v=>canvas.Grid=v));previewToolbar.Controls.Add(Check("Snap to 10 px",true,v=>canvas.Snap=v));
+            AddGridTools(previewToolbar);
             previewToolbar.Controls.Add(Check("Focus",true,v=>canvas.FocusPreview=v));previewToolbar.Controls.Add(Check("Show hidden",false,v=>canvas.ShowHidden=v));
             var testData=ButtonFor("Sample Data",ShowPreviewSettings);testData.Width=91;testData.Height=28;testData.Margin=new Padding(0,2,0,0);previewToolbar.Controls.Add(testData);tips.SetToolTip(testData,"Configure sample data and simulated plugin states; presets include long titles, weather and news.");
             var languageButton=ButtonFor("Language",ShowLanguageSettings);languageButton.Width=82;languageButton.Height=28;languageButton.Margin=new Padding(8,2,0,0);previewToolbar.Controls.Add(languageButton);tips.SetToolTip(languageButton,"Load language files for numeric labels; save primary and fallback languages in the editor project.");
@@ -323,7 +325,8 @@ namespace MP1SkinStudio
             var bottom=new Panel{Dock=DockStyle.Bottom,Height=139,Padding=new Padding(10,7,8,5),BackColor=panel};
             bottom.Controls.Add(LabelFor("PREVIEW & INFORMATION",22));
             diagnostics.Dock=DockStyle.Fill;diagnostics.Multiline=true;diagnostics.ReadOnly=true;diagnostics.ScrollBars=ScrollBars.Vertical;diagnostics.BorderStyle=BorderStyle.None;diagnostics.BackColor=panel;diagnostics.ForeColor=muted;diagnostics.Font=new Font("Segoe UI",9);var diagnosticScroll=new DarkScrollHost(diagnostics);bottom.Controls.Add(diagnosticScroll);diagnosticScroll.BringToFront();
-            center.Controls.Add(canvas);center.Controls.Add(BuildPreviewModeBar());center.Controls.Add(BuildViewBar());center.Controls.Add(previewToolbar);center.Controls.Add(BuildDesignerBar());center.Controls.Add(bottom);main.Controls.Add(center,1,0);
+            var canvasStage=new Panel{Dock=DockStyle.Fill};canvasStage.Controls.Add(canvas);canvasStage.Controls.Add(BuildDropPalette());
+            center.Controls.Add(canvasStage);center.Controls.Add(BuildPreviewModeBar());center.Controls.Add(BuildViewBar());center.Controls.Add(previewToolbar);center.Controls.Add(BuildDesignerBar());center.Controls.Add(bottom);main.Controls.Add(center,1,0);
             var right=new Panel{Dock=DockStyle.Fill,BackColor=panel,Padding=new Padding(12),Margin=new Padding(0)};
             var propHeader=new Panel{Dock=DockStyle.Top,Height=130};
             selectionName=new Label{Text="Select an element",ForeColor=ink,Font=new Font("Segoe UI",12,FontStyle.Bold),AutoEllipsis=true};selectionName.SetBounds(0,0,270,27);propHeader.Controls.Add(selectionName);
@@ -358,6 +361,7 @@ namespace MP1SkinStudio
             {
                 elementSearch.Clear();theme.Items.Clear();theme.Items.Add("Default skin");theme.Items.AddRange(prepared.Themes.Cast<object>());
                 theme.SelectedIndex=project.Theme.Length==0?0:theme.FindStringExact(project.Theme);
+                SyncGridTools();RefreshDropAssets();
                 PopulatePageChoices(prepared.Pages);
             }
             finally{loading=prior;}
@@ -547,6 +551,7 @@ namespace MP1SkinStudio
             RunProjectUiSmoke(directory,verify);
             RunTextureUiSmoke(directory,verify);
             RunViewportUiSmoke(directory,verify);
+            RunWorkflowToolsUiSmoke(directory,verify);
             RunAuditUiSmoke(verify);
             RunPropertyResetUiSmoke(verify);
             RunPreviewSettingsUiSmoke(directory,verify);

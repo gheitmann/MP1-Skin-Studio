@@ -15,7 +15,7 @@ namespace MP1SkinStudio
         string ResetBlockedReason(string key)
         {
             if(project==null||!editable.Contains(key)||SelectedControls().Length==0)return "No matching selection.";
-            var targets=SelectedControls();if(targets.Any(c=>project.IsLocked(c)))return "The selection contains a locked element.";
+            var targets=SelectedControls();if(targets.Any(c=>project.IsPropertyLocked(c,key)))return "This property is locked in the selection.";
             if(fields.Any(pair=>pair.Key!=key&&originals.ContainsKey(pair.Key)&&(pair.Value.Text!=originals[pair.Key]||(mixedFields.Contains(pair.Key)&&touchedFields.Contains(pair.Key)))))
                 return "Other properties have pending edits. Apply them first.";
             int locals=0;

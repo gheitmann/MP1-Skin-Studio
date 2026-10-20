@@ -14,6 +14,8 @@ namespace MP1SkinStudio
         public List<TextureAsset> Assets=new List<TextureAsset>();
         public TextureAsset[] VisibleAssets=new TextureAsset[0];
         public TextureAsset Selected;
+        public bool DragImages;
+        Point dragOrigin;bool imageDragArmed;
         public event Action SelectionChanged,AcceptSelection;
         readonly Dictionary<string,Bitmap> cache=new Dictionary<string,Bitmap>(StringComparer.OrdinalIgnoreCase);
         public TextureGrid(){DoubleBuffered=true;AutoScroll=true;TabStop=true;BackColor=Color.FromArgb(18,24,33);ForeColor=Color.FromArgb(220,233,244);ResizeRedraw=true;}
@@ -62,6 +64,13 @@ namespace MP1SkinStudio
             base.OnMouseDown(e);Focus();int x=e.X-AutoScrollPosition.X-8,y=e.Y-AutoScrollPosition.Y-8;if(x<0||y<0)return;
             int index=y/TileHeight*Columns+x/TileWidth;if(x/TileWidth>=Columns||index>=VisibleAssets.Length)return;
             Selected=VisibleAssets[index];if(SelectionChanged!=null)SelectionChanged();Invalidate();
+            dragOrigin=e.Location;imageDragArmed=DragImages&&e.Button==MouseButtons.Left;
+        }
+        protected override void OnMouseUp(MouseEventArgs e){base.OnMouseUp(e);imageDragArmed=false;}
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);if(!imageDragArmed||e.Button!=MouseButtons.Left||Selected==null||Math.Abs(e.X-dragOrigin.X)<SystemInformation.DragSize.Width/2&&Math.Abs(e.Y-dragOrigin.Y)<SystemInformation.DragSize.Height/2)return;
+            imageDragArmed=false;DoDragDrop(new DataObject(DataFormats.FileDrop,new[]{Selected.PhysicalPath}),DragDropEffects.Copy);
         }
         protected override void OnMouseDoubleClick(MouseEventArgs e){base.OnMouseDoubleClick(e);if(Selected!=null&&AcceptSelection!=null)AcceptSelection();}
         protected override bool IsInputKey(Keys keyData){return new[]{Keys.Left,Keys.Right,Keys.Up,Keys.Down}.Contains(keyData)||base.IsInputKey(keyData);}

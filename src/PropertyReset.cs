@@ -69,7 +69,7 @@ namespace MP1SkinStudio
         public void ResetProperty(IEnumerable<SkinControl> selection,string key,bool replaceBindings)
         {
             var controls=selection.GroupBy(c=>c.Key).Select(g=>RequireCurrent(g.First())).ToArray();
-            if(controls.Any(IsLocked))throw new InvalidOperationException("The selection contains a locked element. Unlock it first.");
+            if(controls.Any(c=>IsPropertyLocked(c,key)))throw new InvalidOperationException("This property is locked in the selection. Unlock it first.");
             var changed=new List<SkinControl>();
             foreach(var control in controls)
             {

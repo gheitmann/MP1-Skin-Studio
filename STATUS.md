@@ -1,6 +1,37 @@
 # Development status and next steps
 
-Date: October 20, 2026. Imported version: 0.9.
+Date: October 21, 2026. Imported version: 0.9.
+
+## Latest source milestone: complete visual editing workflow / preview.2
+
+October 20, 2026: completed the remaining legacy-editor recommendations.
+Toolbox shows an integrated side panel with draggable text/button/image tools
+and filtered skin Media thumbnails. Explorer drops accept one active Media
+image. Insertions use skin coordinates, zoom/pan and snapping, target the current
+page XML, and undo atomically. Image dimensions/proportions are retained; pending
+inputs, Navigation mode, external/overridden paths and out-of-skin drops are
+rejected. Media files remain unchanged. The toolbar wraps and the side panel
+retains a usable preview at minimum window size.
+
+Grid/Snap options and spacing presets (1–200 skin pixels) persist in the editor
+project. Visible grid density adapts to zoom. Separate position and size locks
+inherit through groups, protect gestures/property edits/resets/atomic batches,
+and follow structural undo/redo. Existing complete locks remain available.
+Project format 5 preserves these settings; formats 1–4 remain readable and XML
+exports do not contain editor settings. Together with grouped properties/help
+and font preview, all four recommended feature areas are implemented.
+
+Acceptance: 438 core checks, 229 broad UI checks, twelve complete demo workflows
+and twelve clean-session workflows passed on the integrated development build.
+Final OLE result reporting and responsive toolbox/header layout were then checked
+with 17 targeted workflows plus 25 selector/scroll/menu scenarios; all 488
+installed DefaultWideHD XML hashes remained unchanged. No broad rerun after
+that UI polish, attended drag/drop or MP1 runtime comparison is claimed.
+See [workflow tools validation](Validation/Workflow-Tools/README.md).
+
+v0.9.0-preview.2 is prepared as the next Windows pre-release. Publication and
+anonymous asset verification are recorded after the GitHub operation completes.
+v0.9.0-preview.1 and its assets/tag remain unchanged.
 
 ## Latest source milestone: grouped properties and visual font choice
 

@@ -74,7 +74,7 @@ namespace MP1SkinStudio
                 Write(p.Root,"fonts.xml","<fonts><font><name>title</name><filename>Segoe UI</filename><height>64</height></font></fonts>");
                 Write(p.Root,"header.xml","<window><controls><control><type>label</type><posX>10</posX><posY>10</posY><width>210</width><height>50</height><font>title</font><label>Visible title</label><textcolor>ffffff</textcolor></control></controls></window>");
                 Directory.CreateDirectory(Path.Combine(p.Root,"Media"));using(var texture=new Bitmap(8,8))using(var g=Graphics.FromImage(texture)){g.Clear(Color.Black);texture.Save(Path.Combine(p.Root,"Media","black.png"));}
-                p=new SkinProject(p.Root);p.OpenPage("main.xml");string signature=ProjectFile.ContentSignature(p);
+                p=new SkinProject(p.Root);p.OpenPage("main.xml");p.Editor.GridVisible=false;string signature=ProjectFile.ContentSignature(p);
                 using(var canvas=new SkinCanvas{Project=p,State=new PreviewState(p),Grid=false,Size=new Size(294,250)})using(var output=new Bitmap(294,250))
                 {
                     canvas.DrawToBitmap(output,new Rectangle(0,0,294,250));int white=0;

@@ -1,0 +1,18 @@
+PASS Position protection disables only position inputs
+PASS Position lock prevents canvas movement
+PASS Size protection leaves movement inputs editable
+PASS Size lock prevents resizing through canvas events
+PASS Snap selector changes saved editor state without XML edits
+PASS Integrated toolbox lists draggable skin images
+PASS Pending property drafts block drop acceptance
+PASS Canvas drop inserts into the page at snapped skin coordinates in one action
+PASS Undo of a canvas drop restores the entire source
+PASS Media-file drop uses its relative texture and natural dimensions
+PASS Multiple files and images outside active Media are rejected
+PASS Tool payloads from another skin are rejected
+PASS Saved project restores geometry protection and synchronizes grid tools
+PASS Dropping outside the skin is rejected through the canvas event path
+PASS Navigation mode rejects insertion through the canvas event path
+PASS Toolbox toggle fits and retains a usable canvas at minimum window size
+PASS Installed skin toolbox discovers Media assets without editing XML
+PASS 488 installed XML hashes unchanged.

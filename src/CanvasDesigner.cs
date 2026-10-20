@@ -45,6 +45,7 @@ namespace MP1SkinStudio
             if(dragControls.Any(c=>Project.IsLocked(c)||Project.IsEditorHidden(c)))
             {if(Notice!=null)Notice("Unlock locked or editor-hidden elements in the tree first. The entire selection remains unchanged.");return;}
             string[] keys=resizing?new[]{"width","height"}:new[]{"posX","posY"};
+            if(dragControls.Any(c=>keys.Any(key=>Project.IsPropertyLocked(c,key)))){if(Notice!=null)Notice("Position or size is locked. Unlock that geometry through Element first.");return;}
             if(!UnlockBindings&&dragControls.Any(c=>keys.Any(c.IsBound)))
             {if(Notice!=null)Notice("At least one element contains a binding. Explicitly allow replacement on the right.");Invalidate();return;}
             try{foreach(var item in dragControls){LayoutTools.RequireManualGeometry(item);LayoutTools.RequireNumeric(item,keys);}}catch(Exception ex){if(Notice!=null)Notice(ex.Message);return;}
@@ -101,7 +102,7 @@ namespace MP1SkinStudio
             {
                 if(Project.IsEditorHidden(c))continue;var rect=SelectionBounds(g,c);
                 using(var pen=new Pen(Project.IsLocked(c)?Color.FromArgb(244,193,102):c.Key==Selected.Key?Color.FromArgb(85,186,255):Color.FromArgb(83,211,190),2/scale))g.DrawRectangle(pen,rect.X,rect.Y,rect.Width,rect.Height);
-                if(SelectedKeys.Count==1&&!TextSelection(c)&&!Project.IsLocked(c)&&!c.AutomaticLayout&&!LayoutTools.IsContainer(c)){float size=9/scale;using(var b=new SolidBrush(Color.FromArgb(100,197,255)))g.FillRectangle(b,rect.Right-size/2,rect.Bottom-size/2,size,size);}
+                if(SelectedKeys.Count==1&&!TextSelection(c)&&!Project.IsSizeLocked(c)&&!c.AutomaticLayout&&!LayoutTools.IsContainer(c)){float size=9/scale;using(var b=new SolidBrush(Color.FromArgb(100,197,255)))g.FillRectangle(b,rect.Right-size/2,rect.Bottom-size/2,size,size);}
             }
             if(!NavigationMode||Project.IsEditorHidden(Selected))return;
             string[] directions={"onleft","onright","onup","ondown"},names={"Left","Right","Up","Down"};

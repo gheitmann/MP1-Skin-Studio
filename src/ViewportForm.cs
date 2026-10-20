@@ -35,7 +35,7 @@ namespace MP1SkinStudio
         }
         void UpdateViewTools(){if(zoomLabel!=null)zoomLabel.Text=canvas.ZoomText;}
         string EditorMark(SkinControl control)
-        {return (project.IsLocked(control)?"[L] ":"")+(project.IsEditorHidden(control)?"[H] ":"");}
+        {return (project.IsLocked(control)?"[L] ":(project.IsPositionLocked(control)?"[P] ":"")+(project.IsSizeLocked(control)?"[S] ":""))+(project.IsEditorHidden(control)?"[H] ":"");}
         void ShowProtectionMenu(Control anchor)
         {if(project==null)return;var menu=ProtectionMenu();menu.Show(anchor,new Point(0,anchor.Height));}
         ContextMenuStrip ProtectionMenu()
@@ -44,11 +44,12 @@ namespace MP1SkinStudio
             bool locked=controls.Length>0&&controls.All(c=>project.Editor.Locked.Contains(c.Key));
             bool hidden=controls.Length>0&&controls.All(c=>project.Editor.Hidden.Contains(c.Key));
             var lockItem=menu.Items.Add(locked?"Unlock selection":"Lock selection",null,(s,e)=>SetProtection(true,!locked));lockItem.Enabled=controls.Length>0;
+            AddGeometryLockMenu(menu,controls,"position");AddGeometryLockMenu(menu,controls,"size");
             var hideItem=menu.Items.Add(hidden?"Show selection again":"Hide selection in editor only",null,(s,e)=>SetProtection(false,!hidden));hideItem.Enabled=controls.Length>0;
             AddStructureCommands(menu);AddGroupCommands(menu);AddTextCommands(menu);AddVisibilityCommands(menu);
             menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add("Show all editor-hidden elements",null,(s,e)=>Attempt(()=>{RequireAppliedProperties();project.Editor.Hidden.Clear();RefreshProject(selected==null?null:selected.Key);})).Enabled=project.Editor.Hidden.Count>0;
-            menu.Items.Add("Unlock all elements",null,(s,e)=>Attempt(()=>{RequireAppliedProperties();project.Editor.Locked.Clear();RefreshProject(selected==null?null:selected.Key);})).Enabled=project.Editor.Locked.Count>0;
+            menu.Items.Add("Unlock all elements",null,(s,e)=>Attempt(()=>{RequireAppliedProperties();project.Editor.Locked.Clear();project.Editor.PositionLocked.Clear();project.Editor.SizeLocked.Clear();RefreshProject(selected==null?null:selected.Key);})).Enabled=project.Editor.Locked.Count+project.Editor.PositionLocked.Count+project.Editor.SizeLocked.Count>0;
             return menu;
         }
         void SetProtection(bool locking,bool enabled)
@@ -62,7 +63,7 @@ namespace MP1SkinStudio
         void UpdateProtectionTools()
         {
             bool locked=project!=null&&SelectedControls().Any(c=>project.IsLocked(c));
-            foreach(var pair in fields){bool bound=(pair.Key=="posX"||pair.Key=="posY")&&SelectedControls().Any(c=>{PropertyValue p;return c.Properties.TryGetValue(pair.Key,out p)&&p.Expression.Length>0;});pair.Value.ReadOnly=locked||bound;pair.Value.ForeColor=locked||bound?muted:ink;}
+            foreach(var pair in fields){bool bound=(pair.Key=="posX"||pair.Key=="posY")&&SelectedControls().Any(c=>{PropertyValue p;return c.Properties.TryGetValue(pair.Key,out p)&&p.Expression.Length>0;});bool protectedValue=bound||SelectedControls().Any(c=>project.IsPropertyLocked(c,pair.Key));pair.Value.ReadOnly=protectedValue;pair.Value.ForeColor=protectedValue?muted:ink;}
             foreach(Control row in properties.Controls)foreach(Control item in row.Controls)if(item is Button)item.Enabled=!locked;
             unlock.Enabled=!locked;
             if(protectButton!=null)protectButton.Enabled=project!=null;
@@ -73,6 +74,17 @@ namespace MP1SkinStudio
             PrepareMultiPreview();SetProtection(true,true);
             canvas.NativeView();
             ShowNotice("[L] = locked · Mouse wheel zooms · Middle button pans · Fit shows the full skin");
+        }
+        void AddGeometryLockMenu(ContextMenuStrip menu,SkinControl[] controls,string kind)
+        {
+            var flags=kind=="position"?project.Editor.PositionLocked:project.Editor.SizeLocked;bool active=controls.Length>0&&controls.All(c=>flags.Contains(c.Key));
+            var item=menu.Items.Add((active?"Unlock ":"Lock ")+kind+" only",null,(s,e)=>Attempt(()=>SetGeometryProtection(kind,!active)));item.Enabled=controls.Length>0;((ToolStripMenuItem)item).Checked=active;
+        }
+        void SetGeometryProtection(string kind,bool enabled)
+        {
+            RequireAppliedProperties();var flags=kind=="position"?project.Editor.PositionLocked:kind=="size"?project.Editor.SizeLocked:null;if(flags==null)throw new InvalidOperationException("Unknown geometry lock.");
+            foreach(var control in SelectedControls()){if(enabled)flags.Add(control.Key);else flags.Remove(control.Key);}RefreshProject(selected==null?null:selected.Key);
+            ShowNotice("Geometry protection updated. [P] locks position; [S] locks size. Inherited group locks must be removed on the group.");
         }
         void RunViewportUiSmoke(string directory,Action<bool,string> verify)
         {

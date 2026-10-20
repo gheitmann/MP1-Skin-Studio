@@ -39,7 +39,7 @@ namespace MP1SkinStudio
             try
             {
                 var prepared=project.PrepareTheme(theme.SelectedIndex<=0?"":theme.SelectedItem.ToString());
-                canvas.IsolateSelection=false;state=prepared.Preview;canvas.State=state;canvas.ResetAssets();PopulatePageChoices(prepared.Pages);RefreshProject(null);
+                canvas.IsolateSelection=false;state=prepared.Preview;canvas.State=state;canvas.ResetAssets();RefreshDropAssets();PopulatePageChoices(prepared.Pages);RefreshProject(null);
             }
             catch
             {

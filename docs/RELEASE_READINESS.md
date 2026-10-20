@@ -1,6 +1,6 @@
 # Review candidate readiness
 
-Date: October 20, 2026. Version: 0.9. Delivery: portable Windows review ZIP.
+Date: October 21, 2026. Version: v0.9.0-preview.2. Delivery: portable Windows ZIP.
 The ZIP includes the executable, twelve complete demo scenes, their shared
 resources, license, user guide and quick start. Extract it completely before
 running. Windows and .NET Framework 4.x are required; no compiler is needed.

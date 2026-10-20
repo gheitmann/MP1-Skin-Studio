@@ -49,7 +49,7 @@ class SkinSelectorProbe
             Check(properties.AutoScrollPosition.Y<0&&fields["width"].Text=="321"&&fields["width"].Focused,"The dark property thumb scrolls fields and preserves their values and focus");Scroll(properties,true,4,0);
             string information=diagnostics.Text;diagnostics.Text=String.Join(Environment.NewLine,Enumerable.Range(0,100).Select(i=>"Preview information line "+i));Application.DoEvents();Scroll(diagnostics,true,4,20);
             Check(Bar(diagnostics,true).ScrollPosition>0,"The dark information scrollbar scrolls the native text content");diagnostics.Text=information;
-            Check(Desc(f).OfType<DarkScrollHost>().Count()==4&&Desc(f).OfType<DarkScrollBar>().Where(b=>b.Visible).All(b=>b.BackColor==Color.FromArgb(20,26,35)),"All four main content regions use matching dark scrollbar chrome");
+            Check(new Control[]{list,tree,properties,diagnostics}.All(content=>content.Parent is DarkScrollHost)&&Desc(f).OfType<DarkScrollBar>().Where(b=>b.Visible).All(b=>b.BackColor==Color.FromArgb(20,26,35)),"All four main content regions retain matching dark scrollbar chrome with the added toolbox");
             Check(Desc(f).OfType<DarkScrollHost>().All(host=>host.Controls.Cast<Control>().Where(c=>c!=host.Content).All(c=>host.Controls.GetChildIndex(c)<host.Controls.GetChildIndex(host.Content))),"Scrollbar overlays stay in front of native content windows in every host");
             Check(ProjectFile.XmlSignature(root)==xml&&!root.Dirty&&Field<SkinControl>(f,"selected").Key==selected,"Scrollbar input and wider layout never edit XML or change selected controls");fields["width"].Text=original;
             tree.SelectedNode.EnsureVisible();Scroll(tree,false,4,0);list.TopIndex=list.SelectedIndex;
