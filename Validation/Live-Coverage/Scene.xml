@@ -1,0 +1,10 @@
+<window>
+  <id>90110</id><defaultcontrol>21103</defaultcontrol><allowoverlay>no</allowoverlay>
+  <controls>
+    <control><type>label</type><id>21100</id><description>Coverage heading</description><posX>80</posX><posY>40</posY><width>1700</width><height>70</height><font>font18</font><label>Skin Studio - native live coverage</label><textcolor>ffffffff</textcolor></control>
+    <control><type>textboxscrollup</type><id>21101</id><description>Scrolling test text</description><posX>80</posX><posY>140</posY><width>780</width><height>200</height><font>font18</font><label>Original scrolling text. This paragraph is rendered by MediaPortal.</label><textcolor>ffffffff</textcolor><textalign>left</textalign></control>
+    <control><type>textbox</type><id>21102</id><description>Multiline test text</description><posX>980</posX><posY>140</posY><width>780</width><height>200</height><font>font18</font><label>Original multiline text. This paragraph is rendered by MediaPortal.</label><textcolor>ffffffff</textcolor><textalign>left</textalign></control>
+    <control><type>listcontrol</type><id>21103</id><description>List geometry test</description><posX>80</posX><posY>400</posY><width>780</width><height>530</height><font>font18</font><textureHeight>65</textureHeight><spaceBetweenItems>8</spaceBetweenItems><itemWidth>35</itemWidth><itemHeight>35</itemHeight><textXOff>10</textXOff><textYOff>5</textYOff><textcolor>ffffffff</textcolor><selectedColor>ff00ccff</selectedColor></control>
+    <control><type>filmstrip</type><id>21104</id><description>Filmstrip geometry test</description><posX>980</posX><posY>430</posY><width>780</width><height>430</height><font>font18</font><itemWidth>180</itemWidth><itemHeight>220</itemHeight><textureWidth>150</textureWidth><textureHeight>180</textureHeight><thumbWidth>120</thumbWidth><thumbHeight>150</thumbHeight><textcolor>ffffffff</textcolor></control>
+  </controls>
+</window>

@@ -35,3 +35,24 @@ installed SDK metadata before adapting protected state.
 
 No installed configuration, private paths, skin XML/assets, captures or runtime
 logs are included as repository evidence. Results contain counts and filenames.
+
+## Reproducing the specialized full-renderer test
+
+Prepare-Scene.ps1 accepts ClientDirectory and SkinDirectory, both restricted to
+an isolated copy beneath this repository's work directory. Close that copied
+MP client before preparing it. The script copies the current bridge, compiles
+the test-only scene plugin and SceneProbe, and adds Scene.xml to the copied skin.
+It does not install the fixture into the owner's MediaPortal installation.
+
+Set MP1_SKIN_STUDIO_LIVE_DIR to a private IPC directory for both the copied
+MediaPortal process and SceneProbe. Start the copied client, then run
+SceneProbe.exe with the IPC directory and a fresh result directory as arguments.
+The probe opens window 90110 with six synthetic list rows and four filmstrip
+items, updates text/colors and collection dimensions, and holds the changed
+scene for 35 seconds for visual inspection. It then checks empty-frame and
+disconnect restoration. Results.txt records each check.
+
+Desired geometry accepts one skin pixel of rounding after MP's scaled-window
+pixel conversion. Restoring captured original values still requires exact
+equality. Collection item counts must survive layout rebuilding and restoration.
+The fixture is test infrastructure, not a distributable plugin or user skin.
