@@ -2,7 +2,29 @@
 
 Date: October 29, 2026. Imported version: 0.9.
 
-## Latest development milestone: native MediaPortal live editing
+## Newest development milestone: durable skin-copy saving
+
+October 29: Save skin beside Live applies valid inputs, reviews the desired XML
+and creates a complete separate output skin. Later saves update only reviewed
+files in that managed copy, including a reversal made through Undo. The current
+source, live runtime baseline and editor Undo/Redo history continue. Save Project
+retains the optional output location in format 5; old projects remain readable.
+
+Source-bound receipts, actual target hashes, exclusive save locking and final
+checks reject unrelated skins, changed baselines, external changes, read-only
+targets and stale saves. Each update backs up previous XML/receipt bytes to ZIP.
+A failed multi-file replacement restores already changed files; concurrent
+third-party writes during recovery retain recovery data and report the location.
+Backup files and metadata do not appear as skin XML pages.
+
+Fresh validation: 471 core checks, 13 save-dialog checks, 13 Studio/native-MP-SDK
+live checks including first copy and saving Undo, and 17 existing toolbox
+workflows passed. All 488 installed DefaultWideHD XML hashes remained unchanged.
+See [save guide](docs/SAVE_SKIN_COPY.md) and [validation](Validation/Saved-Skin/README.md).
+The earlier full real-MP acceptance below is retained as historical evidence;
+this milestone does not claim a second full renderer comparison.
+
+## Previous development milestone: native MediaPortal live editing
 
 Studio now includes an optional Live toolbar and a MediaPortal 1.39 process
 plugin. Valid property drafts and in-progress canvas gestures update existing

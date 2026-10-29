@@ -40,11 +40,14 @@ valid preview. Apply commits inputs to the editor model; it does not restart MP.
 Revert Inputs removes uncommitted previews. Undo/Redo follows the editor model.
 
 **Disconnect restores the native runtime state from before the live session.**
-Editor changes remain available. A dropped connection, an editor crash, a page
+The saved output skin copy remains on disk. Editor changes remain available.
+A dropped connection, an editor crash, a page
 change or plugin shutdown also restores preview overrides. A busy MP GUI can
 delay restoration until it processes messages again. Runtime previews are never
-written to skin files by the plugin. Save an editor project to continue later;
-use the existing export/copy workflow to make a skin change permanent. Export
+written to skin files by the plugin. Use **Save skin …** beside Live to create
+and update a separate complete output skin with review, conflict checks and
+backups. See [Save a complete skin copy](SAVE_SKIN_COPY.md). Save an editor
+project to retain Undo history and the output location. Export
 alone does not replace the live session's original runtime baseline.
 
 ## Supported scope

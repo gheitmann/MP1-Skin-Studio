@@ -15,6 +15,7 @@ namespace MP1SkinStudio
         public bool SnapEnabled=true,GridVisible=true;
         public bool ShowUnresolved=true;
         public string PreviewMode="layout",MediaTipScene="music";
+        public string SavedSkinRoot="";
         public int PreviewFocusId=-1;
         public string PreviewFocusPage="";
         public string PreviewFocusTheme="";
@@ -73,10 +74,13 @@ namespace MP1SkinStudio
     public static partial class ProjectFile
     {
         static string Number(double value){return value.ToString("R",CultureInfo.InvariantCulture);}
+        static void ValidateSavedSkin(EditorState state)
+        {string path=state.SavedSkinRoot;if(!String.IsNullOrEmpty(path)&&(path.Length>1024||!Path.IsPathRooted(path)||path.IndexOfAny(Path.GetInvalidPathChars())>=0))throw new InvalidDataException("Invalid saved skin location.");}
         public static string EditorSignature(SkinProject project)
         {
             ReadablePreview.Validate(project.Editor);
             ValidateGrid(project.Editor);
+            ValidateSavedSkin(project.Editor);
             var value=new StringBuilder(Number(project.Editor.Zoom)+","+Number(project.Editor.PanX)+","+Number(project.Editor.PanY));
             string page=project.Page??"",theme=project.Theme??"";
             value.Append('\n').Append(page.Length).Append(':').Append(page).Append(theme.Length).Append(':').Append(theme);
@@ -84,6 +88,7 @@ namespace MP1SkinStudio
             value.Append('\n').Append(project.Editor.SnapSpacing).Append(':').Append(project.Editor.SnapEnabled).Append(':').Append(project.Editor.GridVisible);
             value.Append('\n').Append(project.Editor.Preview.SignatureText()).Append('\n').Append(project.Editor.Language.Signature()).Append(project.Editor.ShowUnresolved?'U':'-').Append(project.Editor.Collection.Signature());
             value.Append('\n').Append(project.Editor.PreviewMode).Append(':').Append(project.Editor.MediaTipScene);
+            if(!String.IsNullOrEmpty(project.Editor.SavedSkinRoot))value.Append("\nsavedSkin:").Append(project.Editor.SavedSkinRoot.Length).Append(':').Append(project.Editor.SavedSkinRoot);
             value.Append('\n').Append(project.Editor.PreviewFocusPage).Append(':').Append(project.Editor.PreviewFocusId);
             value.Append(':').Append(project.Editor.PreviewFocusTheme);
             foreach(var entry in project.Editor.FocusEntries.OrderBy(p=>p.Key,StringComparer.OrdinalIgnoreCase))value.Append('\n').Append(entry.Key.Length).Append(':').Append(entry.Key.ToLowerInvariant()).Append(':').Append(entry.Value.Id);
@@ -95,10 +100,12 @@ namespace MP1SkinStudio
         {
             ReadablePreview.Validate(project.Editor);
             ValidateGrid(project.Editor);
+            ValidateSavedSkin(project.Editor);
             var state=doc.CreateElement("editorState");doc.DocumentElement.AppendChild(state);
             state.SetAttribute("zoom",Number(project.Editor.Zoom));state.SetAttribute("panX",Number(project.Editor.PanX));state.SetAttribute("panY",Number(project.Editor.PanY));
             state.SetAttribute("snapSpacing",project.Editor.SnapSpacing.ToString(CultureInfo.InvariantCulture));state.SetAttribute("snapEnabled",project.Editor.SnapEnabled?"true":"false");state.SetAttribute("gridVisible",project.Editor.GridVisible?"true":"false");
             state.SetAttribute("previewMode",project.Editor.PreviewMode);state.SetAttribute("mediaTipScene",project.Editor.MediaTipScene);
+            if(!String.IsNullOrEmpty(project.Editor.SavedSkinRoot))state.SetAttribute("savedSkin",project.Editor.SavedSkinRoot);
             state.SetAttribute("showUnresolved",project.Editor.ShowUnresolved?"true":"false");SavePreviewSettings(project.Editor.Preview,state);
             SaveCollectionSettings(project.Editor.Collection,state);
             if(project.Editor.PreviewFocusId>0){state.SetAttribute("focusPage",project.Editor.PreviewFocusPage);state.SetAttribute("focusTheme",project.Editor.PreviewFocusTheme);state.SetAttribute("focusId",project.Editor.PreviewFocusId.ToString(CultureInfo.InvariantCulture));}
@@ -120,6 +127,7 @@ namespace MP1SkinStudio
         static void LoadEditorState(SkinProject project,XmlDocument doc)
         {
             var state=doc.SelectSingleNode("/skinStudioProject/editorState") as XmlElement;if(state==null)return;
+            if(state.HasAttribute("savedSkin")){string saved=state.GetAttribute("savedSkin");if(saved.Length>1024||!Path.IsPathRooted(saved)||saved.IndexOfAny(Path.GetInvalidPathChars())>=0)throw new InvalidDataException("Invalid saved skin location.");project.Editor.SavedSkinRoot=saved;}
             if(state.HasAttribute("snapSpacing")){int spacing;if(!Int32.TryParse(state.GetAttribute("snapSpacing"),NumberStyles.None,CultureInfo.InvariantCulture,out spacing))throw new InvalidDataException("Invalid snap spacing.");project.Editor.SnapSpacing=spacing;}
             project.Editor.SnapEnabled=OptionalStateBoolean(state,"snapEnabled",true);project.Editor.GridVisible=OptionalStateBoolean(state,"gridVisible",true);ValidateGrid(project.Editor);
             project.Editor.PreviewMode=state.HasAttribute("previewMode")?state.GetAttribute("previewMode"):"all";

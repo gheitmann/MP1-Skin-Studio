@@ -10,6 +10,10 @@ This preview provides a practical visual guide; rendering remains approximate. S
 
 ## Build and run
 
+The development build also offers [Save skin …](docs/SAVE_SKIN_COPY.md): create
+a complete output copy once, then update its reviewed XML with conflict checks
+and automatic backups while editing and live preview continue.
+
 The development build adds [native live preview in MediaPortal 1.39](docs/LIVE_PREVIEW.md).
 It includes a local process plugin: valid input drafts and canvas gestures update
 the active MP controls without Apply, XML export or a restart. Enable **Live**

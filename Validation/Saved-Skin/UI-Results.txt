@@ -1,0 +1,13 @@
+PASS pending inputs remain unapplied before Save skin
+PASS output XML review displays the exact pending target change
+PASS review enables updating a valid output copy
+PASS successful save refreshes to an up-to-date copy
+PASS Save skin applies valid drafts and saves the reviewed output copy
+PASS dialog workflow preserves source XML
+PASS review enables updating a valid output copy
+PASS successful save refreshes to an up-to-date copy
+PASS dialog saves Undo without losing Redo or source baseline
+PASS Save skin toolbar retains a usable minimum-size canvas with Toolbox
+PASS first-save dialog always includes edits and keeps the current live source
+PASS target conflict disables writing while leaving New skin copy available
+PASS conflicted output can be replaced by creating a separate new copy

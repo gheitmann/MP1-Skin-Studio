@@ -12,6 +12,7 @@ $reviewTarget = Join-Path $reviewOutput 'MP1-Skin-Studio-Review.zip'
 $reviewTemp = $reviewTarget + '.' + [Guid]::NewGuid().ToString('N') + '.tmp'
 $reviewFiles = @('MP1SkinStudio.exe', 'LICENSE', 'docs/USER_GUIDE.md', 'docs/QUICK_START.md', 'docs/RELEASE_READINESS.md', 'docs/RELEASE_NOTES.md')
 $reviewFiles += @('LiveBridge/bin/MP1SkinStudio.LiveBridge.dll','LiveBridge/Install-LiveBridge.ps1','docs/LIVE_PREVIEW.md')
+$reviewFiles += @('docs/SAVE_SKIN_COPY.md')
 $reviewSampleRoot = Join-Path $PSScriptRoot 'Samples\Titan-Sample'
 $reviewFiles += @(Get-ChildItem -LiteralPath $reviewSampleRoot -Recurse -File |
     Where-Object { $_.Extension -in @('.xml', '.png', '.jpg', '.jpeg') } |
@@ -23,6 +24,12 @@ foreach ($reviewFile in $reviewFiles) {
 $reviewNotes = @"
 MP1 Skin Studio - manual review build
 Source revision: $Revision
+
+Save skin … beside Live saves applied inputs to a complete separate output skin.
+Create its first copy once; later saves update reviewed XML with conflict checks,
+transaction rollback and automatic ZIP backups. The current source, live preview
+and editor Undo history continue. Save Project also remembers the output folder.
+See docs/SAVE_SKIN_COPY.md for persistence, recovery and normal MP skin selection.
 
 Live preview: install LiveBridge/bin/MP1SkinStudio.LiveBridge.dll into your MP1
 1.39 plugins/process folder, or use LiveBridge/Install-LiveBridge.ps1 with admin

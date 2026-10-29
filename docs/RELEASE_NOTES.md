@@ -1,3 +1,17 @@
+# Development additions — October 29, 2026
+
+- Live drafts and gestures update native MP1 1.39 controls without Apply, page
+  reload or restart; Disconnect restores runtime previews.
+- Save skin creates a complete output copy once and updates it on later saves,
+  with exact XML review, conflict checks, ZIP backups and multi-file rollback.
+  Saving Undo is supported. The current source, live connection and Undo history
+  continue, and Save Project remembers the output location.
+- Fresh saving validation: 471 core checks, 13 focused dialog checks, 13 native
+  SDK live checks and 17 toolbox workflows. See docs/SAVE_SKIN_COPY.md.
+
+These additions belong to the development package. The published preview.2
+release and its assets have not been replaced.
+
 # MP1 Skin Studio v0.9.0-preview.2
 
 October 21, 2026. Easier visual editing for Windows and MediaPortal 1 skin authors.

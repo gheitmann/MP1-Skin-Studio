@@ -33,6 +33,7 @@ namespace MP1SkinStudio
             });commands.Controls.Add(navigation);
             var toolbox=ButtonFor("Toolbox",ToggleDropPalette);toolbox.Width=78;commands.Controls.Add(toolbox);tips.SetToolTip(toolbox,"Show the integrated drag-and-drop tools and skin images.");
             var live=Check("Live",false,value=>{if(liveHost!=null)liveHost.Visible=value;});live.Width=62;commands.Controls.Add(live);tips.SetToolTip(live,"Show the connection to a running MediaPortal instance. Install the included LiveBridge plugin once; valid fields and canvas drags then preview without Apply or reload.");
+            var saveCopy=ButtonFor("Save skin …",SaveSkinCopy);saveCopy.Width=111;commands.Controls.Add(saveCopy);tips.SetToolTip(saveCopy,"Save your applied changes to a separate skin copy, with review, conflict checks and automatic backups.");
             row.Controls.Add(new Label{Text="Direction",ForeColor=muted,Width=64,Height=27,TextAlign=ContentAlignment.MiddleLeft});
             navDirection.Width=100;navDirection.Height=27;navDirection.BackColor=Color.FromArgb(20,26,35);navDirection.ForeColor=ink;
             navDirection.Items.AddRange(new object[]{"Left","Right","Up","Down"});navDirection.SelectedIndex=1;row.Controls.Add(navDirection);

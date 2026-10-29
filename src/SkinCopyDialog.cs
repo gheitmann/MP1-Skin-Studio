@@ -13,12 +13,13 @@ namespace MP1SkinStudio
         readonly SkinProject project;readonly TextBox name=new TextBox(),parent=new TextBox();
         readonly CheckBox include=new CheckBox(),open=new CheckBox();readonly Label status=new Label();
         readonly Button create=new Button(),browse=new Button(),cancel=new Button();readonly ProgressBar progress=new ProgressBar();
-        CancellationTokenSource cancellation;bool busy;
+        CancellationTokenSource cancellation;bool busy;readonly bool saveMode;
         public string CreatedRoot {get;private set;}
         public bool OpenCopy {get{return open.Checked;}}
-        public SkinCopyDialog(SkinProject source)
+        public SkinCopyDialog(SkinProject source):this(source,false){}
+        public SkinCopyDialog(SkinProject source,bool saving)
         {
-            project=source;Text="Copy skin / create a new skin";StartPosition=FormStartPosition.CenterParent;
+            project=source;saveMode=saving;Text=saving?"Save changes to a new skin copy":"Copy skin / create a new skin";StartPosition=FormStartPosition.CenterParent;
             FormBorderStyle=FormBorderStyle.FixedDialog;MinimizeBox=false;MaximizeBox=false;ShowInTaskbar=false;
             AutoScaleMode=AutoScaleMode.None;Font=new Font("Segoe UI",9.5f);ClientSize=new Size(650,380);
             BackColor=Color.FromArgb(29,35,46);ForeColor=Color.FromArgb(225,234,244);
@@ -28,8 +29,9 @@ namespace MP1SkinStudio
             browse.Text="Browse …";browse.SetBounds(535,152,95,29);browse.Click+=(s,e)=>{using(var dialog=new FolderBrowserDialog{Description="Choose the parent folder for the new skin",SelectedPath=parent.Text})if(dialog.ShowDialog(this)==DialogResult.OK)parent.Text=dialog.SelectedPath;};Controls.Add(browse);
             int changed=source.Sources.Values.Count(s=>s.Changed);include.Text="Include applied editor changes ("+changed+" XML files)";include.Checked=true;include.SetBounds(20,196,610,25);Controls.Add(include);
             open.Text="Open the new skin when copying finishes";open.Checked=true;open.SetBounds(20,226,610,25);Controls.Add(open);
+            if(saveMode){include.Enabled=false;open.Checked=false;open.Enabled=false;open.Text="Continue editing the current source and live preview";status.Text="The output copy is saved separately. Your editor undo history and live connection continue.";}
             progress.SetBounds(20,261,610,12);progress.Style=ProgressBarStyle.Marquee;progress.Visible=false;Controls.Add(progress);
-            status.SetBounds(20,281,610,42);status.Text="Pending property inputs must be applied first. Preview settings and undo history stay in the current project.";Controls.Add(status);
+            status.SetBounds(20,281,610,42);status.Text=saveMode?"Save includes applied XML changes. The current source, Undo history and live connection continue.":"Pending property inputs must be applied first. Preview settings and undo history stay in the current project.";Controls.Add(status);
             create.Text="Create copy";create.SetBounds(375,333,125,32);create.Click+=async(s,e)=>await CreateCopy();Controls.Add(create);
             cancel.Text="Cancel";cancel.SetBounds(510,333,120,32);cancel.Click+=(s,e)=>{if(busy){cancellation.Cancel();status.Text="Cancelling and removing the unfinished copy …";}else{DialogResult=DialogResult.Cancel;Close();}};Controls.Add(cancel);
             foreach(var field in new[]{name,parent}){field.BackColor=Color.FromArgb(20,26,35);field.ForeColor=ForeColor;field.BorderStyle=BorderStyle.FixedSingle;}
@@ -42,16 +44,16 @@ namespace MP1SkinStudio
             if(busy)return;
             try
             {
-                SkinCopyPlan.ValidateName(name.Text);string destination=parent.Text,skinName=name.Text;var plan=SkinCopyPlan.Capture(project,include.Checked);
+                SkinCopyPlan.ValidateName(name.Text);string destination=parent.Text,skinName=name.Text;var plan=SkinCopyPlan.Capture(project,include.Checked);var savePlan=saveMode?SkinSavePlan.Capture(project):null;
                 cancellation=new CancellationTokenSource();busy=true;SetInputs(false);progress.Visible=true;status.Text="Copying the complete skin. Large media folders may take a moment …";
-                CreatedRoot=await Task.Factory.StartNew(()=>plan.CopyTo(destination,skinName,cancellation.Token));
+                CreatedRoot=await Task.Factory.StartNew(()=>savePlan==null?plan.CopyTo(destination,skinName,cancellation.Token):savePlan.CreateCopy(destination,skinName,cancellation.Token));
                 busy=false;DialogResult=DialogResult.OK;Close();
             }
             catch(OperationCanceledException){status.Text="Copy cancelled. The source skin and existing folders are unchanged.";}
             catch(Exception error){status.Text="Copy was not created: "+error.Message;}
             finally{busy=false;if(cancellation!=null){cancellation.Dispose();cancellation=null;}if(!IsDisposed){SetInputs(true);progress.Visible=false;}}
         }
-        void SetInputs(bool enabled){name.Enabled=parent.Enabled=browse.Enabled=include.Enabled=open.Enabled=create.Enabled=enabled;}
+        void SetInputs(bool enabled){name.Enabled=parent.Enabled=browse.Enabled=create.Enabled=enabled;include.Enabled=open.Enabled=enabled&&!saveMode;}
     }
     public sealed partial class StudioForm
     {

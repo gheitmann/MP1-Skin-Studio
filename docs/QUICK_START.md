@@ -10,6 +10,11 @@ MediaPortal skin are unnecessary for the bundled demo.
 
 ## A complete first workflow
 
+To keep a complete usable output while continuing to edit, use **Save skin …**
+beside Live. Create a new output copy once, then Update saved copy on later
+saves. Review XML, conflict checks and backups protect that copy; current source,
+Undo and live preview continue. See [saving skin copies](SAVE_SKIN_COPY.md).
+
 To start a new skin from an installed one, select its SKIN entry and choose
 **Copy skin …** beside the heading. Choose a new name and destination folder,
 then Create copy. Leave Open enabled to continue in the independent copy.

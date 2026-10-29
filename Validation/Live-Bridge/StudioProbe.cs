@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using MediaPortal.GUI.Library;
 using MP1SkinStudio;
@@ -17,7 +18,7 @@ class StudioProbe
  static object Field(object target,string name){return target.GetType().GetField(name,BindingFlags.Instance|BindingFlags.NonPublic).GetValue(target);}
  static void Call(string method,params object[] args){typeof(StudioForm).GetMethod(method,BindingFlags.Instance|BindingFlags.NonPublic,null,args.Select(a=>a.GetType()).ToArray(),null).Invoke(form,args);}
  static void Check(bool value,string name){results.Add((value?"PASS ":"FAIL ")+name);if(!value)throw new Exception(name);}
- static void Wait(Func<bool> condition){var watch=Stopwatch.StartNew();while(!condition()&&watch.ElapsedMilliseconds<8000){Application.DoEvents();Thread.Sleep(10);}if(!condition())throw new Exception("Timed out: "+((Label)Field(form,"liveNotice")).Text);Application.DoEvents();}
+ static void Wait(Func<bool> condition,int timeout=8000){var watch=Stopwatch.StartNew();while(!condition()&&watch.ElapsedMilliseconds<timeout){Application.DoEvents();Thread.Sleep(10);}if(!condition())throw new Exception("Timed out: "+((Label)Field(form,"liveNotice")).Text);Application.DoEvents();}
  [STAThread]static int Main(string[] args)
  {
   LiveServer server=null;
@@ -34,7 +35,7 @@ class StudioProbe
    fields["posX"].Text="230";Wait(()=>native.XPosition==GUIGraphicsContext.ScaleHorizontal(230));Check(true,"pending geometry input updates native pixels");
    fields["posX"].Text="-";var timer=Stopwatch.StartNew();while(timer.ElapsedMilliseconds<200){Application.DoEvents();Thread.Sleep(10);}Check(native.XPosition==GUIGraphicsContext.ScaleHorizontal(230),"unfinished numeric input retains last valid preview");
    Call("RevertPropertyInputs");Wait(()=>native.Label=="Live bridge: original text"&&native.XPosition==GUIGraphicsContext.ScaleHorizontal(100));Check(true,"Revert Inputs restores native text and geometry");
-   fields["label"].Text="Applied native text";Wait(()=>native.Label=="Applied native text");Call("Apply");Check(project.Dirty&&native.Label=="Applied native text","Apply retains live preview and commits editor model");Call("UndoEditor",false);Wait(()=>native.Label=="Live bridge: original text");Check(!project.Dirty,"Undo restores native label and exact source");
+   fields["label"].Text="Applied native text";Wait(()=>native.Label=="Applied native text");Call("Apply");Check(project.Dirty&&native.Label=="Applied native text","Apply retains live preview and commits editor model");string savedCopy=null;if(args.Length>2&&args[2]=="persist"){var copyPlan=SkinSavePlan.Capture(project);var copying=Task.Factory.StartNew(()=>copyPlan.CreateCopy(args[1],"Saved live skin",CancellationToken.None));Wait(()=>copying.IsCompleted,60000);savedCopy=copying.Result;Check(File.ReadAllText(Path.Combine(savedCopy,"myHome.xml")).Contains("Applied native text")&&(bool)Field(form,"liveVerified")&&native.Label=="Applied native text","saving a complete output copy keeps the native live session active");}Call("UndoEditor",false);Wait(()=>native.Label=="Live bridge: original text");Check(!project.Dirty,"Undo restores native label and exact source");if(savedCopy!=null){var updatePlan=SkinSavePlan.Capture(project,savedCopy);var updating=Task.Factory.StartNew(()=>updatePlan.Save());Wait(()=>updating.IsCompleted);if(updating.IsFaulted)throw updating.Exception;Check(File.ReadAllText(Path.Combine(savedCopy,"myHome.xml")).Contains("Live bridge: original text")&&native.Label=="Live bridge: original text"&&(bool)Field(form,"liveVerified"),"saving Undo updates the output copy while the native live connection continues");}
    control=project.Controls.First(c=>c.Get("id")=="21001");var gesture=new List<ControlEdit>{new ControlEdit(control,new Dictionary<string,string>{{"posX","340"}})};var callback=(System.Action<List<ControlEdit>>)typeof(SkinCanvas).GetField("LiveGesturePreview",BindingFlags.Instance|BindingFlags.NonPublic).GetValue(Field(form,"canvas"));callback(gesture);Wait(()=>native.XPosition==GUIGraphicsContext.ScaleHorizontal(340));Check(!project.Dirty,"canvas gesture draft streams before model commit");callback(null);Wait(()=>native.XPosition==GUIGraphicsContext.ScaleHorizontal(100));Check(true,"cancelled canvas gesture restores baseline");
    fields["label"].Text="Disconnect restores this";Wait(()=>native.Label=="Disconnect restores this");Call("DisconnectLive");Wait(()=>Field(form,"liveClient")==null);Check(native.Label=="Live bridge: original text","Studio disconnect restores MP SDK control");
    Check(File.ReadAllText(control.Source.Path)==before,"on-disk isolated XML remains byte-content identical");return 0;

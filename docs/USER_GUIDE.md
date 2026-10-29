@@ -1,5 +1,10 @@
 # MP1 Skin Studio user guide
 
+Development addition, October 29: **Save skin …** creates a complete output skin
+and safely updates it on later saves. It retains the current live connection
+and Undo history, remembers the output in Save Project, and provides XML review,
+conflict checks and automatic backups. See [Save a complete skin copy](SAVE_SKIN_COPY.md).
+
 Version 0.9 · October 20, 2026
 
 Development addition, October 29: [Live preview](LIVE_PREVIEW.md) connects Studio

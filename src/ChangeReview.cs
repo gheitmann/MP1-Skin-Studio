@@ -9,6 +9,11 @@ namespace MP1SkinStudio
         public readonly string RelativePath,Original,Edited,OriginalHash,EditedHash,EncodingName,SourceStatus;
         public readonly int OriginalBytes,EditedBytes,FirstDifference;
         public readonly bool SourceMatches;
+        internal ReviewedXmlChange(string path,string original,string edited,byte[] before,byte[] after,string encoding,bool matches,string status)
+        {
+            RelativePath=path;Original=original;Edited=edited;OriginalHash=ProjectFile.Digest(before);EditedHash=ProjectFile.Digest(after);OriginalBytes=before.Length;EditedBytes=after.Length;EncodingName=encoding;SourceMatches=matches;SourceStatus=status;
+            int offset=0;while(offset<original.Length&&offset<edited.Length&&original[offset]==edited[offset])offset++;FirstDifference=offset;
+        }
         internal ReviewedXmlChange(SkinSource source)
         {
             RelativePath=source.RelativePath;Original=source.Original;Edited=source.Text;
