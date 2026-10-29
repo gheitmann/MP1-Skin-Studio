@@ -1,5 +1,9 @@
 # Start and finish a skin edit
 
+For native WYSIWYG editing in an already running MediaPortal 1.39 window, see
+[Live preview](LIVE_PREVIEW.md). Install the included process plugin once, then
+enable Live beside Toolbox and Connect to the same skin, theme and XML page.
+
 Extract the entire review ZIP into its own folder and run MP1SkinStudio.exe.
 Windows and .NET Framework 4.x are required. A compiler and an installed
 MediaPortal skin are unnecessary for the bundled demo.

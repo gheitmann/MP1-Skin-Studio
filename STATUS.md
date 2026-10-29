@@ -1,6 +1,34 @@
 # Development status and next steps
 
-Date: October 21, 2026. Imported version: 0.9.
+Date: October 29, 2026. Imported version: 0.9.
+
+## Latest development milestone: native MediaPortal live editing
+
+Studio now includes an optional Live toolbar and a MediaPortal 1.39 process
+plugin. Valid property drafts and in-progress canvas gestures update existing
+native MP controls over an authenticated same-user local pipe. Apply, Revert,
+Undo, cancelled gestures and Disconnect follow the editor workflow without
+writing skin files or restarting/reloading MP for supported edits. The bridge
+restores native values, animation baselines and changed tree structure when
+disconnected or invalidated. Unsupported/ambiguous operations remain explicit.
+See [live setup and scope](docs/LIVE_PREVIEW.md).
+
+Fresh validation: 455 core checks; 13 original-MP-SDK adapter checks; 11
+Studio-to-native-SDK-host checks; authenticated transport and crash reset;
+17 focused toolbox/geometry workflows; twelve packaged demo workflows, twelve
+clean-session workflows and 229 broad UI checks. All 489 original installed
+skin/config XML hashes remained unchanged. The final two live insertion tests
+postdate the broad UI package pass and affect only live frame construction.
+
+The isolated official MP client displayed the real test Home skin and loaded
+the bridge, but its sandbox blocked pipe clients. Normal-rights transport and
+the Studio/native-SDK host passed. A normal MP startup explicitly requires the
+owner's open Configuration Studio to close. Its window was preserved, so the
+complete visible Studio-to-running-MP comparison is still pending. Windows
+also denied writing the plugin to Program Files without administrator consent.
+The portable package contains the built DLL, guarded installer (including
+optional Windows elevation), guides and checksums. No existing release or tag
+was replaced; preview.2 remains the latest published release.
 
 ## Latest source milestone: complete visual editing workflow / preview.2
 

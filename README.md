@@ -10,6 +10,13 @@ This preview provides a practical visual guide; rendering remains approximate. S
 
 ## Build and run
 
+The development build adds [native live preview in MediaPortal 1.39](docs/LIVE_PREVIEW.md).
+It includes a local process plugin: valid input drafts and canvas gestures update
+the active MP controls without Apply, XML export or a restart. Enable **Live**
+beside Toolbox after the one-time plugin setup. Disconnect restores preview
+overrides; saving/exporting remains explicit. The released preview.2 assets do
+not include this new feature.
+
 The review ZIP runs directly after complete extraction: see [Quick start](docs/QUICK_START.md). Building from source requires Windows, .NET Framework 4.x and its C# compiler. From the repository directory:
 
 ```powershell

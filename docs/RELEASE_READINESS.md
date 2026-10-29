@@ -121,3 +121,14 @@ modified XML originals; retain complete matching resources for a recovery skin.
 No release publication, automatic installation or skin activation is performed
 by this ZIP. GitHub main is the source checkpoint; README-Review.txt in the ZIP
 identifies its source revision and MANIFEST.sha256 identifies payload bytes.
+# Live development build, October 29, 2026
+
+The development package adds the optional MP1 1.39 LiveBridge process plugin.
+See [setup, persistence and supported runtime fields](LIVE_PREVIEW.md) and
+[executed validation and remaining native comparison](../Validation/Live-Bridge/README.md).
+Published v0.9.0-preview.2 assets remain unchanged. Native controls accept valid
+Studio drafts/gestures through a local same-user pipe; the plugin does not write
+XML. Unsupported or ambiguous operations are reported inline. A complete visible
+comparison with an unrestricted running MP instance is still required before
+claiming that attended acceptance, including third-party plugin behavior.
+

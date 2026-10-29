@@ -1,0 +1,231 @@
+PASS  Demo and theme are selected
+PASS  Applying properties edits the associated include file
+PASS  Undo restores the original
+PASS  Redo restores the change
+PASS  Data bindings are protected against accidental replacement
+PASS  Approved data bindings can be replaced locally
+PASS  Canvas mouse events move controls with grid snapping
+PASS  Canvas resize handles change width and height
+PASS  Page selection loads another XML file
+PASS  Returning to the demo preserves original files
+PASS  Multiple selection shows mixed values and enables alignment
+PASS  Canvas mouse events move the entire selection in one transaction
+PASS  One undo restores the entire multiple selection
+PASS  Shared properties apply to every selected control
+PASS  Deliberately clearing a mixed text field clears all selected labels
+PASS  Alignment corrects mixed positions
+PASS  Insertion selects the new control with its own ID
+PASS  Duplication preserves extensions and selects the copy
+PASS  Navigation mode connects to targets through canvas mouse events
+PASS  Arrow keys test the remote-control path to the right
+PASS  Arrow keys test the return remote-control path
+PASS  A protected binding blocks the entire shared drag
+PASS  New designer actions can be fully undone to the original
+PASS  Window titles identify unsaved changes
+PASS  Project saving preserves the session and pending export changes
+PASS  Opening projects restores saved edits
+PASS  Failed project opening preserves the active session
+PASS  Changes after project saving are detected as unsaved
+PASS  Undoing to the saved state clears the change marker
+PASS  Restored project changes can be fully undone
+PASS  The texture browser loads demo images with previews
+PASS  The search field filters textures by file path
+PASS  Empty search results disable image selection
+PASS  Image selection returns a relative Media path
+PASS  Selected textures are saved on the intended control
+PASS  Image selection can be fully undone
+PASS  Cancelling the texture browser preserves XML files
+PASS  Opening a skin keeps initial fallback focus clean
+PASS  Mouse-wheel zoom preserves the logical point under the pointer
+PASS  Middle-button panning changes the view without XML edits or undo steps
+PASS  View-only changes mark the project for saving
+PASS  The 100-percent button displays one skin pixel per canvas pixel
+PASS  Fit restores the initial view and saved-state status
+PASS  Locked elements remain accessible in the tree with read-only properties
+PASS  Canvas hit testing skips locked elements during dragging
+PASS  Element protection also blocks direct property application
+PASS  A locked element blocks the entire alignment action
+PASS  Editor hiding remains effective when showing conditionally hidden controls
+PASS  Opening projects restores hiding and zoom without XML edits
+PASS  Showing elements after saving marks the editor project as changed
+PASS  Position protection disables only position inputs
+PASS  Position lock prevents canvas movement
+PASS  Size protection leaves movement inputs editable
+PASS  Size lock prevents resizing through canvas events
+PASS  Snap selector changes saved editor state without XML edits
+PASS  Integrated toolbox lists draggable skin images
+PASS  Pending property drafts block drop acceptance
+PASS  Canvas drop inserts into the page at snapped skin coordinates in one action
+PASS  Undo of a canvas drop restores the entire source
+PASS  Media-file drop uses its relative texture and natural dimensions
+PASS  Multiple files and images outside active Media are rejected
+PASS  Tool payloads from another skin are rejected
+PASS  Saved project restores geometry protection and synchronizes grid tools
+PASS  The problem list shows findings for the open page
+PASS  Searching by audit code isolates the missing navigation reference
+PASS  Audit details show the value and actual include source
+PASS  Findings return the control key and property for navigation
+PASS  Jumping selects the correct control and highlights its property
+PASS  Empty filters disable jumping to elements
+PASS  Dynamic image paths appear separately as unverified findings
+PASS  The information toggle hides unverified values
+PASS  Rechecking after undo removes resolved navigation findings
+PASS  Local properties are available for reset
+PASS  Reset applies the reference value and shows inherited provenance
+PASS  Already inherited properties cannot be removed again
+PASS  One undo restores the complete local property byte-for-byte
+PASS  Other pending property edits block reset and remain intact
+PASS  Multiple selection applies inherited widths in one undo step
+PASS  Local data bindings remain protected during reset
+PASS  Explicitly approved local bindings can be removed
+PASS  Element protection blocks local-property reset
+PASS  Sample-data dialogs do not automatically clear unknown bindings
+PASS  Preset selection remains local to the dialog until applied
+PASS  Cancelling sample-data dialogs preserves the complete project state
+PASS  The news preset starts with a hidden notification
+PASS  Sample data toggles control visibility while preserving pending property edits
+PASS  Preview-state changes are detected as unsaved without XML edits
+PASS  Opening projects restores saved preview values and saved-state status
+PASS  The weather preset applies plugin state and temperature
+PASS  The baseline restores default values without an XML undo step
+PASS  Invalid variables are detected before changing the active preview
+PASS  Focus changes immediately update tree visibility markers
+PASS  Integrated page selection loads XML without a popup menu
+PASS  Repeated integrated page selection retains the complete file list
+PASS  Applicable properties are organized under named groups
+PASS  Collapsing a group preserves its unapplied inputs and pending guard
+PASS  A draft retained through collapsing applies as one undo step
+PASS  Collapsed groups remain collapsed when selecting another element
+PASS  Keyboard focus exposes plain-language property help
+PASS  Cancelling the font picker leaves fields and XML unchanged
+PASS  Choosing a font creates a property draft without mutating XML
+PASS  Font changes use the existing apply and byte-preserving undo workflow
+PASS  Font preview reports unavailable families, substitute name and actual pixel size
+PASS  An empty font filter clears selection without retaining an old preview
+PASS  Clearing the filter restores available skin font choices
+PASS  Alignment menus select entries and close normally
+PASS  Reset menus survive rebuilding their own anchor button
+PASS  Menu insertion processes clicks completely after closing
+PASS  Menu alignment remains stable while rebuilding property controls
+PASS  Context menus support consecutive locking and unlocking
+PASS  Sample presets can repeatedly change through the real dropdown without crashing
+PASS  Menus remain valid after anchor disposal and nested event loops
+PASS  Menu reuse removes previous items and callback references
+PASS  Escape closes menus without actions or premature disposal
+PASS  Menus are cleaned up when their owner window is disposed
+PASS  Layer menus keep selection and editor markers on the correct element
+PASS  Layer undo restores XML and the original selection
+PASS  Layer redo selects the same logical element again
+PASS  Property editing after layer changes still targets the selected control
+PASS  Layer changes preserve pending property edits
+PASS  Removal involving references and includes starts without approval
+PASS  Explicit approvals enable removal
+PASS  Removal through menus and audit dialogs selects the next element
+PASS  Removal undo restores selection, complete XML and unchanged references
+PASS  Removal redo restores the post-removal selection
+PASS  Search filters affect only the tree and preserve pending edits and the full preview
+PASS  Tree matches preserve pending property edits and the previous selection
+PASS  Match selection is blocked while properties remain unapplied
+PASS  Enter selects the next match and highlights it in the tree
+PASS  Reverse search finds the previous match
+PASS  Reverse search wraps from the first to the last match
+PASS  Targeted ID searches filter include controls in the real tree
+PASS  Empty result lists preserve selection and properties
+PASS  Escape clears search filters and restores all tree nodes
+PASS  Undo refreshes filtered control objects without stale results
+PASS  Page changes apply the current search filter to the new page
+PASS  Pointer hits are sorted in visible front-to-back order
+PASS  Overlap lists include locked elements for inspection
+PASS  Real context menus select obscured locked elements despite tree filters without XML edits while updating simulated focus
+PASS  Reused overlap lists select middle layers without dragging or undo steps
+PASS  Editor-hidden elements are excluded from pointer hit lists
+PASS  Conditionally invisible controls are excluded from overlap lists
+PASS  Show-hidden includes conditionally invisible controls while preserving editor hiding
+PASS  No controls are offered outside the skin surface
+PASS  Project changes reset temporary element searches
+PASS  Group trees show XML nesting without missing or duplicate controls
+PASS  Group frames cannot accidentally be resized as individual rectangles
+PASS  Content selection preserves pending property edits
+PASS  Search matches retain the full ancestor group chain without counting it as matches
+PASS  Match selection reaches deeply nested controls and preserves group markers
+PASS  Real group-content menus clear search filters without XML edits or undo steps
+PASS  Multiple selection highlights deeply nested tree nodes
+PASS  Selected leaf controls move together while group frames remain unchanged
+PASS  Undoing content movement preserves complete XML and multiple selection
+PASS  Free sibling controls within groups align through the UI
+PASS  Content selection respects inherited group locks
+PASS  Dragging within automatically arranged groups changes no controls
+PASS  Removing subgroups removes their complete tree chain
+PASS  Undo restores nested tree structure and complete source text
+PASS  Editor status updates also reach filtered deep tree nodes
+PASS  Grouping preserves pending property edits and selection
+PASS  Group command creates nested structure and selects the new group
+PASS  Group undo restores exact XML and the original multiple selection
+PASS  Group redo restores the new group selection
+PASS  Ungroup protects pending property edits
+PASS  Ungroup menu promotes direct children and selects them
+PASS  Ungroup undo restores exact XML and group selection
+PASS  Ungroup redo restores promoted child selection
+PASS  Text dialogs show bound original values with current sample data and allow unchanged closing
+PASS  Changed bound text requires its own explicit approval
+PASS  Approval enables applying changes and refreshes the preview
+PASS  Canvas double-click opens text editing and applies text in one undo step
+PASS  Undo after double-click restores XML and unknown data exactly
+PASS  Redo after text editing restores the new value
+PASS  Small pointer movements while clicking do not change positions even without snapping
+PASS  Real element menus open text editing and cancellation preserves XML and history
+PASS  Double-click and preceding mouse selection preserve pending property edits
+PASS  F2 on file nodes does not accidentally edit the previous control
+PASS  F2 on the canvas opens text editing and unchanged application creates no undo step
+PASS  Bound text can be explicitly replaced locally through the dialog
+PASS  Undo restores the original data binding
+PASS  Locked text does not open an editable dialog
+PASS  Text remains explicitly editable within automatic group layouts
+PASS  Ctrl+Enter applies multiline text without trimming
+PASS  Unchanged multiline text fields preserve spaces, line breaks and original values
+PASS  Language changes show translated names while preserving original XML IDs
+PASS  Element search finds translated text in the real UI
+PASS  Language changes mark only the editor project for saving
+PASS  The language-catalog search field remains fully visible in narrow windows
+PASS  Language catalogs filter fallback IDs
+PASS  Disabling prefixes is reflected in the language catalog
+PASS  Cancelling language dialogs preserves preview settings
+PASS  Language-text selection returns the matching ID rather than fixed text
+PASS  Text editors show language IDs alongside resolved previews
+PASS  Other language IDs show fallback text and remain protected until approved
+PASS  Language pickers set IDs while preserving replacement protection
+PASS  Saved projects restore preview languages and translated selection
+PASS  Edit layout hides unverified conditions by default
+PASS  Diagnostic layers reveal unverified conditions without editing XML
+PASS  Unverified states can be hidden from the preview without changing conditions
+PASS  XML undo preserves independently selected preview options
+PASS  Stack previews arrange visible items with spacing without changing source positions
+PASS  Mouse selection hits arranged rectangles rather than original positions
+PASS  Element menus open layout dialogs and atomically apply direction, spacing and collapsing
+PASS  Applying layouts reserves hidden items and refreshes the preview
+PASS  Undo restores source text and stack previews exactly
+PASS  Redo refreshes stack geometry
+PASS  Layout dialogs load existing settings correctly
+PASS  Other layout types require explicit approval in the dialog
+PASS  Explicit approval enables applying layouts
+PASS  Grid previews use arranged cell positions
+PASS  Grid hit testing selects arranged controls
+PASS  Grid rendering and selection preserve source XML
+PASS  Grid menus open dialogs and apply atomic edits
+PASS  Grid dialog undo restores complete source XML
+PASS  Grid dialog redo restores the new rule
+PASS  Grid dialog prevents zero rows and zero columns
+PASS  Grid dialog supports row precedence and full integer spacing
+PASS  Grid dialog protects existing bindings
+PASS  Grid dialog permits explicit binding replacement
+PASS  Facades display only the active subview on the canvas
+PASS  Collection dialogs apply views, selection and custom data
+PASS  Collection state is marked for saving independently of XML and undo
+PASS  Opening projects restores collection state and saved-state status
+PASS  Collection dialogs reject invalid image paths before applying changes
+PASS  Element menus open collection dialogs and cancellation preserves data
+PASS  Rendered collections preserve original XML
+PASS  Text spacing and inner alignment can be edited atomically through properties
+PASS  Undoing text-rendering changes restores exact source text
+
+229 passed, 0 failed.

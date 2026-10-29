@@ -1,0 +1,10 @@
+PASS 455 core checks.
+PASS 13 native SDK adapter checks.
+PASS 11 Studio-to-native-SDK integration checks.
+PASS authenticated same-user transport and crash reset.
+PASS 17 focused toolbox/geometry workflows.
+PASS twelve packaged demo workflows and twelve clean-session workflows.
+PASS 229 packaged broad UI checks under normal Windows rights.
+PASS 489 original installed skin/config XML hashes unchanged.
+PENDING visible Studio-to-running-MP comparison: MP startup requires Configuration Studio to close.
+PENDING installation in Program Files: Windows administrator confirmation required.

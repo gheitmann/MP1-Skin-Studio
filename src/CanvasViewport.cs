@@ -46,7 +46,7 @@ namespace MP1SkinStudio
         {
             base.OnMouseCaptureChanged(e);if(Capture)return;
             if(panning){panning=false;Cursor=Cursors.Default;NotifyView();}
-            if(dragging){dragging=false;dragRects.Clear();Cursor=Cursors.Default;Invalidate();}
+            if(dragging){dragging=false;dragRects.Clear();Cursor=Cursors.Default;if(LiveGesturePreview!=null)LiveGesturePreview(null);Invalidate();}
         }
         internal PointF ExerciseZoom(Point anchor,int delta)
         {UpdateTransform();var before=Logical(anchor);OnMouseWheel(new MouseEventArgs(MouseButtons.None,0,anchor.X,anchor.Y,delta));var after=Logical(anchor);return new PointF(after.X-before.X,after.Y-before.Y);}

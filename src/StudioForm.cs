@@ -326,7 +326,7 @@ namespace MP1SkinStudio
             bottom.Controls.Add(LabelFor("PREVIEW & INFORMATION",22));
             diagnostics.Dock=DockStyle.Fill;diagnostics.Multiline=true;diagnostics.ReadOnly=true;diagnostics.ScrollBars=ScrollBars.Vertical;diagnostics.BorderStyle=BorderStyle.None;diagnostics.BackColor=panel;diagnostics.ForeColor=muted;diagnostics.Font=new Font("Segoe UI",9);var diagnosticScroll=new DarkScrollHost(diagnostics);bottom.Controls.Add(diagnosticScroll);diagnosticScroll.BringToFront();
             var canvasStage=new Panel{Dock=DockStyle.Fill};canvasStage.Controls.Add(canvas);canvasStage.Controls.Add(BuildDropPalette());
-            center.Controls.Add(canvasStage);center.Controls.Add(BuildPreviewModeBar());center.Controls.Add(BuildViewBar());center.Controls.Add(previewToolbar);center.Controls.Add(BuildDesignerBar());center.Controls.Add(bottom);main.Controls.Add(center,1,0);
+            center.Controls.Add(canvasStage);center.Controls.Add(BuildPreviewModeBar());center.Controls.Add(BuildViewBar());center.Controls.Add(previewToolbar);center.Controls.Add(BuildDesignerBar());center.Controls.Add(BuildLiveBar());center.Controls.Add(bottom);main.Controls.Add(center,1,0);
             var right=new Panel{Dock=DockStyle.Fill,BackColor=panel,Padding=new Padding(12),Margin=new Padding(0)};
             var propHeader=new Panel{Dock=DockStyle.Top,Height=130};
             selectionName=new Label{Text="Select an element",ForeColor=ink,Font=new Font("Segoe UI",12,FontStyle.Bold),AutoEllipsis=true};selectionName.SetBounds(0,0,270,27);propHeader.Controls.Add(selectionName);

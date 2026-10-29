@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -67,6 +67,7 @@ namespace MP1SkinStudio
             RunSurfaceRegressionTests(root);
             RunTextEditTests(root);
             RunLanguageTests(root);RunConditionScopeTests(root);RunStackTests(root);RunGridTests(root);RunCollectionTests(root);
+            RunLiveTests(root);
             report.Add("");report.Add(passed+" passed, "+failed+" failed.");
             File.WriteAllLines(Path.Combine(root,"test-results.txt"),report.ToArray(),new UTF8Encoding(false));
             return failed==0?0:1;

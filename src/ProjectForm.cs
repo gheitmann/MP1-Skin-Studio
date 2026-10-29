@@ -20,7 +20,7 @@ namespace MP1SkinStudio
             return editorChanged||(project.Dirty&&ProjectFile.XmlSignature(project)!=exportedSignature);
         }
         void UpdateProjectCaption()
-        {Text="MP1 Skin Studio · Prototype 0.9"+(currentProjectFile==null?"":" · "+Path.GetFileName(currentProjectFile))+(SessionNeedsSaving()?" *":"");}
+        {Text="MP1 Skin Studio · Prototype 0.9"+(currentProjectFile==null?"":" · "+Path.GetFileName(currentProjectFile))+(SessionNeedsSaving()?" *":"");ScheduleLivePreview();}
         void SaveSession(string path)
         {
             RequireAppliedProperties();

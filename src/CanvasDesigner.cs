@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -15,6 +15,7 @@ namespace MP1SkinStudio
         public event Action<List<ControlEdit>> CommitBatch;
         public event Action<SkinControl> ConnectRequest;
         public event Action<string> FollowRequest;
+        public event Action<List<ControlEdit>> LiveGesturePreview;
         readonly Dictionary<string,RectangleF> dragRects=new Dictionary<string,RectangleF>();
         readonly Dictionary<string,RectangleF> startRects=new Dictionary<string,RectangleF>();
         SkinControl[] dragControls=new SkinControl[0];
@@ -69,10 +70,18 @@ namespace MP1SkinStudio
                 dragRects[c.Key]=r;
             }
             Cursor=resizing?Cursors.SizeNWSE:Cursors.SizeAll;Invalidate();
+            if(LiveGesturePreview!=null)LiveGesturePreview(DragEdits());
         }
         void DesignerMouseUp(MouseEventArgs e)
         {
             if(!dragging||Selected==null)return;
+            var edits=DragEdits();
+            dragging=false;Capture=false;Cursor=Cursors.Default;dragRects.Clear();if(LiveGesturePreview!=null)LiveGesturePreview(null);
+            if(edits.Count>0){if(CommitBatch!=null)CommitBatch(edits);else if(Commit!=null)foreach(var edit in edits)Commit(edit.Control,new Dictionary<string,string>(edit.Values));}
+            Invalidate();
+        }
+        List<ControlEdit> DragEdits()
+        {
             var edits=new List<ControlEdit>();
             foreach(var c in dragControls)
             {
@@ -81,14 +90,12 @@ namespace MP1SkinStudio
                 else{if(Math.Abs(after.X-before.X)>.1)values["posX"]=((int)(c.Number("posX",0)+after.X-before.X)).ToString();if(Math.Abs(after.Y-before.Y)>.1)values["posY"]=((int)(c.Number("posY",0)+after.Y-before.Y)).ToString();}
                 if(values.Count>0)edits.Add(new ControlEdit(c,values));
             }
-            dragging=false;Capture=false;Cursor=Cursors.Default;dragRects.Clear();
-            if(edits.Count>0){if(CommitBatch!=null)CommitBatch(edits);else if(Commit!=null)foreach(var edit in edits)Commit(edit.Control,new Dictionary<string,string>(edit.Values));}
-            Invalidate();
+            return edits;
         }
         void DesignerKeyDown(KeyEventArgs e)
         {
             if(e.KeyCode==Keys.Escape&&panning){Project.Editor.PanX=panStartX;Project.Editor.PanY=panStartY;panning=false;Capture=false;Cursor=Cursors.Default;UpdateTransform();NotifyView();e.Handled=true;}
-            if(e.KeyCode==Keys.Escape&&dragging){dragging=false;Capture=false;Cursor=Cursors.Default;dragRects.Clear();Invalidate();e.Handled=true;}
+            if(e.KeyCode==Keys.Escape&&dragging){dragging=false;Capture=false;Cursor=Cursors.Default;dragRects.Clear();if(LiveGesturePreview!=null)LiveGesturePreview(null);Invalidate();e.Handled=true;}
             if(NavigationMode&&FollowRequest!=null)
             {
                 string dir=e.KeyCode==Keys.Left?"onleft":e.KeyCode==Keys.Right?"onright":e.KeyCode==Keys.Up?"onup":e.KeyCode==Keys.Down?"ondown":null;

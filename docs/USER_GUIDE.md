@@ -2,6 +2,11 @@
 
 Version 0.9 · October 20, 2026
 
+Development addition, October 29: [Live preview](LIVE_PREVIEW.md) connects Studio
+to native controls in a running MediaPortal 1.39 instance. The included plugin
+is installed once; valid inputs and gestures then preview without Apply or a
+restart. Enable Live beside Toolbox. Disconnect restores runtime previews.
+
 ## Getting started
 
 1. Extract the complete review ZIP. For a source checkout, build with `powershell -NoProfile -File .\build.ps1` instead.

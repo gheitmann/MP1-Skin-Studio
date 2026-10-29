@@ -5,12 +5,13 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.IO.Compression.FileSystem
-if (-not $SkipBuild) { & (Join-Path $PSScriptRoot 'build.ps1') }
+if (-not $SkipBuild) { & (Join-Path $PSScriptRoot 'build.ps1'); & (Join-Path $PSScriptRoot 'LiveBridge\build-plugin.ps1') }
 $reviewOutput = [System.IO.Path]::GetFullPath($OutputDirectory)
 [System.IO.Directory]::CreateDirectory($reviewOutput) | Out-Null
 $reviewTarget = Join-Path $reviewOutput 'MP1-Skin-Studio-Review.zip'
 $reviewTemp = $reviewTarget + '.' + [Guid]::NewGuid().ToString('N') + '.tmp'
 $reviewFiles = @('MP1SkinStudio.exe', 'LICENSE', 'docs/USER_GUIDE.md', 'docs/QUICK_START.md', 'docs/RELEASE_READINESS.md', 'docs/RELEASE_NOTES.md')
+$reviewFiles += @('LiveBridge/bin/MP1SkinStudio.LiveBridge.dll','LiveBridge/Install-LiveBridge.ps1','docs/LIVE_PREVIEW.md')
 $reviewSampleRoot = Join-Path $PSScriptRoot 'Samples\Titan-Sample'
 $reviewFiles += @(Get-ChildItem -LiteralPath $reviewSampleRoot -Recurse -File |
     Where-Object { $_.Extension -in @('.xml', '.png', '.jpg', '.jpeg') } |
@@ -22,6 +23,14 @@ foreach ($reviewFile in $reviewFiles) {
 $reviewNotes = @"
 MP1 Skin Studio - manual review build
 Source revision: $Revision
+
+Live preview: install LiveBridge/bin/MP1SkinStudio.LiveBridge.dll into your MP1
+1.39 plugins/process folder, or use LiveBridge/Install-LiveBridge.ps1 with admin
+rights for Program Files. Start MP once, open the same skin/theme/page in Studio,
+enable Live in the toolbar and Connect. Valid input fields and canvas drags
+update native MP controls without Apply, XML export, reload or restart.
+Disconnect restores preview overrides. Read docs/LIVE_PREVIEW.md for setup,
+runtime property limits and the distinction between live preview and saved XML.
 
 Extract this complete ZIP to a separate directory. To test manually, run
 MP1SkinStudio.exe from that directory. It opens the included demo skin.
