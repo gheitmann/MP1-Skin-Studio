@@ -1,3 +1,13 @@
+## Live editing in MediaPortal
+
+Start MP with LiveBridge 1.1 enabled. In Studio's visible Live bar, click Connect,
+then Open MP page. Studio selects the actual skin, theme and XML page for you.
+Select an element and change a supported property, or drag it in the preview.
+Valid inputs appear directly in MP; Apply records them in the editor model.
+Revert Inputs discards pending values. Save skin copy keeps changes in a separate
+complete output skin; Save Project keeps your editing session and Undo history.
+Disconnect restores the running MP preview. To display a different editor page
+in MP, use Show in MP. A second Studio must disconnect before another can connect.
 # Start and finish a skin edit
 
 For native WYSIWYG editing in an already running MediaPortal 1.39 window, see

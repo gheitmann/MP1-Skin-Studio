@@ -26,15 +26,19 @@ Framework 4.x. Keep the complete extracted package together.
 3. Enable **MP1 Skin Studio Live** under process plugins if it is disabled.
 4. Start MediaPortal once. Its standard configuration application must be
    closed, as required by MP's own startup check.
-5. Open the **same skin directory and theme** in Studio. Use an independent skin
-   copy in both programs when experimenting. Open the XML page displayed in MP.
-6. Enable **Live** beside Toolbox, select the running MP instance and Connect.
-   **Show page** optionally navigates MP to that XML window. Ordinary edits do
+5. In Studio's visible **Live** bar, select the running MP instance and Connect.
+   Click **Open MP page** to open its actual skin, theme and XML in Studio.
+   Pending inputs and unsaved project changes remain protected. Use an independent
+   skin copy in both programs when experimenting.
+6. Select an element and edit. **Show in MP** optionally navigates MP to a
+   different XML window chosen in Studio. Ordinary edits do
    not navigate, reload or restart it.
 
 The status line identifies linking or source mismatches, invalid inputs and
 unsupported properties. An acknowledgement time measures the request/response
 round trip; it does not measure display latency or promise a fixed frame rate.
+Only one Studio can occupy a bridge connection at a time. Disconnect it before
+connecting a different Studio; occupied-bridge errors explain how to retry.
 
 ## Editing and keeping changes
 

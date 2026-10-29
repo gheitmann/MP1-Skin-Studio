@@ -49,7 +49,7 @@ namespace MP1SkinStudio
                 }
                 if(pipe.IsConnected)Exchange(LiveWire.Document("disconnect"));
             }
-            catch(Exception ex){reason="Live disconnected: "+ex.GetBaseException().Message;}
+            catch(Exception ex){reason=ex is TimeoutException||(ex is IOException&&ex.HResult==unchecked((int)0x80070079))?"Cannot connect: the bridge may be in use by another Studio. Disconnect that Studio, check that MP is responding, then Connect again.":"Live disconnected: "+ex.GetBaseException().Message;}
             finally
             {
                 if(watchdog!=null)watchdog.Dispose();if(pipe!=null)pipe.Dispose();lock(gate){stopping=true;signalDisposed=true;signal.Dispose();}

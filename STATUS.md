@@ -2,6 +2,20 @@
 
 Date: October 29, 2026. Imported version: 0.9.
 
+## Newest milestone: preview.3 editing workflow
+
+The Live bar is visible on startup. Connect followed by Open MP page adopts the
+running MP skin, theme and XML; Show in MP navigates in the opposite direction.
+Pending input, unreadable XML and unsaved-session Cancel preserve editor work.
+Opening the same page retains the current session. Occupied bridges now show
+actionable retry guidance. Save skin copy names the separate output explicitly.
+
+Fresh final validation: 12 workflow checks against installed MP 1.39/bridge 1.1
+and 471 core checks passed. All 488 original skin XML hashes remain unchanged.
+The previous editor stays open with the owner's unsaved work; it was disconnected
+for acceptance and was not replaced or closed. See Validation/Live-Workflow.
+The portable preview.3 package includes the editor, bridge, guides and demos.
+
 ## Newest development milestone: extended live property coverage
 
 October 29: the core-SDK audit covers all 449 DefaultWideHD pages, 19,490
@@ -278,7 +292,121 @@ Fresh validation: 378 core checks, ten complete real Titan edit/save/reopen/expo
 
 October 20, 2026: opening a skin/project now captures its baseline after initial designer selection, including fallback focus on pages without defaultcontrol. This removes a false unsaved marker while retaining later focus/view/XML save detection. A viewport regression assertion covers clean initial focus. The overlap-selection UI assertion now checks unchanged XML plus correct persisted focus, rather than wrongly requiring all editor metadata to stay unchanged when selecting another focusable control.
 
-Fresh acceptance uses the compiled editor from an extracted review ZIP: 204 automated Windows-form UI checks, twelve complete demo load/preview/edit/save/reopen/export/normal and restored Undo/Redo workflows, and twelve clean-open/zoom/Fit/save/reopen checks passed. All 29 payload hashes stayed unchanged before/after matrix and UI workflows. Final package metadata/guide were updated afterward; the accepted executable and samples are unchanged. The preceding 370 core/model checks remain historical and were not repeated for this form initialization fix. No new attended input or installed-client run. See [package acceptance and reproduction](Validation/Package-Read…4749 tokens truncated…pected at that source checkpoint; the later runtime checkpoint above validates a separate exported candidate. See [content validation](Validation/Preview-Content/README.md). Windows access was confirmed in earlier attended checkpoints; DirectX remains deferred.
+Fresh acceptance uses the compiled editor from an extracted review ZIP: 204 automated Windows-form UI checks, twelve complete demo load/preview/edit/save/reopen/export/normal and restored Undo/Redo workflows, and twelve clean-open/zoom/Fit/save/reopen checks passed. All 29 payload hashes stayed unchanged before/after matrix and UI workflows. Final package metadata/guide were updated afterward; the accepted executable and samples are unchanged. The preceding 370 core/model checks remain historical and were not repeated for this form initialization fix. No new attended input or installed-client run. See [package acceptance and reproduction](Validation/Package-Readiness/README.md).
+
+## Previous source milestone: checkmark previews and mixed navigation
+
+October 20, 2026: native checkmark controls now render selected/unselected local textures with static mark sizing, label-side placement and focus/unfocused text colors. Known true/false expressions use explicit preview data; unresolved selection stays unknown with Ctrl+F8 diagnostics. Six checkmark-only properties provide normal editing and reset. Dimension aliases preserve existing XML spelling and reject ambiguous edits. Mixed button/checkmark scenes use bounded geometric navigation, including linear stacks, without activation or selection toggling. demo.checkmark.xml supplies selected/unselected/unverified examples.
+
+Fresh validation: 370 core checks, eight complete real Titan workflows, 172 accepted explicit routes, 28 guarded routes and 12 unchanged loaded original XML hashes. Six synthetic Windows canvas arrow events exercise the mixed demo; all six property fields, selected-expression Apply and save/reopen passed. Production state and edited form renders were inspected. Real pages verify explicit mapping/editing regression; authored fixtures and the demo cover new automatic mixed navigation. No new attended input or installed-client run. See [validation and bounds](Validation/Checkmark-Preview/README.md).
+
+## Previous source milestone: ordinary group and standalone button navigation
+
+October 20, 2026: absent/zero button mappings now use bounded geometric navigation in ordinary groups and at page level. Ordinary wrappers retain absolute child positions, can nest other ordinary wrappers, and can contain independently positioned automatic layouts. Ordinary wrappers moved by an automatic ancestor remain guarded. Property-driven empty layout fallbacks are not mistaken for plain groups. Group/ungroup and structural Undo/Redo preserve navigation. demo.free.xml supplies a self-contained four-button scene.
+
+Fresh validation: 361 core checks, ten complete real Titan edit/save/reopen/export/normal and restored Undo/Redo workflows, 124 accepted routes (26 automatic and 98 explicit), 20 guarded routes and ten unchanged original XML hashes. Four synthetic Windows canvas arrow events cross ordinary group branches; saved focus restores. The production demo render was inspected. The real dialogs mainly verify existing explicit mappings; authored fixtures and the bundled demo exercise new automatic plain-group routes. No new attended keyboard or installed-client run. Native math and prior matrices remain historical. See [validation and limits](Validation/Plain-Navigation/README.md).
+
+## Previous source milestone: nested layout navigation
+
+October 20, 2026: automatic geometric navigation now traverses supported nested StackLayout/GridLayout hierarchies and crosses their branches. A top-level stack button can enter or leave a nested layout. All participating measurement subtrees are validated recursively; ordinary/unknown layout wrappers stay unsupported. Hidden/collapsed ancestors exclude descendant targets. Explicit mappings retain precedence and simple linear stack behavior stays separate. demo.navigation.xml supplies a self-contained nested grid/stack scene.
+
+Fresh validation: 353 core checks passed, including nine new nested-navigation checks and the updated nested-grid acceptance check. Four synthetic canvas KeyDown events passed through the Windows form across both branches, with matching focus/selection and saved focus restored. The production render was inspected. Six complete real Titan regression workflows passed again, with 162 accepted routes, 74 guarded routes and 13 unchanged loaded original XML hashes. These Titan pages cover existing non-nested behavior; nested behavior is covered by authored fixtures and the bundled demo. The prior native bearing/distance comparison was not repeated because that math is unchanged. No new attended keyboard or installed-client run. See [validation and limits](Validation/Nested-Navigation/README.md).
+
+## Previous source milestone: bounded automatic grid navigation
+
+October 20, 2026: absent/zero arrow mappings on direct buttons in top-level GridLayouts now use native-style rounded top-left bearings, distances and document-order selection. Explicit mappings retain precedence. Eligible standalone buttons and direct top-level stack/grid peers participate. Unknown visibility, ambiguous IDs, unsupported focusable types and geometry stop the route without mutation. demo.grid.xml now provides visible focus textures on all five buttons and navigation instructions.
+
+Fresh validation: 344 core checks, six complete real Titan edit/save/reopen/export/normal and restored Undo/Redo workflows, 162 accepted automatic routes, 74 conservatively guarded routes and 13 unchanged loaded original XML hashes. All 6,561 bearing/distance comparisons agree with the original installed Core.dll. Six synthetic canvas KeyDown events passed through the production Windows form handler; the bundled demo render was inspected. This was automated form testing, with no new attended keyboard or installed-client run. See [validation and bounds](Validation/Grid-Navigation/README.md).
+
+## Previous source milestone: aligned and cropped image previews
+
+October 20, 2026: image previews honor align/valign and ordered legacy centered settings, plus proportional fit, centered crop and crop from top. Image-only property fields expose the three fit/crop flags. Unknown settings receive informational diagnostics. demo.images.xml supplies six bundled comparisons without external assets. Collection fitting behavior remains separate.
+
+Fresh validation: 332 core checks, 14 real Titan workflows, 98 bounded image plans and 55 unchanged loaded original XML hashes. Attended Windows flag editing/Apply/save/Undo/Redo and saved-archive inspection passed. Final image-specific alignment label wording was compiled afterward without repeating unchanged suites. No new installed-client run. See [validation and limits](Validation/Image-Presentation/README.md).
+
+## Previous source milestone: Windows acceptance and self-contained filmstrip demo
+
+October 20, 2026: attended Windows acceptance passed for the Video PIN Unlocked menu, protected position fields even with binding replacement enabled, arrow navigation and save/close/reopen from the extracted review ZIP. The saved scene retains item 4 and unlocked state with no XML snapshots or derived-focus overrides.
+
+Fresh package validation loads all eight full demo pages and passes the new self-contained filmstrip navigation/save/reopen/export/undo workflow; all 22 bundled source/assets stay unchanged by the probe. A new demo.filmstrip.xml makes property-driven positions directly reviewable without an installed skin. The three authored menu buttons now have readable white centered captions. The engine binary is unchanged; the preceding 322 core checks and six Titan workflows were not repeated. No new installed-client run. See [acceptance and limits](Validation/Review-Acceptance/README.md).
+
+## Previous source milestone: filmstrip coordinates and image position bindings
+
+October 20, 2026: supported static filmstrip facades expose selected thumbnail coordinates; overlays with image posX/posY property attributes follow those coordinates. Integer cint/add/sub expressions and explicit Video PIN samples complete the tested Titan filmstrip scene while keeping unknown PIN state unverified. Property-driven position fields remain protected; XML bindings and fallbacks are preserved.
+
+Fresh validation: 322 core checks, six real Titan filmstrip workflows, 17 unchanged original source hashes and six production canvas renders. A pre-delivery Windows build restored the saved nine-item filmstrip with zero unresolved visibility in accessibility diagnostics; the new PIN submenu and position fields were not newly exercised through attended input. No fresh installed-client run. See [validation and limits](Validation/Filmstrip-State/README.md).
+
+## Previous source milestone: explicit sample artwork
+
+October 20, 2026: Sample Artwork provides searchable, explicit local image/empty/original scenarios for image texture expressions. Rendering and Control.HasThumb follow the chosen samples; XML bindings, exports and XML undo history remain unchanged. Samples persist across save/reopen and retain normal theme asset precedence. Ctrl+F8 also explains unavailable visible artwork. Duplicate IDs remain unverified.
+
+Fresh validation: 311 core checks, eight real Titan artwork workflows, 23 unchanged loaded original XML hashes, and attended Windows menu/search/empty/Apply/save acceptance. A final button docking correction was compiled and exercised in Windows after the model runs. No fresh installed-client run. See [validation and limits](Validation/Artwork-Preview/README.md).
+
+## Previous source milestone: explained and bounded preview states
+
+October 20, 2026: matching Video/Music/Pictures folder presets, explicit idle samples and Ctrl+F8 explanations make unresolved conditions inspectable without changing XML. Bounded condition evaluation retains unknown states. Canonical source cache paths fix mixed-slash alias consistency through save/reopen and undo/redo. Pending property drafts are preserved when a finding jump is blocked.
+
+Fresh validation: 300 core checks, 22 complete real Titan workflows, two idle transitions and 57 unchanged loaded original source hashes. Attended Windows report/search/draft protection passed. No fresh installed-client run. See [validation and limits](Validation/Preview-Reliability/README.md).
+
+## Previous source milestone: collection interaction and complete workflow coverage
+
+October 19, 2026: Navigation arrows browse sample items in lists, icon grids, filmstrip and coverflow; boundary arrows retain explicit control-link testing. Focused collection appearance follows simulated focus. Selection stays visible, list row/detail geometry is corrected, clean preview suppresses invented placeholders, selected-thumbnail metadata follows the row and page preparation clears stale derived values. Active facade views expose their concrete property fields and regain canvas keyboard focus after dialog changes.
+
+Fresh model/render validation: 286 core checks and 70 complete real Titan page/theme/view workflows passed; 33 distinct loaded original source hashes unchanged. Final form-only changes were compiled and tested through attended Windows list/grid/coverflow navigation, side-menu focus, save and close/reopen. Saved XML snapshot hashes are unchanged by UI preview actions. The passing model suite/matrix were not repeated for those form-only changes. No new installed-client run. See [validation and limits](Validation/Collection-Interaction/README.md).
+
+## Previous source milestone: self-contained group duplication
+
+October 19, 2026: Duplicate copies top-level groups and nested ordinary groups with new IDs, internal navigation/default-control/known visibility references and one structural undo step. Inherited style references are overridden locally; originals and shared styles remain unchanged. Insert/Duplicate now restore selection through Undo/Redo. ID allocation also reserves static default/visibility references in unopened files. Unsupported shared/template/dynamic cases fail before source mutation.
+
+Fresh build: 272 core checks passed. Complete Default/Christmas Titan Settings clone/navigation/save/reopen/export/undo workflows passed, with 361 original source hashes unchanged per workflow. Attended Windows copying, selection, Undo/Redo, save and close/reopen passed; the saved Christmas selection was also checked. No fresh installed-client run. See [validation and limits](Validation/Group-Duplication/README.md).
+
+## Previous source milestone: active page/theme save detection
+
+October 19, 2026: switching the active page or theme now marks the editor project as unsaved. Returning to the previous location restores its signature if no other state changed. Saved projects reopen at the selected location without modifying skin XML or export state. Fresh build: 263 core checks and four real Titan view roundtrips passed; 34 loaded source hashes unchanged. No fresh interactive UI/client run. See [validation](Validation/Active-View/README.md).
+
+## Previous source milestone: independent page/theme focus states
+
+October 19, 2026: editor projects retain separate focus states for each page/theme rather than only the latest page. Restoring an existing slot leaves the editor signature unchanged. Legacy single-focus projects migrate. 261 core checks and four real Titan focus states across BasicHome/Settings and Default/Christmas passed, including exact save/reopen and 34 unchanged original source hashes. No new interactive UI/client run occurred. See [validation](Validation/Focus-Map/README.md).
+
+## Previous source milestone: attended navigation and focus caption
+
+October 19, 2026: actual Windows-editor checkbox/arrow navigation passed on BasicHome and Settings. Saved focus survived closing/reopening BasicHome; automatic General→GUI navigation passed in Settings. A missing caption refresh was corrected: focus changes now display an unsaved asterisk, cleared by Ctrl+S. Saved manifests and unchanged XML were checked. The prior 258 core checks are historical; no full-suite rerun or MP1 client run occurred for this caption-only change. See [attended validation](Validation/Attended-Navigation/README.md).
+
+## Previous source milestone: bounded automatic stack navigation
+
+October 19, 2026: the preview handles absent/zero directions along linear StackLayout button menus while preserving explicit mappings. A complete eleven-button Settings down/up loop and both BasicHome theme routes passed, together with 258 core checks. No XML links are generated. This is a bounded subset of native geometric navigation; nested/grid/free-position search remains unsupported. No new interactive UI/client run occurred. See [validation](Validation/Stack-Navigation/README.md).
+
+## Previous source milestone: focus-based preview navigation
+
+October 19, 2026: existing arrow navigation now uses simulated focus and the active facade template. Prospective target visibility is checked without leaking rejected focus changes; unavailable routes produce status notices. 256 core checks and real Titan BasicHome routes in Default/Christmas passed, including saved final focus and unchanged source hashes. Settings explicit edges passed; automatic group-generated directions remain unsupported and are the next concrete gap. No new interactive UI/client run occurred. See [validation](Validation/Preview-Navigation/README.md).
+
+## Previous source milestone: usable BasicHome sample
+
+October 19, 2026: BasicHome now has an explicit saved preview preset. Static absent-control visibility and supported boolean expression conditions resolve correctly; large button text offsets no longer erase captions. 254 core checks and real Titan Default/Christmas sample roundtrips passed. Both rendered themes show six tile pictures and German labels with TV focused; eleven conditions remain unverified. All 32 loaded original source hashes are unchanged. No new interactive client run occurred. See [validation](Validation/BasicHome-Preview/README.md).
+
+## Previous source milestone: page/theme workflows and button focus
+
+October 19, 2026: button focus appearance now follows simulated MP1 focus independently of designer selection. 250 core checks and twelve edit/save/reopen/export/undo workflows across six pages in Default and Christmas passed. All loaded source hashes stayed unchanged. Settings rendering was visually inspected after the fix. BasicHome theme assets load, but dynamic menu content remains incomplete. No new installed-client run occurred. See [matrix validation](Validation/Page-Theme-Matrix/README.md).
+
+## Previous source milestone: explicit stopped playback preview
+
+October 19, 2026: explicit samples now evaluate five common player conditions. The Video folder preset chooses stopped playback; Element > Playback preview can apply or remove that scenario independently. Absent flags stay unknown. 249 core checks and the targeted real Titan probe passed. In this scenario 19 conditions remain unresolved, down from 62. All 17 loaded source hashes remain unchanged. No new interactive client test occurred. See [validation and remaining unknowns](Validation/Playback-Preview/README.md).
+
+## Previous source milestone: Video sample state and text anchors
+
+October 19, 2026: standalone labels now use native-style XML text anchors instead of fabricated designer extents. The Video folder sample explicitly sets unwatched and idle-scroll state. 248 core checks and the targeted Titan probe passed; the production offscreen render was visually inspected. The explicit sample leaves 62 unresolved conditions, down from 87. All 17 loaded source hashes remained unchanged. No new MP1 client test was run. See [validation](Validation/Label-Anchors/README.md).
+
+## Previous source milestone: reproducible clean Video preview
+
+October 19, 2026: saved projects retain page-scoped preview focus. The Video folder preset now reopens with the list focused and hidden menu closed. Clean mode omits unresolved labels and missing image placeholders while preserving diagnostics and XML. 247 core checks and the targeted real Titan probe passed; the reopened GUI was visually inspected. All 17 loaded Titan source hashes remained unchanged. The unresolved-condition count remains 87; this improves presentation and persistence rather than inventing runtime values. See [validation](Validation/Preview-Session/README.md). DirectX work is handled in a separate chat.
+
+## Latest installed-client validation milestone: Video export
+
+October 19, 2026: the exported two-file Video candidate loaded in the installed MP1 client using an isolated skin copy. The header marker, narrower list focus band and side-menu keyboard navigation passed. Titan was restored in the UI and its normal Video page verified. A fresh comparison checked all 2,050 original Titan files with zero differences; the isolated copy differs in exactly the two intended XML files. See [runtime validation](Validation/Video-Runtime-20261019/README.md). This does not establish complete preview fidelity or playback coverage.
+
+## Previous source milestone: known preview content
+
+October 19, 2026: static known-content conditions and nested localization now work in previews. Fresh Windows build: 245 core checks, 25 expression checks and eleven real Titan model stages passed. The isolated folder state has 87 unresolved conditions, down from 89. A production offscreen render was visually inspected at that source checkpoint; the later runtime checkpoint above validates a separate exported candidate. See [content validation](Validation/Preview-Content/README.md). Windows access was confirmed in earlier attended checkpoints; DirectX remains deferred.
 
 ## Current priority: reliable core editing
 

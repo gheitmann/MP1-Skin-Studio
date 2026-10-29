@@ -1,5 +1,11 @@
 # Review candidate readiness
 
+Preview.3, October 29: visible Live controls, Open MP page and actionable occupied
+bridge guidance pass 12 fresh real-MP workflow checks. Pending input, unreadable
+page and unsaved-session Cancel retain work. The final 471 core checks pass.
+All 488 installed original skin XML hashes remain unchanged. The portable ZIP
+includes bridge 1.1, separately verified in the complete renderer as below.
+
 October 29 development addendum: bridge 1.1 passes 16 specialized checks in an
 isolated complete MP 1.39 process, with visual inspection of changed/restored
 text, list and filmstrip controls. Reset/disconnect restore captured originals

@@ -1,0 +1,13 @@
+PASS Live connection controls are visible on startup
+PASS Demo/source mismatch prevents live edits
+PASS Occupied bridge gives actionable connection guidance
+PASS Rejected second client preserves the active connection
+PASS Open MP page adopts actual skin/theme/page and verifies disk hashes
+PASS Opening the same MP page retains the current editor session
+PASS Typing previews geometry without Apply or modifying the editor XML
+PASS Pending input blocks page replacement and retains the draft
+PASS Reverting input preserves original disk XML
+PASS Unreadable MP page retains the current editor session
+PASS Cancel preserves unsaved work when adopting another MP page
+PASS Disconnect disables page adoption and restores runtime overrides
+12 workflow checks passed.

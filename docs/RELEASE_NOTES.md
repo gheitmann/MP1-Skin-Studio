@@ -1,21 +1,41 @@
-# Development additions — October 29, 2026
+# MP1 Skin Studio v0.9.0-preview.3
 
-- Bridge 1.1 expands scrolling-text, list/playlist, filmstrip/gallery and group
-  alignment support. List icons and row dimensions are mapped independently;
-  resizing retains native list data. See docs/LIVE_COVERAGE.md for the 449-page
-  metadata audit, 64 native checks and the remaining full-renderer comparison.
+October 29, 2026. Direct editing in a running MediaPortal 1.39, with a simpler
+connection workflow and durable saving to a separate skin copy.
 
-- Live drafts and gestures update native MP1 1.39 controls without Apply, page
-  reload or restart; Disconnect restores runtime previews.
-- Save skin creates a complete output copy once and updates it on later saves,
-  with exact XML review, conflict checks, ZIP backups and multi-file rollback.
-  Saving Undo is supported. The current source, live connection and Undo history
-  continue, and Save Project remembers the output location.
-- Fresh saving validation: 471 core checks, 13 focused dialog checks, 13 native
-  SDK live checks and 17 toolbox workflows. See docs/SAVE_SKIN_COPY.md.
+## New in preview.3
 
-These additions belong to the development package. The published preview.2
-release and its assets have not been replaced.
+- The Live connection bar is visible on startup. Connect, then Open MP page
+  adopts the skin, theme and XML currently displayed in MP. Show in MP performs
+  the opposite direction. Pending drafts and unsaved editor work stay protected.
+- Occupied-bridge errors explain how to disconnect another Studio and retry.
+- Valid property drafts and canvas gestures preview in MP without Apply, XML
+  export, page reload or restart. Disconnect restores runtime overrides.
+- Bridge 1.1 adds scrolling/multiline text, list and filmstrip/gallery properties
+  and group alignment. Row and icon sizes remain independent; resizing retains
+  native collection data. See LIVE_COVERAGE.md for supported scope and limits.
+- Save skin copy creates a complete separate skin and later updates reviewed XML
+  with conflict checks, automatic ZIP backups and rollback. Saving an Undo is
+  supported. Save Project retains the output location and editor history.
+
+## Install or update
+
+Extract MP1-Skin-Studio-v0.9.0-preview.3-win.zip completely and run
+MP1SkinStudio.exe. Windows and .NET Framework 4.x are required. For live preview,
+close MP once, install the included LiveBridge 1.1 DLL using the bundled installer,
+then start MP and Connect. Subsequent supported edits need no MP restart.
+Use SHA256SUMS.txt to verify the ZIP and MANIFEST.sha256 inside for its payload.
+Project format 5 remains compatible with formats 1–4 when opening old projects.
+The Studio canvas is approximate; native MP shows the actual supported rendering.
+
+## Validation
+
+Fresh final acceptance: 12 workflow checks against running MP 1.39 and 471 core
+checks passed. Earlier validation of this included bridge passed 16 specialized
+full-renderer checks, 64 extended native checks, 13 baseline native checks and
+13 Studio/native-SDK live/save checks. These have different scopes; see the
+Validation directories for exact evidence. All 488 original installed skin XML
+hashes remained unchanged. This is a preview, not universal skin/plugin coverage.
 
 # MP1 Skin Studio v0.9.0-preview.2
 
