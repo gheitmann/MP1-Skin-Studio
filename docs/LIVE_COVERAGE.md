@@ -40,10 +40,15 @@ rendering-accuracy percentage or proof that every plugin page works in MP.
 
 Fresh validation includes 64 extended native-adapter/session checks at a scaled
 window size, 13 baseline adapter checks, 13 Studio/native-SDK live/save checks
-and 471 editor core checks. The new specialized controls have not yet received
-a renewed visible comparison in the complete MP renderer; Configuration Studio
-is active in another chat and was preserved. Earlier attended real-MP tests
-remain evidence for the existing live path, not a new per-control visual pass.
+and 471 editor core checks. The isolated complete MP 1.39 renderer also passes
+16 specialized checks with bridge 1.1: scrolling/multiline text and color updates,
+independent list row/icon sizing, filmstrip dimensions, unchanged item counts,
+and exact original-property restoration after reset and disconnect. Changed and
+restored scenes were visually inspected. The synthetic scene contains six list
+rows and four filmstrip items; it does not establish all-page compatibility.
+Scaled-window geometry accepts one skin pixel of conversion rounding for desired
+values; restoration still requires exact captured values. See the reproducible
+fixture and Real-MP-Results.txt under Validation/Live-Coverage.
 
 ## Remaining limits
 

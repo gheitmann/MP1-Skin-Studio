@@ -22,9 +22,12 @@ No rendering resources are initialized by those tests. See Adapter-Results.txt.
 
 The baseline NativeProbe passes 13 SDK session checks. StudioProbe with persist
 passes 13 real-pipe/owned-native-host checks, including live saving and Undo.
-All 471 editor core checks pass. New per-control visible MP renderer acceptance
-is pending: the other active chat's Configuration Studio is left undisturbed.
-Historical real-MP acceptance is not relabelled as a fresh visual comparison.
+All 471 editor core checks pass. The isolated complete MP 1.39 renderer passes
+16 additional specialized checks; see Real-MP-Results.txt. Changed and restored
+text/list/filmstrip scenes were visually inspected. Six list rows and four
+filmstrip items survive both live layout rebuilding and restoration. Captured
+original properties restore exactly after reset and disconnect. The fixture
+does not establish compatibility for every skin page or plugin control.
 
 Collection resource rebuilds are coalesced at frame completion. Native list
 AllocResources/Calculate paths retain list items; calling collection Dispose

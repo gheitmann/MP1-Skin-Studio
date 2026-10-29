@@ -1,5 +1,12 @@
 # Review candidate readiness
 
+October 29 development addendum: bridge 1.1 passes 16 specialized checks in an
+isolated complete MP 1.39 process, with visual inspection of changed/restored
+text, list and filmstrip controls. Reset/disconnect restore captured originals
+exactly and retain item data. The current development ZIP includes bridge 1.1;
+the published v0.9.0-preview.2 release and owner's installed bridge are separate.
+See LIVE_COVERAGE.md for scope and update instructions.
+
 Date: October 21, 2026. Version: v0.9.0-preview.2. Delivery: portable Windows ZIP.
 The ZIP includes the executable, twelve complete demo scenes, their shared
 resources, license, user guide and quick start. Extract it completely before

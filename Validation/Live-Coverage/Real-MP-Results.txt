@@ -1,0 +1,16 @@
+PASS real MP loads the isolated specialized-control scene
+PASS actual MP process loads bridge 1.1
+PASS fixture starts with six list rows and four filmstrip items
+PASS real scrolling text updates
+PASS real multiline text updates
+PASS real scrolling font and color update
+PASS real list row and icon dimensions stay independent
+PASS real filmstrip dimensions update: texture=181, thumb=140
+PASS native list data survives real layout rebuilding
+PASS same runtime control identities remain active
+PASS native original properties restore for control 21101
+PASS native original properties restore for control 21102
+PASS native original properties restore for control 21103
+PASS native original properties restore for control 21104
+PASS list data survives restoration
+PASS disconnect restores real text and collection geometry
