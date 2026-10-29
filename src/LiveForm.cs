@@ -15,7 +15,7 @@ namespace MP1SkinStudio
     {
         ChoiceBox liveEndpoint=new ChoiceBox();Label liveNotice;Button liveConnect,liveDisconnect,liveMatch,liveShow;Panel liveHost;
         StudioLiveClient liveClient;LiveBinding liveBinding;bool liveVerified,liveBuilding,liveDraftInvalid;int liveGeneration,liveRevision,liveAcknowledged;
-        string liveContext,liveLastFrame;List<ControlEdit> liveGesture;
+        string liveContext,liveLastFrame,liveBridgeVersion;List<ControlEdit> liveGesture;
         readonly Timer liveDebounce=new Timer{Interval=60};
         Panel BuildLiveBar()
         {
@@ -43,7 +43,7 @@ namespace MP1SkinStudio
             int index=selected==null?-1:Array.FindIndex(endpoints,e=>e.Pipe==selected.Pipe);liveEndpoint.SelectedIndex=index>=0?index:endpoints.Length>0?0:-1;
         }
         void LiveStatus(string text,bool error=false,bool ready=false)
-        {if(liveNotice==null)return;liveNotice.Text=text;liveNotice.ForeColor=error?Color.FromArgb(245,186,105):ready?Color.FromArgb(103,206,166):muted;tips.SetToolTip(liveNotice,text);}
+        {if(liveNotice==null)return;if(ready&&!String.IsNullOrEmpty(liveBridgeVersion))text+=" · bridge "+liveBridgeVersion;liveNotice.Text=text;liveNotice.ForeColor=error?Color.FromArgb(245,186,105):ready?Color.FromArgb(103,206,166):muted;tips.SetToolTip(liveNotice,text);}
         void LiveOnUi(System.Action action)
         {if(IsDisposed||Disposing||!IsHandleCreated)return;try{BeginInvoke(new System.Action(()=>{if(!IsDisposed&&!Disposing)action();}));}catch(InvalidOperationException){}}
         string LiveContext(){return project==null?"":project.Root+"\n"+project.Theme+"\n"+project.Page;}
@@ -51,7 +51,7 @@ namespace MP1SkinStudio
         {
             if(liveClient!=null)return;RefreshLiveEndpoints();var endpoint=liveEndpoint.SelectedItem as LiveEndpoint;
             if(endpoint==null){LiveStatus("No running bridge found. Install/enable MP1 Skin Studio Live in MediaPortal and start it once.",true);return;}
-            liveGeneration++;liveBinding=null;liveVerified=false;liveBuilding=false;liveContext=LiveContext();liveLastFrame=null;liveRevision=liveAcknowledged=0;
+            liveGeneration++;liveBinding=null;liveVerified=false;liveBuilding=false;liveContext=LiveContext();liveLastFrame=null;liveBridgeVersion=null;liveRevision=liveAcknowledged=0;
             var client=new StudioLiveClient(endpoint);liveClient=client;
             client.Response+=response=>LiveOnUi(()=>{if(Object.ReferenceEquals(liveClient,client))ReceiveLive(response);});
             client.Disconnected+=reason=>LiveOnUi(()=>{if(!Object.ReferenceEquals(liveClient,client))return;liveClient=null;liveBinding=null;liveVerified=false;liveBuilding=false;liveGeneration++;liveConnect.Enabled=liveEndpoint.Enabled=true;liveDisconnect.Enabled=liveShow.Enabled=liveMatch.Enabled=false;liveDebounce.Stop();LiveStatus(reason,true);});
@@ -65,7 +65,7 @@ namespace MP1SkinStudio
         {
             var root=response.DocumentElement;string command=root.GetAttribute("command");
             if(root.GetAttribute("ok")=="false"){LiveStatus("Not sent: "+root.GetAttribute("message"),true);return;}
-            if(command=="snapshot"){PrepareLiveBinding(response);return;}
+            if(command=="snapshot"){liveBridgeVersion=root.GetAttribute("bridgeVersion");if(liveBridgeVersion.Length>32)liveBridgeVersion=liveBridgeVersion.Substring(0,32);PrepareLiveBinding(response);return;}
             if(command=="verify"){liveVerified=true;liveMatch.Enabled=true;liveLastFrame=null;ScheduleLivePreview();return;}
             if(command=="frame")
             {

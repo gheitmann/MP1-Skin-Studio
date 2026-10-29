@@ -2,7 +2,30 @@
 
 Date: October 29, 2026. Imported version: 0.9.
 
-## Newest development milestone: durable skin-copy saving
+## Newest development milestone: extended live property coverage
+
+October 29: the core-SDK audit covers all 449 DefaultWideHD pages, 19,490
+expanded controls and 114,474 explicit editable field occurrences. Writable
+native mappings increase from 108,736 to 111,528 (2,792 additional mappings).
+All 488 installed skin XML hashes remain unchanged. These are static SDK
+property counts, not a renderer-compatibility percentage.
+
+Bridge 1.1 adds scrolling/multi-line text, primary list font/color, text offsets,
+row spacing, filmstrip texture/thumbnail sizes, gallery aspect/font/color and
+group alignment. List icon height is correctly separated from row height.
+Collection item resizing avoids destructive Dispose setters and preserves data.
+Relevant native layouts rebuild once after changed frame properties and retain
+the selected item where possible; protected adapters target core MP types.
+Studio displays the loaded bridge version. The package includes update guidance.
+
+Fresh checks: 64 extended native-adapter/session checks, 13 baseline SDK session
+checks, 13 Studio/native-SDK live/save checks, and all 471 editor core checks
+passed. A renewed complete-MP visual comparison of the new specialized controls
+is pending while Configuration Studio is active in another chat; no other chat's
+window or installed plugin was replaced. See [coverage guide](docs/LIVE_COVERAGE.md)
+and [audit evidence](Validation/Live-Coverage/README.md).
+
+## Previous development milestone: durable skin-copy saving
 
 October 29: Save skin beside Live applies valid inputs, reviews the desired XML
 and creates a complete separate output skin. Later saves update only reviewed

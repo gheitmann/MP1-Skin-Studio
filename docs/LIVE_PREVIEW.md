@@ -1,5 +1,9 @@
 # Live preview in MediaPortal 1
 
+The development package includes bridge 1.1 with extended scrolling-text,
+list/playlist, filmstrip and gallery support. See [extended live controls](LIVE_COVERAGE.md)
+for update instructions, validation scope and remaining specialized controls.
+
 Live preview sends valid Studio inputs directly to the GUI controls already
 displayed by MediaPortal. Text and geometry do not wait for Apply, XML export,
 page reload or a MediaPortal restart. Canvas gestures stream while dragging.

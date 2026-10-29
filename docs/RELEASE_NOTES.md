@@ -1,5 +1,10 @@
 # Development additions — October 29, 2026
 
+- Bridge 1.1 expands scrolling-text, list/playlist, filmstrip/gallery and group
+  alignment support. List icons and row dimensions are mapped independently;
+  resizing retains native list data. See docs/LIVE_COVERAGE.md for the 449-page
+  metadata audit, 64 native checks and the remaining full-renderer comparison.
+
 - Live drafts and gestures update native MP1 1.39 controls without Apply, page
   reload or restart; Disconnect restores runtime previews.
 - Save skin creates a complete output copy once and updates it on later saves,

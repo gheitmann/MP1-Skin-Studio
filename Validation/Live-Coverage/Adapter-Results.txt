@@ -1,0 +1,64 @@
+PASS GUIListControl itemHeight changes the intended native field
+PASS GUIListControl itemHeight restores its exact native value
+PASS list icon height does not overwrite row height
+PASS GUIListControl itemWidth changes the intended native field
+PASS GUIListControl itemWidth restores its exact native value
+PASS GUIListControl textureHeight changes the intended native field
+PASS GUIListControl textureHeight restores its exact native value
+PASS GUIListControl spaceBetweenItems changes the intended native field
+PASS GUIListControl spaceBetweenItems restores its exact native value
+PASS GUIListControl textXOff changes the intended native field
+PASS GUIListControl textXOff restores its exact native value
+PASS GUIListControl textcolor changes the intended native field
+PASS GUIListControl textcolor restores its exact native value
+PASS list updates request native layout refresh
+PASS negative row dimensions are rejected
+PASS negative row spacing is rejected
+PASS scrolling textbox exposes label, font and color together
+PASS GUITextScrollUpControl textcolor changes the intended native field
+PASS GUITextScrollUpControl textcolor restores its exact native value
+PASS scrolling text replacement clears a previous dynamic-binding flag
+PASS scrolling text restore retains the original dynamic binding
+PASS font restoration retains the exact native font alias
+PASS an unavailable live font is rejected
+PASS GUIFilmstripControl textureWidth changes the intended native field
+PASS GUIFilmstripControl textureWidth restores its exact native value
+PASS GUIFilmstripControl textureHeight changes the intended native field
+PASS GUIFilmstripControl textureHeight restores its exact native value
+PASS GUIFilmstripControl thumbWidth changes the intended native field
+PASS GUIFilmstripControl thumbWidth restores its exact native value
+PASS GUIFilmstripControl thumbHeight changes the intended native field
+PASS GUIFilmstripControl thumbHeight restores its exact native value
+PASS GUIThumbnailPanel keepaspectratio changes the intended native field
+PASS GUIThumbnailPanel keepaspectratio restores its exact native value
+PASS GUIThumbnailPanel textcolor changes the intended native field
+PASS GUIThumbnailPanel textcolor restores its exact native value
+PASS GUIListControl itemWidth changes the intended native field
+PASS GUIListControl itemWidth restores its exact native value
+PASS GUIListControl itemHeight changes the intended native field
+PASS GUIListControl itemHeight restores its exact native value
+PASS geometry keeps original native list items in GUIListControl
+PASS GUIFilmstripControl itemWidth changes the intended native field
+PASS GUIFilmstripControl itemWidth restores its exact native value
+PASS GUIFilmstripControl itemHeight changes the intended native field
+PASS GUIFilmstripControl itemHeight restores its exact native value
+PASS geometry keeps original native list items in GUIFilmstripControl
+PASS GUIThumbnailPanel itemWidth changes the intended native field
+PASS GUIThumbnailPanel itemWidth restores its exact native value
+PASS GUIThumbnailPanel itemHeight changes the intended native field
+PASS GUIThumbnailPanel itemHeight restores its exact native value
+PASS geometry keeps original native list items in GUIThumbnailPanel
+PASS group alignment uses the native group property
+PASS group alignment restores exactly
+PASS metadata audit matches actual slots for GUIListControl
+PASS metadata audit matches actual slots for GUITextScrollUpControl
+PASS metadata audit matches actual slots for GUIFilmstripControl
+PASS metadata audit matches actual slots for GUIThumbnailPanel
+PASS metadata audit matches actual slots for GUIGroup
+PASS metadata audit matches actual slots for GUILabelControl
+PASS metadata audit matches actual slots for GUICheckMarkControl
+PASS complete live frame keeps row and icon height distinct
+PASS complete frame retains native list data
+PASS empty frame restores native row and icon state with data intact
+PASS invalid compound collection frame is rejected atomically
+PASS invalid frame leaves native layout and data unchanged

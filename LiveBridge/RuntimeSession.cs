@@ -75,7 +75,7 @@ namespace MP1SkinStudio.LiveBridge
             EnsureWindow();var doc=Response("snapshot");var root=doc.DocumentElement;
             LiveWire.Attr(root,"epoch",epoch);LiveWire.Attr(root,"skin",skin);LiveWire.Attr(root,"theme",theme);LiveWire.Attr(root,"page",window.WindowXmlFileName);LiveWire.Attr(root,"window",window.GetID);
             LiveWire.Attr(root,"width",GUIGraphicsContext.SkinSize.Width);LiveWire.Attr(root,"height",GUIGraphicsContext.SkinSize.Height);
-            LiveWire.Attr(root,"mpVersion",typeof(GUIControl).Assembly.GetName().Version);LiveWire.Attr(root,"bridgeVersion","1.0.0");
+            LiveWire.Attr(root,"mpVersion",typeof(GUIControl).Assembly.GetName().Version);LiveWire.Attr(root,"bridgeVersion",typeof(RuntimeSession).Assembly.GetName().Version);
             foreach(var entry in entries.Values)
             {
                 var node=LiveWire.Add(root,"control");LiveWire.Attr(node,"token",entry.Token);LiveWire.Attr(node,"parent",entry.Parent);LiveWire.Attr(node,"path",entry.Path);LiveWire.Attr(node,"type",entry.Control.Type);LiveWire.Attr(node,"id",entry.Control.GetID);LiveWire.Attr(node,"description",entry.Control.Description);LiveWire.Attr(node,"automatic",entry.Automatic?"true":"false");
@@ -109,7 +109,7 @@ namespace MP1SkinStudio.LiveBridge
             if(!SameWindow||request.GetAttribute("epoch")!=epoch){Reset();throw new InvalidOperationException("MediaPortal changed page or skin. Reconnect the live session.");}
             if(request.ChildNodes.Count>4096)throw new InvalidDataException("Too many live operations.");
             if(request.ChildNodes.OfType<XmlElement>().Any(n=>!new[]{"control","create","remove","place"}.Contains(n.Name)))throw new InvalidDataException("Unknown live operation.");
-            var changes=new List<Change>();var names=new HashSet<string>(StringComparer.Ordinal);var desiredCreated=new HashSet<string>(StringComparer.Ordinal);
+            var changes=new List<Change>();var names=new HashSet<string>(StringComparer.Ordinal);var desiredCreated=new HashSet<string>(StringComparer.Ordinal);var layoutControls=new HashSet<GUIControl>();
             var treeBefore=CaptureTree();var parentsBefore=CaptureParents();var animationBefore=entries.Values.Concat(created.Values).ToDictionary(e=>e.Control,e=>Animation(e.Control));var detachedBefore=detached.ToArray();var placedBefore=placed.ToArray();var existingCreated=created.Keys.ToArray();var originalBefore=originals.ToArray();var appliedBefore=applied.ToArray();var saved=new Dictionary<RuntimeProperty,object>();
             try
             {
@@ -129,12 +129,12 @@ namespace MP1SkinStudio.LiveBridge
                 foreach(string token in desiredParents.Keys){var seen=new HashSet<string>();string parent=token;while(parent.Length>0){if(!seen.Add(parent))throw new InvalidDataException("Cyclic live group placement.");string next;parent=desiredParents.TryGetValue(parent,out next)?next:ActualParent(Find(parent));if(seen.Count>64)throw new InvalidDataException("Live group nesting exceeds 64.");}}
                 foreach(var entry in entries.Values.Concat(created.Values))if(entry.AnimationOriginal==null)entry.AnimationOriginal=Animation(entry.Control);
                 var storedControls=changes.Select(c=>c.Entry.Control).Concat(entries.Values.Where(e=>originals.Keys.Any(k=>k.StartsWith(e.Token+"/",StringComparison.Ordinal))).Select(e=>e.Control)).Distinct().ToArray();
-                foreach(var pair in originals)if(!names.Contains(pair.Key)){saved[pair.Value.Slot]=pair.Value.Slot.Read();pair.Value.Slot.Write(pair.Value.Native);}
+                foreach(var pair in originals)if(!names.Contains(pair.Key)){saved[pair.Value.Slot]=pair.Value.Slot.Read();pair.Value.Slot.Write(pair.Value.Native);int split=pair.Key.LastIndexOf('/');if(RuntimeProperty.NeedsLayout(pair.Key.Substring(split+1)))layoutControls.Add(Find(pair.Key.Substring(0,split)).Control);}
                 foreach(var change in changes)
                 {
                     if(!saved.ContainsKey(change.Slot))saved[change.Slot]=change.Slot.Read();
                     if(!originals.ContainsKey(change.Name))originals.Add(change.Name,new Saved{Slot=change.Slot,Native=saved[change.Slot]});
-                    string previous;if(!applied.TryGetValue(change.Name,out previous)||previous!=change.Text)change.Slot.Write(change.Native);
+                    string previous;if(!applied.TryGetValue(change.Name,out previous)||previous!=change.Text){change.Slot.Write(change.Native);if(RuntimeProperty.NeedsLayout(change.Name.Substring(change.Name.LastIndexOf('/')+1)))layoutControls.Add(change.Entry.Control);}
                 }
                 RestoreMissingRemovals(removed);
                 foreach(string token in removed){var entry=Find(token);RemoveFromAll(entry.Control);detached.Add(token);}
@@ -147,6 +147,7 @@ namespace MP1SkinStudio.LiveBridge
                 foreach(string name in originals.Keys.Where(k=>!names.Contains(k)).ToArray())originals.Remove(name);
                 applied.Clear();foreach(var change in changes)applied[change.Name]=change.Text;
                 foreach(var control in storedControls)control.StorePosition();
+                foreach(var control in layoutControls)RuntimeProperty.ReflowLayout(control);
                 GUIInfoManager.ResetCache();foreach(string key in obsolete){try{created[key].Control.Dispose();}catch{}created.Remove(key);}expectedTree=CaptureTree();
                 var result=Response("frame");LiveWire.Attr(result.DocumentElement,"epoch",epoch);LiveWire.Attr(result.DocumentElement,"properties",changes.Count);LiveWire.Attr(result.DocumentElement,"created",created.Count);LiveWire.Attr(result.DocumentElement,"removed",removed.Count);return result;
             }
@@ -156,6 +157,7 @@ namespace MP1SkinStudio.LiveBridge
                 RestoreTree(treeBefore);
                 RestoreParents(parentsBefore);detached.Clear();foreach(string token in detachedBefore)detached.Add(token);placed.Clear();foreach(string token in placedBefore)placed.Add(token);
                 foreach(var pair in animationBefore)RestoreAnimation(pair.Key,pair.Value);
+                foreach(var control in layoutControls)try{RuntimeProperty.ReflowLayout(control);}catch{}
                 foreach(string key in created.Keys.Where(k=>!existingCreated.Contains(k)).ToArray()){try{created[key].Control.Dispose();}catch{}created.Remove(key);}
                 originals.Clear();foreach(var pair in originalBefore)originals.Add(pair.Key,pair.Value);applied.Clear();foreach(var pair in appliedBefore)applied.Add(pair.Key,pair.Value);throw;
             }
@@ -200,6 +202,7 @@ namespace MP1SkinStudio.LiveBridge
         public void Reset()
         {
             foreach(var item in originals.Values.Reverse())try{item.Slot.Write(item.Native);}catch{}
+            foreach(var entry in entries.Values.Where(e=>originals.Keys.Any(k=>k.StartsWith(e.Token+"/",StringComparison.Ordinal)&&RuntimeProperty.NeedsLayout(k.Substring(k.LastIndexOf('/')+1)))))try{RuntimeProperty.ReflowLayout(entry.Control);}catch{}
             foreach(var entry in entries.Values)try{RestoreAnimation(entry.Control,entry.AnimationOriginal);}catch{}
             bool scenePresent=window!=null&&Object.ReferenceEquals(window,currentWindow())&&TreeMatches();
             foreach(var entry in created.Values)try{RemoveFromAll(entry.Control);}catch{}

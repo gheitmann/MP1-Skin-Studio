@@ -11,10 +11,18 @@ namespace MP1SkinStudio.LiveBridge
 {
     // Native values are retained separately from wire values: disconnect must
     // restore exact runtime pixels, not a rounded skin-coordinate conversion.
-    public sealed class RuntimeProperty
+    public sealed partial class RuntimeProperty
     {
         public Func<object> Read;public Action<object> Write;public Func<string,object> Parse;public Func<object,string> Format;
         public string Value {get{return Format(Read());}}
+        public static HashSet<string> SupportedFields(Type type)
+        {
+            if(!typeof(GUIControl).IsAssignableFrom(type))throw new ArgumentException("A MediaPortal control type is required.");
+            var fields=new HashSet<string>(StringComparer.Ordinal);
+            foreach(string key in LiveWire.Fields){string name=PropertyName(type,key);var p=name==null?null:type.GetProperty(name,BindingFlags.Public|BindingFlags.Instance);if(p!=null&&p.CanRead&&p.CanWrite&&p.GetIndexParameters().Length==0)fields.Add(key);}
+            if(typeof(GUIButtonControl).IsAssignableFrom(type)){if(Field(type,"_focusedTextureName")!=null&&Field(type,"_imageFocused")!=null)fields.Add("textureFocus");if(Field(type,"_nonFocusedTextureName")!=null&&Field(type,"_imageNonFocused")!=null)fields.Add("textureNoFocus");}
+            AddSupportedExtended(type,fields);fields.Add("visible");return fields;
+        }
         static string Number(object value){return Convert.ToString(value,CultureInfo.InvariantCulture);}
         static int Integer(string value,int minimum=-1000000,int maximum=1000000)
         {int result;if(!Int32.TryParse(value,NumberStyles.Integer,CultureInfo.InvariantCulture,out result)||result<minimum||result>maximum)throw new InvalidDataException("Live geometry requires a bounded integer.");return result;}
@@ -33,12 +41,12 @@ namespace MP1SkinStudio.LiveBridge
             var slots=new Dictionary<string,RuntimeProperty>(StringComparer.Ordinal);
             foreach(string key in LiveWire.Fields)
             {
-                string name=PropertyName(control,key);if(name==null)continue;var property=control.GetType().GetProperty(name,BindingFlags.Public|BindingFlags.Instance);
+                string name=PropertyName(control.GetType(),key);if(name==null)continue;var property=control.GetType().GetProperty(name,BindingFlags.Public|BindingFlags.Instance);
                 if(property==null||!property.CanRead||!property.CanWrite||property.GetIndexParameters().Length>0)continue;
                 string field=key;Type type=property.PropertyType;
                 bool scaledX=field=="posX"||field=="width"||field=="textXOff"||field=="markWidth"||field.ToLowerInvariant().Contains("width");
-                bool scaledY=field=="posY"||field=="height"||field=="textYOff"||field=="spaceBetweenItems"||field.ToLowerInvariant().Contains("height");
-                bool positive=field=="width"||field=="height";
+                bool scaledY=field=="posY"||field=="height"||field=="textYOff"||field=="spaceBetweenItems"&&!(control is GUITextControl)||field.ToLowerInvariant().Contains("height");
+                bool positive=field.ToLowerInvariant().Contains("width")||field.ToLowerInvariant().Contains("height");
                 slots[field]=new RuntimeProperty
                 {
                     Read=()=>property.GetValue(control,null),
@@ -56,7 +64,7 @@ namespace MP1SkinStudio.LiveBridge
                         if(type==typeof(bool))return Boolean(text);
                         if(type==typeof(long))return Color(text);
                         if(type.IsEnum)return EnumValue(type,text);
-                        if(type==typeof(int)){int number=Integer(text,positive?1:-1000000,positive?8192:1000000);return scaledX?GUIGraphicsContext.ScaleHorizontal(number):scaledY?GUIGraphicsContext.ScaleVertical(number):number;}
+                        if(type==typeof(int)){int number=Integer(text,positive?1:field=="spaceBetweenItems"?0:-1000000,positive?8192:1000000);return scaledX?GUIGraphicsContext.ScaleHorizontal(number):scaledY?GUIGraphicsContext.ScaleVertical(number):number;}
                         throw new InvalidDataException("Unsupported native property type.");
                     },
                     Format=value=>
@@ -71,11 +79,7 @@ namespace MP1SkinStudio.LiveBridge
             }
             AddButtonTexture(slots,control,"textureFocus","_focusedTextureName","_imageFocused",skinRoot);
             AddButtonTexture(slots,control,"textureNoFocus","_nonFocusedTextureName","_imageNonFocused",skinRoot);
-            if(control is GUICheckMarkControl)
-            {
-                var mark=(GUICheckMarkControl)control;
-                slots["font"]=new RuntimeProperty{Read=()=>mark.FontName,Write=value=>mark.SetLabel((string)value,mark.Label,mark.TextColor),Parse=text=>{ValidateFont(text);return text;},Format=Number};
-            }
+            AddExtended(slots,control);
             var allow=typeof(GUIControl).GetField("_allowHiddenFocus",BindingFlags.Instance|BindingFlags.NonPublic);
             slots["visible"]=new RuntimeProperty
             {
@@ -97,25 +101,25 @@ namespace MP1SkinStudio.LiveBridge
             slots[key]=new RuntimeProperty{Read=()=>field.GetValue(control),Write=value=>{field.SetValue(control,value);var image=child.GetValue(control);if(image!=null){var file=image.GetType().GetProperty("FileName");if(file!=null&&file.CanWrite)file.SetValue(image,value,null);}Refresh(control);},Parse=text=>{if(text.Length>500)throw new InvalidDataException("Texture path too long.");if(text.Length>0&&text!="-")LiveWire.SafeRelative(root,"Media/"+text);return text;},Format=Number};
         }
         static void Refresh(GUIControl control)
-        {var method=control.GetType().GetMethod("Refresh",Type.EmptyTypes);if(method!=null)method.Invoke(control,null);}
-        static string PropertyName(GUIControl control,string key)
+        {var method=control.GetType().GetMethod("Refresh",Type.EmptyTypes);if(method!=null)method.Invoke(control,null);MarkCollectionRefresh(control);}
+        static string PropertyName(Type type,string key)
         {
             switch(key)
             {
                 case "posX":return "XPosition";case "posY":return "YPosition";case "width":return "Width";case "height":return "Height";
                 case "label":return "Label";case "font":return "FontName";case "textcolor":return "TextColor";case "disabledcolor":return "DisabledColor";
-                case "texture":return control is GUIImage?"FileName":null;
+                case "texture":return typeof(GUIImage).IsAssignableFrom(type)?"FileName":null;
                 case "colordiffuse":return "ColourDiffuse";case "textXOff":return "TextOffsetX";case "textYOff":return "TextOffsetY";
-                case "align":return control is GUIImage?"ImageAlignment":"TextAlignment";
-                case "valign":return control is GUIImage?"ImageVAlignment":"TextVAlignment";
+                case "align":return typeof(GUIGroup).IsAssignableFrom(type)?"GroupAlignment":typeof(GUIImage).IsAssignableFrom(type)?"ImageAlignment":"TextAlignment";
+                case "valign":return typeof(GUIImage).IsAssignableFrom(type)?"ImageVAlignment":"TextVAlignment";
                 case "textalign":return "TextAlignment";case "textvalign":return "TextVAlignment";
                 case "keepaspectratio":return "KeepAspectRatio";case "zoom":return "Zoom";case "zoomfromtop":return "ZoomFromTop";
                 case "onleft":return "NavigateLeft";case "onright":return "NavigateRight";case "onup":return "NavigateUp";case "ondown":return "NavigateDown";
                 case "hyperlink":return "HyperLink";case "selected":return "Selected";
                 case "markWidth":return "CheckMarkWidth";case "markHeight":return "CheckMarkHeight";
-                case "textureHeight":return "TextureHeight";case "textureWidth":return "TextureWidth";case "spaceBetweenItems":return "SpaceBetweenItems";
-                case "itemWidth":return "ItemWidth";case "itemHeight":return "ItemHeight";case "thumbWidth":return "ThumbWidth";case "thumbHeight":return "ThumbHeight";
-                case "itemWidthBig":return "ItemWidthBig";case "itemHeightBig":return "ItemHeightBig";case "thumbWidthBig":return "ThumbWidthBig";case "thumbHeightBig":return "ThumbHeightBig";
+                case "textureHeight":return typeof(GUIListControl).IsAssignableFrom(type)?"ItemHeight":"TextureHeight";case "textureWidth":return "TextureWidth";case "spaceBetweenItems":return type.GetProperty("Space")!=null?"Space":"SpaceBetweenItems";
+                case "itemWidth":return Collection(type)?null:"ItemWidth";case "itemHeight":return Collection(type)?null:"ItemHeight";case "thumbWidth":return "ThumbWidth";case "thumbHeight":return "ThumbHeight";
+                case "itemWidthBig":return Collection(type)?null:"ItemWidthBig";case "itemHeightBig":return Collection(type)?null:"ItemHeightBig";case "thumbWidthBig":return "ThumbWidthBig";case "thumbHeightBig":return "ThumbHeightBig";
                 default:return null;
             }
         }

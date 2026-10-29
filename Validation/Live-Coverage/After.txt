@@ -1,0 +1,127 @@
+Static SDK property audit; this is not a runtime/rendering compatibility percentage.
+Pages/themes audited: 449
+Expanded controls: 19490
+Explicit editable XML fields: 114474
+Native writable fields: 111528
+Control kinds not resolved: cell, clickmania, Pipes, tetris
+Elapsed ms: 1590
+Missing field groups:
+checkbutton / textureFocus: 162 uses; examples base/ARGUS_ClientSettings.xml, base/ARGUS_ServerSettings.xml, base/ClickfinderProgramGuideSetting.xml
+actiongroup / textureFocus: 108 uses; examples base/ARGUS_RecordedRadio2.xml, base/ARGUS_RecordedTv2.xml, base/ARGUS_UpcomingRadio.xml
+actiongroup / textureNoFocus: 108 uses; examples base/ARGUS_RecordedRadio2.xml, base/ARGUS_RecordedTv2.xml, base/ARGUS_UpcomingRadio.xml
+thumbnailpanel / thumbWidthBig: 93 uses; examples base/ARGUS_RecordedRadio2.xml, base/ARGUS_RecordedTv2.xml, base/browsethewebbook.xml
+thumbnailpanel / thumbHeightBig: 93 uses; examples base/ARGUS_RecordedRadio2.xml, base/ARGUS_RecordedTv2.xml, base/browsethewebbook.xml
+progress / label: 90 uses; examples base/ARGUS_Home.xml, base/ARGUS_RadioHome.xml, base/ARGUS_RecordedRadio2.xml
+thumbnailpanel / thumbWidth: 88 uses; examples base/ARGUS_RecordedRadio2.xml, base/ARGUS_RecordedTv2.xml, base/browsethewebbook.xml
+thumbnailpanel / thumbHeight: 88 uses; examples base/ARGUS_RecordedRadio2.xml, base/ARGUS_RecordedTv2.xml, base/browsethewebbook.xml
+cell / posX: 81 uses; examples base/mynumberplace.xml
+cell / posY: 81 uses; examples base/mynumberplace.xml
+cell / width: 81 uses; examples base/mynumberplace.xml
+cell / height: 81 uses; examples base/mynumberplace.xml
+cell / label: 81 uses; examples base/mynumberplace.xml
+cell / font: 81 uses; examples base/mynumberplace.xml
+cell / textcolor: 81 uses; examples base/mynumberplace.xml
+cell / textureFocus: 81 uses; examples base/mynumberplace.xml
+cell / textureNoFocus: 81 uses; examples base/mynumberplace.xml
+cell / onleft: 81 uses; examples base/mynumberplace.xml
+cell / onright: 81 uses; examples base/mynumberplace.xml
+cell / onup: 81 uses; examples base/mynumberplace.xml
+cell / ondown: 81 uses; examples base/mynumberplace.xml
+thumbnailpanel / textureHeight: 77 uses; examples base/ARGUS_RecordedRadio2.xml, base/ARGUS_RecordedTv2.xml, base/browsethewebbook.xml
+thumbnailpanel / textureWidth: 77 uses; examples base/ARGUS_RecordedRadio2.xml, base/ARGUS_RecordedTv2.xml, base/browsethewebbook.xml
+listcontrol / textureFocus: 75 uses; examples base/ARGUS_RecordedRadio2.xml, base/ARGUS_RecordedTv2.xml, base/ClickfinderProgramGuideCategories.xml
+imagelist / textureHeight: 67 uses; examples base/ClickfinderProgramGuideCategories.xml, base/ClickfinderProgramGuideDetail.xml, base/ClickfinderProgramGuideEpisodePreview.xml
+imagelist / textureWidth: 67 uses; examples base/ClickfinderProgramGuideCategories.xml, base/ClickfinderProgramGuideDetail.xml, base/ClickfinderProgramGuideEpisodePreview.xml
+imagelist / align: 59 uses; examples base/ClickfinderProgramGuideCategories.xml, base/ClickfinderProgramGuideDetail.xml, base/ClickfinderProgramGuideEpisodePreview.xml
+spincontrol / align: 57 uses; examples base/ARGUS_RadioGuide.xml, base/ARGUS_TvGuide.xml, base/myradioguide.10Lines.xml
+listcontrol / textureNoFocus: 45 uses; examples base/ClickfinderProgramGuideCategories.xml, base/ClickfinderProgramGuideEpisodePreview.xml, base/ClickfinderProgramGuideHighlights.xml
+spincontrol / width: 44 uses; examples base/ARGUS_RadioGuide.xml, base/ARGUS_TvGuide.xml, base/myradioguide.10Lines.xml
+coverflow / keepaspectratio: 39 uses; examples base/ClickfinderProgramGuideDetail.xml, base/common.facade.home.xml, base/common.facade.music.xml
+checkmark / textureCheckmark: 35 uses; examples base/dialogGeneralRating.xml, base/DialogUserRating.xml, base/Trakt.RateDialog.xml
+checkmark / textureCheckmarkNoFocus: 35 uses; examples base/dialogGeneralRating.xml, base/DialogUserRating.xml, base/Trakt.RateDialog.xml
+videowindow / textureFocus: 28 uses; examples base/ARGUS_Home.xml, base/ARGUS_RadioHome.xml, base/ARGUS_TuningDetails.xml
+spincontrol / font: 28 uses; examples base/myradioguide.10Lines.xml, base/myradioguide.12Lines.xml, base/myradioguide.15Lines.xml
+checkbutton / textureNoFocus: 22 uses; examples base/ARGUS_ClientSettings.xml, base/ARGUS_ServerSettings.xml, base/ClickfinderProgramGuideSetting.xml
+checkbutton / textureCheckmark: 21 uses; examples base/ARGUS_ClientSettings.xml, base/ARGUS_ServerSettings.xml, base/ClickfinderProgramGuideSetting.xml
+checkbutton / textureCheckmarkNoFocus: 21 uses; examples base/ARGUS_ClientSettings.xml, base/ARGUS_ServerSettings.xml, base/ClickfinderProgramGuideSetting.xml
+button3part / label: 20 uses; examples base/myradioguide.10Lines.xml, base/myradioguide.12Lines.xml, base/myradioguide.15Lines.xml
+checkbutton / markWidth: 17 uses; examples base/ARGUS_ClientSettings.xml, base/ARGUS_ServerSettings.xml, base/ClickfinderProgramGuideSetting.xml
+checkbutton / markHeight: 17 uses; examples base/ARGUS_ClientSettings.xml, base/ARGUS_ServerSettings.xml, base/ClickfinderProgramGuideSetting.xml
+fadelabel / disabledcolor: 15 uses; examples base/GlobalSearch.Music.Details.xml, base/myonlinevideos.details.xml, base/myonlinevideos.xml
+tvprogress / label: 9 uses; examples base/myonlinevideosFullScreen.xml, base/myonlinevideosOSD.xml, base/myonlinevideosOSDexpanded.xml
+selectbutton / textureFocus: 9 uses; examples base/settings_MiniDisplay_Control.xml, base/settings_MiniDisplay_Equalizer.xml, base/settings_MiniDisplay_Main.xml
+image / hyperlink: 8 uses; examples base/BasicHome.xml, base/BasicHomeEditor.main.Carousel.xml, base/BasicHomeEditor.sub.Carousel.xml
+checklistcontrol / textureFocus: 7 uses; examples base/DialogCheckList.xml, base/MyWebradioFavoriten.xml, base/MyWebradioFilter.xml
+checklistcontrol / markWidth: 7 uses; examples base/DialogCheckList.xml, base/MyWebradioFavoriten.xml, base/MyWebradioFilter.xml
+checklistcontrol / markHeight: 7 uses; examples base/DialogCheckList.xml, base/MyWebradioFavoriten.xml, base/MyWebradioFilter.xml
+volumebar / texture: 6 uses; examples base/common.play.tv.xml, base/common.play.xml, base/myonlinevideosFullScreen.xml
+image / spaceBetweenItems: 6 uses; examples base/MyFilms.xml, base/MyFilmsDetail.xml, base/TVSeries.Playlist.xml
+image / textcolor: 6 uses; examples base/MyFilms.xml, base/MyFilmsLatestMedia.xml
+checklistcontrol / textureNoFocus: 6 uses; examples base/MyWebradioFavoriten.xml, base/MyWebradioFilter.xml
+checklistcontrol / textureCheckmark: 6 uses; examples base/MyWebradioFavoriten.xml, base/MyWebradioFilter.xml
+checklistcontrol / textureCheckmarkNoFocus: 6 uses; examples base/MyWebradioFavoriten.xml, base/MyWebradioFilter.xml
+fadelabel / textureFocus: 6 uses; examples base/settings_Common_ShareFolders.xml
+spinbutton / textureFocus: 5 uses; examples base/ARGUS_ClientSettings.xml, base/ARGUS_ServerSettings.xml
+spinbutton / textureNoFocus: 5 uses; examples base/ARGUS_ClientSettings.xml, base/ARGUS_ServerSettings.xml
+filmstrip / textYOff: 5 uses; examples base/common.facade.home.xml, base/MyFilmsCoverManager.xml, base/MyFilmsFanartManager.xml
+menubutton / textureFocus: 5 uses; examples base/settings_GUI_Skin.xml, base/settings_MyMusic_NowPlaying.xml
+progress / textcolor: 4 uses; examples base/HTPCInfo.xml, base/HTPCInfoGauges.xml, base/myonlinevideos.xml
+label / disabledcolor: 4 uses; examples base/myLyrics.xml
+imagelist / valign: 4 uses; examples base/MyMusicPlayingNow.xml, base/MyMusicPlayingNowAnVU.xml, base/MyMusicPlayingNowLedVU.xml
+label / textureFocus: 4 uses; examples base/settings_Common_ShareFolders.xml, base/settings_GUI_ScreenSaver.xml, base/settings_MyPictures_Slideshow.xml
+thumbnailpanel / textalign: 3 uses; examples base/common.facade.home.xml, base/myHome.xml, base/myHomePlugIns.xml
+filmstrip / textalign: 3 uses; examples base/common.facade.home.xml, base/myHome.xml, base/myHomePlugIns.xml
+filmstrip / textXOff: 3 uses; examples base/common.facade.home.xml, base/myHome.xml, base/myHomePlugIns.xml
+checkmark / textureFocus: 3 uses; examples base/MyMusicCoverArtGrabberProgress.xml
+checkmark / textureNoFocus: 3 uses; examples base/MyMusicCoverArtGrabberProgress.xml
+image / textureFocus: 3 uses; examples base/Trakt.Settings.General.xml
+menubutton / hyperlink: 2 uses; examples base/BasicHomeEditor.xml, base/settings_GUI_Skin.xml
+textbox / align: 2 uses; examples base/DialogIncompatiblePlugins.xml, base/dialogOldSkin.xml
+textboxscrollup / disabledcolor: 2 uses; examples base/myonlinevideos.details.xml, base/myonlinevideos.xml
+checkmark / markWidth: 2 uses; examples base/SubCentral.ModifySearch.xml, base/SubCentral.xml
+checkmark / markHeight: 2 uses; examples base/SubCentral.ModifySearch.xml, base/SubCentral.xml
+textbox / textalign: 1 uses; examples base/APODPlugin.xml
+clickmania / posX: 1 uses; examples base/myClickMania.xml
+clickmania / posY: 1 uses; examples base/myClickMania.xml
+clickmania / width: 1 uses; examples base/myClickMania.xml
+clickmania / height: 1 uses; examples base/myClickMania.xml
+clickmania / font: 1 uses; examples base/myClickMania.xml
+clickmania / textcolor: 1 uses; examples base/myClickMania.xml
+clickmania / texture: 1 uses; examples base/myClickMania.xml
+clickmania / colordiffuse: 1 uses; examples base/myClickMania.xml
+clickmania / onleft: 1 uses; examples base/myClickMania.xml
+clickmania / onright: 1 uses; examples base/myClickMania.xml
+clickmania / onup: 1 uses; examples base/myClickMania.xml
+clickmania / ondown: 1 uses; examples base/myClickMania.xml
+multiimage / align: 1 uses; examples base/MyFilmsDetail.xml
+multiimage / valign: 1 uses; examples base/MyFilmsDetail.xml
+thumbnailpanel / textureFocus: 1 uses; examples base/MyFilmsFanartManager.xml
+Pipes / posX: 1 uses; examples base/myPipes.xml
+Pipes / posY: 1 uses; examples base/myPipes.xml
+Pipes / width: 1 uses; examples base/myPipes.xml
+Pipes / height: 1 uses; examples base/myPipes.xml
+Pipes / font: 1 uses; examples base/myPipes.xml
+Pipes / textcolor: 1 uses; examples base/myPipes.xml
+Pipes / texture: 1 uses; examples base/myPipes.xml
+Pipes / colordiffuse: 1 uses; examples base/myPipes.xml
+Pipes / onleft: 1 uses; examples base/myPipes.xml
+Pipes / onright: 1 uses; examples base/myPipes.xml
+Pipes / onup: 1 uses; examples base/myPipes.xml
+Pipes / ondown: 1 uses; examples base/myPipes.xml
+tetris / posX: 1 uses; examples base/mytetris.xml
+tetris / posY: 1 uses; examples base/mytetris.xml
+tetris / width: 1 uses; examples base/mytetris.xml
+tetris / height: 1 uses; examples base/mytetris.xml
+tetris / font: 1 uses; examples base/mytetris.xml
+tetris / textcolor: 1 uses; examples base/mytetris.xml
+tetris / texture: 1 uses; examples base/mytetris.xml
+tetris / colordiffuse: 1 uses; examples base/mytetris.xml
+tetris / onleft: 1 uses; examples base/mytetris.xml
+tetris / onright: 1 uses; examples base/mytetris.xml
+tetris / onup: 1 uses; examples base/mytetris.xml
+tetris / ondown: 1 uses; examples base/mytetris.xml
+tetris / visible: 1 uses; examples base/mytetris.xml
+updownlistcontrol / textureFocus: 1 uses; examples base/mytvpriorities.xml
+updownlistcontrol / textureNoFocus: 1 uses; examples base/mytvpriorities.xml
+group / textureFocus: 1 uses; examples base/Trakt.Settings.xml
+PASS 488 installed XML hashes unchanged.

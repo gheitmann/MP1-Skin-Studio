@@ -10,6 +10,11 @@ This preview provides a practical visual guide; rendering remains approximate. S
 
 ## Build and run
 
+The development package includes [LiveBridge 1.1](docs/LIVE_COVERAGE.md), extending
+scrolling text, lists, filmstrips/galleries and group alignment. The ready status
+shows the loaded bridge version. A plugin update requires closing MP once;
+ordinary live edits continue without page reload or restart.
+
 The development build also offers [Save skin …](docs/SAVE_SKIN_COPY.md): create
 a complete output copy once, then update its reviewed XML with conflict checks
 and automatic backups while editing and live preview continue.

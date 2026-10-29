@@ -1,0 +1,13 @@
+PASS Studio discovers, authenticates and verifies original XML hashes
+PASS typing previews native text without Apply or XML modification
+PASS pending geometry input updates native pixels
+PASS unfinished numeric input retains last valid preview
+PASS Revert Inputs restores native text and geometry
+PASS Apply retains live preview and commits editor model
+PASS saving a complete output copy keeps the native live session active
+PASS Undo restores native label and exact source
+PASS saving Undo updates the output copy while the native live connection continues
+PASS canvas gesture draft streams before model commit
+PASS cancelled canvas gesture restores baseline
+PASS Studio disconnect restores MP SDK control
+PASS on-disk isolated XML remains byte-content identical
