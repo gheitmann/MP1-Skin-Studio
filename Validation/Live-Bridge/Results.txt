@@ -5,6 +5,9 @@ PASS authenticated same-user transport and crash reset.
 PASS 17 focused toolbox/geometry workflows.
 PASS twelve packaged demo workflows and twelve clean-session workflows.
 PASS 229 packaged broad UI checks under normal Windows rights.
-PASS 489 original installed skin/config XML hashes unchanged.
-PENDING visible Studio-to-running-MP comparison: MP startup requires Configuration Studio to close.
-PENDING installation in Program Files: Windows administrator confirmation required.
+PASS 10 direct real-MediaPortal runtime checks.
+PASS 11 complete Studio-to-real-MediaPortal checks.
+PASS native MP visual comparison: changed text, position and color without reload; original baseline restored.
+PASS 488 original installed skin XML hashes unchanged after real MP acceptance.
+PASS plugin installed in MediaPortal 1.39; installed DLL hash matches package.
+NOTE installed MP configuration differs from the initial baseline across concurrent Configuration Studio work; it was not overwritten or reverted. The plugin does not write configuration.

@@ -1,0 +1,11 @@
+PASS Studio connects to the real MP Home page and verifies XML hashes
+PASS typing in Studio updates real MP without Apply or XML writes
+PASS position and color inputs update real MP controls
+PASS same MP window and control identities: no page reload
+PASS invalid numeric draft preserves last valid real MP preview
+PASS Revert Inputs restores real MP text and position
+PASS Apply commits editor model while real MP keeps its live preview
+PASS Undo restores real MP and exact editor source
+PASS in-progress canvas gesture updates real MP before committing XML
+PASS real MP workflow leaves disk XML unchanged
+PASS disconnect and reconnect restore real MP native baseline

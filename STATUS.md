@@ -20,12 +20,19 @@ clean-session workflows and 229 broad UI checks. All 489 original installed
 skin/config XML hashes remained unchanged. The final two live insertion tests
 postdate the broad UI package pass and affect only live frame construction.
 
-The isolated official MP client displayed the real test Home skin and loaded
-the bridge, but its sandbox blocked pipe clients. Normal-rights transport and
-the Studio/native-SDK host passed. A normal MP startup explicitly requires the
-owner's open Configuration Studio to close. Its window was preserved, so the
-complete visible Studio-to-running-MP comparison is still pending. Windows
-also denied writing the plugin to Program Files without administrator consent.
+Final attended acceptance passed against the official running MP 1.39 client:
+10 direct runtime checks and 11 complete Studio-to-real-MP checks. Typing,
+position/color inputs, Revert, Apply, Undo, in-progress canvas gestures and
+Disconnect/reconnect changed existing native controls without a page reload or
+XML writes. The real MP window visibly displayed the Studio text and color;
+the exact original baseline was restored afterwards. All 488 installed skin XML
+hashes remained unchanged. Tests used an independent MP client/skin/data copy.
+The installed MP configuration differs from the initial baseline across the
+owner's concurrent Configuration Studio work; it was not overwritten or reverted
+by this task. The bridge itself never writes configuration.
+The owner confirmed closing Configuration Studio and Windows administrator
+installation. The installed plugin DLL matches the portable package hash.
+
 The portable package contains the built DLL, guarded installer (including
 optional Windows elevation), guides and checksums. No existing release or tag
 was replaced; preview.2 remains the latest published release.

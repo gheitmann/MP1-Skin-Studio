@@ -125,10 +125,12 @@ identifies its source revision and MANIFEST.sha256 identifies payload bytes.
 
 The development package adds the optional MP1 1.39 LiveBridge process plugin.
 See [setup, persistence and supported runtime fields](LIVE_PREVIEW.md) and
-[executed validation and remaining native comparison](../Validation/Live-Bridge/README.md).
+[executed validation and native comparison](../Validation/Live-Bridge/README.md).
 Published v0.9.0-preview.2 assets remain unchanged. Native controls accept valid
 Studio drafts/gestures through a local same-user pipe; the plugin does not write
-XML. Unsupported or ambiguous operations are reported inline. A complete visible
-comparison with an unrestricted running MP instance is still required before
-claiming that attended acceptance, including third-party plugin behavior.
+XML. Unsupported or ambiguous operations are reported inline. The attended
+comparison with an unrestricted running MP 1.39 instance passed: 10 direct
+runtime checks and 11 Studio-to-real-MP checks, including visible text/color/
+position changes, Apply/Revert/Undo, gesture previews and Disconnect/reconnect.
+This does not establish compatibility with every third-party plugin control.
 

@@ -33,6 +33,14 @@ to its copied myHome.xml. `PathsProbe.cs` confirms MP directory resolution.
   deterministic controls inserted by Prepare-Runtime. Optional second argument
   `hold` holds the changed text/position/color for an attended visual check.
   It also checks an invalid frame, empty-frame restore and reconnect/reset.
+* `StudioRuntimeProbe.cs`, compiled with references to the editor, System.Core,
+  System.Xml, System.Drawing and Windows.Forms, drives owned Studio inputs over
+  the real bridge to an already running isolated MP process. Its arguments are
+  the copied skin, endpoint directory and a fresh result directory. Run under
+  normal Windows desktop rights. It verifies text/geometry/color, unchanged
+  runtime identity, invalid drafts, Revert/Apply/Undo, gesture streaming,
+  Disconnect/reconnect and unchanged disk XML. It holds its changed visual for
+  40 seconds for an attended native-window comparison.
 
 ## Executed evidence
 
@@ -46,14 +54,21 @@ host completed under normal Windows rights. The final two insertion-template
 checks were added afterwards, with no changes to existing non-live behavior.
 All 489 original installed skin/config XML hashes were rechecked unchanged.
 
-The isolated official MP executable launched its real DefaultWideHD-derived
-Home page and loaded the bridge. Native screenshots confirmed the deterministic
-test controls. Its sandboxed launch could not accept named-pipe clients; the
-same transport probe succeeds outside that sandbox. A normal MP launch showed
-the explicit startup message: configuration must be closed before starting MP.
-The owner's Configuration Studio remains open and was preserved.
-Therefore a visible, complete Studio-to-running-MP comparison is still pending;
-the native SDK-host checks must not be described as that comparison.
+The final official MP 1.39 executable ran its real DefaultWideHD-derived Home
+page with the deterministic controls. Ten direct runtime checks and eleven
+complete Studio-to-real-MP checks passed. The native window visibly showed
+the text typed in Studio, its changed position and yellow color without a page
+reload. Revert/Undo and Disconnect/reconnect restored the original baseline.
+The MP process and runtime control epoch stayed unchanged during live edits.
+See Real-Studio-Results.txt and Results.txt. All 488 original installed skin XML
+hashes were rechecked unchanged after this real MP run. The installed process
+plugin DLL hash matches the tested package after owner-confirmed Windows
+administrator installation. Normal Windows rights are required for the pipe;
+the earlier restricted sandbox launch could not accept clients.
+
+The installed MP configuration differs from the initial baseline across
+concurrent Configuration Studio work in another chat; it was not overwritten
+or reverted. No configuration-preservation claim covers that concurrent work.
 
 No installed skin, MP binaries, private configuration, endpoint nonce, user
 paths, captures or runtime logs belong in this repository's validation evidence.
