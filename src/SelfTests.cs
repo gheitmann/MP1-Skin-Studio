@@ -70,6 +70,7 @@ namespace MP1SkinStudio
             RunLiveTests(root);
             RunSkinPersistenceTests(root);
             RunSpecialLiveTests(root);
+            RunFontDefinitionTests(root);
             report.Add("");report.Add(passed+" passed, "+failed+" failed.");
             File.WriteAllLines(Path.Combine(root,"test-results.txt"),report.ToArray(),new UTF8Encoding(false));
             return failed==0?0:1;

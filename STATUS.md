@@ -2,6 +2,22 @@
 
 Date: October 30, 2026. Imported version: 0.9.
 
+## Newest development milestone: live font definitions, bridge 1.3
+
+Fonts … edits existing/new font definitions and aliases in fonts.xml without raw
+XML. Installed family, height and bold/italic changes preview on supported linked
+controls. MP's original font objects and alias registry remain intact; private
+variants have distinct family/style/scale cache identities and bounded retention.
+Undo, project save/reopen and skin-copy persistence retain edited definitions.
+
+Fresh acceptance covers core font transactions, 17 native cache/lifecycle checks,
+12 complete-MP font checks and 8 real Studio font workflows. Text, checkbox and
+gallery previews were exercised without a page reload. Unrelated font uses remain
+unchanged; missing families and full caches are rejected. Original font objects
+survive resets and disconnect. Registry replacement invalidates the live context.
+See Validation/Live-Fonts and docs/LIVE_FONTS.md for exact support and limits.
+This remains a development build; the published preview.3 release is unchanged.
+
 ## Newest development milestone: bridge 1.2 special controls
 
 Checkbox image paths, selected-binding previews and exact mark dimensions now

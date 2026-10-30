@@ -1,5 +1,9 @@
 # Live special controls — bridge 1.2 development
 
+Bridge 1.3 additionally previews edited font families, sizes, styles and aliases
+through the new Fonts dialog. See [live font definitions](LIVE_FONTS.md). The
+1.2 validation below records the preceding special-control milestone.
+
 This development build adds safely scoped checkbox, gallery, effect and shared
 reference editing to the preview.3 workflow. It targets MP1 1.39. The published
 preview.3 release is unchanged.
@@ -45,10 +49,8 @@ Validation/Live-Special. Original installed skin XML remains untouched.
 
 ## Still outside this update
 
-This is not arbitrary fonts.xml hot reload. New font families, font height/style,
-alias registry changes and global reference-cache replacement require a coordinated
-MP-wide resource refresh. The normal MP font loader disposes registered fonts;
-calling it during a preview would invalidate cached objects in unrelated pages.
-Save the output skin and use MP's normal skin reload/restart for those definition
-changes. Plugin-specific effect implementations, shader/effect files and animation
+Bridge 1.3 supports installed Windows font families, heights, styles and alias
+retargeting with private per-page previews. Global reference-cache replacement,
+installing font files and arbitrary font schema remain outside this scoped path.
+Plugin-specific effect implementations, shader/effect files and animation
 XML texture templates are also outside the verified live scope.

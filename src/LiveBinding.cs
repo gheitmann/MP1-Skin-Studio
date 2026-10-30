@@ -12,10 +12,12 @@ namespace MP1SkinStudio
     public sealed class LiveBinding
     {
         public readonly SkinProject Baseline;public readonly LiveItem[] Items;public readonly string Epoch;
+        readonly bool fontDefinitions;
         public readonly Dictionary<string,LiveItem[]> Matches=new Dictionary<string,LiveItem[]>(StringComparer.OrdinalIgnoreCase);
         public LiveBinding(SkinProject baseline,XmlDocument snapshot)
         {
             Baseline=baseline;var root=snapshot.DocumentElement;Epoch=LiveWire.Required(root,"epoch",100);
+            fontDefinitions=root.GetAttribute("fontDefinitions")=="private-v1";
             if(!String.Equals(Path.GetFullPath(root.GetAttribute("skin")).TrimEnd('\\','/'),baseline.Root.TrimEnd('\\','/'),StringComparison.OrdinalIgnoreCase))throw new InvalidOperationException("Open the same skin folder in Studio and MediaPortal.");
             string actualTheme=LiveWire.ThemeKey(root.GetAttribute("theme"));
             string editorTheme=LiveWire.ThemeKey(baseline.Theme);
@@ -75,7 +77,7 @@ namespace MP1SkinStudio
                     structural=true;string token=NewToken(control);runtimeTokens[control.Key]=token;var add=LiveWire.Add(root,"create");LiveWire.Attr(add,"token",token);var node=LiveWire.Add(add,"control");
                     foreach(string field in new[]{"type","id","description"}.Concat(LiveWire.Fields))
                     {
-                        string value=pending!=null&&pending.ContainsKey(field)?pending[field]:control.Resolved(field);if(field=="width"||field=="height"){if(control.Get("type")=="group"&&value=="0")continue;}
+                        string value=pending!=null&&pending.ContainsKey(field)?pending[field]:control.Resolved(field);if(field=="font"&&FontDefinitionChanged(current,value)){if(!fontDefinitions)throw new InvalidOperationException("Edited font definitions require bridge 1.3.");value=FontWire(current,value);}if(field=="width"||field=="height"){if(control.Get("type")=="group"&&value=="0")continue;}
                         if(value.Length==0&&!(field=="label"&&(control.Get("type")=="label"||control.Get("type")=="button")))continue;var property=LiveWire.Add(node,field);property.InnerText=value;
                     }
                     continue;
@@ -85,9 +87,12 @@ namespace MP1SkinStudio
                 foreach(string field in LiveWire.Fields)
                 {
                     string value=pending!=null&&pending.ContainsKey(field)?pending[field]:field=="animations"?EffectEditing.Read(control):control.Get(field);
-                    if(value==(field=="animations"?EffectEditing.Read(original):original.Get(field)))continue;
+                    string fontAlias=field=="font"?(pending!=null&&pending.ContainsKey(field)?value:control.Resolved("font")):null;
+                    bool definitionChanged=field=="font"&&FontDefinitionChanged(current,fontAlias);
+                    if(value==(field=="animations"?EffectEditing.Read(original):original.Get(field))&&!definitionChanged)continue;
                     if(original.IsBound(field)&&pending!=null&&pending.ContainsKey(field)&&control.Get(field)==original.Get(field)&&!drafts.ContainsKey("@bindings-approved"))throw new InvalidOperationException("Binding protected: enable Replace bindings locally before live replacement.");
                     changed[field]=pending!=null&&pending.ContainsKey(field)?value:field=="animations"?value:control.Resolved(field);
+                    if(definitionChanged){if(!fontDefinitions)throw new InvalidOperationException("Edited font definitions require bridge 1.3. Update the plugin once and reconnect.");changed[field]=FontWire(current,fontAlias);}
                 }
                 LiveItem[] matches;if(!Matches.TryGetValue(key,out matches))
                 {if(changed.Count>0)throw new InvalidOperationException("Link the selected XML element to its MediaPortal control before live editing: "+control.Name);continue;}
@@ -117,5 +122,8 @@ namespace MP1SkinStudio
             }
             return doc;
         }
+        bool FontDefinitionChanged(SkinProject current,string name)
+        {SkinFontSpec now,old;return current.FontSpecs.TryGetValue(name,out now)&&(!Baseline.FontSpecs.TryGetValue(name,out old)||now.Family!=old.Family||now.Height!=old.Height||now.Style!=old.Style);}
+        static string FontWire(SkinProject current,string name){var spec=current.FontSpecs[name];return new LiveFontDefinition{Family=spec.Family,Height=(int)spec.Height,Style=(int)spec.Style}.ToWire();}
     }
 }

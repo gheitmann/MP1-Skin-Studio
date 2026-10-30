@@ -1,3 +1,13 @@
+# Development extension — live font definitions
+
+Bridge 1.3 adds Fonts … for installed family, size, bold/italic, new definitions
+and alias editing in fonts.xml. Private variants preview linked native controls
+without replacing original MP fonts or reloading the page. Undo, project saving
+and skin-copy saving retain the definitions. Cache variants are bounded and
+reused. See LIVE_FONTS.md. Final validation: 489 core, 17 native lifecycle,
+12 full-renderer and 8 Studio font workflow checks passed; all 488 original
+installed skin XML hashes remain unchanged. This is a development package;
+the published preview.3 release is unchanged.
 # Development extension — October 30, 2026
 
 Bridge 1.2 adds native checkbox textures/mark dimensions, selected-expression

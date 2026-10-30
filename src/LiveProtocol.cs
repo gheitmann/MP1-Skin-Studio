@@ -12,6 +12,20 @@ using System.Xml;
 
 namespace MP1SkinStudio.Live
 {
+    public sealed class LiveFontDefinition
+    {
+        public const string Prefix="@studio-font:";
+        public string Family;public int Height,Style;
+        public void Validate(){if(String.IsNullOrWhiteSpace(Family)||Family.Length>120||Family.Any(c=>Char.IsControl(c)||"/\\:".Contains(c))||Height<1||Height>96||Style<0||Style>3)throw new InvalidDataException("Choose an installed font family, height 1–96 and regular/bold/italic style.");}
+        public string ToWire(){Validate();var doc=new XmlDocument();var root=doc.CreateElement("font");doc.AppendChild(root);root.SetAttribute("family",Family);root.SetAttribute("height",Height.ToString(CultureInfo.InvariantCulture));root.SetAttribute("style",Style.ToString(CultureInfo.InvariantCulture));return Prefix+Convert.ToBase64String(Encoding.UTF8.GetBytes(doc.OuterXml));}
+        public static LiveFontDefinition Parse(string value)
+        {
+            if(value==null||value.Length>2048||!value.StartsWith(Prefix,StringComparison.Ordinal))throw new InvalidDataException("Invalid preview font descriptor.");
+            var bytes=Convert.FromBase64String(value.Substring(Prefix.Length));var doc=new XmlDocument{XmlResolver=null};using(var input=new MemoryStream(bytes))using(var reader=XmlReader.Create(input,new XmlReaderSettings{DtdProcessing=DtdProcessing.Prohibit,XmlResolver=null,MaxCharactersInDocument=2048}))doc.Load(reader);
+            var root=doc.DocumentElement;int height,style;if(root==null||root.Name!="font"||root.HasChildNodes||root.Attributes.Count!=3||!Int32.TryParse(root.GetAttribute("height"),out height)||!Int32.TryParse(root.GetAttribute("style"),out style))throw new InvalidDataException("Invalid preview font definition.");
+            var result=new LiveFontDefinition{Family=root.GetAttribute("family"),Height=height,Style=style};result.Validate();return result;
+        }
+    }
     public static class LiveWire
     {
         public const int Protocol=1,MaximumBytes=8*1024*1024;

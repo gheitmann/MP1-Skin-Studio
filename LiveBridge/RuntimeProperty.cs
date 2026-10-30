@@ -50,13 +50,13 @@ namespace MP1SkinStudio.LiveBridge
                 slots[field]=new RuntimeProperty
                 {
                     Read=()=>property.GetValue(control,null),
-                    Write=value=>{if(field=="posX")control.SetPosition((int)value,control.YPosition);else if(field=="posY")control.SetPosition(control.XPosition,(int)value);else property.SetValue(control,value,null);Refresh(control);},
+                    Write=value=>{if(field=="posX")control.SetPosition((int)value,control.YPosition);else if(field=="posY")control.SetPosition(control.XPosition,(int)value);else property.SetValue(control,value,null);if(field=="font")RuntimeFonts.Invalidate(control);Refresh(control);},
                     Parse=text=>
                     {
                         if(text==null||text.Length>16384)throw new InvalidDataException("Live text exceeds 16,384 characters.");
                         if(type==typeof(string))
                         {
-                            if(field=="font")ValidateFont(text);
+                            if(field=="font")return RuntimeFonts.Resolve(text);
                             if(field=="label"){int resource;if(Int32.TryParse(text,NumberStyles.Integer,CultureInfo.InvariantCulture,out resource)&&resource>=0)return GUILocalizeStrings.Get(resource);}
                             if(field.StartsWith("texture",StringComparison.Ordinal)&&text.Length>0&&text!="-"){LiveWire.SafeRelative(skinRoot,"Media/"+text);}
                             return text;
@@ -94,7 +94,7 @@ namespace MP1SkinStudio.LiveBridge
         }
         sealed class Visibility {public int Condition;public bool Allow,Shown;}
         static void ValidateFont(string text)
-        {var font=GUIFontManager.GetFont(text);if(text.Length==0||font==null||!String.Equals(font.FontName,text,StringComparison.OrdinalIgnoreCase))throw new InvalidDataException("This font is not loaded by MediaPortal.");}
+        {RuntimeFonts.Resolve(text);}
         static FieldInfo Field(Type type,string name)
         {for(Type t=type;t!=null;t=t.BaseType){var field=t.GetField(name,BindingFlags.Instance|BindingFlags.Public|BindingFlags.NonPublic|BindingFlags.DeclaredOnly);if(field!=null)return field;}return null;}
         static void AddButtonTexture(Dictionary<string,RuntimeProperty> slots,GUIControl control,string key,string fieldName,string imageName,string root)

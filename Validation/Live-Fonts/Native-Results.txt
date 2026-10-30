@@ -1,0 +1,17 @@
+PASS private allocation preserves the original font registry identity
+PASS private preview appends a font without replacing original registry entries
+PASS private preview has its own alias and ID
+PASS identical definitions reuse a bounded cache entry
+PASS style changes have distinct font cache identities
+PASS family changes have distinct cache identities
+PASS native font property accepts a private definition descriptor
+PASS font restoration retains the original registered object
+PASS malformed font descriptor is rejected
+PASS font paths are rejected before allocation
+PASS preview variants never mutate the original font definition
+PASS private font variants are limited to 32 per active registry
+PASS a full preview cache rejects another allocation
+PASS capacity rejection preserves the registry and original font
+PASS normal MP registry replacement invalidates obsolete private cache entries
+PASS normal registry replacement invalidates the live window context
+PASS font registry replacement starts a fresh runtime epoch

@@ -1,0 +1,8 @@
+PASS Fonts dialog changes family, height and style without XML editing
+PASS one shared definition previews all linked native uses
+PASS unrelated font aliases remain unchanged
+PASS font definition updates do not reload the MP page
+PASS font definitions stay in the editor model until explicitly saved
+PASS project save/reopen retains changed fonts.xml definitions
+PASS Undo restores native font aliases across all linked controls
+PASS Undo retains exact original source state

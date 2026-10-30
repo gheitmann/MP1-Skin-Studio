@@ -15,6 +15,7 @@ $reviewFiles += @('LiveBridge/bin/MP1SkinStudio.LiveBridge.dll','LiveBridge/Inst
 $reviewFiles += @('docs/SAVE_SKIN_COPY.md')
 $reviewFiles += @('docs/LIVE_COVERAGE.md')
 $reviewFiles += @('docs/LIVE_SPECIAL.md')
+$reviewFiles += @('docs/LIVE_FONTS.md')
 $reviewSampleRoot = Join-Path $PSScriptRoot 'Samples\Titan-Sample'
 $reviewFiles += @(Get-ChildItem -LiteralPath $reviewSampleRoot -Recurse -File |
     Where-Object { $_.Extension -in @('.xml', '.png', '.jpg', '.jpeg') } |
@@ -27,7 +28,10 @@ $reviewNotes = @"
 MP1 Skin Studio - manual review build
 Source revision: $Revision
 
-LiveBridge 1.2 adds checkbox images/dimensions, small/large gallery templates,
+LiveBridge 1.3 adds private font definition previews through Fonts …, without
+replacing MP's original fonts. See docs/LIVE_FONTS.md for Windows font support,
+Undo/persistence and the bounded preview cache.
+The bridge also supports checkbox images/dimensions, small/large gallery templates,
 native effects and shared reference defaults. Use Element > Effects or
 Element > Shared defaults. See docs/LIVE_SPECIAL.md for exact scope and limits.
 Close MP once for the plugin update, install the included DLL and reconnect.

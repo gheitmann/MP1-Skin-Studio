@@ -1,0 +1,12 @@
+PASS full MP advertises font definition previews in bridge 1.3
+PASS label, checkbox and gallery use the same isolated preview font
+PASS one preview definition appends one cache entry
+PASS original registered MP font object and definition remain intact
+PASS font layout rebuilding retains all native gallery items
+PASS font preview keeps the same window and native controls
+PASS font style has a distinct private cache identity
+PASS repeated font definition reuses its private resource
+PASS unavailable Windows font family is rejected
+PASS rejected font definition retains last valid preview
+PASS empty frame restores original fonts on all target control types
+PASS disconnect preserves original registry and gallery data

@@ -95,9 +95,9 @@ namespace MP1SkinStudio.LiveBridge
                 slots["font"]=new RuntimeProperty
                 {
                     Read=()=>new NativeFont{Name=(string)fontName.GetValue(control),Font=font.GetValue(control)},
-                    Parse=text=>{if(text==null||text.Length>500)throw new InvalidDataException("Invalid live font name.");ValidateFont(text);return new NativeFont{Name=text,Font=GUIFontManager.GetFont(text)};},
+                    Parse=text=>{string name=RuntimeFonts.Resolve(text);return new NativeFont{Name=name,Font=GUIFontManager.GetFont(name)};},
                     Format=value=>((NativeFont)value).Name??"",
-                    Write=value=>{var state=(NativeFont)value;fontName.SetValue(control,state.Name);font.SetValue(control,state.Font);if(ScrollingText(type))ReflowText(control,(string)type.GetProperty("Property").GetValue(control,null));MarkCollectionRefresh(control);}
+                    Write=value=>{var state=(NativeFont)value;object actual=state.Font;if(actual!=null&&!RuntimeFonts.Registered(actual)){var current=GUIFontManager.GetFont(state.Name);if(current!=null&&current.FontName==state.Name)actual=current;else return;}fontName.SetValue(control,state.Name);font.SetValue(control,actual);RuntimeFonts.Invalidate(control);if(ScrollingText(type))ReflowText(control,(string)type.GetProperty("Property").GetValue(control,null));MarkCollectionRefresh(control);}
                 };
             }
         }

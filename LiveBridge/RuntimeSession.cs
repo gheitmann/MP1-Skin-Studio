@@ -27,12 +27,12 @@ namespace MP1SkinStudio.LiveBridge
         readonly Dictionary<string,string> applied=new Dictionary<string,string>(StringComparer.Ordinal);
         readonly HashSet<string> detached=new HashSet<string>(StringComparer.Ordinal),placed=new HashSet<string>(StringComparer.Ordinal);
         Dictionary<GUIControl,GUIControl> originalParents;Dictionary<GUIControlCollection,object[]> expectedTree;
-        Dictionary<GUIControlCollection,object[]> originalTree;GUIWindow window;string epoch,skin,theme;
+        Dictionary<GUIControlCollection,object[]> originalTree;GUIWindow window;string epoch,skin,theme,fontRegistry;
         readonly Func<GUIWindow> currentWindow;
         public RuntimeSession():this(()=>GUIWindowManager.GetWindow(GUIWindowManager.ActiveWindowEx)){}
         public RuntimeSession(Func<GUIWindow> provider){currentWindow=provider;}
         string CurrentSkin {get{return Path.GetFullPath(GUIGraphicsContext.Skin).TrimEnd('\\','/');}}
-        bool SameWindow {get{return window!=null&&Object.ReferenceEquals(window,currentWindow())&&String.Equals(skin,CurrentSkin,StringComparison.OrdinalIgnoreCase)&&String.Equals(theme,GUIGraphicsContext.ThemeName,StringComparison.OrdinalIgnoreCase)&&TreeMatches();}}
+        bool SameWindow {get{return window!=null&&Object.ReferenceEquals(window,currentWindow())&&String.Equals(skin,CurrentSkin,StringComparison.OrdinalIgnoreCase)&&String.Equals(theme,GUIGraphicsContext.ThemeName,StringComparison.OrdinalIgnoreCase)&&fontRegistry==RuntimeFonts.RegistryStamp&&TreeMatches();}}
         bool TreeMatches(){return expectedTree==null||expectedTree.All(pair=>pair.Key.Count==pair.Value.Length&&pair.Key.Cast<object>().Zip(pair.Value,(a,b)=>Object.ReferenceEquals(a,b)).All(same=>same));}
         static XmlDocument Response(string command){var doc=LiveWire.Document(command);LiveWire.Attr(doc.DocumentElement,"ok","true");return doc;}
         public XmlDocument Handle(XmlDocument request)
@@ -51,7 +51,7 @@ namespace MP1SkinStudio.LiveBridge
         void EnsureWindow()
         {
             if(SameWindow&&entries.Count>0)return;Reset();window=currentWindow();if(window==null||!window.WindowLoaded)throw new InvalidOperationException("Open a skin page in MediaPortal first.");
-            skin=CurrentSkin;theme=GUIGraphicsContext.ThemeName;epoch=Guid.NewGuid().ToString("N");
+            skin=CurrentSkin;theme=GUIGraphicsContext.ThemeName;fontRegistry=RuntimeFonts.RegistryStamp;epoch=Guid.NewGuid().ToString("N");
             var seen=new HashSet<GUIControl>();Capture(window.Children,"","",false,seen);originalTree=CaptureTree();expectedTree=CaptureTree();originalParents=CaptureParents();
         }
         void Capture(GUIControlCollection collection,string parent,string path,bool automatic,HashSet<GUIControl> seen)
@@ -76,6 +76,7 @@ namespace MP1SkinStudio.LiveBridge
             LiveWire.Attr(root,"epoch",epoch);LiveWire.Attr(root,"skin",skin);LiveWire.Attr(root,"theme",theme);LiveWire.Attr(root,"page",window.WindowXmlFileName);LiveWire.Attr(root,"window",window.GetID);
             LiveWire.Attr(root,"width",GUIGraphicsContext.SkinSize.Width);LiveWire.Attr(root,"height",GUIGraphicsContext.SkinSize.Height);
             LiveWire.Attr(root,"mpVersion",typeof(GUIControl).Assembly.GetName().Version);LiveWire.Attr(root,"bridgeVersion",typeof(RuntimeSession).Assembly.GetName().Version);
+            LiveWire.Attr(root,"fontDefinitions","private-v1");
             foreach(var entry in entries.Values)
             {
                 var node=LiveWire.Add(root,"control");LiveWire.Attr(node,"token",entry.Token);LiveWire.Attr(node,"parent",entry.Parent);LiveWire.Attr(node,"path",entry.Path);LiveWire.Attr(node,"type",entry.Control.Type);LiveWire.Attr(node,"id",entry.Control.GetID);LiveWire.Attr(node,"description",entry.Control.Description);LiveWire.Attr(node,"automatic",entry.Automatic?"true":"false");
@@ -176,7 +177,8 @@ namespace MP1SkinStudio.LiveBridge
             string kind=definition["type"]==null?"":definition["type"].InnerText;if(!new[]{"label","button","image","group"}.Contains(kind))throw new InvalidDataException("Live creation supports text, buttons, images and groups.");
             int id;if(definition["id"]==null||!Int32.TryParse(definition["id"].InnerText,out id)||id<1||entries.Values.Concat(created.Values).Any(e=>e.Control.GetID==id))throw new InvalidDataException("Live insertion requires a unique positive control ID.");
             foreach(XmlElement field in definition.ChildNodes.OfType<XmlElement>())if(field.Name.StartsWith("texture",StringComparison.Ordinal)&&field.InnerText.Length>0&&field.InnerText!="-")LiveWire.SafeRelative(skin,"Media/"+field.InnerText);
-            var control=GUIControlFactory.Create(window.GetID,definition,new Dictionary<string,string>(),window.WindowXmlFileName);if(control==null)throw new InvalidOperationException("MediaPortal could not create this control.");
+            var nativeDefinition=(XmlElement)definition.CloneNode(true);if(nativeDefinition["font"]!=null&&nativeDefinition["font"].InnerText.StartsWith(LiveFontDefinition.Prefix,StringComparison.Ordinal))nativeDefinition["font"].InnerText=RuntimeFonts.Resolve(nativeDefinition["font"].InnerText);
+            var control=GUIControlFactory.Create(window.GetID,nativeDefinition,new Dictionary<string,string>(),window.WindowXmlFileName);if(control==null)throw new InvalidOperationException("MediaPortal could not create this control.");
             try{control.AllocResources();((GUIControlCollection)window.Children).Add(control);return new Entry{Token=token,Control=control,Owner=(GUIControlCollection)window.Children,Parent="",Path="new",Slots=RuntimeProperty.For(control,skin)};}
             catch{control.Dispose();throw;}
         }

@@ -29,6 +29,7 @@ namespace MP1SkinStudio
             liveOpen=ButtonFor("Open MP page",OpenPageFromLive);liveOpen.Width=119;liveOpen.Enabled=false;commands.Controls.Add(liveOpen);
             liveShow=ButtonFor("Show in MP",ShowPageLive);liveShow.Width=99;liveShow.Enabled=false;commands.Controls.Add(liveShow);
             liveMatch=ButtonFor("Link element",MatchLiveElement);liveMatch.Width=102;liveMatch.Enabled=false;commands.Controls.Add(liveMatch);
+            var fonts=ButtonFor("Fonts …",()=>Attempt(EditFontDefinitions));fonts.Width=85;commands.Controls.Add(fonts);tips.SetToolTip(fonts,"Edit font family, height, style or aliases. Bridge 1.3 previews changed definitions without reloading MP's original fonts.");
             liveNotice=new Label{Dock=DockStyle.Bottom,Height=24,AutoEllipsis=true,ForeColor=muted,Text="Start MediaPortal, then Connect → Open MP page → select an element and edit. Save skin copy keeps your changes."};
             host.Controls.Add(liveNotice);host.Controls.Add(commands);commands.SizeChanged+=(s,e)=>host.Height=commands.Height+26;
             tips.SetToolTip(liveConnect,"Connect to the same skin, theme and page in MediaPortal. Valid inputs and canvas drags preview live without Apply, export or reload. Skin files remain unchanged.");

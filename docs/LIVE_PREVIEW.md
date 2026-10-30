@@ -1,6 +1,7 @@
 # Live preview in MediaPortal 1
 
-The development package includes bridge 1.2 with checkbox, gallery-template,
+The development package includes bridge 1.3 with private font definition previews
+through Fonts …; see [font editing](LIVE_FONTS.md). It also includes checkbox, gallery-template,
 effect and shared-default support. See [special live controls](LIVE_SPECIAL.md)
 and [extended live controls](LIVE_COVERAGE.md)
 for update instructions, validation scope and remaining specialized controls.

@@ -264,7 +264,7 @@ namespace MP1SkinStudio
         readonly string[] labels=new[]{"Position X","Position Y","Width","Height","Text / data binding","Font name","Text color · AARRGGBB","Image / texture","Focused image","Unfocused image","Alignment","Navigate left → ID","Navigate right → ID","Navigate up → ID","Navigate down → ID","Target page → Window ID","Text offset X","Text offset Y","Horizontal inner text alignment","Vertical inner text alignment","Vertical text field alignment","Image tint · AARRGGBB","Visibility condition","Keep image proportions","Crop to fill","Crop from top"}.Concat(CheckmarkPresentation.Labels).Concat(CollectionProperties.Fields.Select(f=>f.Label)).ToArray();
         public StudioForm(string root)
         {
-            Text="MP1 Skin Studio · Live 1.2 development";StartPosition=FormStartPosition.CenterScreen;Size=new Size(1520,960);MinimumSize=new Size(1180,780);
+            Text="MP1 Skin Studio · Live 1.3 development";StartPosition=FormStartPosition.CenterScreen;Size=new Size(1520,960);MinimumSize=new Size(1180,780);
             AutoScaleMode=AutoScaleMode.None;Font=new Font("Segoe UI",9.5f);BackColor=Color.FromArgb(21,26,35);ForeColor=ink;KeyPreview=true;
             BuildUi();
             canvas.Selection+=SelectControl;
