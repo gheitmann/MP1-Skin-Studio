@@ -8,7 +8,7 @@ using MP1SkinStudio.Live;
 
 [assembly: AssemblyTitle("MP1 Skin Studio Live Bridge")]
 [assembly: AssemblyDescription("Local live skin editing bridge for MP1 Skin Studio")]
-[assembly: AssemblyVersion("1.1.0.0")]
+[assembly: AssemblyVersion("1.2.0.0")]
 [assembly: CompatibleVersion("1.39.0.0")]
 namespace MP1SkinStudio.LiveBridge
 {

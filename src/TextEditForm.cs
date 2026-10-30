@@ -21,6 +21,8 @@ namespace MP1SkinStudio
         {
             menu.Items.Add(new ToolStripSeparator());var item=menu.Items.Add("Edit text …",null,(s,e)=>Attempt(()=>EditElementText(selected)));
             item.Enabled=SelectedControls().Length==1&&selected!=null&&project.InspectTextEdit(selected).Allowed;
+            menu.Items.Add("Effects …",null,(s,e)=>Attempt(EditElementEffects)).Enabled=SelectedControls().Length==1&&selected!=null;
+            menu.Items.Add("Shared defaults …",null,(s,e)=>Attempt(EditReferenceDefault)).Enabled=SelectedControls().Length==1&&selected!=null;
         }
         bool AllowCanvasGesture()
         {

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -228,6 +228,7 @@ namespace MP1SkinStudio
         public int Ordinal, Depth;
         public bool AutomaticLayout;
         public string Key, IncludeCondition;
+        public string EffectXml="<effects/>";
         public SkinControl RuntimeParent;public VisibilityTerm[] VisibilityTerms;
         public Dictionary<string, PropertyValue> Properties = new Dictionary<string, PropertyValue>(StringComparer.Ordinal);
         public Dictionary<string, string> Defines;
@@ -379,6 +380,7 @@ namespace MP1SkinStudio
         static string JoinCondition(string a,string b) { return String.IsNullOrEmpty(a)?b:String.IsNullOrEmpty(b)?a:"["+a+"]+["+b+"]"; }
         static void Merge(SkinControl c, ElementSpan n,string origin,bool local)
         {
+            var effects=n.Children.Where(e=>e.Name=="animation").ToArray();if(effects.Length>0)c.EffectXml="<effects>"+String.Concat(effects.Select(e=>e.Element.OuterXml))+"</effects>";
             foreach(var p in n.Children.Where(e=>e.Name!="control"))
             {
                 if(p.Name=="align"||p.Name=="valign"||p.Name=="centered")c.ImageAlignmentRules.Add(new KeyValuePair<string,string>(p.Name,p.Element.InnerText));

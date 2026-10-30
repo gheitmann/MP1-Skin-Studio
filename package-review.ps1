@@ -14,6 +14,7 @@ $reviewFiles = @('MP1SkinStudio.exe', 'LICENSE', 'docs/USER_GUIDE.md', 'docs/QUI
 $reviewFiles += @('LiveBridge/bin/MP1SkinStudio.LiveBridge.dll','LiveBridge/Install-LiveBridge.ps1','docs/LIVE_PREVIEW.md')
 $reviewFiles += @('docs/SAVE_SKIN_COPY.md')
 $reviewFiles += @('docs/LIVE_COVERAGE.md')
+$reviewFiles += @('docs/LIVE_SPECIAL.md')
 $reviewSampleRoot = Join-Path $PSScriptRoot 'Samples\Titan-Sample'
 $reviewFiles += @(Get-ChildItem -LiteralPath $reviewSampleRoot -Recurse -File |
     Where-Object { $_.Extension -in @('.xml', '.png', '.jpg', '.jpeg') } |
@@ -26,11 +27,13 @@ $reviewNotes = @"
 MP1 Skin Studio - manual review build
 Source revision: $Revision
 
-LiveBridge 1.1 extends scrolling text, lists, filmstrips and gallery properties.
+LiveBridge 1.2 adds checkbox images/dimensions, small/large gallery templates,
+native effects and shared reference defaults. Use Element > Effects or
+Element > Shared defaults. See docs/LIVE_SPECIAL.md for exact scope and limits.
 Close MP once for the plugin update, install the included DLL and reconnect.
 The Live status displays its running bridge version. Ordinary live edits still
 do not require a page reload or restart. See docs/LIVE_COVERAGE.md for the native
-adapter changes, metadata audit and current visual-test limits.
+adapter changes, metadata audit and historical visual-test scope.
 
 Save skin … beside Live saves applied inputs to a complete separate output skin.
 Create its first copy once; later saves update reviewed XML with conflict checks,

@@ -1,0 +1,11 @@
+PASS Structured effects reach the native control
+PASS Effects dialog applies structured effects and previews them in full MP
+PASS Native effect state follows Undo
+PASS Effect Undo restores native effect count without page reload
+PASS Inherited shared font reaches native control
+PASS Shared font dialog previews an inherited loaded alias in full MP
+PASS Shared default preserves explicit local font override
+PASS Native shared font follows Undo
+PASS Shared default Undo restores native font alias
+PASS Effects and shared defaults leave original disk XML unchanged
+PASS Disconnect retains clean editor after both Undos

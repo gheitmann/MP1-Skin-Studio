@@ -1,0 +1,53 @@
+PASS checkbox preview clears the old native selected expression
+PASS checkbox restore retains the original selected binding
+PASS invalid checkbox selected value rejected
+PASS textureCheckmark updates native child texture
+PASS textureCheckmark restores original child texture
+PASS textureCheckmark rejects traversal
+PASS textureCheckmark guards animation XML templates
+PASS textureCheckmarkNoFocus updates native child texture
+PASS textureCheckmarkNoFocus restores original child texture
+PASS textureCheckmarkNoFocus rejects traversal
+PASS textureCheckmarkNoFocus guards animation XML templates
+PASS markWidth updates both native checkbox images
+PASS markWidth restores both exact native dimensions
+PASS markHeight updates both native checkbox images
+PASS markHeight restores both exact native dimensions
+PASS itemWidth updates active layout and stored template
+PASS itemWidth restores exact active dimensions
+PASS itemHeight updates active layout and stored template
+PASS itemHeight restores exact active dimensions
+PASS textureWidth updates active layout and stored template
+PASS textureWidth restores exact active dimensions
+PASS textureHeight updates active layout and stored template
+PASS textureHeight restores exact active dimensions
+PASS thumbWidth updates active layout and stored template
+PASS thumbWidth restores exact active dimensions
+PASS thumbHeight updates active layout and stored template
+PASS thumbHeight restores exact active dimensions
+PASS itemWidthBig updates active layout and stored template
+PASS itemWidthBig restores exact active dimensions
+PASS itemHeightBig updates active layout and stored template
+PASS itemHeightBig restores exact active dimensions
+PASS textureWidthBig updates active layout and stored template
+PASS textureWidthBig restores exact active dimensions
+PASS textureHeightBig updates active layout and stored template
+PASS textureHeightBig restores exact active dimensions
+PASS thumbWidthBig updates active layout and stored template
+PASS thumbWidthBig restores exact active dimensions
+PASS thumbHeightBig updates active layout and stored template
+PASS thumbHeightBig restores exact active dimensions
+PASS inactive large thumbnail template does not overwrite the small layout
+PASS zero gallery dimension rejected
+PASS template updates retain native collection data
+PASS VisibleChange creates forward and reverse native effects
+PASS effect restoration retains original native effect objects
+PASS effect XML rejects DTD
+PASS unknown native animation trigger rejected
+PASS supported metadata matches slots for GUICheckMarkControl
+PASS supported metadata matches slots for GUIThumbnailPanel
+PASS supported metadata matches slots for GUILabelControl
+PASS compound frame applies checkbox, gallery and effects together
+PASS empty frame restores exact native state and retains data
+PASS invalid compound frame rejected before native mutation
+PASS rejected frame preserves original native state

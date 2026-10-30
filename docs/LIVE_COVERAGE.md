@@ -1,5 +1,8 @@
 # Extended live controls — bridge 1.1
 
+For the subsequent bridge 1.2 development extension, see [special controls and
+shared defaults](LIVE_SPECIAL.md). The 1.1 results below are historical scope.
+
 This development package extends the existing MP1 1.39 live connection. The
 ready status now includes the running bridge version.
 
@@ -52,8 +55,9 @@ fixture and Real-MP-Results.txt under Validation/Live-Coverage.
 
 ## Remaining limits
 
-Special checkbutton textures, large/small gallery thumbnail templates, effects,
-global font/reference hot reload and plugin-specific controls remain outside
-this extension. Game controls registered by their own plugins are not resolved
+Bridge 1.2 now supports ordinary checkbox images, small/large gallery templates,
+basic native effects and supported shared reference defaults on linked pages.
+Arbitrary global font/reference-cache hot reload and plugin-specific controls
+remain outside this extension. Game controls registered by their own plugins are not resolved
 by the core-only static audit. Structural edits on ambiguous/repeated XML still
 use the existing protection. Unsupported changes are reported explicitly.

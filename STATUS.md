@@ -1,6 +1,23 @@
 # Development status and next steps
 
-Date: October 29, 2026. Imported version: 0.9.
+Date: October 30, 2026. Imported version: 0.9.
+
+## Newest development milestone: bridge 1.2 special controls
+
+Checkbox image paths, selected-binding previews and exact mark dimensions now
+have native adapters. Gallery small/large item, texture and thumbnail templates
+are independent and retain native items. Element > Effects edits local effects
+without raw XML and previews them through MP's native effect implementation.
+Element > Shared defaults edits supported references.xml fields, including loaded
+font aliases, while retaining local overrides and normal Undo/save-copy behavior.
+
+Fresh checks: 478 core, 53 special native, 64 extended native, 17 full-renderer and
+11 actual Studio-to-MP workflows. See Validation/Live-Special for exact stages.
+The final selected-binding adapter has separate native acceptance after the
+initial renderer scene. Arbitrary fonts.xml family/height/style hot reload,
+global reference-cache replacement, shader files and animation XML texture
+templates remain outside the implemented live scope. See docs/LIVE_SPECIAL.md.
+The published preview.3 release remains unchanged; this is a development build.
 
 ## Newest milestone: preview.3 editing workflow
 

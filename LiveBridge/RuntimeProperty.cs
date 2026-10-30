@@ -21,7 +21,7 @@ namespace MP1SkinStudio.LiveBridge
             var fields=new HashSet<string>(StringComparer.Ordinal);
             foreach(string key in LiveWire.Fields){string name=PropertyName(type,key);var p=name==null?null:type.GetProperty(name,BindingFlags.Public|BindingFlags.Instance);if(p!=null&&p.CanRead&&p.CanWrite&&p.GetIndexParameters().Length==0)fields.Add(key);}
             if(typeof(GUIButtonControl).IsAssignableFrom(type)){if(Field(type,"_focusedTextureName")!=null&&Field(type,"_imageFocused")!=null)fields.Add("textureFocus");if(Field(type,"_nonFocusedTextureName")!=null&&Field(type,"_imageNonFocused")!=null)fields.Add("textureNoFocus");}
-            AddSupportedExtended(type,fields);fields.Add("visible");return fields;
+            AddSupportedExtended(type,fields);AddSupportedSpecial(type,fields);if(EffectAdapter(type))fields.Add("animations");fields.Add("visible");return fields;
         }
         static string Number(object value){return Convert.ToString(value,CultureInfo.InvariantCulture);}
         static int Integer(string value,int minimum=-1000000,int maximum=1000000)
@@ -80,6 +80,8 @@ namespace MP1SkinStudio.LiveBridge
             AddButtonTexture(slots,control,"textureFocus","_focusedTextureName","_imageFocused",skinRoot);
             AddButtonTexture(slots,control,"textureNoFocus","_nonFocusedTextureName","_imageNonFocused",skinRoot);
             AddExtended(slots,control);
+            AddSpecial(slots,control,skinRoot);
+            if(EffectAdapter(control.GetType()))slots["animations"]=Effects(control);
             var allow=typeof(GUIControl).GetField("_allowHiddenFocus",BindingFlags.Instance|BindingFlags.NonPublic);
             slots["visible"]=new RuntimeProperty
             {

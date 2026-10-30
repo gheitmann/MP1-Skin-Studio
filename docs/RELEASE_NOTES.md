@@ -1,3 +1,12 @@
+# Development extension — October 30, 2026
+
+Bridge 1.2 adds native checkbox textures/mark dimensions, selected-expression
+restoration and independent small/large gallery templates. Element > Effects
+provides structured fade/zoom/rotate editing and native MP preview; Element >
+Shared defaults edits supported references.xml values and loaded font aliases.
+Undo, reset and disconnect retain original native state. Arbitrary fonts.xml
+resource replacement is not implemented. See LIVE_SPECIAL.md for exact scope.
+The published preview.3 package remains unchanged.
 # MP1 Skin Studio v0.9.0-preview.3
 
 October 29, 2026. Direct editing in a running MediaPortal 1.39, with a simpler

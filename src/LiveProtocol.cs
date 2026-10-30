@@ -15,7 +15,7 @@ namespace MP1SkinStudio.Live
     public static class LiveWire
     {
         public const int Protocol=1,MaximumBytes=8*1024*1024;
-        public static readonly string[] Fields={"posX","posY","width","height","label","font","textcolor","disabledcolor","texture","textureFocus","textureNoFocus","align","valign","textalign","textvalign","textXOff","textYOff","colordiffuse","keepaspectratio","zoom","zoomfromtop","onleft","onright","onup","ondown","hyperlink","selected","visible","markWidth","markHeight","textureCheckmark","textureCheckmarkNoFocus","textureHeight","textureWidth","spaceBetweenItems","itemWidth","itemHeight","thumbWidth","thumbHeight","itemWidthBig","itemHeightBig","thumbWidthBig","thumbHeightBig"};
+        public static readonly string[] Fields={"posX","posY","width","height","label","font","textcolor","disabledcolor","texture","textureFocus","textureNoFocus","align","valign","textalign","textvalign","textXOff","textYOff","colordiffuse","keepaspectratio","zoom","zoomfromtop","onleft","onright","onup","ondown","hyperlink","selected","visible","markWidth","markHeight","textureCheckmark","textureCheckmarkNoFocus","textureHeight","textureWidth","spaceBetweenItems","itemWidth","itemHeight","thumbWidth","thumbHeight","itemWidthBig","itemHeightBig","thumbWidthBig","thumbHeightBig","textureWidthBig","textureHeightBig","animations"};
         public static string DirectoryPath
         {
             get{string custom=Environment.GetEnvironmentVariable("MP1_SKIN_STUDIO_LIVE_DIR");return String.IsNullOrWhiteSpace(custom)?Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"MP1SkinStudio","Live"):Path.GetFullPath(custom);}

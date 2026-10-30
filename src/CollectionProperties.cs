@@ -23,8 +23,8 @@ namespace MP1SkinStudio
     public static class CollectionProperties
     {
         public static readonly CollectionProperty[] Fields={
-            new CollectionProperty("textureHeight","Row / texture height",true,"listcontrol","playlistcontrol","filmstrip"),
-            new CollectionProperty("textureWidth","Texture width",true,"filmstrip"),
+            new CollectionProperty("textureHeight","Row / small texture height",true,"listcontrol","playlistcontrol","filmstrip","thumbnailpanel"),
+            new CollectionProperty("textureWidth","Small texture width",true,"filmstrip","thumbnailpanel"),
             new CollectionProperty("spaceBetweenItems","Space between rows",false,"listcontrol","playlistcontrol"),
             new CollectionProperty("itemWidth","Item / icon width",true,"listcontrol","playlistcontrol","filmstrip","thumbnailpanel"),
             new CollectionProperty("itemHeight","Item / icon height",true,"listcontrol","playlistcontrol","filmstrip","thumbnailpanel"),
@@ -33,7 +33,9 @@ namespace MP1SkinStudio
             new CollectionProperty("itemWidthBig","Large item width",true,"thumbnailpanel"),
             new CollectionProperty("itemHeightBig","Large item height",true,"thumbnailpanel"),
             new CollectionProperty("thumbWidthBig","Large thumbnail width",true,"thumbnailpanel"),
-            new CollectionProperty("thumbHeightBig","Large thumbnail height",true,"thumbnailpanel")
+            new CollectionProperty("thumbHeightBig","Large thumbnail height",true,"thumbnailpanel"),
+            new CollectionProperty("textureWidthBig","Large texture width",true,"thumbnailpanel"),
+            new CollectionProperty("textureHeightBig","Large texture height",true,"thumbnailpanel")
         };
         public static CollectionProperty Find(string key){return Fields.FirstOrDefault(f=>f.Key==key);}
     }

@@ -1,0 +1,17 @@
+PASS full MP process loads bridge 1.2
+PASS gallery starts with six items in small mode
+PASS allocated checkbox textures update in both native states
+PASS allocated checkbox images resize
+PASS small gallery template updates in full renderer
+PASS native effect replacement is accepted
+PASS control identities remain stable without page reload
+PASS native gallery items survive small-template rebuilding
+PASS empty frame restores original fields for 21201
+PASS empty frame restores original fields for 21202
+PASS empty frame restores original fields for 21203
+PASS empty frame restores original fields for 21204
+PASS native large-icon mode switch keeps all items
+PASS large gallery templates update in full renderer
+PASS large-template rebuilding retains native items
+PASS large templates restore exactly
+PASS disconnect restores native gallery templates and data

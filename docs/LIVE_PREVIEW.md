@@ -1,7 +1,8 @@
 # Live preview in MediaPortal 1
 
-The development package includes bridge 1.1 with extended scrolling-text,
-list/playlist, filmstrip and gallery support. See [extended live controls](LIVE_COVERAGE.md)
+The development package includes bridge 1.2 with checkbox, gallery-template,
+effect and shared-default support. See [special live controls](LIVE_SPECIAL.md)
+and [extended live controls](LIVE_COVERAGE.md)
 for update instructions, validation scope and remaining specialized controls.
 
 Live preview sends valid Studio inputs directly to the GUI controls already

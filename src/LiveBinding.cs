@@ -84,10 +84,10 @@ namespace MP1SkinStudio
                 var changed=new Dictionary<string,string>();
                 foreach(string field in LiveWire.Fields)
                 {
-                    string value=pending!=null&&pending.ContainsKey(field)?pending[field]:control.Get(field);
-                    if(value==original.Get(field))continue;
+                    string value=pending!=null&&pending.ContainsKey(field)?pending[field]:field=="animations"?EffectEditing.Read(control):control.Get(field);
+                    if(value==(field=="animations"?EffectEditing.Read(original):original.Get(field)))continue;
                     if(original.IsBound(field)&&pending!=null&&pending.ContainsKey(field)&&control.Get(field)==original.Get(field)&&!drafts.ContainsKey("@bindings-approved"))throw new InvalidOperationException("Binding protected: enable Replace bindings locally before live replacement.");
-                    changed[field]=pending!=null&&pending.ContainsKey(field)?value:control.Resolved(field);
+                    changed[field]=pending!=null&&pending.ContainsKey(field)?value:field=="animations"?value:control.Resolved(field);
                 }
                 LiveItem[] matches;if(!Matches.TryGetValue(key,out matches))
                 {if(changed.Count>0)throw new InvalidOperationException("Link the selected XML element to its MediaPortal control before live editing: "+control.Name);continue;}
