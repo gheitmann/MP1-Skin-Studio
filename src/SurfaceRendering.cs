@@ -85,28 +85,37 @@ namespace MP1SkinStudio
             FontStyle style=spec.Style;if(!family.IsStyleAvailable(style))style=FontStyle.Regular;
             return new Font(family,spec.Pixels(Project.Height),style,GraphicsUnit.Pixel);
         }
-        void SurfaceText(Graphics g,SkinControl c,string text,RectangleF rect,bool focus,string fontProperty="font",string colorProperty="textcolor",string alignProperty="align",bool multiline=false)
+        void SurfaceText(Graphics g,SkinControl c,string text,RectangleF rect,bool focus,string fontProperty="font",string colorProperty="textcolor",string alignProperty="align",bool multiline=false,bool marked=false)
         {
             if(String.IsNullOrEmpty(text)||rect.Width<1||rect.Height<1)return;
             if(pendingSurfaceText!=null)
             {
                 // MP1 presents queued font textures after control textures.
                 // Retain each collection/control clip when deferring its text.
-                pendingSurfaceText.Add(new PendingSurfaceText{Clip=g.Clip,Paint=target=>SurfaceText(target,c,text,rect,focus,fontProperty,colorProperty,alignProperty,multiline)});
+                pendingSurfaceText.Add(new PendingSurfaceText{Clip=g.Clip,Paint=target=>SurfaceText(target,c,text,rect,focus,fontProperty,colorProperty,alignProperty,multiline,marked)});
                 return;
             }
             bool button=c.Get("type").Contains("button");
+            bool list=c.Get("type")=="listcontrol"||c.Get("type")=="playlistcontrol";
             string align=c.Resolved(button?"textalign":alignProperty,"left").ToLowerInvariant();string valign=c.Resolved(button?"textvalign":"valign","top").ToLowerInvariant();
             if(c.Get("type")=="checkmark")valign="top";
             Color color=ParseColor(c.Resolved(colorProperty,colorProperty=="disabledcolor"?"ff606060":"ffffffff"),Color.White);
-            if(focus)color=ParseColor(c.Resolved(button?"textcolor":"selectedColor",c.Resolved("textcolorfocus",c.Resolved(colorProperty,"ffffffff"))),color);
+            if(list)
+            {
+                // MediaPortal applies selectedColor to the item's Selected flag.
+                // Keyboard focus alone changes the row texture, not that flag.
+                string suffix=colorProperty=="textcolor2"?"2":"";
+                if(marked)color=ParseColor(c.Resolved("selectedColor"+suffix,"ffffffff"),color);
+                else if(!focus)color=ParseColor(c.Resolved("textcolorNoFocus"+suffix),color);
+            }
+            else if(focus)color=ParseColor(c.Resolved(button?"textcolor":"selectedColor",c.Resolved("textcolorfocus",c.Resolved(colorProperty,"ffffffff"))),color);
             else if(button)color=ParseColor(c.Resolved("textcolorNoFocus",c.Resolved(colorProperty,"ffffffff")),color);
             using(var font=SurfaceFont(c,fontProperty))using(var format=new StringFormat(StringFormat.GenericTypographic))
             {
                 format.Alignment=align=="right"?StringAlignment.Far:align=="center"?StringAlignment.Center:StringAlignment.Near;
                 format.LineAlignment=valign=="bottom"?StringAlignment.Far:valign=="middle"||valign=="center"?StringAlignment.Center:StringAlignment.Near;
                 format.Trimming=multiline?StringTrimming.EllipsisWord:StringTrimming.EllipsisCharacter;if(!multiline)format.FormatFlags=StringFormatFlags.NoWrap;
-                if(!multiline&&(c.Get("type")=="listcontrol"||c.Get("type")=="playlistcontrol"))
+                if(!multiline&&list)
                 {
                     // MP1 list captions use zero-height GUILabelControls. Center
                     // alignment anchors Y at the text midpoint, not its top.

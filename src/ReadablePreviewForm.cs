@@ -6,7 +6,7 @@ namespace MP1SkinStudio
 {
     public sealed partial class StudioForm
     {
-        ChoiceBox previewMode,mediaTipScene;Label previewModeHint,sceneLabel;bool updatingPreviewMode;
+        ChoiceBox previewMode,mediaTipScene;Label previewModeHint,sceneLabel;Button pluginExample;bool updatingPreviewMode;
         Control BuildPreviewModeBar()
         {
             var panel=new Panel{Dock=DockStyle.Top,Height=59};
@@ -17,6 +17,8 @@ namespace MP1SkinStudio
             sceneLabel=new Label{Text="Example",ForeColor=muted,Width=60,Height=27,TextAlign=ContentAlignment.MiddleLeft};row.Controls.Add(sceneLabel);
             mediaTipScene=new ChoiceBox{Width=127,Height=26,AccessibleName="MediaTip example variant"};
             mediaTipScene.Items.AddRange(new object[]{"Music","Video","Pictures","Folder","Radio"});row.Controls.Add(mediaTipScene);
+            pluginExample=ButtonFor("Plugin example",ApplyPluginOverviewPreview);pluginExample.Height=26;pluginExample.Width=130;pluginExample.Visible=false;row.Controls.Add(pluginExample);
+            tips.SetToolTip(pluginExample,"Use a built-in example with a plugin image, author, description and focused row. Customize it with Sample Data and Collection.");
             previewModeHint=new Label{Dock=DockStyle.Bottom,Height=23,Padding=new Padding(10,0,4,0),ForeColor=muted,AutoEllipsis=true};
             panel.Controls.Add(row);panel.Controls.Add(previewModeHint);
             previewMode.SelectedIndexChanged+=(s,e)=>
@@ -42,6 +44,7 @@ namespace MP1SkinStudio
             {
                 previewMode.SelectedIndex=canvas.IsolateSelection?1:project.Editor.PreviewMode=="all"?2:0;
                 bool supported=ReadablePreview.SupportsMediaTip(project);sceneLabel.Visible=mediaTipScene.Visible=supported;
+                pluginExample.Visible=PluginOverviewPreview.Supports(project);
                 mediaTipScene.SelectedIndex=Array.IndexOf(ReadablePreview.Scenes,project.Editor.MediaTipScene);
                 mediaTipScene.Enabled=supported&&!canvas.IsolateSelection&&project.Editor.PreviewMode!="all";
                 string hint=canvas.IsolateSelection?"Selected element/group only. Choose another element in the tree. Isolation is temporary.":project.Editor.PreviewMode=="all"?"Diagnostic view: authored layers and raw unresolved bindings may overlap.":supported?"MediaTip example: one variant with sample text. Not live plugin state.":"Editing example: known visibility and short captions. All layers reveals unresolved content.";

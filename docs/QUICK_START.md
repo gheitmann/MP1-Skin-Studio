@@ -65,6 +65,12 @@ selection helps edit overlapping elements; All layers reveals raw variants.
 On recognized MediaTipOverlay.xml, Example selects Music/Video/Pictures/Folder/
 Radio. These are preview-only examples; property bindings and exports stay intact.
 
+On DefaultWideHD's `myHomePlugIns.xml`, click **Plugin example** beside **View**
+to see a focused Notifier item with its artwork and sample description.
+Customize the sample texts in **Sample Data** and the row or image in
+**Collection**. Add `| marked` as a fourth item field to preview the text color
+of a plugin-marked list entry separately from keyboard focus.
+
 ## Choose a demo
 
 Use PAGE / XML. Common XML files and demo.menu.xml are includes; choose one of

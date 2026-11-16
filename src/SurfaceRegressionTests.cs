@@ -21,9 +21,20 @@ namespace MP1SkinStudio
                     {
                         for(int index=0;index<2;index++)
                         {
-                            p.Editor.Collection.Focus=index;g.Clear(Color.Transparent);canvas.BeginTextPassForTest();canvas.ControlSurfaceForTest(g,p.Controls[0],new RectangleF(20,20,350,150));canvas.FlushTextPassForTest(g);
-                            int top=180,bottom=-1;for(int y=0;y<180;y++)for(int x=0;x<400;x++){var pixel=image.GetPixel(x,y);if(pixel.G>100&&pixel.R<30&&pixel.B<30&&pixel.A>100){top=Math.Min(top,y);bottom=Math.Max(bottom,y);}}
-                            Check(bottom-top>20&&Math.Abs((top+bottom)/2f-(50+65*index))<10,"Centered caption fell below its row or lost its lower glyphs.");
+                            p.Editor.Collection.Focus=index;
+                            p.Editor.Collection.Items[0].Marked=index!=0;
+                            p.Editor.Collection.Items[1].Marked=index!=1;
+                            g.Clear(Color.Transparent);canvas.BeginTextPassForTest();canvas.ControlSurfaceForTest(g,p.Controls[0],new RectangleF(20,20,350,150));canvas.FlushTextPassForTest(g);
+                            int top=180,bottom=-1,markedTop=180,markedBottom=-1;
+                            for(int y=0;y<180;y++)for(int x=0;x<400;x++)
+                            {
+                                var pixel=image.GetPixel(x,y);
+                                if(pixel.A<=100)continue;
+                                if(pixel.R>180&&pixel.G>180&&pixel.B>180){top=Math.Min(top,y);bottom=Math.Max(bottom,y);}
+                                if(pixel.G>180&&pixel.R<30&&pixel.B<30){markedTop=Math.Min(markedTop,y);markedBottom=Math.Max(markedBottom,y);}
+                            }
+                            Check(bottom-top>20&&Math.Abs((top+bottom)/2f-(50+65*index))<10,"Focused ordinary text lost its white caption or row alignment.");
+                            Check(markedBottom-markedTop>20&&Math.Abs((markedTop+markedBottom)/2f-(50+65*(1-index)))<10,"The marked item's color followed keyboard focus.");
                         }
                     }
                     Check(ProjectFile.XmlSignature(p)==signature&&!p.Dirty,"Preview alignment changed skin XML.");

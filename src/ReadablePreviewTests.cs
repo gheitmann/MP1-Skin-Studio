@@ -18,6 +18,39 @@ namespace MP1SkinStudio
         }
         static void RunReadablePreviewTests(string root)
         {
+            Test("Plugin overview example resolves artwork and author while preserving skin XML",()=>
+            {
+                string folder=Path.Combine(root,"plugin-preview-example");
+                Directory.CreateDirectory(Path.Combine(folder,"Media"));
+                File.WriteAllBytes(Path.Combine(folder,"Media","hover_my notifier.png"),new byte[]{1});
+                Write(folder,"myHomePlugIns.xml","<window><id>34</id><defaultcontrol>50</defaultcontrol><controls><control><type>facadeview</type><id>50</id><control><type>listcontrol</type><id>50</id></control></control><control><type>label</type><label>#(L(200))#pluginauthor</label></control><control><type>textboxscrollup</type><label>#plugindescription</label></control><control><type>image</type><texture>#selectedthumb</texture></control></controls></window>");
+                var project=new SkinProject(folder);
+                project.OpenPage("myHomePlugIns.xml");
+                string source=ProjectFile.XmlSignature(project);
+                project.Editor.Preview.Values["#unrelated"]="Keep this";
+                PluginOverviewPreview.Apply(project);
+                var state=new PreviewState(project);
+                var author=project.Controls.Single(c=>c.Get("type")=="label");
+                var description=project.Controls.Single(c=>c.Get("type")=="textboxscrollup");
+                var image=project.Controls.Single(c=>c.Get("type")=="image");
+                Check(state.FocusId==50&&state.Values["#selecteditem"]=="My Notifier"&&
+                    ReadablePreview.Caption(state,author)=="Writer:Team MediaPortal"&&
+                    ReadablePreview.Caption(state,description)=="Notifier. (1.39.0.0)"&&
+                    state.Text(image,state.ImageTexture(image))=="hover_my notifier.png","Plugin sample is incomplete.");
+                Check(ProjectFile.XmlSignature(project)==source&&project.Undo.Count==0&&state.Values["#unrelated"]=="Keep this",
+                    "Preview rewrote XML or unrelated sample data.");
+                project.Editor.Collection.Items[0].Marked=true;
+                string file=Path.Combine(root,"plugin-example.mp1skinproj");
+                ProjectFile.Save(project,file);
+                var reopened=ProjectFile.Load(file);
+                Check(reopened.Editor.Collection.Items[0].Marked&&
+                    new PreviewState(reopened).Values["#pluginauthor"]=="Team MediaPortal","Sample state did not round-trip.");
+                Write(folder,"other.xml","<window><id>35</id><controls><control><type>label</type><label>#(L(200))</label></control></controls></window>");
+                reopened.OpenPage("other.xml");
+                Check(!PluginOverviewPreview.Supports(reopened)&&
+                    !new PreviewState(reopened).ResolvedLabel(reopened.Controls[0],"#(L(200))"),
+                    "Example translation leaked into another page.");
+            });
             Test("MediaTip examples expose exactly one five-line block without modifying XML or conditions",()=>
             {var p=MediaTipFixture(root,"readable-scenes");string xml=ProjectFile.XmlSignature(p);var state=new PreviewState(p);Check(ReadablePreview.SupportsMediaTip(p),"Expected supported fixture");for(int i=0;i<ReadablePreview.Scenes.Length;i++){p.Editor.MediaTipScene=ReadablePreview.Scenes[i];var shown=p.Controls.Where(c=>ReadablePreview.InScene(p,c)).ToArray();Check(shown.Length==6&&shown.Where(c=>SkinProject.ControlId(c)>=20).All(c=>SkinProject.ControlId(c)/10==i+2),"More than one variant displayed");Check(p.Controls.All(c=>state.Visible(c)==true),"Example changed actual visibility evaluation");}Check(ProjectFile.XmlSignature(p)==xml&&!p.Dirty&&p.Undo.Count==0,"Example altered XML/history");});
             Test("MediaTip matching rejects other pages, IDs, incomplete blocks and ambiguous controls",()=>

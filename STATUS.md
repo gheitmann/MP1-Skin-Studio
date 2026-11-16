@@ -2,6 +2,17 @@
 
 Release checkpoint: v0.9.1.
 
+## Plugin overview preview improvements
+
+Plugin example loads the My Notifier artwork and dynamic description samples
+on the recognized DefaultWideHD Plugin overview. List focus and item marking
+now use separate text-color rules. Sample changes persist in the editor
+project. The 491 core checks and the actual DefaultWideHD button/render probe
+passed. See [validation](Validation/Plugin-Preview/README.md).
+
+The installed LiveBridge 1.3.1.0 matches the published v0.9.1 DLL by SHA256.
+The preview improvements are editor changes and use the same bridge.
+
 ## Follow-up: Music Genres navigation timeout
 
 Live navigation now restores the previous preview under the render lock and

@@ -40,7 +40,8 @@ namespace MP1SkinStudio
             {
                 int id;string localized,origin;
                 if(args[0] is int)id=(int)args[0];else if(!Int32.TryParse(str(0),NumberStyles.Integer,CultureInfo.InvariantCulture,out id))return false;
-                if(id<0||!Project.Editor.Language.TryGet(id,out localized,out origin)||localized.Length>8192)return false;
+                if(id<0||(!Project.Editor.Language.TryGet(id,out localized,out origin)&&
+                    !PluginOverviewPreview.TryWriterSample(Project,id,out localized))||localized.Length>8192)return false;
                 value=localized;return true;
             }
             if(name=="iif"&&args.Count==3){bool condition;if(args[0] is bool)condition=(bool)args[0];else if(!Boolean.TryParse(str(0),out condition))return false;value=condition?args[1]:args[2];return true;}

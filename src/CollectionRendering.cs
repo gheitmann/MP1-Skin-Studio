@@ -31,8 +31,8 @@ namespace MP1SkinStudio
                         else if(item.Image.Length>0&&Project.Editor.ShowUnresolved){using(var brush=new SolidBrush(Color.FromArgb(255,44+(tile.Index*27)%70,74+(tile.Index*19)%80,105+(tile.Index*31)%90)))g.FillRectangle(brush,target);if(target.Width>45&&target.Height>45)DrawText(g,(tile.Index+1).ToString(),target,Math.Min(80,target.Height*.3f),Color.FromArgb(150,255,255,255),"center");}
                         if(selected&&(image!=null||item.Image.Length>0&&Project.Editor.ShowUnresolved))using(var pen=new Pen(Color.FromArgb(100,205,255),3/scale))g.DrawRectangle(pen,tile.Image.X,tile.Image.Y,tile.Image.Width,tile.Image.Height);
                     }
-                    SurfaceText(g,c,item.Title,tile.Title,selected,"font","textcolor","textalign");
-                    if(tile.Detail.Width>1)SurfaceText(g,c,item.Detail,tile.Detail,selected,"font2","textcolor2","textalign2");
+                    SurfaceText(g,c,item.Title,tile.Title,selected,"font","textcolor","textalign",marked:item.Marked);
+                    if(tile.Detail.Width>1)SurfaceText(g,c,item.Detail,tile.Detail,selected,"font2","textcolor2","textalign2",marked:item.Marked);
                 }
                 if(settings.Items.Count==0&&Project.Editor.ShowUnresolved)DrawText(g,"Empty collection",rect,24,Color.FromArgb(130,160,185),"center");
                 bool? visible=State.Visible(c);if(visible!=true)using(var pen=new Pen(Color.FromArgb(190,232,174,78),1/scale)){pen.DashStyle=DashStyle.Dot;g.DrawRectangle(pen,rect.X,rect.Y,rect.Width,rect.Height);}

@@ -28,6 +28,11 @@ $reviewNotes = @"
 MP1 Skin Studio - manual review build
 Source revision: $Revision
 
+On DefaultWideHD's Plugin overview, the Plugin example button sets a focused
+Notifier row and populates the artwork and description. Sample Data and
+Collection customize the example. List focus and the marked-item text color
+are rendered separately.
+
 Version 0.9.1 includes LiveBridge 1.3.1 to fix a page activation timeout
 on Music Genres. Update the process plugin with MediaPortal closed.
 

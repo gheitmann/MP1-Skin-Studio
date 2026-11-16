@@ -14,14 +14,22 @@ namespace MP1SkinStudio
             Text="Collection Preview · MP1 Skin Studio";Font=new Font("Segoe UI",10);ClientSize=new Size(940,600);MinimumSize=new Size(820,500);StartPosition=FormStartPosition.CenterParent;
             var top=new Panel{Dock=DockStyle.Top,Height=145,Width=ClientSize.Width};top.Controls.Add(new Label{Text="View",Location=new Point(20,22),AutoSize=true});mode.SetBounds(120,16,245,30);mode.Items.AddRange(new object[]{"Automatic","List","Small icons","Large icons","Filmstrip","Album list","Playlist","Coverflow (approximate)"});mode.SelectedIndex=Array.IndexOf(CollectionSettings.Modes,settings.Mode);mode.BackColor=Color.FromArgb(20,26,35);mode.ForeColor=Color.FromArgb(225,234,244);top.Controls.Add(mode);
             top.Controls.Add(new Label{Text="Selected item",Location=new Point(420,22),AutoSize=true});focus.SetBounds(605,18,80,28);focus.Value=settings.Focus+1;top.Controls.Add(focus);
-            top.Controls.Add(new Label{Text="Only the matching facade subview is rendered; otherwise the first available view is used.\nOne item per line: Title | Additional text | Optional image relative to Media. Maximum 50 items.\nSample data is saved in the editor project and does not change skin XML.",Location=new Point(20,67),Size=new Size(890,76),Anchor=AnchorStyles.Left|AnchorStyles.Right|AnchorStyles.Top});
-            lines.Dock=DockStyle.Fill;lines.Multiline=true;lines.AcceptsReturn=true;lines.ScrollBars=ScrollBars.Both;lines.WordWrap=false;lines.MaxLength=60000;lines.Font=new Font("Consolas",10);lines.Text=String.Join(Environment.NewLine,settings.Items.Select(i=>i.Title+" | "+i.Detail+" | "+i.Image));
+            top.Controls.Add(new Label{Text="One item per line: Title | Details | Image relative to Media | Optional mark. Maximum 50 items.\nAdd ‘marked’ in the fourth field to show a plugin-marked row with its own text color.\nSample data is saved in the editor project.",Location=new Point(20,67),Size=new Size(890,76),Anchor=AnchorStyles.Left|AnchorStyles.Right|AnchorStyles.Top});
+            lines.Dock=DockStyle.Fill;lines.Multiline=true;lines.AcceptsReturn=true;lines.ScrollBars=ScrollBars.Both;lines.WordWrap=false;lines.MaxLength=60000;lines.Font=new Font("Consolas",10);lines.Text=String.Join(Environment.NewLine,settings.Items.Select(i=>i.Title+" | "+i.Detail+" | "+i.Image+(i.Marked?" | marked":"")));
             var bottom=new FlowLayoutPanel{Dock=DockStyle.Bottom,Height=55,FlowDirection=FlowDirection.RightToLeft,Padding=new Padding(12,10,12,8)};var accept=new Button{Text="Apply",Width=140,Height=32};accept.Click+=(s,e)=>{try{AcceptSettings();}catch(Exception ex){MessageBox.Show(this,ex.Message,"Validate collection",MessageBoxButtons.OK,MessageBoxIcon.Warning);}};var cancel=new Button{Text="Cancel",Width=130,Height=32,DialogResult=DialogResult.Cancel};bottom.Controls.Add(accept);bottom.Controls.Add(cancel);CancelButton=cancel;Controls.Add(lines);Controls.Add(bottom);Controls.Add(top);
         }
         CollectionSettings Collect()
         {
             var result=new CollectionSettings{Mode=CollectionSettings.Modes[Math.Max(0,mode.SelectedIndex)],Focus=(int)focus.Value-1};result.Items.Clear();
-            foreach(string line in lines.Lines.Where(s=>s.Trim().Length>0)){var parts=line.Split('|');if(parts.Length>3)throw new InvalidOperationException("Use no more than three fields per item: Title | Details | Image.");result.Items.Add(new PreviewItem{Title=parts[0].Trim(),Detail=parts.Length>1?parts[1].Trim():"",Image=parts.Length>2?parts[2].Trim():""});}
+            foreach(string line in lines.Lines.Where(s=>s.Trim().Length>0))
+            {
+                var parts=line.Split('|');
+                string mark=parts.Length>3?parts[3].Trim():"";
+                if(parts.Length>4||(mark.Length>0&&!mark.Equals("marked",StringComparison.OrdinalIgnoreCase)))
+                    throw new InvalidOperationException("Use Title | Details | Image and optionally add | marked.");
+                result.Items.Add(new PreviewItem{Title=parts[0].Trim(),Detail=parts.Length>1?parts[1].Trim():"",
+                    Image=parts.Length>2?parts[2].Trim():"",Marked=mark.Length>0});
+            }
             result.Validate();return result;
         }
         void AcceptSettings(){Result=Collect();DialogResult=DialogResult.OK;Close();}

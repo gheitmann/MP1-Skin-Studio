@@ -10,7 +10,7 @@ using System.Xml;
 namespace MP1SkinStudio
 {
     public sealed class PreviewItem
-    {public string Title="",Detail="",Image="";public PreviewItem Copy(){return new PreviewItem{Title=Title,Detail=Detail,Image=Image};}}
+    {public string Title="",Detail="",Image="";public bool Marked;public PreviewItem Copy(){return new PreviewItem{Title=Title,Detail=Detail,Image=Image,Marked=Marked};}}
     public sealed class CollectionSettings
     {
         public static readonly string[] Modes={"auto","list","smallicons","largeicons","filmstrip","album","playlist","coverflow"};
@@ -25,7 +25,7 @@ namespace MP1SkinStudio
         public int SelectedIndex {get{return Items.Count==0?-1:Math.Min(Focus,Items.Count-1);}}
         public CollectionSettings Copy(){Validate();var copy=new CollectionSettings{Mode=Mode,Focus=Focus};copy.Items.Clear();copy.Items.AddRange(Items.Select(i=>i.Copy()));return copy;}
         public void SetFrom(CollectionSettings value){var copy=value.Copy();Mode=copy.Mode;Focus=copy.Focus;Items.Clear();Items.AddRange(copy.Items);}
-        public string Signature(){Validate();var b=new StringBuilder(Mode+":"+Focus);foreach(var item in Items)foreach(string s in new[]{item.Title,item.Detail,item.Image})b.Append('|').Append(s.Length).Append(':').Append(s);return b.ToString();}
+        public string Signature(){Validate();var b=new StringBuilder(Mode+":"+Focus);foreach(var item in Items){foreach(string s in new[]{item.Title,item.Detail,item.Image})b.Append('|').Append(s.Length).Append(':').Append(s);if(item.Marked)b.Append("|marked");}return b.ToString();}
         public static bool IsCollection(SkinControl c){return new[]{"listcontrol","playlistcontrol","thumbnailpanel","filmstrip","coverflow","facadeview"}.Contains(c.Get("type"));}
         public static string Kind(SkinControl c,string requested)
         {string type=c.Get("type");if(type=="thumbnailpanel")return requested=="largeicons"?"largeicons":"smallicons";if(type=="listcontrol"||type=="playlistcontrol")return c.Get("subtype")=="album"?"album":c.Get("subtype")=="playlist"||type=="playlistcontrol"?"playlist":"list";return type=="facadeview"?"list":type;}
@@ -95,8 +95,8 @@ namespace MP1SkinStudio
     public static partial class ProjectFile
     {
         static void SaveCollectionSettings(CollectionSettings settings,XmlElement state)
-        {settings.Validate();var doc=state.OwnerDocument;var node=doc.CreateElement("collection");node.SetAttribute("mode",settings.Mode);node.SetAttribute("focus",settings.Focus.ToString(CultureInfo.InvariantCulture));state.AppendChild(node);foreach(var entry in settings.Items){var item=doc.CreateElement("item");item.SetAttribute("title",entry.Title);item.SetAttribute("detail",entry.Detail);item.SetAttribute("image",entry.Image);node.AppendChild(item);}}
+        {settings.Validate();var doc=state.OwnerDocument;var node=doc.CreateElement("collection");node.SetAttribute("mode",settings.Mode);node.SetAttribute("focus",settings.Focus.ToString(CultureInfo.InvariantCulture));state.AppendChild(node);foreach(var entry in settings.Items){var item=doc.CreateElement("item");item.SetAttribute("title",entry.Title);item.SetAttribute("detail",entry.Detail);item.SetAttribute("image",entry.Image);if(entry.Marked)item.SetAttribute("marked","true");node.AppendChild(item);}}
         static void LoadCollectionSettings(CollectionSettings settings,XmlElement state)
-        {var nodes=state.SelectNodes("collection");if(nodes.Count==0)return;if(nodes.Count!=1)throw new InvalidDataException("Duplicate collection state.");var node=(XmlElement)nodes[0];int focus;if(!Int32.TryParse(node.GetAttribute("focus"),out focus))throw new InvalidDataException("Invalid collection selection.");var loaded=new CollectionSettings{Mode=node.GetAttribute("mode"),Focus=focus};loaded.Items.Clear();if(node.SelectNodes("item").Count>50)throw new InvalidDataException("Too many collection items.");foreach(XmlElement item in node.SelectNodes("item"))loaded.Items.Add(new PreviewItem{Title=item.GetAttribute("title"),Detail=item.GetAttribute("detail"),Image=item.GetAttribute("image")});settings.SetFrom(loaded);}
+        {var nodes=state.SelectNodes("collection");if(nodes.Count==0)return;if(nodes.Count!=1)throw new InvalidDataException("Duplicate collection state.");var node=(XmlElement)nodes[0];int focus;if(!Int32.TryParse(node.GetAttribute("focus"),out focus))throw new InvalidDataException("Invalid collection selection.");var loaded=new CollectionSettings{Mode=node.GetAttribute("mode"),Focus=focus};loaded.Items.Clear();if(node.SelectNodes("item").Count>50)throw new InvalidDataException("Too many collection items.");foreach(XmlElement item in node.SelectNodes("item"))loaded.Items.Add(new PreviewItem{Title=item.GetAttribute("title"),Detail=item.GetAttribute("detail"),Image=item.GetAttribute("image"),Marked=item.GetAttribute("marked")=="true"});settings.SetFrom(loaded);}
     }
 }
