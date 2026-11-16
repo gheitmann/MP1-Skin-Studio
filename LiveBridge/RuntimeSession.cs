@@ -40,7 +40,13 @@ namespace MP1SkinStudio.LiveBridge
             string command=LiveWire.Required(request.DocumentElement,"command",20);
             if(command=="snapshot")return Snapshot();
             if(command=="activate")
-            {int id=LiveWire.Int(request.DocumentElement,"window",0,Int32.MaxValue);if(GUIWindowManager.GetWindow(id)==null)throw new InvalidOperationException("This page is not registered by the running MediaPortal installation.");Reset();GUIWindowManager.ActivateWindow(id);return Response("activate");}
+            {
+                int id=LiveWire.Int(request.DocumentElement,"window",0,Int32.MaxValue);
+                if(GUIWindowManager.GetWindow(id)==null)throw new InvalidOperationException("This page is not registered by the running MediaPortal installation.");
+                lock(GUIGraphicsContext.RenderLock)Reset();
+                GUIWindowManager.ActivateWindow(id);
+                return Response("activate");
+            }
             if(command=="reset"){Reset();return Response("reset");}
             if(command=="ping")
             {var result=Response("ping");LiveWire.Attr(result.DocumentElement,"epoch",epoch??"");LiveWire.Attr(result.DocumentElement,"current",SameWindow?"true":"false");if(!SameWindow)Reset();return result;}

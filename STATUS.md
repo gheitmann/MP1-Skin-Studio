@@ -2,6 +2,16 @@
 
 Date: November 16, 2026. Release checkpoint: v0.9.0.
 
+## Follow-up: Music Genres navigation timeout
+
+Live navigation now restores the previous preview under the render lock and
+then lets MediaPortal initialize the requested window without an outer lock.
+This avoids a deadlock with the Music Genres worker clearing the native list.
+The isolated release/patched run reproduced the timeout at 8,022 ms and then
+opened Music Genres and captured its snapshot in 418 ms. Plugin overview and
+Videos also passed their native move and Undo checks on the patched build.
+This fix is on the development branch after the v0.9.0 release.
+
 The release includes the tested First steps and Live work with Bridge 1.3.
 Final native checks verified editing and Undo on the standard Plugin overview
 and Videos windows. See [release acceptance](Validation/Release-09/README.md).

@@ -26,23 +26,41 @@ namespace MP1SkinStudio.LiveBridge
         public bool GetHome(out string name,out string image,out string focus,out string picture){name=PluginName();image=focus=picture="";return false;}
         public void Start()
         {
-            try{session=new RuntimeSession();server=new LiveServer(session,Dispatch);server.Diagnostic=message=>Log.Warn("MP1 Skin Studio Live: {0}",message);server.Start();GUIWindowManager.OnDeActivateWindow+=LeavingWindow;Log.Info("MP1 Skin Studio Live: bridge ready, PID {0}; no skin files are modified.",System.Diagnostics.Process.GetCurrentProcess().Id);}
+            try{session=new RuntimeSession();server=new LiveServer(session,Dispatch,action=>DispatchOnGui(action,false));server.Diagnostic=message=>Log.Warn("MP1 Skin Studio Live: {0}",message);server.Start();GUIWindowManager.OnDeActivateWindow+=LeavingWindow;Log.Info("MP1 Skin Studio Live: bridge ready, PID {0}; no skin files are modified.",System.Diagnostics.Process.GetCurrentProcess().Id);}
             catch(Exception ex){Log.Error("MP1 Skin Studio Live: could not start bridge: {0}",ex.Message);if(server!=null)server.Dispose();server=null;}
         }
         sealed class Ticket {public int State;public bool Abandoned;public XmlDocument Result;public Exception Error;}
         XmlDocument Dispatch(Func<XmlDocument> action)
+        {return DispatchOnGui(action,true);}
+        XmlDocument DispatchOnGui(Func<XmlDocument> action,bool lockRenderer)
         {
             var form=GUIGraphicsContext.form;if(form==null||form.IsDisposed||!form.IsHandleCreated)throw new InvalidOperationException("MediaPortal GUI is not ready.");
-            if(!form.InvokeRequired){lock(GUIGraphicsContext.RenderLock)return action();}
+            // Window initialization may join a worker that needs the render lock.
+            if(!form.InvokeRequired)
+            {
+                if(!lockRenderer)return action();
+                lock(GUIGraphicsContext.RenderLock)return action();
+            }
             var ticket=new Ticket();
+            System.Action run=()=>
+            {
+                try{ticket.Result=action();}catch(Exception ex){ticket.Error=ex;}
+                lock(ticket)
+                {
+                    try
+                    {
+                        if(ticket.Abandoned&&session!=null)
+                            lock(GUIGraphicsContext.RenderLock)session.Reset();
+                    }
+                    catch(Exception ex){Log.Warn("MP1 Skin Studio Live: abandoned preview restore: {0}",ex.Message);}
+                    finally{ticket.State=2;Monitor.PulseAll(ticket);}
+                }
+            };
             form.BeginInvoke(new System.Action(()=>
             {
                 lock(ticket){if(ticket.State!=0)return;ticket.State=1;}
-                lock(GUIGraphicsContext.RenderLock)
-                {
-                    try{ticket.Result=action();}catch(Exception ex){ticket.Error=ex;}
-                    lock(ticket){if(ticket.Abandoned&&session!=null)session.Reset();ticket.State=2;Monitor.PulseAll(ticket);}
-                }
+                if(!lockRenderer)run();
+                else lock(GUIGraphicsContext.RenderLock)run();
             }));
             lock(ticket)
             {

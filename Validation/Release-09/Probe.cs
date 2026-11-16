@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.IO.Pipes;
@@ -101,7 +102,22 @@ static class ReleaseProbe
                 var hello = LiveWire.Document("hello");
                 LiveWire.Attr(hello.DocumentElement, "nonce", endpoint.Nonce);
                 Exchange(pipe, hello);
-                if (args.Length == 3) OpenPage(pipe, Int32.Parse(args[2]));
+                if (args.Length == 3)
+                {
+                    var timer = Stopwatch.StartNew();
+                    try
+                    {
+                        var active = OpenPage(pipe, Int32.Parse(args[2]));
+                        Console.WriteLine("PASS activate and snapshot: " +
+                            Path.GetFileName(active.DocumentElement.GetAttribute("page")) + " in " +
+                            timer.ElapsedMilliseconds + " ms.");
+                    }
+                    catch (Exception error)
+                    {
+                        throw new InvalidOperationException("Activation test after " + timer.ElapsedMilliseconds +
+                            " ms: " + error.Message, error);
+                    }
+                }
                 else
                 {
                     Application.EnableVisualStyles();

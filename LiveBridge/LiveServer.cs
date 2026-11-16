@@ -10,9 +10,12 @@ namespace MP1SkinStudio.LiveBridge
 {
     public sealed class LiveServer : IDisposable
     {
-        readonly ILiveSession session;readonly Func<Func<XmlDocument>,XmlDocument> dispatch;public Action<string> Diagnostic;
+        readonly ILiveSession session;readonly Func<Func<XmlDocument>,XmlDocument> dispatch,dispatchActivation;public Action<string> Diagnostic;
         Thread worker;Timer watchdog;volatile bool stopped;NamedPipeServerStream pipe;readonly object gate=new object();long activity;string endpointFile;LiveEndpoint endpoint;
-        public LiveServer(ILiveSession runtime,Func<Func<XmlDocument>,XmlDocument> guiDispatch){session=runtime;dispatch=guiDispatch;}
+        public LiveServer(ILiveSession runtime,Func<Func<XmlDocument>,XmlDocument> guiDispatch)
+            :this(runtime,guiDispatch,guiDispatch){}
+        internal LiveServer(ILiveSession runtime,Func<Func<XmlDocument>,XmlDocument> guiDispatch,Func<Func<XmlDocument>,XmlDocument> guiActivation)
+        {session=runtime;dispatch=guiDispatch;dispatchActivation=guiActivation;}
         public LiveEndpoint Endpoint {get{return endpoint;}}
         NamedPipeServerStream CreatePipe(){return new NamedPipeServerStream(endpoint.Pipe,PipeDirection.InOut,1,PipeTransmissionMode.Byte,PipeOptions.Asynchronous,65536,65536,LiveWire.PipePermissions());}
         public void Start()
@@ -45,7 +48,8 @@ namespace MP1SkinStudio.LiveBridge
                         try
                         {
                             if(command=="disconnect"){dispatch(()=>{session.Reset();return LiveWire.Document("disconnected");});LiveWire.Write(connection,LiveWire.Document("disconnected"));break;}
-                            LiveWire.Write(connection,dispatch(()=>session.Handle(request)));
+                            var run=command=="activate"?dispatchActivation:dispatch;
+                            LiveWire.Write(connection,run(()=>session.Handle(request)));
                         }
                         catch(Exception ex){LiveWire.Write(connection,Error(ex));}
                     }
