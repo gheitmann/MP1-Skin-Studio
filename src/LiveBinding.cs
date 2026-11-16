@@ -12,12 +12,14 @@ namespace MP1SkinStudio
     public sealed class LiveBinding
     {
         public readonly SkinProject Baseline;public readonly LiveItem[] Items;public readonly string Epoch;
+        public readonly bool SupportsPluginPreview;
         readonly bool fontDefinitions;
         public readonly Dictionary<string,LiveItem[]> Matches=new Dictionary<string,LiveItem[]>(StringComparer.OrdinalIgnoreCase);
         public LiveBinding(SkinProject baseline,XmlDocument snapshot)
         {
             Baseline=baseline;var root=snapshot.DocumentElement;Epoch=LiveWire.Required(root,"epoch",100);
             fontDefinitions=root.GetAttribute("fontDefinitions")=="private-v1";
+            SupportsPluginPreview=root.GetAttribute("pluginPreview")=="1";
             if(!String.Equals(Path.GetFullPath(root.GetAttribute("skin")).TrimEnd('\\','/'),baseline.Root.TrimEnd('\\','/'),StringComparison.OrdinalIgnoreCase))throw new InvalidOperationException("Open the same skin folder in Studio and MediaPortal.");
             string actualTheme=LiveWire.ThemeKey(root.GetAttribute("theme"));
             string editorTheme=LiveWire.ThemeKey(baseline.Theme);

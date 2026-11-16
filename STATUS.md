@@ -2,6 +2,16 @@
 
 Release checkpoint: v0.9.1.
 
+## Development build: import the native Plugin overview
+
+Bridge 1.4 and **Use MP preview** copy the current Plugin overview into
+Studio's editable samples. Supported data includes the plugin name, author,
+description, artwork, clock, list rows, selected row and native control focus.
+The copy is read on demand and accepts up to 50 rows. The existing offline
+example remains available. See [live setup and usage](docs/LIVE_PREVIEW.md).
+All 492 core checks and the [native Windows probe](Validation/Plugin-Preview/README.md#native-import)
+passed using MediaPortal 1.39 and a separate DefaultWideHD copy.
+
 ## Plugin overview preview improvements
 
 Plugin example loads the My Notifier artwork and dynamic description samples
@@ -11,7 +21,7 @@ project. The 491 core checks and the actual DefaultWideHD button/render probe
 passed. See [validation](Validation/Plugin-Preview/README.md).
 
 The installed LiveBridge 1.3.1.0 matches the published v0.9.1 DLL by SHA256.
-The preview improvements are editor changes and use the same bridge.
+The offline example and list-color changes work with that bridge.
 
 ## Follow-up: Music Genres navigation timeout
 

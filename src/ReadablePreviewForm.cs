@@ -6,7 +6,7 @@ namespace MP1SkinStudio
 {
     public sealed partial class StudioForm
     {
-        ChoiceBox previewMode,mediaTipScene;Label previewModeHint,sceneLabel;Button pluginExample;bool updatingPreviewMode;
+        ChoiceBox previewMode,mediaTipScene;Label previewModeHint,sceneLabel;Button pluginExample,livePluginExample;bool updatingPreviewMode;
         Control BuildPreviewModeBar()
         {
             var panel=new Panel{Dock=DockStyle.Top,Height=59};
@@ -19,6 +19,8 @@ namespace MP1SkinStudio
             mediaTipScene.Items.AddRange(new object[]{"Music","Video","Pictures","Folder","Radio"});row.Controls.Add(mediaTipScene);
             pluginExample=ButtonFor("Plugin example",ApplyPluginOverviewPreview);pluginExample.Height=26;pluginExample.Width=130;pluginExample.Visible=false;row.Controls.Add(pluginExample);
             tips.SetToolTip(pluginExample,"Use a built-in example with a plugin image, author, description and focused row. Customize it with Sample Data and Collection.");
+            livePluginExample=ButtonFor("Use MP preview",ReadPluginPreview);livePluginExample.Height=26;livePluginExample.Width=130;livePluginExample.Visible=false;row.Controls.Add(livePluginExample);
+            tips.SetToolTip(livePluginExample,"Copy the current plugin preview into your project samples. Open the same Plugin overview in MediaPortal and connect using Bridge 1.4 or later.");
             previewModeHint=new Label{Dock=DockStyle.Bottom,Height=23,Padding=new Padding(10,0,4,0),ForeColor=muted,AutoEllipsis=true};
             panel.Controls.Add(row);panel.Controls.Add(previewModeHint);
             previewMode.SelectedIndexChanged+=(s,e)=>
@@ -44,7 +46,7 @@ namespace MP1SkinStudio
             {
                 previewMode.SelectedIndex=canvas.IsolateSelection?1:project.Editor.PreviewMode=="all"?2:0;
                 bool supported=ReadablePreview.SupportsMediaTip(project);sceneLabel.Visible=mediaTipScene.Visible=supported;
-                pluginExample.Visible=PluginOverviewPreview.Supports(project);
+                UpdatePluginPreviewButton();
                 mediaTipScene.SelectedIndex=Array.IndexOf(ReadablePreview.Scenes,project.Editor.MediaTipScene);
                 mediaTipScene.Enabled=supported&&!canvas.IsolateSelection&&project.Editor.PreviewMode!="all";
                 string hint=canvas.IsolateSelection?"Selected element/group only. Choose another element in the tree. Isolation is temporary.":project.Editor.PreviewMode=="all"?"Diagnostic view: authored layers and raw unresolved bindings may overlap.":supported?"MediaTip example: one variant with sample text. Not live plugin state.":"Editing example: known visibility and short captions. All layers reveals unresolved content.";
@@ -52,6 +54,12 @@ namespace MP1SkinStudio
                 previewModeHint.Text=hint;tips.SetToolTip(previewModeHint,hint);
             }
             finally{updatingPreviewMode=false;}
+        }
+        void UpdatePluginPreviewButton()
+        {
+            if(livePluginExample==null)return;
+            pluginExample.Visible=livePluginExample.Visible=PluginOverviewPreview.Supports(project);
+            livePluginExample.Enabled=CanReadPluginPreview()&&pluginCaptureGeneration!=liveGeneration;
         }
     }
 }

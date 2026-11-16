@@ -52,6 +52,7 @@ namespace MP1SkinStudio.LiveBridge
             {var result=Response("ping");LiveWire.Attr(result.DocumentElement,"epoch",epoch??"");LiveWire.Attr(result.DocumentElement,"current",SameWindow?"true":"false");if(!SameWindow)Reset();return result;}
             if(command=="frame")return Apply(request.DocumentElement);
             if(command=="verify")return Verify(request.DocumentElement);
+            if(command=="plugin-preview")return PluginPreview(request.DocumentElement);
             throw new InvalidDataException("Unsupported live command.");
         }
         void EnsureWindow()
@@ -83,6 +84,7 @@ namespace MP1SkinStudio.LiveBridge
             LiveWire.Attr(root,"width",GUIGraphicsContext.SkinSize.Width);LiveWire.Attr(root,"height",GUIGraphicsContext.SkinSize.Height);
             LiveWire.Attr(root,"mpVersion",typeof(GUIControl).Assembly.GetName().Version);LiveWire.Attr(root,"bridgeVersion",typeof(RuntimeSession).Assembly.GetName().Version);
             LiveWire.Attr(root,"fontDefinitions","private-v1");
+            if(RuntimePluginPreview.FindList(window)!=null)LiveWire.Attr(root,"pluginPreview","1");
             foreach(var entry in entries.Values)
             {
                 var node=LiveWire.Add(root,"control");LiveWire.Attr(node,"token",entry.Token);LiveWire.Attr(node,"parent",entry.Parent);LiveWire.Attr(node,"path",entry.Path);LiveWire.Attr(node,"type",entry.Control.Type);LiveWire.Attr(node,"id",entry.Control.GetID);LiveWire.Attr(node,"description",entry.Control.Description);LiveWire.Attr(node,"automatic",entry.Automatic?"true":"false");
@@ -91,6 +93,17 @@ namespace MP1SkinStudio.LiveBridge
                     try{var value=LiveWire.Add(node,"value");LiveWire.Attr(value,"key",slot.Key);LiveWire.Attr(value,"writable",entry.Automatic&&(slot.Key=="posX"||slot.Key=="posY")?"false":"true");value.InnerText=slot.Value.Value??"";}catch{throw new InvalidOperationException("Cannot inspect runtime property "+entry.Control.Description+" · "+slot.Key);}
                 }
             }
+            return doc;
+        }
+        XmlDocument PluginPreview(XmlElement request)
+        {
+            if(!SameWindow||request.GetAttribute("epoch")!=epoch)
+                throw new InvalidOperationException("MediaPortal changed page or skin. Reconnect the live session.");
+            var list=RuntimePluginPreview.FindList(window);
+            if(list==null)throw new InvalidOperationException("Open the Plugin overview in MediaPortal first.");
+            var doc=Response("plugin-preview");
+            LiveWire.Attr(doc.DocumentElement,"epoch",epoch);
+            RuntimePluginPreview.Read(doc.DocumentElement,window,list,skin);
             return doc;
         }
         XmlDocument Verify(XmlElement request)

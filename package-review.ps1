@@ -33,6 +33,10 @@ Notifier row and populates the artwork and description. Sample Data and
 Collection customize the example. List focus and the marked-item text color
 are rendered separately.
 
+With the included LiveBridge 1.4, open the same Plugin overview in MediaPortal
+and Studio, then click Use MP preview to import the current page's sample
+texts, artwork and list state.
+
 Version 0.9.1 includes LiveBridge 1.3.1 to fix a page activation timeout
 on Music Genres. Update the process plugin with MediaPortal closed.
 

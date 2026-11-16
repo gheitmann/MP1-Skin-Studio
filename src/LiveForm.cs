@@ -48,7 +48,7 @@ namespace MP1SkinStudio
             int index=selected==null?-1:Array.FindIndex(endpoints,e=>e.Pipe==selected.Pipe);liveEndpoint.SelectedIndex=index>=0?index:endpoints.Length>0?0:-1;
         }
         void LiveStatus(string text,bool error=false,bool ready=false)
-        {if(liveNotice==null)return;if(ready&&!String.IsNullOrEmpty(liveBridgeVersion))text+=" · bridge "+liveBridgeVersion;liveNotice.Text=text;liveNotice.ForeColor=error?Color.FromArgb(245,186,105):ready?Color.FromArgb(103,206,166):muted;tips.SetToolTip(liveNotice,text);}
+        {UpdatePluginPreviewButton();if(liveNotice==null)return;if(ready&&!String.IsNullOrEmpty(liveBridgeVersion))text+=" · bridge "+liveBridgeVersion;liveNotice.Text=text;liveNotice.ForeColor=error?Color.FromArgb(245,186,105):ready?Color.FromArgb(103,206,166):muted;tips.SetToolTip(liveNotice,text);}
         void LiveOnUi(System.Action action)
         {if(IsDisposed||Disposing||!IsHandleCreated)return;try{BeginInvoke(new System.Action(()=>{if(!IsDisposed&&!Disposing)action();}));}catch(InvalidOperationException){}}
         string LiveContext(){return project==null?"":project.Root+"\n"+project.Theme+"\n"+project.Page;}
@@ -72,6 +72,7 @@ namespace MP1SkinStudio
         void ReceiveLive(XmlDocument response)
         {
             var root=response.DocumentElement;string command=root.GetAttribute("command");
+            if(root.GetAttribute("requestCommand")=="plugin-preview"){ReceivePluginPreview(root);return;}
             if(root.GetAttribute("ok")=="false"){if(command=="snapshot"){liveOpenRequested=false;liveOpen.Enabled=true;}LiveStatus("Not sent: "+root.GetAttribute("message"),true);return;}
             if(command=="snapshot")
             {
@@ -83,7 +84,7 @@ namespace MP1SkinStudio
                 }
                 PrepareLiveBinding(response);return;
             }
-            if(command=="verify"){liveVerified=true;liveMatch.Enabled=true;liveLastFrame=null;if(helpProperty!=null)UpdatePropertyHelp(helpProperty);ScheduleLivePreview();return;}
+            if(command=="verify"){liveVerified=true;liveMatch.Enabled=true;liveLastFrame=null;UpdatePluginPreviewButton();if(helpProperty!=null)UpdatePropertyHelp(helpProperty);ScheduleLivePreview();return;}
             if(command=="frame")
             {
                 int revision;if(Int32.TryParse(root.GetAttribute("requestRevision"),out revision))liveAcknowledged=Math.Max(liveAcknowledged,revision);

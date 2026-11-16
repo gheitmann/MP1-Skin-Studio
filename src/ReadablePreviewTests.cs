@@ -51,6 +51,22 @@ namespace MP1SkinStudio
                     !new PreviewState(reopened).ResolvedLabel(reopened.Controls[0],"#(L(200))"),
                     "Example translation leaked into another page.");
             });
+            Test("Invalid plugin capture preserves the existing preview and XML",()=>
+            {
+                string folder=Path.Combine(root,"plugin-live-reject");
+                Directory.CreateDirectory(folder);
+                Write(folder,"myHomePlugIns.xml","<window><id>34</id><defaultcontrol>50</defaultcontrol><controls><control><type>facadeview</type><id>50</id></control></controls></window>");
+                var project=new SkinProject(folder);
+                project.OpenPage("myHomePlugIns.xml");
+                PluginOverviewPreview.Apply(project);
+                string signature=ProjectFile.ContentSignature(project);
+                var capture=new System.Xml.XmlDocument();
+                capture.LoadXml("<live count='1' selection='1' focus='50'><item title='One'/></live>");
+                Reject(()=>PluginOverviewPreview.ApplyLive(project,capture.DocumentElement));
+                capture.LoadXml("<live count='1' selection='0' focus='50'><item image='../outside.png'/></live>");
+                Reject(()=>PluginOverviewPreview.ApplyLive(project,capture.DocumentElement));
+                Check(ProjectFile.ContentSignature(project)==signature&&project.Undo.Count==0,"Invalid data changed the editor project.");
+            });
             Test("MediaTip examples expose exactly one five-line block without modifying XML or conditions",()=>
             {var p=MediaTipFixture(root,"readable-scenes");string xml=ProjectFile.XmlSignature(p);var state=new PreviewState(p);Check(ReadablePreview.SupportsMediaTip(p),"Expected supported fixture");for(int i=0;i<ReadablePreview.Scenes.Length;i++){p.Editor.MediaTipScene=ReadablePreview.Scenes[i];var shown=p.Controls.Where(c=>ReadablePreview.InScene(p,c)).ToArray();Check(shown.Length==6&&shown.Where(c=>SkinProject.ControlId(c)>=20).All(c=>SkinProject.ControlId(c)/10==i+2),"More than one variant displayed");Check(p.Controls.All(c=>state.Visible(c)==true),"Example changed actual visibility evaluation");}Check(ProjectFile.XmlSignature(p)==xml&&!p.Dirty&&p.Undo.Count==0,"Example altered XML/history");});
             Test("MediaTip matching rejects other pages, IDs, incomplete blocks and ambiguous controls",()=>

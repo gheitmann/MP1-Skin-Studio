@@ -1,6 +1,6 @@
 # Live preview in MediaPortal 1
 
-The development package includes bridge 1.3 with private font definition previews
+The development package includes Bridge 1.4 with private font definition previews
 through Fonts …; see [font editing](LIVE_FONTS.md). It also includes checkbox, gallery-template,
 effect and shared-default support. See [special live controls](LIVE_SPECIAL.md)
 and [extended live controls](LIVE_COVERAGE.md)
@@ -42,6 +42,20 @@ unsupported properties. An acknowledgement time measures the request/response
 round trip; it does not measure display latency or promise a fixed frame rate.
 Only one Studio can occupy a bridge connection at a time. Disconnect it before
 connecting a different Studio; occupied-bridge errors explain how to retry.
+
+## Use MediaPortal's Plugin overview in Studio
+
+Open the **Plugin overview** in MediaPortal and click **Open MP page** in
+Studio. With Bridge 1.4, **Use MP preview** beside **View** copies the current
+plugin name, author, description, clock, selected artwork and up to 50 list
+rows with their selection and marked state into Studio's sample data. Click
+again after selecting another plugin in MediaPortal. Artwork must resolve to
+an image inside the skin's Media directory.
+
+The imported samples can be adjusted in **Sample Data** and **Collection**
+and saved in the Studio project. The command leaves the skin XML and the
+running MediaPortal window unchanged. **Plugin example** loads the built-in
+Notifier example without a connection.
 
 ## Editing and keeping changes
 

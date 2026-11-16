@@ -21,7 +21,7 @@ namespace MP1SkinStudio
         XmlDocument Exchange(XmlDocument request)
         {
             Interlocked.Exchange(ref waiting,DateTime.UtcNow.Ticks);var clock=Stopwatch.StartNew();
-            try{LiveWire.Write(pipe,request);var response=LiveWire.Read(pipe);LiveWire.Attr(response.DocumentElement,"requestRevision",request.DocumentElement.GetAttribute("revision"));LiveWire.Attr(response.DocumentElement,"roundTripMs",clock.ElapsedMilliseconds);return response;}
+            try{LiveWire.Write(pipe,request);var response=LiveWire.Read(pipe);LiveWire.Attr(response.DocumentElement,"requestCommand",request.DocumentElement.GetAttribute("command"));LiveWire.Attr(response.DocumentElement,"requestRevision",request.DocumentElement.GetAttribute("revision"));LiveWire.Attr(response.DocumentElement,"roundTripMs",clock.ElapsedMilliseconds);return response;}
             finally{Interlocked.Exchange(ref waiting,0);}
         }
         void Notify(XmlDocument response){var handler=Response;if(handler!=null)handler(response);}
