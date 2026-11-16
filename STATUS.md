@@ -1,6 +1,6 @@
 # Development status and next steps
 
-Date: November 16, 2026. Release checkpoint: v0.9.0.
+Release checkpoint: v0.9.1.
 
 ## Follow-up: Music Genres navigation timeout
 
@@ -10,7 +10,7 @@ This avoids a deadlock with the Music Genres worker clearing the native list.
 The isolated release/patched run reproduced the timeout at 8,022 ms and then
 opened Music Genres and captured its snapshot in 418 ms. Plugin overview and
 Videos also passed their native move and Undo checks on the patched build.
-This fix is on the development branch after the v0.9.0 release.
+Version 0.9.1 packages the fix as LiveBridge 1.3.1.
 
 The release includes the tested First steps and Live work with Bridge 1.3.
 Final native checks verified editing and Undo on the standard Plugin overview

@@ -28,6 +28,9 @@ $reviewNotes = @"
 MP1 Skin Studio - manual review build
 Source revision: $Revision
 
+Version 0.9.1 includes LiveBridge 1.3.1 to fix a page activation timeout
+on Music Genres. Update the process plugin with MediaPortal closed.
+
 Open First steps to choose a skin, find a page or element, edit text and save
 a complete skin copy. Ctrl+L focuses the page filter. Enter opens an exact
 filename match or the only search result. Preview information can collapse to

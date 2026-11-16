@@ -1,3 +1,11 @@
+# MP1 Skin Studio v0.9.1
+
+**Show in MP** opens Music Genres without the render-lock deadlock from 0.9.0.
+The included LiveBridge 1.3.1 restores preview overrides before MediaPortal
+initializes the target window. Close MediaPortal once and run the bundled
+`LiveBridge/Install-LiveBridge.ps1` to update the plugin.
+See [native page validation](../Validation/Release-09/README.md).
+
 # MP1 Skin Studio v0.9.0
 
 November 16, 2026. The first stable release adds an integrated

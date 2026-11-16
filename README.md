@@ -4,13 +4,13 @@ A visual Windows skin editor for MediaPortal 1. Edit text, layout, images and ef
 
 ## Download
 
-Get the portable Windows ZIP and SHA256 checksum from [v0.9.0](https://github.com/gheitmann/MP1-Skin-Studio/releases/tag/v0.9.0). Extract the complete archive and run `MP1SkinStudio.exe`. Windows and .NET Framework 4.x are required. The package includes twelve demo scenes and a quick start guide.
+Get the portable Windows ZIP and SHA256 checksum from [v0.9.1](https://github.com/gheitmann/MP1-Skin-Studio/releases/tag/v0.9.1). Extract the complete archive and run `MP1SkinStudio.exe`. Windows and .NET Framework 4.x are required. The package includes twelve demo scenes and a quick start guide.
 
 This preview provides a practical visual guide; rendering remains approximate. Start from an independent skin copy using **Copy skin …**. See [release notes](docs/RELEASE_NOTES.md) and [practical scope](docs/RELEASE_READINESS.md).
 
 ## Build and run
 
-Version 0.9.0 includes [LiveBridge 1.3](docs/LIVE_PREVIEW.md) for MediaPortal 1.39.
+Version 0.9.1 includes [LiveBridge 1.3.1](docs/LIVE_PREVIEW.md) for MediaPortal 1.39.
 Close MediaPortal for the one-time installation or update, enable the plugin and
 restart MP. Use **Open MP page** to connect and open the displayed page. Bridge 1.3 supports
 [live font definitions](docs/LIVE_FONTS.md) and

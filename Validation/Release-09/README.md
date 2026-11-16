@@ -41,6 +41,28 @@ of the bridge command.
 The probe's optional three-argument mode takes the IPC directory, process ID,
 and window ID. Window 504 exercises Music Genres activation and snapshot.
 
+## Version 0.9.1 final verification and image comparison
+
+The versioned LiveBridge 1.3.1.0 activated Music Genres and returned a native
+snapshot in 618 ms. It then opened the Plugin overview in 374 ms.
+
+NativeCapture runs as a test-only plugin in the isolated client. It saves the
+native render surface and the Plugin overview list state. MatchedPreview feeds
+those exact list strings, selection and focus into the release editor.
+Both frames show DefaultWideHD, its default theme, focus control 50 and the
+selected My Notifier row. The background, list panel, selected row and lower
+description panel align closely. The native plugin icon and description are
+replaced by editor placeholders, the selected text uses a different color,
+and the clock uses editor sample data. The comparison is specific to this
+page and state.
+
+For reproduction, compile NativeCapture.cs as an isolated process plugin with
+the MediaPortal SDK and its bundled SharpDX assemblies. Set
+`MP1_SKIN_STUDIO_CAPTURE_DIR` to an empty writable validation directory.
+Open window 34 and create `capture.request` inside it. Then compile
+MatchedPreview.cs beside the versioned editor and run it with the copied skin
+root and capture directory. The capture plugin belongs only to the fixture.
+
 To reproduce, compile Probe.cs beside the packaged executable, referencing
 MP1SkinStudio.exe, System, System.Core, System.Windows.Forms and System.Xml.
 Pass the isolated IPC directory, the test MediaPortal PID, copied skin root
