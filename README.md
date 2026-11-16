@@ -1,30 +1,28 @@
 # MP1 Skin Studio
 
-A visual Windows skin editor for MediaPortal 1, built around visual editing and source-preserving XML changes. The current preview is **v0.9.0-preview.2**, based on the 0.9 prototype.
+A visual Windows skin editor for MediaPortal 1. Edit text, layout, images and effects through the interface, preview supported changes in a running MediaPortal 1.39 and save a complete skin copy.
 
 ## Download
 
-Get the portable Windows ZIP and SHA256 checksum from [v0.9.0-preview.2](https://github.com/gheitmann/MP1-Skin-Studio/releases/tag/v0.9.0-preview.2). Extract the complete archive and run `MP1SkinStudio.exe`. Windows and .NET Framework 4.x are required. The package includes twelve demo scenes and a quick start guide.
+Get the portable Windows ZIP and SHA256 checksum from [v0.9.0-preview.4](https://github.com/gheitmann/MP1-Skin-Studio/releases/tag/v0.9.0-preview.4). Extract the complete archive and run `MP1SkinStudio.exe`. Windows and .NET Framework 4.x are required. The package includes twelve demo scenes and a quick start guide.
 
 This preview provides a practical visual guide; rendering remains approximate. Start from an independent skin copy using **Copy skin …**. See [release notes](docs/RELEASE_NOTES.md) and [practical scope](docs/RELEASE_READINESS.md).
 
 ## Build and run
 
-The development package includes [LiveBridge 1.1](docs/LIVE_COVERAGE.md), extending
-scrolling text, lists, filmstrips/galleries and group alignment. The ready status
-shows the loaded bridge version. A plugin update requires closing MP once;
-ordinary live edits continue without page reload or restart.
+Preview.4 includes [LiveBridge 1.3](docs/LIVE_PREVIEW.md) for MediaPortal 1.39.
+Close MediaPortal for the one-time installation or update, enable the plugin and
+restart MP. In Preview.4, use **Connect**, then **Open MP page**. Bridge 1.3 supports
+[live font definitions](docs/LIVE_FONTS.md) and
+[effects, checkbox textures and gallery templates](docs/LIVE_SPECIAL.md).
 
-The development build also offers [Save skin …](docs/SAVE_SKIN_COPY.md): create
-a complete output copy once, then update its reviewed XML with conflict checks
-and automatic backups while editing and live preview continue.
+Use [Save skin copy …](docs/SAVE_SKIN_COPY.md) to create a complete output skin
+and update it with conflict checks and backups. **Save Project** retains the
+editing session and Undo history.
 
-The development build adds [native live preview in MediaPortal 1.39](docs/LIVE_PREVIEW.md).
-It includes a local process plugin: valid input drafts and canvas gestures update
-the active MP controls without Apply, XML export or a restart. Enable **Live**
-beside Toolbox after the one-time plugin setup. Disconnect restores preview
-overrides; saving/exporting remains explicit. The released preview.2 assets do
-not include this new feature.
+The current source adds **First steps**, an integrated path from choosing a skin
+to finding the element and saving. **Open MP page** combines connecting and
+opening the native page. See [Quick start](docs/QUICK_START.md).
 
 The review ZIP runs directly after complete extraction: see [Quick start](docs/QUICK_START.md). Building from source requires Windows, .NET Framework 4.x and its C# compiler. From the repository directory:
 

@@ -31,7 +31,7 @@ namespace MP1SkinStudio
             var hit=WithMeasuredLayout(()=>
             {
                 resizing=SelectedKeys.Count<=1&&Selected!=null&&!TextSelection(Selected)&&Drawn(Selected)&&!Project.IsLocked(Selected)&&Math.Abs(p.X-BoundsOf(Selected).Right)<12/scale&&Math.Abs(p.Y-BoundsOf(Selected).Bottom)<12/scale;
-                return resizing?Selected:Project.Controls.LastOrDefault(c=>Drawn(c)&&!Project.IsLocked(c)&&SelectionContains(c,p));
+                return resizing?Selected:CanvasHits(p,false).FirstOrDefault();
             });
             if(hit==null)return;
             bool toggle=(ModifierKeys&Keys.Control)!=0;

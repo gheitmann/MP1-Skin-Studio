@@ -4,9 +4,8 @@ Bridge 1.3 additionally previews edited font families, sizes, styles and aliases
 through the new Fonts dialog. See [live font definitions](LIVE_FONTS.md). The
 1.2 validation below records the preceding special-control milestone.
 
-This development build adds safely scoped checkbox, gallery, effect and shared
-reference editing to the preview.3 workflow. It targets MP1 1.39. The published
-preview.3 release is unchanged.
+Preview.4 includes checkbox, gallery, effect and shared reference editing.
+It targets MP1 1.39 and includes the cumulative LiveBridge 1.3 update.
 
 ## Using the new controls
 

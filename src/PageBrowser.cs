@@ -48,8 +48,14 @@ namespace MP1SkinStudio
             page.BackColor=Color.FromArgb(20,26,35);page.ForeColor=ink;page.Dock=DockStyle.Fill;
             browser.Controls.Add(new DarkScrollHost(page));browser.Controls.Add(header);
             pageSearch.TextChanged+=(s,e)=>{if(!loading)FilterPageChoices();};
-            pageSearch.KeyDown+=(s,e)=>{if(e.KeyCode==Keys.Escape){pageSearch.Clear();e.Handled=true;e.SuppressKeyPress=true;}};
-            tips.SetToolTip(pageSearch,"Filter XML filenames. Filtering and scrolling keep the current preview and pending property inputs unchanged. Escape clears the filter.");
+            pageSearch.KeyDown+=(s,e)=>
+            {
+                if(e.KeyCode==Keys.Escape)pageSearch.Clear();
+                else if(e.KeyCode==Keys.Enter)OpenPageSearchResult();
+                else return;
+                e.Handled=true;e.SuppressKeyPress=true;
+            };
+            tips.SetToolTip(pageSearch,"Ctrl+L focuses the page filter. Enter opens an exact match or the only result. Escape clears the filter.");
             tips.SetToolTip(page,"Click a file to open its controls. Scroll with the mouse wheel without changing the active page. Drag the divider below to resize the file list.");
             return browser;
         }
@@ -73,8 +79,26 @@ namespace MP1SkinStudio
         void UpdatePageSummary()
         {
             if(pageCount==null)return;
-            pageCount.Text=page.Items.Count+" of "+allPageNames.Length+" files"+(page.Items.Count==0?" · No matches":"");
-            tips.SetToolTip(pageCount,"Active page: "+(project==null?"none":project.Page)+". The preview stays on this page while filtering or scrolling.");
+            string active=project==null?"No page open":project.Page;
+            string count=page.Items.Count+" of "+allPageNames.Length+" files";
+            pageCount.Text=(page.Items.Count==0?"No matches":count)+"  ·  "+active;
+            tips.SetToolTip(pageCount,"Active page: "+active+" · "+count);
+        }
+        void OpenPageSearchResult()
+        {
+            string query=pageSearch.Text.Trim();
+            if(project==null||query.Length==0)return;
+            int index=page.FindStringExact(query);
+            if(index<0)index=page.FindStringExact(query+".xml");
+            if(index<0&&page.Items.Count==1)index=0;
+            if(index<0)
+            {
+                ShowNotice(page.Items.Count==0?"No matching page. Try part of its filename.":"Several pages match. Refine the search or click a file.");
+                return;
+            }
+            string requested=page.Items[index].ToString();
+            page.SelectedIndex=index;
+            if(String.Equals(project.Page,requested,StringComparison.OrdinalIgnoreCase))page.Focus();
         }
         void ChooseIntegratedPage()
         {

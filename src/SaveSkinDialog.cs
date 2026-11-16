@@ -17,7 +17,7 @@ namespace MP1SkinStudio
         {
             project=source;Text="Save skin copy — MP1 Skin Studio";StartPosition=FormStartPosition.CenterParent;Size=new Size(900,590);MinimumSize=new Size(820,520);Font=new Font("Segoe UI",9.5f);BackColor=Color.FromArgb(29,35,46);ForeColor=Color.FromArgb(225,234,244);
             var top=new Panel{Dock=DockStyle.Top,Height=142,Padding=new Padding(12)};
-            var description=new Label{Dock=DockStyle.Top,Height=49,Text="Keep your edits in a separate complete skin copy. The current source and live preview continue unchanged.\r\nUpdates are checked against the previous save and backed up automatically."};
+            var description=new Label{Dock=DockStyle.Top,Height=49,Text="Save a complete skin for use in MediaPortal. Create a new copy on the first save.\r\nTo keep editing later with Undo history, also use Save Project in Studio."};
             target.Dock=DockStyle.Top;target.Height=27;target.ReadOnly=true;target.Text=source.Editor.SavedSkinRoot;target.BackColor=Color.FromArgb(20,26,35);target.ForeColor=ForeColor;target.AccessibleName="Saved skin copy location";
             var actions=new FlowLayoutPanel{Dock=DockStyle.Bottom,Height=40,WrapContents=false};top.Controls.Add(actions);top.Controls.Add(target);top.Controls.Add(description);
             create.Text="New skin copy …";create.Width=151;create.Click+=(s,e)=>CreateCopy();choose.Text="Choose saved copy …";choose.Width=172;choose.Click+=(s,e)=>ChooseCopy();refresh.Text="Refresh checks";refresh.Width=133;refresh.Click+=(s,e)=>RefreshPlan();review.Text="Review XML …";review.Width=128;review.Click+=(s,e)=>{if(plan!=null)using(var dialog=new ChangeReviewDialog(()=>SkinSavePlan.Capture(project,String.IsNullOrWhiteSpace(target.Text)?null:target.Text).Review(),false)){dialog.Text="Review output skin changes";dialog.ShowDialog(this);}};
@@ -33,10 +33,11 @@ namespace MP1SkinStudio
             try
             {
                 plan=SkinSavePlan.Capture(project,String.IsNullOrWhiteSpace(target.Text)?null:target.Text);files.Items.AddRange(plan.Files.Cast<object>().ToArray());
-                status.Text=plan.Target==null?"Choose New skin copy for the first save. You can update that output copy on later saves.":plan.HasConflicts?"Target conflicts found. Nothing will be overwritten. Review the files or create a new copy.":plan.ChangeCount==0?"The saved copy is up to date for the loaded session XML.":plan.ChangeCount+" XML file(s) ready. Update writes only these files and creates a ZIP backup of their previous bytes.";
+                status.Text=plan.Target==null?"Choose New skin copy to save here for the first time. To make the copy available in MediaPortal, choose its skin directory as the parent folder.":plan.HasConflicts?"Target conflicts found. Nothing will be overwritten. Review the files or create a new copy.":plan.ChangeCount==0?"The saved copy is up to date for the loaded session XML.":plan.ChangeCount+" XML file(s) ready. Update writes only these files and creates a ZIP backup of their previous bytes.";
             }
             catch(Exception ex){status.Text="Cannot use this saved copy: "+ex.Message;}
             save.Enabled=plan!=null&&plan.Target!=null&&!plan.HasConflicts&&plan.ChangeCount>0;review.Enabled=plan!=null&&plan.Files.Length>0;
+            AcceptButton=save.Enabled?save:plan!=null&&plan.Target==null?create:close;
         }
         void CreateCopy()
         {

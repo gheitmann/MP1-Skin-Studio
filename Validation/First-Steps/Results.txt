@@ -1,0 +1,16 @@
+Windows acceptance, November 16, 2026
+Core: 490 passed, 0 failed.
+UI: 229 passed, 0 failed.
+
+PASS Guide opens in the main window and leaves a usable canvas at minimum size (guide visible: True, canvas: {Width=505, Height=142})
+PASS Ambiguous filename search leaves the active page open
+PASS Enter opens a page by filename without its XML extension
+PASS One guide action connects and opens the active MediaPortal page
+PASS Linked text property shows live availability
+PASS Unavailable property is identified before editing
+PASS Guided text edit reaches the same native page without a reload
+PASS First save defaults to creating a complete skin copy
+PASS Saved copy contains edited XML and the skin resources
+PASS Undo restores native text after saving the copy
+PASS Editing, saving and Undo preserve the source page bytes
+PASS A fresh MediaPortal session loads the saved skin and edited text from disk

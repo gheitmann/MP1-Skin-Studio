@@ -44,12 +44,13 @@ namespace MP1SkinStudio
             if(busy)return;
             try
             {
-                SkinCopyPlan.ValidateName(name.Text);string destination=parent.Text,skinName=name.Text;var plan=SkinCopyPlan.Capture(project,include.Checked);var savePlan=saveMode?SkinSavePlan.Capture(project):null;
+                SkinCopyPlan.ValidateName(name.Text);string destination=parent.Text,skinName=name.Text;var plan=saveMode?null:SkinCopyPlan.Capture(project,include.Checked);var savePlan=saveMode?SkinSavePlan.Capture(project):null;
                 cancellation=new CancellationTokenSource();busy=true;SetInputs(false);progress.Visible=true;status.Text="Copying the complete skin. Large media folders may take a moment …";
                 CreatedRoot=await Task.Factory.StartNew(()=>savePlan==null?plan.CopyTo(destination,skinName,cancellation.Token):savePlan.CreateCopy(destination,skinName,cancellation.Token));
                 busy=false;DialogResult=DialogResult.OK;Close();
             }
             catch(OperationCanceledException){status.Text="Copy cancelled. The source skin and existing folders are unchanged.";}
+            catch(PathTooLongException){status.Text="Copy was not created: Windows could not open a long path. Choose a parent folder closer to the drive root or a shorter skin name.";}
             catch(Exception error){status.Text="Copy was not created: "+error.Message;}
             finally{busy=false;if(cancellation!=null){cancellation.Dispose();cancellation=null;}if(!IsDisposed){SetInputs(true);progress.Visible=false;}}
         }

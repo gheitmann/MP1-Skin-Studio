@@ -1,18 +1,4 @@
-## Live editing in MediaPortal
-
-Start MP with LiveBridge 1.1 enabled. In Studio's visible Live bar, click Connect,
-then Open MP page. Studio selects the actual skin, theme and XML page for you.
-Select an element and change a supported property, or drag it in the preview.
-Valid inputs appear directly in MP; Apply records them in the editor model.
-Revert Inputs discards pending values. Save skin copy keeps changes in a separate
-complete output skin; Save Project keeps your editing session and Undo history.
-Disconnect restores the running MP preview. To display a different editor page
-in MP, use Show in MP. A second Studio must disconnect before another can connect.
 # Start and finish a skin edit
-
-For native WYSIWYG editing in an already running MediaPortal 1.39 window, see
-[Live preview](LIVE_PREVIEW.md). Install the included process plugin once, then
-enable Live beside Toolbox and Connect to the same skin, theme and XML page.
 
 Extract the entire review ZIP into its own folder and run MP1SkinStudio.exe.
 Windows and .NET Framework 4.x are required. A compiler and an installed
@@ -20,10 +6,22 @@ MediaPortal skin are unnecessary for the bundled demo.
 
 ## A complete first workflow
 
-To keep a complete usable output while continuing to edit, use **Save skin …**
-beside Live. Create a new output copy once, then Update saved copy on later
-saves. Review XML, conflict checks and backups protect that copy; current source,
-Undo and live preview continue. See [saving skin copies](SAVE_SKIN_COPY.md).
+1. Click **First steps** in the top right. Start with the bundled Titan demo or
+   choose an installed skin using **Choose skin**.
+2. Click **Find page** (Ctrl+L). Type a filename or part of it. Enter opens an
+   exact match or the only result. Escape clears the filter. In the demo, open
+   `demo.xml`.
+3. Select an element in the preview or use **Find element** (Ctrl+F). If elements
+   overlap, right-click the preview to choose from the controls under the pointer.
+4. Select **Movies** in the demo, click **Edit selected text …**, enter “My movies”
+   and apply it. Drag an element to move it or use **Apply Properties** after
+   editing fields. **Undo** and **Redo** step through applied changes.
+5. Use **Save skin copy …** for a skin that MediaPortal can use. Choose **New skin
+   copy …** on the first save, then **Update saved copy** for later changes.
+   Choose MediaPortal's skin directory as the parent when you want MP to list
+   the new skin. The copy has its own name, XML, images, fonts and themes.
+6. Use **Save Project** to keep the editor session and Undo history. Reopen the
+   `.mp1skinproj` file when you return.
 
 To start a new skin from an installed one, select its SKIN entry and choose
 **Copy skin …** beside the heading. Choose a new name and destination folder,
@@ -31,20 +29,21 @@ then Create copy. Leave Open enabled to continue in the independent copy.
 Applied editor XML can be included; pending fields must first be applied or
 reverted. The source skin stays untouched and existing folders are protected.
 
-1. Keep demo.xml selected. Select Movies in the tree or preview.
-2. Change Text / data binding to My movies and click Apply Properties.
-3. Undo restores Movies; Redo restores My movies.
-4. Save Project to a new .mp1skinproj file. Open Project restores the edit,
-   selected page, preview samples and undo history.
-5. Use Ctrl+Shift+E (Element > Review XML changes) to compare original/edited
-   files and check for source conflicts, including shared includes. Close the
-   review, then Export Changes as ZIP creates changed XML and application instructions.
-   Saving a project or exporting does not overwrite the source skin.
-6. Open the export and review every changed file before applying it to a
-   separate complete skin copy. A shared include can affect several pages.
+## Live editing in MediaPortal
+
+Start MediaPortal 1.39 with LiveBridge 1.3 enabled, then use **Open MP page**
+in the Live bar or **Open page from MP** under First steps. Studio opens the
+skin, theme and page MP is displaying. Select an element and focus a property
+to see whether the linked MP control supports live preview for it. Valid inputs
+appear directly in MP. **Apply Properties** records the edit, **Revert Inputs**
+discards uncommitted values and **Disconnect** restores the running MP preview.
+Use **Show in MP** if you want MP to display a different open editor page.
+See [Live preview setup](LIVE_PREVIEW.md) and [saving skin copies](SAVE_SKIN_COPY.md).
 
 Apply Properties commits field input. Revert Inputs discards pending fields.
-Pending input blocks save/export and page changes until applied or reverted.
+Pending input blocks project saving, export and page changes until applied or
+reverted. **Save skin copy** applies valid pending input before opening the
+copy dialog.
 An asterisk also records unsaved preview/page/focus state; it does not always
 mean that skin XML changed. Export is enabled only for changed XML.
 

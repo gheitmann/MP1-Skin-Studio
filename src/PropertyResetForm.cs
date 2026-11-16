@@ -13,10 +13,18 @@ namespace MP1SkinStudio
             reset.FlatAppearance.BorderColor=Color.FromArgb(63,78,96);reset.Click+=(s,e)=>ShowPropertyResetMenu(reset,key);row.Controls.Add(reset);return reset;
         }
         string ResetBlockedReason(string key)
+        {return CheckPropertyReset(key,SelectedControls(),PendingResetFields());}
+        string[] PendingResetFields()
         {
-            if(project==null||!editable.Contains(key)||SelectedControls().Length==0)return "No matching selection.";
-            var targets=SelectedControls();if(targets.Any(c=>project.IsPropertyLocked(c,key)))return "This property is locked in the selection.";
-            if(fields.Any(pair=>pair.Key!=key&&originals.ContainsKey(pair.Key)&&(pair.Value.Text!=originals[pair.Key]||(mixedFields.Contains(pair.Key)&&touchedFields.Contains(pair.Key)))))
+            return fields.Where(pair=>originals.ContainsKey(pair.Key)&&
+                (pair.Value.Text!=originals[pair.Key]||mixedFields.Contains(pair.Key)&&touchedFields.Contains(pair.Key)))
+                .Select(pair=>pair.Key).ToArray();
+        }
+        string CheckPropertyReset(string key,SkinControl[] targets,string[] pending)
+        {
+            if(project==null||!editable.Contains(key)||targets.Length==0)return "No matching selection.";
+            if(targets.Any(c=>project.IsPropertyLocked(c,key)))return "This property is locked in the selection.";
+            if(pending.Any(field=>field!=key))
                 return "Other properties have pending edits. Apply them first.";
             int locals=0;
             foreach(var control in targets)
@@ -30,10 +38,12 @@ namespace MP1SkinStudio
         }
         void UpdateResetTools()
         {
+            var targets=SelectedControls();
+            var pending=PendingResetFields();
             foreach(Control row in properties.Controls)foreach(Control item in row.Controls)
             {
                 var button=item as Button;string tag=button==null?null:button.Tag as string;if(tag==null||!tag.StartsWith("reset:",StringComparison.Ordinal))continue;
-                string key=tag.Substring(6),reason=ResetBlockedReason(key);button.Enabled=reason==null;
+                string key=tag.Substring(6),reason=CheckPropertyReset(key,targets,pending);button.Enabled=reason==null;
                 tips.SetToolTip(button,reason??"Remove the local override. The menu shows the style/reference value that will take effect.");
             }
         }

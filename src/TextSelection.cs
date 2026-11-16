@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
@@ -36,6 +37,23 @@ namespace MP1SkinStudio
             if(!TextSelection(control))return EffectiveBounds(control).Contains(point);
             if(selectionGraphics!=null)return SelectionBounds(selectionGraphics,control).Contains(point);
             using(var graphics=CreateGraphics())return SelectionBounds(graphics,control).Contains(point);
+        }
+        IEnumerable<SkinControl> CanvasHits(PointF point,bool includeLocked)
+        {
+            // The canvas paints label text after surfaces. Use its ink bounds
+            // first, then the remaining elements in ordinary front-first order.
+            var surfaces=new List<SkinControl>();
+            bool allLayers=Project.Editor.PreviewMode=="all"&&!IsolateSelection;
+            for(int i=Project.Controls.Count-1;i>=0;i--)
+            {
+                var control=Project.Controls[i];
+                if(!includeLocked&&Project.IsLocked(control))continue;
+                if(!Drawn(control)||!SelectionContains(control,point))continue;
+                if(TextSelection(control)&&!String.IsNullOrWhiteSpace(ReadablePreview.Caption(State,control,allLayers))&&
+                    ParseColor(control.Resolved("textcolor","ffffffff"),Color.White).A>0)yield return control;
+                else surfaces.Add(control);
+            }
+            foreach(var control in surfaces)yield return control;
         }
     }
 }

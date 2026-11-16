@@ -1,5 +1,20 @@
 # Review candidate readiness
 
+November 16, 2026. Preview.4 is the current public download and includes
+LiveBridge 1.3. The source checkpoint adds First steps, more direct Live setup,
+caption hit ordering and a shorter skin-copy staging path. Validation exercises
+the exact guided workflow on a running isolated MediaPortal 1.39 and the XML
+model on DefaultWideHD, Titan and MayaHD copies.
+See [First steps validation](../Validation/First-Steps/README.md) for the
+reproducible scope and [Quick start](QUICK_START.md) for first use.
+
+The editor canvas targets practical selection and layout editing. The linked
+MediaPortal window provides the reference for supported native properties.
+Plugin-specific values, conditional states and arbitrary animations require
+testing on the actual skin and plugin combination.
+
+## Historical readiness checks
+
 Preview.3, October 29: visible Live controls, Open MP page and actionable occupied
 bridge guidance pass 12 fresh real-MP workflow checks. Pending input, unreadable
 page and unsaved-session Cancel retain work. The final 471 core checks pass.
@@ -146,4 +161,5 @@ comparison with an unrestricted running MP 1.39 instance passed: 10 direct
 runtime checks and 11 Studio-to-real-MP checks, including visible text/color/
 position changes, Apply/Revert/Undo, gesture previews and Disconnect/reconnect.
 This does not establish compatibility with every third-party plugin control.
+
 

@@ -1,4 +1,17 @@
-# Development extension — live font definitions
+# First steps and editor reliability
+
+November 16, 2026. The source checkpoint after Preview.4 adds an integrated
+First steps toolbar, keyboard page search and one-click opening of the running
+MediaPortal page. Property help describes live availability for linked controls.
+Visible label captions take precedence over overlapping textures in the canvas;
+the overlap menu still lists the other controls. Preview information collapses
+in smaller windows and can be reopened from its heading.
+
+Creating a skin copy uses a shorter temporary directory name. Property selection,
+reset checks and native control matching avoid repeatedly searching the same
+control lists. See [First steps validation](../Validation/First-Steps/README.md).
+
+# MP1 Skin Studio v0.9.0-preview.4
 
 Bridge 1.3 adds Fonts … for installed family, size, bold/italic, new definitions
 and alias editing in fonts.xml. Private variants preview linked native controls
@@ -6,8 +19,9 @@ without replacing original MP fonts or reloading the page. Undo, project saving
 and skin-copy saving retain the definitions. Cache variants are bounded and
 reused. See LIVE_FONTS.md. Final validation: 489 core, 17 native lifecycle,
 12 full-renderer and 8 Studio font workflow checks passed; all 488 original
-installed skin XML hashes remain unchanged. This is a development package;
-the published preview.3 release is unchanged.
+installed skin XML hashes remain unchanged.
+
+[Download Preview.4](https://github.com/gheitmann/MP1-Skin-Studio/releases/tag/v0.9.0-preview.4).
 # Development extension — October 30, 2026
 
 Bridge 1.2 adds native checkbox textures/mark dimensions, selected-expression

@@ -41,7 +41,7 @@ namespace MP1SkinStudio
             dragging=false;dragRects.Clear();Capture=false;Cursor=Cursors.Default;Invalidate();
             if(AllowGesture!=null&&!AllowGesture())return;
             UpdateTransform();var p=Logical(e.Location);if(p.X<0||p.Y<0||p.X>=Project.Width||p.Y>=Project.Height)return;
-            var hit=WithMeasuredLayout(()=>Project.Controls.LastOrDefault(c=>Drawn(c)&&SelectionContains(c,p)));if(hit!=null&&TextRequest!=null)TextRequest(hit);
+            var hit=WithMeasuredLayout(()=>CanvasHits(p,true).FirstOrDefault());if(hit!=null&&TextRequest!=null)TextRequest(hit);
         }
         internal void ExerciseTextDoubleClick(SkinControl control)
         {RectangleF r;using(var g=CreateGraphics())r=SelectionBounds(g,control);var point=PointForTest(r.X+r.Width/2,r.Y+r.Height/2);OnMouseDown(new MouseEventArgs(MouseButtons.Left,2,point.X,point.Y,0));OnMouseDoubleClick(new MouseEventArgs(MouseButtons.Left,2,point.X,point.Y,0));OnMouseUp(new MouseEventArgs(MouseButtons.Left,2,point.X,point.Y,0));}

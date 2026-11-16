@@ -44,7 +44,10 @@ namespace MP1SkinStudio
             if(parent.Equals(root,StringComparison.OrdinalIgnoreCase)||parent.StartsWith(root+Path.DirectorySeparatorChar,StringComparison.OrdinalIgnoreCase))throw new IOException("Choose a destination outside the source skin.");
             string target=Inside(parent,name);
             if(Directory.Exists(target)||File.Exists(target))throw new IOException("A file or skin with this name already exists. Nothing was overwritten.");
-            string stage=Inside(parent,".skinstudio-copy-"+Guid.NewGuid().ToString("N"));bool owned=false;
+            // Keep the staging name compact so a legal destination does not fail
+            // solely because the Framework must traverse a longer temporary path.
+            string suffix=Convert.ToBase64String(Guid.NewGuid().ToByteArray()).TrimEnd('=').Replace('+','-').Replace('/','_');
+            string stage=Inside(parent,".ss-"+suffix);bool owned=false;
             try
             {
                 cancel.ThrowIfCancellationRequested();Directory.CreateDirectory(stage);owned=true;

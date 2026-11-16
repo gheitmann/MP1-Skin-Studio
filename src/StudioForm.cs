@@ -35,9 +35,9 @@ namespace MP1SkinStudio
             if(SelectedItem!=null)TextRenderer.DrawText(e.Graphics,SelectedItem.ToString(),Font,new Rectangle(7,1,Width-31,Height-2),ForeColor,TextFormatFlags.Left|TextFormatFlags.VerticalCenter|TextFormatFlags.EndEllipsis);
             using(var brush=new SolidBrush(ForeColor))e.Graphics.FillPolygon(brush,new[]{new Point(Width-17,Height/2-2),new Point(Width-9,Height/2-2),new Point(Width-13,Height/2+2)});
         }
-        StudioMenu OpenChoices()
+        internal StudioMenu OpenChoices()
         {
-            if(Opening!=null)Opening(this,EventArgs.Empty);Focus();if(Items.Count==0)return null;var menu=StudioMenus.For(this,menuKey);
+            if(Opening!=null)Opening(this,EventArgs.Empty);Focus();if(Items.Count==0&&PopulateActions==null)return null;var menu=StudioMenus.For(this,menuKey);
             menu.SuspendLayout();
             try
             {
@@ -264,7 +264,7 @@ namespace MP1SkinStudio
         readonly string[] labels=new[]{"Position X","Position Y","Width","Height","Text / data binding","Font name","Text color · AARRGGBB","Image / texture","Focused image","Unfocused image","Alignment","Navigate left → ID","Navigate right → ID","Navigate up → ID","Navigate down → ID","Target page → Window ID","Text offset X","Text offset Y","Horizontal inner text alignment","Vertical inner text alignment","Vertical text field alignment","Image tint · AARRGGBB","Visibility condition","Keep image proportions","Crop to fill","Crop from top"}.Concat(CheckmarkPresentation.Labels).Concat(CollectionProperties.Fields.Select(f=>f.Label)).ToArray();
         public StudioForm(string root)
         {
-            Text="MP1 Skin Studio · Live 1.3 development";StartPosition=FormStartPosition.CenterScreen;Size=new Size(1520,960);MinimumSize=new Size(1180,780);
+            Text="MP1 Skin Studio";StartPosition=FormStartPosition.CenterScreen;Size=new Size(1520,960);MinimumSize=new Size(1180,780);
             AutoScaleMode=AutoScaleMode.None;Font=new Font("Segoe UI",9.5f);BackColor=Color.FromArgb(21,26,35);ForeColor=ink;KeyPreview=true;
             BuildUi();
             canvas.Selection+=SelectControl;
@@ -293,7 +293,9 @@ namespace MP1SkinStudio
             var header=new Panel{Dock=DockStyle.Top,Height=72,Padding=new Padding(22,12,20,8),BackColor=panel};
             header.Controls.Add(new Label{Text="MP1  /  SKIN STUDIO",Font=new Font("Segoe UI",19,FontStyle.Bold),AutoSize=true,Location=new Point(22,10),ForeColor=ink});
             header.Controls.Add(new Label{Text="Design visually. Preserve existing XML.",AutoSize=true,Location=new Point(24,43),ForeColor=muted});
-            var badge=new Label{Text="LAYOUT PROTOTYPE   ·   WITHOUT MP1 RENDERER",AutoSize=true,ForeColor=Color.FromArgb(244,193,102),Anchor=AnchorStyles.Right|AnchorStyles.Top,Location=new Point(1010,27)};header.Controls.Add(badge);header.Resize+=(s,e)=>badge.Left=header.Width-badge.Width-24;
+            firstStepsToggle=ButtonFor("First steps",ToggleFirstSteps);firstStepsToggle.Width=139;firstStepsToggle.Top=19;
+            header.Controls.Add(firstStepsToggle);header.Resize+=(s,e)=>firstStepsToggle.Left=header.Width-firstStepsToggle.Width-24;
+            firstSteps=BuildFirstSteps();
             var toolbar=new FlowLayoutPanel{Dock=DockStyle.Top,Height=56,Padding=new Padding(20,11,12,10),WrapContents=false};
             toolbar.Controls.Add(ButtonFor("Open skin directory",OpenFolder,true));var openXml=ButtonFor("Open XML",OpenXml);openXml.Width=110;toolbar.Controls.Add(openXml);var demo=ButtonFor("Titan Demo",()=>{if(CanSwitch())LoadProject(DemoRoot(),"demo.xml");});demo.Width=110;toolbar.Controls.Add(demo);
             undo=ButtonFor("↶ Undo",()=>{if(project!=null){UndoEditor(false);}});undo.Width=125;toolbar.Controls.Add(undo);
@@ -322,9 +324,7 @@ namespace MP1SkinStudio
             var testData=ButtonFor("Sample Data",ShowPreviewSettings);testData.Width=91;testData.Height=28;testData.Margin=new Padding(0,2,0,0);previewToolbar.Controls.Add(testData);tips.SetToolTip(testData,"Configure sample data and simulated plugin states; presets include long titles, weather and news.");
             var languageButton=ButtonFor("Language",ShowLanguageSettings);languageButton.Width=82;languageButton.Height=28;languageButton.Margin=new Padding(8,2,0,0);previewToolbar.Controls.Add(languageButton);tips.SetToolTip(languageButton,"Load language files for numeric labels; save primary and fallback languages in the editor project.");
             var collectionButton=ButtonFor("Collection",()=>Attempt(ShowCollectionSettings));collectionButton.Width=95;collectionButton.Height=28;collectionButton.Margin=new Padding(8,2,0,0);previewToolbar.Controls.Add(collectionButton);
-            var bottom=new Panel{Dock=DockStyle.Bottom,Height=139,Padding=new Padding(10,7,8,5),BackColor=panel};
-            bottom.Controls.Add(LabelFor("PREVIEW & INFORMATION",22));
-            diagnostics.Dock=DockStyle.Fill;diagnostics.Multiline=true;diagnostics.ReadOnly=true;diagnostics.ScrollBars=ScrollBars.Vertical;diagnostics.BorderStyle=BorderStyle.None;diagnostics.BackColor=panel;diagnostics.ForeColor=muted;diagnostics.Font=new Font("Segoe UI",9);var diagnosticScroll=new DarkScrollHost(diagnostics);bottom.Controls.Add(diagnosticScroll);diagnosticScroll.BringToFront();
+            var bottom=BuildPreviewInformation();
             var canvasStage=new Panel{Dock=DockStyle.Fill};canvasStage.Controls.Add(canvas);canvasStage.Controls.Add(BuildDropPalette());
             center.Controls.Add(canvasStage);center.Controls.Add(BuildPreviewModeBar());center.Controls.Add(BuildViewBar());center.Controls.Add(previewToolbar);center.Controls.Add(BuildDesignerBar());center.Controls.Add(BuildLiveBar());center.Controls.Add(bottom);main.Controls.Add(center,1,0);
             var right=new Panel{Dock=DockStyle.Fill,BackColor=panel,Padding=new Padding(12),Margin=new Padding(0)};
@@ -340,7 +340,8 @@ namespace MP1SkinStudio
             propertyHelp.Dock=DockStyle.Bottom;propertyHelp.Height=88;propertyHelp.ForeColor=muted;propertyHelp.Padding=new Padding(0,6,0,0);propertyHelp.Text="Select a property for help. Collapse groups to keep the panel compact.";
             right.Controls.Add(new DarkScrollHost(properties));right.Controls.Add(propHeader);right.Controls.Add(propertyHelp);right.Controls.Add(propertyActions);main.Controls.Add(right,2,0);
             status=new Label{Dock=DockStyle.Bottom,Height=31,Padding=new Padding(20,5,0,0),BackColor=panel,ForeColor=muted,Text="Ready"};
-            Controls.Add(main);Controls.Add(toolbar);Controls.Add(header);Controls.Add(status);
+            Controls.Add(main);Controls.Add(firstSteps);Controls.Add(toolbar);Controls.Add(header);Controls.Add(status);
+            Resize+=(s,e)=>UpdatePreviewInformationSize();UpdatePreviewInformationSize();
             tips.SetToolTip(unlock,"Enable only when intentionally replacing an existing #Property or #Define with a local value.");
         }
         public static string DemoRoot(){return System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"Samples","Titan-Sample");}
@@ -394,28 +395,32 @@ namespace MP1SkinStudio
             {canvas.SelectedKeys.Remove(c.Key);c=project.Controls.FirstOrDefault(item=>canvas.SelectedKeys.Contains(item.Key));}
             if(c!=null)canvas.SelectedKeys.Add(c.Key);
             selected=c;canvas.Selected=c;UpdatePreviewModeTools();unlock.Checked=preserveUnlock;canvas.UnlockBindings=preserveUnlock;
-            propertyHelp.Text="Select a property for help. Collapse groups to keep the panel compact.";
+            helpProperty=null;propertyHelp.Text="Select a property for help. Collapse groups to keep the panel compact.";
             fields.Clear();originals.Clear();touchedFields.Clear();mixedFields.Clear();properties.SuspendLayout();foreach(Control old in properties.Controls.Cast<Control>().ToArray())old.Dispose();properties.Controls.Clear();
             UpdateSelectionTools();
-            if(c==null){selectionName.Text="No controls";selectionInfo.Text="This file contains no supported controls.";properties.ResumeLayout();canvas.Invalidate();return;}
+            if(c==null){selectionName.Text="No controls";selectionInfo.Text="This file contains no supported controls.";properties.ResumeLayout();canvas.Invalidate();UpdateFirstSteps();return;}
             selectionName.Text=(canvas.SelectedKeys.Count>1?canvas.SelectedKeys.Count+" items · ":"")+DisplayName(c);selectionInfo.Text=c.Get("type")+"  ·  ID "+c.Get("id","—")+" (protected)\n"+c.Source.RelativePath+"\n"+(canvas.SelectedKeys.Count>1?"Changes apply to the entire selection":LayoutTools.IsContainer(c)?"Group: select contents through the Element menu":c.AutomaticLayout?"Position controlled by group layout":c.IncludeCondition.Length>0?"Conditional include":"XML source mapped");
             if(canvas.SelectedKeys.Count==1&&SkinCanvas.TextSelection(c))selectionInfo.Text=c.Get("type")+" · ID "+c.Get("id","—")+" · "+c.Source.RelativePath+"\nText outline follows the caption.\nSet Width / Height in Properties.";
             tips.SetToolTip(selectionInfo,c.Source.Path+"\n"+c.IncludeCondition);
+            var targets=SelectedControls();
+            bool imagesOnly=targets.All(item=>item.Get("type")=="image");
+            bool checkmarksOnly=targets.All(item=>item.Get("type")=="checkmark");
             string lastGroup=null;
             foreach(int i in Enumerable.Range(0,editable.Length).OrderBy(index=>Array.IndexOf(PropertyPresentation.Groups,PropertyPresentation.Group(editable[index]))))
             {
                 string key=editable[i];var collectionProperty=CollectionProperties.Find(key);
-                if(ImagePresentation.BooleanFields.Contains(key)&&SelectedControls().Any(item=>item.Get("type")!="image"))continue;
-                if(CheckmarkPresentation.Fields.Contains(key)&&SelectedControls().Any(item=>item.Get("type")!="checkmark"))continue;
-                if(collectionProperty!=null&&SelectedControls().Any(item=>!collectionProperty.AppliesTo(item)))continue;
+                if(ImagePresentation.BooleanFields.Contains(key)&&!imagesOnly)continue;
+                if(CheckmarkPresentation.Fields.Contains(key)&&!checkmarksOnly)continue;
+                if(collectionProperty!=null&&targets.Any(item=>!collectionProperty.AppliesTo(item)))continue;
                 string group=PropertyPresentation.Group(key);if(group!=lastGroup){AddPropertyGroup(group);lastGroup=group;}
                 var row=new Panel{Width=251,Height=72,Margin=new Padding(0,0,0,3),Tag="property-group:"+group,Visible=!collapsedPropertyGroups.Contains(group)};
-                string propertyLabel=labels[i];if(SelectedControls().All(item=>item.Get("type")=="image")){if(key=="align")propertyLabel="Horizontal image alignment";if(key=="valign")propertyLabel="Vertical image alignment";}
+                string propertyLabel=labels[i];if(imagesOnly){if(key=="align")propertyLabel="Horizontal image alignment";if(key=="valign")propertyLabel="Vertical image alignment";}
                 var label=new Label{Text=propertyLabel,ForeColor=muted,AutoSize=true,Location=new Point(0,0)};row.Controls.Add(label);
-                bool mixed=SelectedControls().Any(item=>item.Get(key)!=c.Get(key));
+                string selectedValue=c.Get(key);
+                bool mixed=targets.Any(item=>item.Get(key)!=selectedValue);
                 if(mixed)mixedFields.Add(key);
-                var box=new TextBox{Text=mixed?"":c.Get(key),Width=247,Location=new Point(0,24),BackColor=Color.FromArgb(20,26,35),ForeColor=ink,BorderStyle=BorderStyle.FixedSingle};row.Controls.Add(box);
-                box.AccessibleName=propertyLabel;box.Enter+=(s,e)=>propertyHelp.Text=PropertyPresentation.Help(key);label.MouseEnter+=(s,e)=>propertyHelp.Text=PropertyPresentation.Help(key);tips.SetToolTip(label,PropertyPresentation.Help(key));
+                var box=new TextBox{Text=mixed?"":selectedValue,Width=247,Location=new Point(0,24),BackColor=Color.FromArgb(20,26,35),ForeColor=ink,BorderStyle=BorderStyle.FixedSingle};row.Controls.Add(box);
+                box.AccessibleName=propertyLabel;box.Enter+=(s,e)=>UpdatePropertyHelp(key);label.MouseEnter+=(s,e)=>UpdatePropertyHelp(key);tips.SetToolTip(label,PropertyPresentation.Help(key));
                 box.TextChanged+=(sender,args)=>{touchedFields.Add(key);UpdateResetTools();if(project!=null&&!loading){UpdateProjectCaption();export.Enabled=project.Dirty||PendingProperties();}};
                 AddPropertyResetButton(row,key);
                 if(new[]{"textcolor","colordiffuse","font","align","textalign","textvalign","valign","texture","textureFocus","textureNoFocus","textureCheckmark","textureCheckmarkNoFocus","disabledcolor"}.Contains(key)||ImagePresentation.BooleanFields.Contains(key)||key=="selected")
@@ -512,7 +517,8 @@ namespace MP1SkinStudio
             if(keyData==(Keys.Control|Keys.O)){Attempt(OpenEditorProject);return true;}
             if(keyData==(Keys.Control|Keys.Shift|Keys.E)){Attempt(ShowChangeReview);return true;}
             if(keyData==(Keys.Control|Keys.E)){export.PerformClick();return true;}
-            if(keyData==(Keys.Control|Keys.F)){elementSearch.Focus();elementSearch.SelectAll();return true;}
+            if(keyData==(Keys.Control|Keys.F)){FocusElementSearch();return true;}
+            if(keyData==(Keys.Control|Keys.L)){FocusPageSearch();return true;}
             if(keyData==Keys.F2&&(canvas.Focused||(tree.Focused&&tree.SelectedNode!=null&&tree.SelectedNode.Tag is SkinControl))&&SelectedControls().Length==1){Attempt(()=>EditElementText(selected));return true;}
             if(keyData==Keys.F8){Attempt(ShowAudit);return true;}
             if(keyData==(Keys.Control|Keys.F8)){Attempt(ShowPreviewProblems);return true;}

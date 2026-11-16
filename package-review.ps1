@@ -28,6 +28,11 @@ $reviewNotes = @"
 MP1 Skin Studio - manual review build
 Source revision: $Revision
 
+Open First steps to choose a skin, find a page or element, edit text and save
+a complete skin copy. Ctrl+L focuses the page filter. Enter opens an exact
+filename match or the only search result. Preview information can collapse to
+leave room for the canvas in smaller windows.
+
 LiveBridge 1.3 adds private font definition previews through Fonts …, without
 replacing MP's original fonts. See docs/LIVE_FONTS.md for Windows font support,
 Undo/persistence and the bounded preview cache.
@@ -39,7 +44,7 @@ The Live status displays its running bridge version. Ordinary live edits still
 do not require a page reload or restart. See docs/LIVE_COVERAGE.md for the native
 adapter changes, metadata audit and historical visual-test scope.
 
-Save skin … beside Live saves applied inputs to a complete separate output skin.
+Save skin copy … beside Live saves applied inputs to a complete separate output skin.
 Create its first copy once; later saves update reviewed XML with conflict checks,
 transaction rollback and automatic ZIP backups. The current source, live preview
 and editor Undo history continue. Save Project also remembers the output folder.
@@ -47,8 +52,8 @@ See docs/SAVE_SKIN_COPY.md for persistence, recovery and normal MP skin selectio
 
 Live preview: install LiveBridge/bin/MP1SkinStudio.LiveBridge.dll into your MP1
 1.39 plugins/process folder, or use LiveBridge/Install-LiveBridge.ps1 with admin
-rights for Program Files. Start MP once, open the same skin/theme/page in Studio,
-enable Live in the toolbar and Connect. Valid input fields and canvas drags
+rights for Program Files. Start MP once, then use Open MP page in Studio to
+connect and open the skin, theme and page that MP is displaying. Valid input fields and canvas drags
 update native MP controls without Apply, XML export, reload or restart.
 Disconnect restores preview overrides. Read docs/LIVE_PREVIEW.md for setup,
 runtime property limits and the distinction between live preview and saved XML.

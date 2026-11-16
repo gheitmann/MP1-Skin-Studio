@@ -1,4 +1,4 @@
-# Live font definitions — bridge 1.3 development
+# Live font definitions — bridge 1.3
 
 Open Fonts … in Studio's Live bar. Select a font definition and choose an installed
 Windows family, skin height and bold/italic style. Apply definition updates the editor
@@ -26,7 +26,7 @@ the same editing session. The normal global font-loader is not invoked.
 Requires the included bridge 1.3. Update it once with MP closed, then start MP and
 reconnect. Ordinary font definition edits thereafter do not require another restart.
 Older bridges reject definition previews with an update message while retaining
-normal supported live properties. The published preview.3 release is unchanged.
+normal supported live properties. The published Preview.4 ZIP includes bridge 1.3.
 
 ## Bounds
 

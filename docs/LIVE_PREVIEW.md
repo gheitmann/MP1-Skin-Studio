@@ -28,8 +28,9 @@ Framework 4.x. Keep the complete extracted package together.
 3. Enable **MP1 Skin Studio Live** under process plugins if it is disabled.
 4. Start MediaPortal once. Its standard configuration application must be
    closed, as required by MP's own startup check.
-5. In Studio's visible **Live** bar, select the running MP instance and Connect.
-   Click **Open MP page** to open its actual skin, theme and XML in Studio.
+5. In Studio's **Live** bar, choose the running MP instance and click
+   **Open MP page**. Studio connects and opens its actual skin, theme and XML.
+   In Preview.4, click **Connect** before **Open MP page**.
    Pending inputs and unsaved project changes remain protected. Use an independent
    skin copy in both programs when experimenting.
 6. Select an element and edit. **Show in MP** optionally navigates MP to a

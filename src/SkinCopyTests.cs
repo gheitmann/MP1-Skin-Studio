@@ -14,7 +14,7 @@ namespace MP1SkinStudio
             Directory.CreateDirectory(Path.Combine(p.Root,"Themes/Blue"));Write(p.Root,"Themes/Blue/theme.xml","<theme/>");File.WriteAllBytes(Path.Combine(p.Root,"Media","Artwork.bin"),new byte[]{0,255,13,10,42});return p;
         }
         static void NoPartialCopy(string parent,string name)
-        {Check(!Directory.Exists(Path.Combine(parent,name))&&!Directory.GetDirectories(parent,".skinstudio-copy-*").Any(),"A partial skin copy was left behind.");}
+        {Check(!Directory.Exists(Path.Combine(parent,name))&&!Directory.GetDirectories(parent,".ss-*").Any(),"A partial skin copy was left behind.");}
         static void RunSkinCopyTests(string root)
         {
             Test("Skin copies retain complete nested assets empty folders and exact source bytes",()=>
@@ -43,7 +43,7 @@ namespace MP1SkinStudio
                 Reject(()=>plan.CopyTo(root,"copy-paths",CancellationToken.None));Reject(()=>plan.CopyTo(p.Root,"Nested",CancellationToken.None));
                 File.WriteAllText(Path.Combine(root,"Occupied"),"keep");Reject(()=>plan.CopyTo(root,"Occupied",CancellationToken.None));
                 foreach(string name in new[]{"../escape","CON","nul.txt","bad."," bad","bad ","a:b","..",""})Reject(()=>SkinCopyPlan.ValidateName(name));
-                Check(File.ReadAllText(Path.Combine(root,"Occupied"))=="keep"&&!Directory.GetDirectories(root,".skinstudio-copy-*").Any(),"Rejected copy overwrote files or created staging folders.");
+                Check(File.ReadAllText(Path.Combine(root,"Occupied"))=="keep"&&!Directory.GetDirectories(root,".ss-*").Any(),"Rejected copy overwrote files or created staging folders.");
             });
             Test("Copying edited XML rejects external source drift and removes the unfinished copy",()=>
             {

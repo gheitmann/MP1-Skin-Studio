@@ -32,7 +32,7 @@ namespace MP1SkinStudio
                 if(value)ShowNotice("The selection is the source. Choose a direction and click a target; use arrow keys to test connections.");
             });commands.Controls.Add(navigation);
             var toolbox=ButtonFor("Toolbox",ToggleDropPalette);toolbox.Width=78;commands.Controls.Add(toolbox);tips.SetToolTip(toolbox,"Show the integrated drag-and-drop tools and skin images.");
-            var live=Check("Live",true,value=>{if(liveHost!=null)liveHost.Visible=value;});live.Width=62;commands.Controls.Add(live);tips.SetToolTip(live,"Show the connection to a running MediaPortal instance. Install the included LiveBridge plugin once; valid fields and canvas drags then preview without Apply or reload.");
+            liveToggle=Check("Live",true,value=>{if(liveHost!=null)liveHost.Visible=value;});liveToggle.Width=62;commands.Controls.Add(liveToggle);tips.SetToolTip(liveToggle,"Show the connection to a running MediaPortal instance. Install the included LiveBridge plugin once; valid fields and canvas drags then preview without Apply or reload.");
             var saveCopy=ButtonFor("Save skin copy …",SaveSkinCopy);saveCopy.Width=143;commands.Controls.Add(saveCopy);tips.SetToolTip(saveCopy,"Save your applied changes to a separate skin copy, with review, conflict checks and automatic backups.");
             row.Controls.Add(new Label{Text="Direction",ForeColor=muted,Width=64,Height=27,TextAlign=ContentAlignment.MiddleLeft});
             navDirection.Width=100;navDirection.Height=27;navDirection.BackColor=Color.FromArgb(20,26,35);navDirection.ForeColor=ink;

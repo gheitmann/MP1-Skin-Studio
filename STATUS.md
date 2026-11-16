@@ -1,6 +1,31 @@
 # Development status and next steps
 
-Date: October 30, 2026. Imported version: 0.9.
+Date: November 16, 2026. Latest public release: v0.9.0-preview.4.
+
+## First steps, live connection and reliable skin copies
+
+First steps is integrated into the main window. It opens the installed-skin
+chooser, filters pages and elements, edits captions and saves a complete skin.
+Ctrl+L focuses the file filter; Enter opens a unique result or exact filename.
+The collapsible Preview information panel leaves room for the canvas at the
+minimum window size. A visible caption drawn over a texture picks the label.
+
+Open MP page connects and adopts the current native page in one operation.
+Existing pending-input and unsaved-session guards apply. Property help reports
+live availability from the linked native controls. Initial skin copies use a
+shorter staging name to fit deeper Windows folders. Property and bridge setup
+avoid repeated scans through the full control collections.
+
+490 core checks, 229 desktop UI checks and 11 guided UI/MediaPortal checks
+passed, including a live edit, complete skin save and native Undo. A fresh
+isolated MediaPortal session loaded the saved skin and edited label from disk.
+Model checks loaded 2,225 page and theme variants from independent DefaultWideHD,
+Titan and MayaHD XML copies with zero XML or editing errors. All 488 monitored
+installed source XML hashes match the original baseline.
+See [validation](Validation/First-Steps/README.md).
+
+The supported workflow is ready for packaged acceptance. Further preview
+comparison on real plugin pages is useful when extending the supported scope.
 
 ## Newest development milestone: live font definitions, bridge 1.3
 

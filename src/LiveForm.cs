@@ -16,6 +16,7 @@ namespace MP1SkinStudio
         ChoiceBox liveEndpoint=new ChoiceBox();Label liveNotice;Button liveConnect,liveDisconnect,liveMatch,liveShow;Panel liveHost;
         StudioLiveClient liveClient;LiveBinding liveBinding;bool liveVerified,liveBuilding,liveDraftInvalid,liveOpenRequested,liveOpening;int liveGeneration,liveRevision,liveAcknowledged;
         Button liveOpen;
+        CheckBox liveToggle;
         string liveContext,liveLastFrame,liveBridgeVersion;List<ControlEdit> liveGesture;
         readonly Timer liveDebounce=new Timer{Interval=60};
         Panel BuildLiveBar()
@@ -26,16 +27,16 @@ namespace MP1SkinStudio
             liveEndpoint.Width=181;liveEndpoint.Height=28;liveEndpoint.Margin=new Padding(0,3,8,0);liveEndpoint.AccessibleName="Running MediaPortal live bridges";liveEndpoint.Opening+=(s,e)=>RefreshLiveEndpoints();commands.Controls.Add(liveEndpoint);
             liveConnect=ButtonFor("Connect",ConnectLive);liveConnect.Width=77;commands.Controls.Add(liveConnect);
             liveDisconnect=ButtonFor("Disconnect",DisconnectLive);liveDisconnect.Width=91;liveDisconnect.Enabled=false;commands.Controls.Add(liveDisconnect);
-            liveOpen=ButtonFor("Open MP page",OpenPageFromLive);liveOpen.Width=119;liveOpen.Enabled=false;commands.Controls.Add(liveOpen);
+            liveOpen=ButtonFor("Open MP page",OpenPageFromLive);liveOpen.Width=119;commands.Controls.Add(liveOpen);
             liveShow=ButtonFor("Show in MP",ShowPageLive);liveShow.Width=99;liveShow.Enabled=false;commands.Controls.Add(liveShow);
             liveMatch=ButtonFor("Link element",MatchLiveElement);liveMatch.Width=102;liveMatch.Enabled=false;commands.Controls.Add(liveMatch);
             var fonts=ButtonFor("Fonts …",()=>Attempt(EditFontDefinitions));fonts.Width=85;commands.Controls.Add(fonts);tips.SetToolTip(fonts,"Edit font family, height, style or aliases. Bridge 1.3 previews changed definitions without reloading MP's original fonts.");
-            liveNotice=new Label{Dock=DockStyle.Bottom,Height=24,AutoEllipsis=true,ForeColor=muted,Text="Start MediaPortal, then Connect → Open MP page → select an element and edit. Save skin copy keeps your changes."};
+            liveNotice=new Label{Dock=DockStyle.Bottom,Height=24,AutoEllipsis=true,ForeColor=muted,Text="Start MediaPortal with LiveBridge enabled, then click Open MP page."};
             host.Controls.Add(liveNotice);host.Controls.Add(commands);commands.SizeChanged+=(s,e)=>host.Height=commands.Height+26;
             tips.SetToolTip(liveConnect,"Connect to the same skin, theme and page in MediaPortal. Valid inputs and canvas drags preview live without Apply, export or reload. Skin files remain unchanged.");
             tips.SetToolTip(liveDisconnect,"Restore all preview overrides in MediaPortal and close the live connection. Editor changes remain in Studio.");
             tips.SetToolTip(liveShow,"Navigate MediaPortal to the current XML window. This is optional; ordinary live edits never reload or switch its page.");
-            tips.SetToolTip(liveOpen,"Open the skin, theme and XML page currently displayed in MediaPortal. Pending inputs and unsaved projects remain protected. This does not navigate MediaPortal.");
+            tips.SetToolTip(liveOpen,"Connect if needed and open the skin, theme and XML page currently displayed in MediaPortal.");
             tips.SetToolTip(liveMatch,"Resolve an ambiguous ID by explicitly linking the selected XML element to a matching runtime control.");
             liveDebounce.Tick+=(s,e)=>{liveDebounce.Stop();SendLiveFrame();};
             canvas.LiveGesturePreview+=changes=>{liveGesture=changes;ScheduleLivePreview();};
@@ -52,14 +53,17 @@ namespace MP1SkinStudio
         {if(IsDisposed||Disposing||!IsHandleCreated)return;try{BeginInvoke(new System.Action(()=>{if(!IsDisposed&&!Disposing)action();}));}catch(InvalidOperationException){}}
         string LiveContext(){return project==null?"":project.Root+"\n"+project.Theme+"\n"+project.Page;}
         void ConnectLive()
+        {ConnectLiveCore(false);}
+        void ConnectLiveCore(bool openPage)
         {
             if(liveClient!=null)return;RefreshLiveEndpoints();var endpoint=liveEndpoint.SelectedItem as LiveEndpoint;
             if(endpoint==null){LiveStatus("No running bridge found. Install/enable MP1 Skin Studio Live in MediaPortal and start it once.",true);return;}
+            liveOpenRequested=openPage;
             liveGeneration++;liveBinding=null;liveVerified=false;liveBuilding=false;liveContext=LiveContext();liveLastFrame=null;liveBridgeVersion=null;liveRevision=liveAcknowledged=0;
             var client=new StudioLiveClient(endpoint);liveClient=client;
             client.Response+=response=>LiveOnUi(()=>{if(Object.ReferenceEquals(liveClient,client))ReceiveLive(response);});
-            client.Disconnected+=reason=>LiveOnUi(()=>{if(!Object.ReferenceEquals(liveClient,client))return;liveClient=null;liveBinding=null;liveVerified=false;liveBuilding=false;liveOpenRequested=false;liveGeneration++;liveConnect.Enabled=liveEndpoint.Enabled=true;liveDisconnect.Enabled=liveShow.Enabled=liveMatch.Enabled=liveOpen.Enabled=false;liveDebounce.Stop();LiveStatus(reason+" · Connect to resume live editing.",true);});
-            liveConnect.Enabled=liveEndpoint.Enabled=false;liveDisconnect.Enabled=liveShow.Enabled=true;LiveStatus("Connecting to MediaPortal…");client.Start();
+            client.Disconnected+=reason=>LiveOnUi(()=>{if(!Object.ReferenceEquals(liveClient,client))return;liveClient=null;liveBinding=null;liveVerified=false;liveBuilding=false;liveOpenRequested=false;liveGeneration++;liveConnect.Enabled=liveEndpoint.Enabled=liveOpen.Enabled=true;liveDisconnect.Enabled=liveShow.Enabled=liveMatch.Enabled=false;liveDebounce.Stop();if(helpProperty!=null)UpdatePropertyHelp(helpProperty);LiveStatus(reason+" · Connect to resume live editing.",true);});
+            liveConnect.Enabled=liveEndpoint.Enabled=liveOpen.Enabled=false;liveDisconnect.Enabled=liveShow.Enabled=true;LiveStatus(openPage?"Connecting to MediaPortal and opening its page…":"Connecting to MediaPortal…");client.Start();
         }
         void DisconnectLive()
         {
@@ -68,7 +72,7 @@ namespace MP1SkinStudio
         void ReceiveLive(XmlDocument response)
         {
             var root=response.DocumentElement;string command=root.GetAttribute("command");
-            if(root.GetAttribute("ok")=="false"){if(command=="snapshot")liveOpenRequested=false;LiveStatus("Not sent: "+root.GetAttribute("message"),true);return;}
+            if(root.GetAttribute("ok")=="false"){if(command=="snapshot"){liveOpenRequested=false;liveOpen.Enabled=true;}LiveStatus("Not sent: "+root.GetAttribute("message"),true);return;}
             if(command=="snapshot")
             {
                 liveOpen.Enabled=true;liveBridgeVersion=root.GetAttribute("bridgeVersion");if(liveBridgeVersion.Length>32)liveBridgeVersion=liveBridgeVersion.Substring(0,32);
@@ -79,7 +83,7 @@ namespace MP1SkinStudio
                 }
                 PrepareLiveBinding(response);return;
             }
-            if(command=="verify"){liveVerified=true;liveMatch.Enabled=true;liveLastFrame=null;ScheduleLivePreview();return;}
+            if(command=="verify"){liveVerified=true;liveMatch.Enabled=true;liveLastFrame=null;if(helpProperty!=null)UpdatePropertyHelp(helpProperty);ScheduleLivePreview();return;}
             if(command=="frame")
             {
                 int revision;if(Int32.TryParse(root.GetAttribute("requestRevision"),out revision))liveAcknowledged=Math.Max(liveAcknowledged,revision);
@@ -89,7 +93,7 @@ namespace MP1SkinStudio
         void PrepareLiveBinding(XmlDocument snapshot)
         {
             if(project==null||liveClient==null)return;int generation=++liveGeneration;liveVerified=false;liveBuilding=true;liveMatch.Enabled=false;liveGesture=null;
-            var editor=project;string root=project.Root,themeName=project.Theme,pageName=project.Page;liveContext=LiveContext();LiveStatus("Checking live skin/page and linking runtime controls…");
+            var editor=project;string root=project.Root,themeName=project.Theme,pageName=project.Page;liveContext=LiveContext();if(helpProperty!=null)UpdatePropertyHelp(helpProperty);LiveStatus("Checking live skin/page and linking runtime controls…");
             Task.Factory.StartNew(()=>{var baseline=new SkinProject(root){Theme=themeName};baseline.OpenPage(pageName);return new LiveBinding(baseline,snapshot);}).ContinueWith(task=>
             {
                 var failure=task.IsFaulted?task.Exception.GetBaseException():null;
@@ -150,8 +154,11 @@ namespace MP1SkinStudio
         }
         void OpenPageFromLive()
         {
-            if(liveClient==null||liveOpenRequested)return;
+            if(liveOpenRequested)return;
             if(PendingProperties()){ShowNotice("Apply pending property edits or restore their previous values before opening the MP page.");return;}
+            if(liveToggle!=null)liveToggle.Checked=true;
+            if(liveClient==null){ConnectLiveCore(true);return;}
+            if(!liveOpen.Enabled)return;
             liveOpenRequested=true;liveVerified=false;liveGeneration++;liveBuilding=false;liveDebounce.Stop();liveClient.ClearFrames();
             liveClient.Send(LiveWire.Document("reset"));liveClient.Send(LiveWire.Document("snapshot"));LiveStatus("Opening the page currently displayed in MediaPortal…");
         }
@@ -170,7 +177,7 @@ namespace MP1SkinStudio
             if(liveBinding==null||selected==null||SelectedControls().Length!=1)return;var menu=StudioMenus.For(this,"live-match");var matches=liveBinding.Items.Where(item=>item.Kind.Equals(selected.Get("type"),StringComparison.OrdinalIgnoreCase)).ToArray();
             menu.Items.Add("Link XML: "+selected.Name).Enabled=false;
             foreach(var item in matches.OrderBy(item=>item.Id==SkinProject.ControlId(selected)?0:1).ThenBy(item=>item.Description).Take(80))
-            {var target=item;menu.Items.Add(item.ToString().Replace("&","&&"),null,(s,e)=>Attempt(()=>{liveBinding.Link(selected,target);liveLastFrame=null;ScheduleLivePreview();}));}
+            {var target=item;menu.Items.Add(item.ToString().Replace("&","&&"),null,(s,e)=>Attempt(()=>{liveBinding.Link(selected,target);if(helpProperty!=null)UpdatePropertyHelp(helpProperty);liveLastFrame=null;ScheduleLivePreview();}));}
             if(matches.Length==0)menu.Items.Add("No matching control type is currently loaded in MP").Enabled=false;menu.Show(liveMatch,new Point(0,liveMatch.Height));
         }
     }

@@ -24,11 +24,13 @@ namespace MP1SkinStudio
             if(!String.Equals(actualTheme,editorTheme,StringComparison.OrdinalIgnoreCase))throw new InvalidOperationException("Choose the same theme in Studio and MediaPortal (Studio: "+editorTheme+"; MP: "+actualTheme+").");
             if(!String.Equals(Path.GetFileName(root.GetAttribute("page")),Path.GetFileName(baseline.Page),StringComparison.OrdinalIgnoreCase)||LiveWire.Int(root,"window",Int32.MinValue,Int32.MaxValue)!=baseline.WindowId)throw new InvalidOperationException("Waiting for MediaPortal page "+baseline.Page+". Use Show page in MP if required.");
             Items=root.SelectNodes("control").Cast<XmlElement>().Select(LiveItem.Read).ToArray();if(Items.Select(i=>i.Token).Distinct().Count()!=Items.Length)throw new InvalidDataException("Duplicate runtime control token.");
+            var itemsById=Items.ToLookup(item=>item.Id);
             var candidates=new Dictionary<string,LiveItem[]>(StringComparer.OrdinalIgnoreCase);
             foreach(var group in baseline.Controls.GroupBy(c=>c.Key))
             {
                 var control=group.First();int id;if(!Int32.TryParse(control.Get("id","0"),out id))continue;
-                var pool=Items.Where(i=>i.Kind.Equals(control.Get("type"),StringComparison.OrdinalIgnoreCase)&&i.Id==id).ToArray();
+                string kind=control.Get("type");
+                var pool=itemsById[id].Where(item=>item.Kind.Equals(kind,StringComparison.OrdinalIgnoreCase)).ToArray();
                 string description=control.Resolved("description");var described=pool.Where(i=>i.Description==description).ToArray();if(described.Length>0)pool=described;
                 if(pool.Length>group.Count())
                 {
