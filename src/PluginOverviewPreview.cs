@@ -57,7 +57,6 @@ namespace MP1SkinStudio
             RequireAppliedProperties();
             PluginOverviewPreview.Apply(project);
             canvas.IsolateSelection = false;
-            canvas.ShowHidden = false;
             ApplyPreviewSettings(project.Editor.Preview);
             state.SetFocus(50);
             RefreshProject(null);

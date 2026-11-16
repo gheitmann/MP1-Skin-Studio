@@ -32,7 +32,11 @@ static class PluginPreviewProbe
                 string source = ProjectFile.XmlSignature(project);
                 var example = Field<Button>(form, "pluginExample");
                 if (!example.Visible || !example.Enabled) throw new Exception("Plugin example is unavailable.");
+                var canvas = Field<SkinCanvas>(form, "canvas");
+                canvas.ShowHidden = true;
                 example.PerformClick();
+                if (!canvas.ShowHidden) throw new Exception("The example reset a separate preview option.");
+                canvas.ShowHidden = false;
                 var state = Field<PreviewState>(form, "state");
                 if (state.FocusId != 50 || project.Editor.Collection.Items.Single().Image != "hover_my notifier.png")
                     throw new Exception("Plugin image or focus was not applied.");
