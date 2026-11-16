@@ -1,6 +1,10 @@
 # Development status and next steps
 
-Date: November 16, 2026. Latest public release: v0.9.0-preview.4.
+Date: November 16, 2026. Release checkpoint: v0.9.0.
+
+The release includes the tested First steps and Live work with Bridge 1.3.
+Final native checks verified editing and Undo on the standard Plugin overview
+and Videos windows. See [release acceptance](Validation/Release-09/README.md).
 
 ## First steps, live connection and reliable skin copies
 
@@ -24,8 +28,8 @@ Titan and MayaHD XML copies with zero XML or editing errors. All 488 monitored
 installed source XML hashes match the original baseline.
 See [validation](Validation/First-Steps/README.md).
 
-The supported workflow is ready for packaged acceptance. Further preview
-comparison on real plugin pages is useful when extending the supported scope.
+The packaged editor and bridge match the tested binaries. The bundled demo
+opens from a clean extraction.
 
 ## Newest development milestone: live font definitions, bridge 1.3
 

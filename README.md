@@ -4,15 +4,15 @@ A visual Windows skin editor for MediaPortal 1. Edit text, layout, images and ef
 
 ## Download
 
-Get the portable Windows ZIP and SHA256 checksum from [v0.9.0-preview.4](https://github.com/gheitmann/MP1-Skin-Studio/releases/tag/v0.9.0-preview.4). Extract the complete archive and run `MP1SkinStudio.exe`. Windows and .NET Framework 4.x are required. The package includes twelve demo scenes and a quick start guide.
+Get the portable Windows ZIP and SHA256 checksum from [v0.9.0](https://github.com/gheitmann/MP1-Skin-Studio/releases/tag/v0.9.0). Extract the complete archive and run `MP1SkinStudio.exe`. Windows and .NET Framework 4.x are required. The package includes twelve demo scenes and a quick start guide.
 
 This preview provides a practical visual guide; rendering remains approximate. Start from an independent skin copy using **Copy skin …**. See [release notes](docs/RELEASE_NOTES.md) and [practical scope](docs/RELEASE_READINESS.md).
 
 ## Build and run
 
-Preview.4 includes [LiveBridge 1.3](docs/LIVE_PREVIEW.md) for MediaPortal 1.39.
+Version 0.9.0 includes [LiveBridge 1.3](docs/LIVE_PREVIEW.md) for MediaPortal 1.39.
 Close MediaPortal for the one-time installation or update, enable the plugin and
-restart MP. In Preview.4, use **Connect**, then **Open MP page**. Bridge 1.3 supports
+restart MP. Use **Open MP page** to connect and open the displayed page. Bridge 1.3 supports
 [live font definitions](docs/LIVE_FONTS.md) and
 [effects, checkbox textures and gallery templates](docs/LIVE_SPECIAL.md).
 
@@ -20,7 +20,7 @@ Use [Save skin copy …](docs/SAVE_SKIN_COPY.md) to create a complete output ski
 and update it with conflict checks and backups. **Save Project** retains the
 editing session and Undo history.
 
-The current source adds **First steps**, an integrated path from choosing a skin
+Use **First steps**, an integrated path from choosing a skin
 to finding the element and saving. **Open MP page** combines connecting and
 opening the native page. See [Quick start](docs/QUICK_START.md).
 

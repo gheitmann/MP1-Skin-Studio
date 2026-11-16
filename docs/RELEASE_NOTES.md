@@ -1,6 +1,6 @@
-# First steps and editor reliability
+# MP1 Skin Studio v0.9.0
 
-November 16, 2026. The source checkpoint after Preview.4 adds an integrated
+November 16, 2026. The first stable release adds an integrated
 First steps toolbar, keyboard page search and one-click opening of the running
 MediaPortal page. Property help describes live availability for linked controls.
 Visible label captions take precedence over overlapping textures in the canvas;
@@ -9,7 +9,8 @@ in smaller windows and can be reopened from its heading.
 
 Creating a skin copy uses a shorter temporary directory name. Property selection,
 reset checks and native control matching avoid repeatedly searching the same
-control lists. See [First steps validation](../Validation/First-Steps/README.md).
+control lists. See [First steps validation](../Validation/First-Steps/README.md)
+and [final native page checks](../Validation/Release-09/README.md).
 
 # MP1 Skin Studio v0.9.0-preview.4
 

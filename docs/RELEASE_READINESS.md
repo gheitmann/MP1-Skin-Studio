@@ -1,12 +1,13 @@
 # Review candidate readiness
 
-November 16, 2026. Preview.4 is the current public download and includes
-LiveBridge 1.3. The source checkpoint adds First steps, more direct Live setup,
+November 16, 2026. Version 0.9.0 includes LiveBridge 1.3.
+The release adds First steps, more direct Live setup,
 caption hit ordering and a shorter skin-copy staging path. Validation exercises
 the exact guided workflow on a running isolated MediaPortal 1.39 and the XML
 model on DefaultWideHD, Titan and MayaHD copies.
 See [First steps validation](../Validation/First-Steps/README.md) for the
-reproducible scope and [Quick start](QUICK_START.md) for first use.
+reproducible scope, [final native page checks](../Validation/Release-09/README.md)
+and [Quick start](QUICK_START.md) for first use.
 
 The editor canvas targets practical selection and layout editing. The linked
 MediaPortal window provides the reference for supported native properties.
